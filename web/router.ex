@@ -16,6 +16,7 @@ defmodule Karma.Router do
   scope "/", Karma do
     pipe_through :browser # Use the default browser stack
     resources "/users", UserController
+    resources "/sessions", SessionController, only: [:new, :create]
     get "/", PageController, :index
   end
 
