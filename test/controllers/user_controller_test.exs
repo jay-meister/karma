@@ -2,8 +2,8 @@ defmodule Karma.UserControllerTest do
   use Karma.ConnCase
 
   alias Karma.User
-  @user_attrs %{email: "some content"}
-  @valid_attrs %{email: "some content", first_name: "some content", last_name: "some content", password: "some content"}
+  @user_attrs %{email: "test@test.com"}
+  @valid_attrs %{email: "test@test.com", first_name: "Joe", last_name: "Blogs", password: "123456"}
   @invalid_attrs %{}
 
   test "lists all entries on index", %{conn: conn} do
