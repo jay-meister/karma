@@ -26,17 +26,16 @@ defmodule Karma.User do
   def registration_changeset(struct, params \\ %{}) do
     struct
     |> changeset(params)
-    |> validate_password(params)
+    |> validate_password()
     |> put_password_hash()
   end
 
-  def validate_password(changeset, params) do
+  defp validate_password(changeset) do
     changeset
-    |> cast(params, [:email, :password])
     |> validate_length(:password, min: 6, max: 100)
   end
 
-  def put_password_hash(changeset) do
+  defp put_password_hash(changeset) do
     case changeset do
       %Ecto.Changeset{valid?: true, changes: %{password: given_pass}} ->
         put_change(changeset, :password_hash, Bcrypt.hashpwsalt(given_pass))
