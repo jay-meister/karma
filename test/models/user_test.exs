@@ -31,6 +31,15 @@ defmodule Karma.UserTest do
     assert changeset.valid?
   end
 
+  test "changeset is invalid if email is used already" do
+    changeset = User.registration_changeset(%User{}, @valid_attrs)
+    # insert a user
+    Karma.Repo.insert!(changeset)
+    # attempt to insert a user with same email
+    assert {:error, changeset} = Repo.insert(changeset)
+    assert {"has already been taken", _} = changeset.errors[:email]
+  end
+
   test "registration changeset with invalid password and email" do
     changeset = User.registration_changeset(%User{}, @invalid_account_creation)
     refute changeset.valid?
