@@ -20,6 +20,14 @@ defmodule Karma.UserTest do
 
   test "registration changeset with valid password" do
     changeset = User.registration_changeset(%User{}, @valid_account_creation)
+
+    %{changes: changes} = changeset
+
+    # ensure password_hash has been added
+    assert Map.has_key?(changes, :password_hash)
+
+    # ensure password has been hashed
+    refute changes.password_hash == "123456"
     assert changeset.valid?
   end
 
