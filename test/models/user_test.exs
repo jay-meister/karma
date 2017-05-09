@@ -3,13 +3,13 @@ defmodule Karma.UserTest do
 
   alias Karma.User
 
-  @valid_attrs %{email: "test@test.com", first_name: "Joe", last_name: "Blogs", password: "123456"}
   @invalid_attrs %{}
   @valid_account_creation %{email: "test@test.com", first_name: "Joe", last_name: "Blogs", password: "123456"}
   @invalid_account_creation %{email: "testtest.com", first_name: "Joe", last_name: "Blogs", password: "12345"}
 
+  # Generic user changeset tests
   test "changeset with valid attributes" do
-    changeset = User.changeset(%User{}, @valid_attrs)
+    changeset = User.changeset(%User{}, @valid_account_creation)
     assert changeset.valid?
   end
 
@@ -18,6 +18,8 @@ defmodule Karma.UserTest do
     refute changeset.valid?
   end
 
+
+  # Account creation tests
   test "registration changeset with valid password" do
     changeset = User.registration_changeset(%User{}, @valid_account_creation)
 
@@ -32,7 +34,7 @@ defmodule Karma.UserTest do
   end
 
   test "changeset is invalid if email is used already" do
-    changeset = User.registration_changeset(%User{}, @valid_attrs)
+    changeset = User.registration_changeset(%User{}, @valid_account_creation)
     # insert a user
     Karma.Repo.insert!(changeset)
     # attempt to insert a user with same email
