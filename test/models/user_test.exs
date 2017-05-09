@@ -25,8 +25,11 @@ defmodule Karma.UserTest do
 
   test "registration changeset with invalid password and email" do
     changeset = User.registration_changeset(%User{}, @invalid_account_creation)
-    %{errors: [password, email]} = changeset
-
     refute changeset.valid?
+
+    # ensure email and password have failed
+    %{errors: errors} = changeset
+    Keyword.has_key?(errors, :password)
+    Keyword.has_key?(errors, :email)
   end
 end
