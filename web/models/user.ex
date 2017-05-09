@@ -18,5 +18,19 @@ defmodule Karma.User do
     struct
     |> cast(params, [:email, :first_name, :last_name, :password])
     |> validate_required([:email, :first_name, :last_name, :password])
+    |> validate_format(:email, ~r/@/)
+    |> unique_constraint(:email)
+  end
+
+  def registration_changeset(struct, params \\ %{}) do
+    struct
+    |> changeset(params)
+    |> validate_password(params)
+  end
+
+  def validate_password(changeset, params) do
+    changeset
+    |> cast(params, [:email, :password])
+    |> validate_length(:password, min: 6, max: 100)
   end
 end
