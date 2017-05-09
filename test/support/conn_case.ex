@@ -24,6 +24,7 @@ defmodule Karma.ConnCase do
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
+      import Karma.TestHelpers
 
       import Karma.Router.Helpers
 

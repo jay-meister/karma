@@ -1,7 +1,9 @@
 defmodule Karma.UserController do
   use Karma.Web, :controller
 
-  alias Karma.User
+  plug :authenticate when action in [:index, :show, :edit, :update, :delete]
+
+  alias Karma.{User, Auth}
 
   def index(conn, _params) do
     users = Repo.all(User)
@@ -17,8 +19,9 @@ defmodule Karma.UserController do
     changeset = User.registration_changeset(%User{}, user_params)
 
     case Repo.insert(changeset) do
-      {:ok, _user} ->
+      {:ok, user} ->
         conn
+        |> Auth.login(user)
         |> put_flash(:info, "User created successfully.")
         |> redirect(to: user_path(conn, :index))
       {:error, changeset} ->
