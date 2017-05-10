@@ -23,7 +23,7 @@ defmodule Karma.UserController do
         conn
         |> Auth.login(user)
         |> put_flash(:info, "User created successfully.")
-        |> redirect(to: user_path(conn, :index))
+        |> redirect(to: dashboard_path(conn, :index))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end

@@ -23,7 +23,7 @@ defmodule Karma.UserControllerTest do
 
   test "creates resource and redirects when data is valid", %{conn: conn} do
     conn = post conn, user_path(conn, :create), user: @valid_attrs
-    assert redirected_to(conn) == user_path(conn, :index)
+    assert redirected_to(conn) == dashboard_path(conn, :index)
     assert Repo.get_by(User, @user_attrs)
   end
 
