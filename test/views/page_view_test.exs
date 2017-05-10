@@ -1,3 +1,3 @@
-defmodule Karma.PageViewTest do
+defmodule Karma.DashboardViewTest do
   use Karma.ConnCase, async: true
 end

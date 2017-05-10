@@ -1,4 +1,4 @@
-defmodule Karma.PageControllerTest do
+defmodule Karma.DashboardControllerTest do
   use Karma.ConnCase
 
   test "GET /", %{conn: conn} do
