@@ -12,7 +12,8 @@ defmodule Karma.TestHelpers do
       %{first_name: "Joe",
         last_name: "Blogs",
         email: "test@test.com",
-        password: "123456"},
+        password: "123456",
+        terms_accepted: true},
         attrs)
 
     %User{}

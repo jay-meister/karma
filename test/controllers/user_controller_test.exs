@@ -3,7 +3,7 @@ defmodule Karma.UserControllerTest do
 
   alias Karma.User
   @user_attrs %{email: "test@test.com"}
-  @valid_attrs %{email: "test@test.com", first_name: "Joe", last_name: "Blogs", password: "123456"}
+  @valid_attrs %{email: "test@test.com", first_name: "Joe", last_name: "Blogs", password: "123456", terms_accepted: true}
   @invalid_attrs %{}
 
 
