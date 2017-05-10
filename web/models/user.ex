@@ -9,6 +9,7 @@ defmodule Karma.User do
     field :password_hash, :string
     field :password, :string, virtual: true
     field :verified, :boolean
+    field :terms_accepted, :boolean
 
     timestamps()
   end
@@ -33,8 +34,18 @@ defmodule Karma.User do
   def registration_changeset(struct, params \\ %{}) do
     struct
     |> changeset(params)
+    |> terms_accepted(params)
     |> validate_password()
     |> put_password_hash()
+  end
+
+
+  defp terms_accepted(changeset, params) do
+    message = "You must agree to the terms and conditions"
+    changeset
+    |> cast(params, [:terms_accepted])
+    |> validate_required([:terms_accepted])
+    |> validate_inclusion(:terms_accepted, [true], message: message)
   end
 
   defp validate_password(changeset) do

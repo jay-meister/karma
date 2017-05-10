@@ -10,7 +10,7 @@ defmodule Karma.SessionController do
       _user ->
         conn
         |> put_flash(:info, "You are already logged in!")
-        |> redirect(to: page_path(conn, :index))
+        |> redirect(to: dashboard_path(conn, :index))
     end
 
   end
@@ -20,7 +20,7 @@ defmodule Karma.SessionController do
       {:ok, conn} ->
         conn
         |> put_flash(:info, "Welcome Back!")
-        |> redirect(to: page_path(conn, :index))
+        |> redirect(to: dashboard_path(conn, :index))
       {:error, _reason, conn} ->
         conn
         |> put_flash(:error, "Invalid email/password combination")

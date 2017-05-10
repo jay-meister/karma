@@ -1,4 +1,4 @@
-defmodule Karma.PageController do
+defmodule Karma.DashboardController do
   use Karma.Web, :controller
 
   plug :authenticate when action in [:index]

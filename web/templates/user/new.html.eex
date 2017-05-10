@@ -1,6 +1,44 @@
 <h2>New user</h2>
 
-<%= render "form.html", changeset: @changeset,
-                        action: user_path(@conn, :create) %>
+  <%= form_for @changeset, user_path(@conn, :create), fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
 
-<%= link "Back", to: user_path(@conn, :index) %>
+  <div class="form-group">
+    <%= label f, :email, class: "control-label" %>
+    <%= text_input f, :email, class: "form-control" %>
+    <%= error_tag f, :email %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :first_name, class: "control-label" %>
+    <%= text_input f, :first_name, class: "form-control" %>
+    <%= error_tag f, :first_name %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :last_name, class: "control-label" %>
+    <%= text_input f, :last_name, class: "form-control" %>
+    <%= error_tag f, :last_name %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :password, class: "control-label" %>
+    <%= password_input f, :password, class: "form-control" %>
+    <%= error_tag f, :password %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :terms_accepted, "I have read and accept the ", class: "control-label" %>
+    <%= link "terms and conditions", to: "#" %>
+    <%= checkbox f, :terms_accepted, class: "form-control" %>
+    <%= error_tag f, :terms_accepted %>
+  </div>
+
+  <div class="form-group">
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>

@@ -9,18 +9,18 @@ defmodule Karma.VerificationController do
       nil ->
         conn
         |> put_flash(:error, "Email not verified!")
-        |> redirect(to: page_path(conn, :index))
+        |> redirect(to: dashboard_path(conn, :index))
       user ->
         changeset = User.email_verification_changeset(user, %{verified: true})
         case Repo.update(changeset) do
           {:ok, user} ->
             conn
             |> put_flash(:info, "Email #{user.email} verified!")
-            |> redirect(to: page_path(conn, :index))
+            |> redirect(to: dashboard_path(conn, :index))
           {:error, changeset} ->
             conn
             |> put_flash(:error, "Error validating email!")
-            |> redirect(to: page_path(conn, :index))
+            |> redirect(to: dashboard_path(conn, :index))
         end
     end
   end
