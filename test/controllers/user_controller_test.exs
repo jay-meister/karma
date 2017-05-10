@@ -3,7 +3,7 @@ defmodule Karma.UserControllerTest do
 
   alias Karma.User
   @user_attrs %{email: "test@test.com"}
-  @valid_attrs %{email: "test@test.com", first_name: "Joe", last_name: "Blogs", password: "123456"}
+  @valid_attrs %{email: "test@test.com", first_name: "Joe", last_name: "Blogs", password: "123456", terms_accepted: true}
   @invalid_attrs %{}
 
 
@@ -88,4 +88,13 @@ defmodule Karma.UserControllerTest do
     assert redirected_to(conn) == user_path(conn, :index)
     refute Repo.get(User, user.id)
   end
+
+  test "does not create new user if terms_accepted are not accepted", %{conn: conn} do
+    invalid_user = %{ @valid_attrs | terms_accepted: false }
+
+    conn = post conn, user_path(conn, :create), user: invalid_user
+    # assert the error message is displayed
+    assert html_response(conn, 200) =~ "You must agree to the terms and conditions"
+  end
+
 end
