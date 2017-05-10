@@ -25,3 +25,19 @@ config :logger, :console,
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
+
+# Configure mailing
+config :karma, Karma.Mailer,
+  adapter: Bamboo.SMTPAdapter,
+  server: System.get_env("SES_SERVER"),
+  port: System.get_env("SES_PORT"),
+  username: System.get_env("SMTP_USERNAME"),
+  password: System.get_env("SMTP_PASSWORD"),
+  tls: :always, # can be `:always` or `:never`
+  ssl: false, # can be `true`
+  retries: 1
+
+# Configure Cipher
+config :cipher, keyphrase: "testiekeyphraseforcipher",
+                ivphrase: "testieivphraseforcipher",
+                magic_token: "magictoken"

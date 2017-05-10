@@ -20,6 +20,8 @@ defmodule Karma.UserController do
 
     case Repo.insert(changeset) do
       {:ok, user} ->
+        Karma.Email.send_verification_email(user)
+        |> Karma.Mailer.deliver_now()
         conn
         |> Auth.login(user)
         |> put_flash(:info, "User created successfully.")

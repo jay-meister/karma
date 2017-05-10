@@ -19,6 +19,7 @@ defmodule Karma.Router do
     resources "/users", UserController
     resources "/sessions", SessionController, only: [:new, :create, :delete]
     get "/", PageController, :index
+    get "/verification/:hash", VerificationController, :verify
   end
 
   # Other scopes may use custom stacks.
