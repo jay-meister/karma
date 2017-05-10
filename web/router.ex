@@ -18,7 +18,7 @@ defmodule Karma.Router do
     pipe_through :browser # Use the default browser stack
     resources "/users", UserController
     resources "/sessions", SessionController, only: [:new, :create, :delete]
-    get "/", PageController, :index
+    get "/", DashboardController, :index
   end
 
   # Other scopes may use custom stacks.

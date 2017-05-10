@@ -1,0 +1,9 @@
+<div class="jumbotron">
+  <h2>My projects</h2>
+  <p class="lead">You have not created any projects yet</p>
+  <p>Why don't you <%= link "create one?", to: "#" %>
+</div>
+<div class="jumbotron">
+  <h2>My offers</h2>
+  <p class="lead">You don't have any offers yet</p>
+</div>
