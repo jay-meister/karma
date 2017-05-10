@@ -24,13 +24,13 @@ defmodule Karma.SessionControllerTest do
         conn
         |> assign(:current_user, user)
       conn = get conn, session_path(conn, :new)
-      assert redirected_to(conn, 302) == "/"
+      assert redirected_to(conn, 302) == dashboard_path(conn, :index)
     end
 
     test "Login: Valid session /session/new", %{conn: conn} do
       conn = post conn, session_path(conn, :create,
       %{"session" => %{"email" => "test@test.com", "password" => "123456"}})
-      assert redirected_to(conn, 302) == "/"
+      assert redirected_to(conn, 302) == dashboard_path(conn, :index)
     end
 
     test "Login: Invalid session /sessions/new", %{conn: conn} do
