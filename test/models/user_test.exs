@@ -42,6 +42,15 @@ defmodule Karma.UserTest do
     assert {"has already been taken", _} = changeset.errors[:email]
   end
 
+  test "terms and conditions must be accepted" do
+    attrs = %{ @valid_account_creation | terms_accepted: false }
+    changeset = User.registration_changeset(%User{}, attrs)
+    refute changeset.valid?
+
+    assert [terms_accepted: {"You must agree to the terms and conditions", _}]
+      = changeset.errors
+  end
+
   test "registration changeset with invalid password and email" do
     changeset = User.registration_changeset(%User{}, @invalid_account_creation)
     refute changeset.valid?
