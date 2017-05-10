@@ -4,7 +4,7 @@ defmodule Karma.UserTest do
   alias Karma.User
 
   @invalid_attrs %{}
-  @valid_account_creation %{email: "test@test.com", first_name: "Joe", last_name: "Blogs", password: "123456"}
+  @valid_account_creation %{email: "test@test.com", first_name: "Joe", last_name: "Blogs", password: "123456", terms_accepted: true}
   @invalid_account_creation %{email: "testtest.com", first_name: "Joe", last_name: "Blogs", password: "12345"}
 
   # Generic user changeset tests
@@ -40,6 +40,15 @@ defmodule Karma.UserTest do
     # attempt to insert a user with same email
     assert {:error, changeset} = Repo.insert(changeset)
     assert {"has already been taken", _} = changeset.errors[:email]
+  end
+
+  test "terms and conditions must be accepted" do
+    attrs = %{ @valid_account_creation | terms_accepted: false }
+    changeset = User.registration_changeset(%User{}, attrs)
+    refute changeset.valid?
+
+    assert [terms_accepted: {"You must agree to the terms and conditions", _}]
+      = changeset.errors
   end
 
   test "registration changeset with invalid password and email" do
