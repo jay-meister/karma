@@ -36,8 +36,3 @@ config :karma, Karma.Mailer,
   tls: :always, # can be `:always` or `:never`
   ssl: false, # can be `true`
   retries: 1
-
-# Configure Cipher
-config :cipher, keyphrase: "testiekeyphraseforcipher",
-                ivphrase: "testieivphraseforcipher",
-                magic_token: "magictoken"

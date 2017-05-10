@@ -10,12 +10,9 @@ defmodule Karma.Email do
   end
 
   def send_verification_email(user) do
-    IO.inspect user
-    encoded_string =
-      user.id
-      |> Cipher.encrypt
-    IO.inspect encoded_string
-    message = "Follow the link below to verify your email address: "
+    encoded_string = Base.hex_encode32(user.email, padding: false)
+    message = "Follow the link below to verify your email address:
+    http://localhost:4000/verification/#{encoded_string}"
     send_email(user.email, "Email Verification", message)
   end
 end

@@ -47,8 +47,7 @@ defmodule Karma.Mixfile do
      {:comeonin, "~> 3.0.2"},
      {:bamboo, "~> 0.7"},
      {:bamboo_smtp, "~> 1.2.1"},
-     {:mock, "~> 0.2.0", only: :test},
-     {:cipher, ">= 1.3.0"}
+     {:mock, "~> 0.2.0", only: :test}
    ]
   end
 
