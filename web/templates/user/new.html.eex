@@ -42,6 +42,3 @@
     <%= submit "Submit", class: "btn btn-primary" %>
   </div>
 <% end %>
-
-
-<%= link "Back", to: user_path(@conn, :index) %>

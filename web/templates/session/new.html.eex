@@ -1,3 +1,6 @@
+<h4>New to Karma?</h4>
+<%= link "Create an account", to: user_path(@conn, :new) %>
+
 <h2>Log in</h2>
 
 <%= form_for @conn, session_path(@conn, :create), [as: :session], fn f -> %>
