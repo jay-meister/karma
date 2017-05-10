@@ -19,16 +19,7 @@ defmodule Karma.SessionControllerTest do
     end
 
     test "Get /sessions/new logged in", %{conn: conn} do
-      changes = %{first_name: "First",
-          last_name: "Last",
-          email: "email@test2.com",
-          password: "supersecret",
-          id: 2}
-
-      user =
-        %User{}
-        |> User.registration_changeset(changes)
-        |> Repo.insert!
+      user = insert_user(%{email: "test2@test.com"})
       conn =
         conn
         |> assign(:current_user, user)
@@ -55,16 +46,7 @@ defmodule Karma.SessionControllerTest do
     end
 
     test "Logout", %{conn: conn} do
-      changes = %{first_name: "First",
-          last_name: "Last",
-          email: "email@test1.com",
-          password: "supersecret",
-          id: 1}
-
-      user =
-        %User{}
-        |> User.registration_changeset(changes)
-        |> Repo.insert!
+      user = insert_user(%{email: "test2@test.com"})
       conn =
         conn
         |> assign(:current_user, user)

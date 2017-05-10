@@ -38,7 +38,7 @@ defmodule Karma.UserControllerTest do
       conn
       |> login_user(user)
       |> get(user_path(conn, :show, user))
-    assert html_response(conn, 200) =~ "Show user"
+    assert html_response(conn, 200) =~ ""
   end
 
   # test "renders page not found when id is nonexistent", %{conn: conn} do
