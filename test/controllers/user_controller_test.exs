@@ -6,6 +6,21 @@ defmodule Karma.UserControllerTest do
   @valid_attrs %{email: "test@test.com", first_name: "Joe", last_name: "Blogs", password: "123456", terms_accepted: true}
   @invalid_attrs %{}
 
+  test "user paths require user authentication", %{conn: conn} do
+    user = insert_user()
+
+    Enum.each([
+      get(conn, user_path(conn, :index)),
+      get(conn, user_path(conn, :show, user)),
+      get(conn, user_path(conn, :edit, user)),
+      put(conn, user_path(conn, :update, user)),
+      delete(conn, user_path(conn, :delete, user)),
+    ], fn conn ->
+      assert html_response(conn, 302)
+      assert conn.halted
+    end)
+  end
+
 
   test "lists all entries on index", %{conn: conn} do
     user = insert_user()
