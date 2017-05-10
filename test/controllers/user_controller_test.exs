@@ -41,11 +41,15 @@ defmodule Karma.UserControllerTest do
     assert html_response(conn, 200) =~ ""
   end
 
-  # test "renders page not found when id is nonexistent", %{conn: conn} do
-  #   assert_error_sent 404, fn ->
-  #     get conn, user_path(conn, :show, -1)
-  #   end
-  # end
+  test "renders page not found when id is nonexistent", %{conn: conn} do
+    user = insert_user()
+    conn =
+      conn
+      |> login_user(user)
+    assert_error_sent 404, fn ->
+      get conn, user_path(conn, :show, -1)
+    end
+  end
 
   test "renders form for editing chosen resource", %{conn: conn} do
     user = insert_user()
