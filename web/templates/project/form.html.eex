@@ -1,0 +1,149 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= label f, :type, class: "control-label" %>
+    <%= text_input f, :type, class: "form-control" %>
+    <%= error_tag f, :type %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :budget, class: "control-label" %>
+    <%= text_input f, :budget, class: "form-control" %>
+    <%= error_tag f, :budget %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :name, class: "control-label" %>
+    <%= text_input f, :name, class: "form-control" %>
+    <%= error_tag f, :name %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :codename, class: "control-label" %>
+    <%= text_input f, :codename, class: "form-control" %>
+    <%= error_tag f, :codename %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :description, class: "control-label" %>
+    <%= textarea f, :description, class: "form-control" %>
+    <%= error_tag f, :description %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :start_date, class: "control-label" %>
+    <%= datetime_select f, :start_date, class: "form-control" %>
+    <%= error_tag f, :start_date %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :duration, class: "control-label" %>
+    <%= number_input f, :duration, class: "form-control" %>
+    <%= error_tag f, :duration %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :studio_name, class: "control-label" %>
+    <%= text_input f, :studio_name, class: "form-control" %>
+    <%= error_tag f, :studio_name %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :company_name, class: "control-label" %>
+    <%= text_input f, :company_name, class: "form-control" %>
+    <%= error_tag f, :company_name %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :company_address_1, class: "control-label" %>
+    <%= text_input f, :company_address_1, class: "form-control" %>
+    <%= error_tag f, :company_address_1 %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :company_address_2, class: "control-label" %>
+    <%= text_input f, :company_address_2, class: "form-control" %>
+    <%= error_tag f, :company_address_2 %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :company_address_3, class: "control-label" %>
+    <%= text_input f, :company_address_3, class: "form-control" %>
+    <%= error_tag f, :company_address_3 %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :company_address_4, class: "control-label" %>
+    <%= text_input f, :company_address_4, class: "form-control" %>
+    <%= error_tag f, :company_address_4 %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :company_address_5, class: "control-label" %>
+    <%= text_input f, :company_address_5, class: "form-control" %>
+    <%= error_tag f, :company_address_5 %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :operating_base_address_1, class: "control-label" %>
+    <%= text_input f, :operating_base_address_1, class: "form-control" %>
+    <%= error_tag f, :operating_base_address_1 %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :operating_base_address_2, class: "control-label" %>
+    <%= text_input f, :operating_base_address_2, class: "form-control" %>
+    <%= error_tag f, :operating_base_address_2 %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :operating_base_address_3, class: "control-label" %>
+    <%= text_input f, :operating_base_address_3, class: "form-control" %>
+    <%= error_tag f, :operating_base_address_3 %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :operating_base_address_4, class: "control-label" %>
+    <%= text_input f, :operating_base_address_4, class: "form-control" %>
+    <%= error_tag f, :operating_base_address_4 %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :operating_base_address_5, class: "control-label" %>
+    <%= text_input f, :operating_base_address_5, class: "form-control" %>
+    <%= error_tag f, :operating_base_address_5 %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :locations, class: "control-label" %>
+    <%= text_input f, :locations, class: "form-control" %>
+    <%= error_tag f, :locations %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :holiday_rate, class: "control-label" %>
+    <%= number_input f, :holiday_rate, step: "any", class: "form-control" %>
+    <%= error_tag f, :holiday_rate %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :additional_notes, class: "control-label" %>
+    <%= textarea f, :additional_notes, class: "form-control" %>
+    <%= error_tag f, :additional_notes %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :active, class: "control-label" %>
+    <%= checkbox f, :active, class: "form-control" %>
+    <%= error_tag f, :active %>
+  </div>
+
+  <div class="form-group">
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>
