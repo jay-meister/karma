@@ -15,7 +15,6 @@ defmodule Karma.ProjectController do
 
   def create(conn, %{"project" => project_params}) do
     changeset = Project.changeset(%Project{}, project_params)
-
     case Repo.insert(changeset) do
       {:ok, _project} ->
         conn

@@ -8,7 +8,7 @@ defmodule Karma.Repo.Migrations.CreateProject do
       add :name, :string
       add :codename, :string
       add :description, :text
-      add :start_date, :datetime
+      add :start_date, :date
       add :duration, :integer
       add :studio_name, :string
       add :company_name, :string
@@ -25,12 +25,11 @@ defmodule Karma.Repo.Migrations.CreateProject do
       add :locations, :string
       add :holiday_rate, :float
       add :additional_notes, :text
-      add :active, :boolean, default: false, null: false
+      add :active, :boolean, default: true, null: false
       add :user_id, references(:users, on_delete: :nothing)
 
       timestamps()
     end
     create index(:projects, [:user_id])
-
   end
 end

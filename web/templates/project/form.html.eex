@@ -7,24 +7,24 @@
 
   <div class="form-group">
     <%= label f, :type, class: "control-label" %>
-    <%= text_input f, :type, class: "form-control" %>
+    <%= select f, :type, ["Feature Film": "feature", "Television": "television"], prompt: "Project type..." %>
     <%= error_tag f, :type %>
   </div>
 
   <div class="form-group">
     <%= label f, :budget, class: "control-label" %>
-    <%= text_input f, :budget, class: "form-control" %>
+    <%= select f, :budget, ["None/Low": "none/low", "Mid": "mid", "Big": "big"], prompt: "Budget..." %>
     <%= error_tag f, :budget %>
   </div>
 
   <div class="form-group">
-    <%= label f, :name, class: "control-label" %>
+    <%= label f, :name, "Project name", class: "control-label" %>
     <%= text_input f, :name, class: "form-control" %>
     <%= error_tag f, :name %>
   </div>
 
   <div class="form-group">
-    <%= label f, :codename, class: "control-label" %>
+    <%= label f, :codename, "Project code-name", class: "control-label" %>
     <%= text_input f, :codename, class: "form-control" %>
     <%= error_tag f, :codename %>
   </div>
@@ -37,12 +37,12 @@
 
   <div class="form-group">
     <%= label f, :start_date, class: "control-label" %>
-    <%= datetime_select f, :start_date, class: "form-control" %>
+    <%= date_select f, :start_date, class: "form-control" %>
     <%= error_tag f, :start_date %>
   </div>
 
   <div class="form-group">
-    <%= label f, :duration, class: "control-label" %>
+    <%= label f, :duration, "Duration (weeks)", class: "control-label" %>
     <%= number_input f, :duration, class: "form-control" %>
     <%= error_tag f, :duration %>
   </div>
@@ -127,7 +127,7 @@
 
   <div class="form-group">
     <%= label f, :holiday_rate, class: "control-label" %>
-    <%= number_input f, :holiday_rate, step: "any", class: "form-control" %>
+    <%= select f, :holiday_rate, ["10.77%": 0.1077, "12.07%": 0.1207], prompt: "Select rate..." %>
     <%= error_tag f, :holiday_rate %>
   </div>
 

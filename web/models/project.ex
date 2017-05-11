@@ -7,7 +7,7 @@ defmodule Karma.Project do
     field :name, :string
     field :codename, :string
     field :description, :string
-    field :start_date, Ecto.DateTime
+    field :start_date, Ecto.Date
     field :duration, :integer
     field :studio_name, :string
     field :company_name, :string
@@ -24,7 +24,7 @@ defmodule Karma.Project do
     field :locations, :string
     field :holiday_rate, :float
     field :additional_notes, :string
-    field :active, :boolean, default: false
+    field :active, :boolean, default: true
     belongs_to :user, Karma.User
 
     timestamps()
@@ -36,6 +36,6 @@ defmodule Karma.Project do
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:type, :budget, :name, :codename, :description, :start_date, :duration, :studio_name, :company_name, :company_address_1, :company_address_2, :company_address_3, :company_address_4, :company_address_5, :operating_base_address_1, :operating_base_address_2, :operating_base_address_3, :operating_base_address_4, :operating_base_address_5, :locations, :holiday_rate, :additional_notes, :active])
-    |> validate_required([:type, :budget, :name, :codename, :description, :start_date, :duration, :studio_name, :company_name, :company_address_1, :company_address_2, :company_address_3, :company_address_4, :company_address_5, :operating_base_address_1, :operating_base_address_2, :operating_base_address_3, :operating_base_address_4, :operating_base_address_5, :locations, :holiday_rate, :additional_notes, :active])
+    |> validate_required([:type, :budget, :name, :codename, :description, :start_date, :duration, :studio_name, :company_name, :company_address_1, :company_address_2, :company_address_3, :operating_base_address_1, :operating_base_address_2, :operating_base_address_3, :holiday_rate, :active])
   end
 end
