@@ -18,6 +18,7 @@ defmodule Karma.Router do
     pipe_through :browser # Use the default browser stack
     resources "/users", UserController
     resources "/sessions", SessionController, only: [:new, :create, :delete]
+    get "/verification/:hash", VerificationController, :verify
     get "/", DashboardController, :index
   end
 

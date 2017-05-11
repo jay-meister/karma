@@ -19,6 +19,10 @@ config :karma, Karma.Repo,
   pool: Ecto.Adapters.SQL.Sandbox
 
 # Configure password hashing
-
 config :comeonin, :bcrypt_log_rounds, 4
 config :comeonin, :pbkdf2_rounds, 1
+
+
+# Configure Bamboo
+config :karma, Karma.Mailer,
+  adapter: Bamboo.TestAdapter

@@ -8,6 +8,7 @@ defmodule Karma.User do
     field :last_name, :string
     field :password_hash, :string
     field :password, :string, virtual: true
+    field :verified, :boolean
     field :terms_accepted, :boolean
 
     timestamps()
@@ -18,10 +19,16 @@ defmodule Karma.User do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:email, :first_name, :last_name, :password])
+    |> cast(params, [:email, :first_name, :last_name, :password, :verified])
     |> validate_required([:email, :first_name, :last_name, :password])
     |> validate_format(:email, ~r/@/)
     |> unique_constraint(:email)
+  end
+
+  def email_verification_changeset(struct, params \\ %{}) do
+    struct
+    |> cast(params, [:verified])
+    |> validate_required([:verified])
   end
 
   def registration_changeset(struct, params \\ %{}) do
