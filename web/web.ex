@@ -36,6 +36,7 @@ defmodule Karma.Web do
 
       import Karma.Router.Helpers
       import Karma.Gettext
+      import Karma.Controllers.Helpers
       import Karma.Auth, only: [authenticate: 2]
     end
   end

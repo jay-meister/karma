@@ -12,7 +12,7 @@ defmodule Karma.SessionControllerTest do
 
   describe "session routes that need authentication" do
     setup do
-      insert_user()
+      insert_user(%{verified: true})
 
       conn = assign(build_conn(), :current_user, Repo.get(User, id().user))
       {:ok, conn: conn}
@@ -42,6 +42,13 @@ defmodule Karma.SessionControllerTest do
     test "Login: Invalid password", %{conn: conn} do
       conn = post conn, session_path(conn, :create,
       %{"session" => %{"email" => "test@test.com", "password" => "invld"}})
+      assert html_response(conn, 302) =~ "/sessions/new"
+    end
+
+    test "Login: Not verified", %{conn: conn} do
+      insert_user(%{email: "test2@test.com"})
+      conn = post conn, session_path(conn, :create,
+      %{"session" => %{"email" => "test2@test.com", "password" => "123456"}})
       assert html_response(conn, 302) =~ "/sessions/new"
     end
 

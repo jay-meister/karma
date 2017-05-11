@@ -3,7 +3,8 @@ defmodule Karma.UserControllerTest do
 
   import Mock
 
-  alias Karma.User
+  alias Karma.{User, Email}
+
   @user_attrs %{email: "test@test.com"}
   @valid_attrs %{email: "test@test.com", first_name: "Joe", last_name: "Blogs", password: "123456", terms_accepted: true}
   @invalid_attrs %{}
@@ -38,10 +39,20 @@ defmodule Karma.UserControllerTest do
     assert html_response(conn, 200) =~ "New user"
   end
 
-  test "creates resource and redirects when data is valid", %{conn: conn} do
+  test "creates resource and redirects when data is valid DEV", %{conn: conn} do
     with_mock Karma.Mailer, [deliver_now: fn(_) -> nil end] do
+      Mix.env(:dev)
       conn = post conn, user_path(conn, :create), user: @valid_attrs
-      assert redirected_to(conn) == dashboard_path(conn, :index)
+      assert redirected_to(conn) == session_path(conn, :new)
+      assert Repo.get_by(User, @user_attrs)
+    end
+  end
+
+  test "creates resource and redirects when data is valid not DEV", %{conn: conn} do
+    with_mock Karma.Mailer, [deliver_now: fn(_) -> nil end] do
+      Mix.env(:prod)
+      conn = post conn, user_path(conn, :create), user: @valid_attrs
+      assert redirected_to(conn) == session_path(conn, :new)
       assert Repo.get_by(User, @user_attrs)
     end
   end
@@ -114,6 +125,13 @@ defmodule Karma.UserControllerTest do
     conn = post conn, user_path(conn, :create), user: invalid_user
     # assert the error message is displayed
     assert html_response(conn, 200) =~ "You must agree to the terms and conditions"
+  end
+
+  test "structure of email is ok" do
+    email = Email.send_email("test@email.com", "Welcome", "Hello there")
+    assert email.to == "test@email.com"
+    assert email.subject == "Welcome"
+    assert email.text_body =~ "Hello there"
   end
 
 end

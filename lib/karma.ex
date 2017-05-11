@@ -12,6 +12,8 @@ defmodule Karma do
       supervisor(Karma.Repo, []),
       # Start the endpoint when the application starts
       supervisor(Karma.Endpoint, []),
+      # Start redis
+      supervisor(Karma.RedisClientSupervisor, [])
       # Start your own worker by calling: Karma.Worker.start_link(arg1, arg2, arg3)
       # worker(Karma.Worker, [arg1, arg2, arg3]),
     ]
