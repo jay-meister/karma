@@ -4,7 +4,7 @@ defmodule Karma.Email do
   def send_email(recipient, subject, message) do
     new_email()
     |> to(recipient) # also needs to be a validated email
-    |> from(System.get_env("TARGET_EMAIL"))
+    |> from(System.get_env("ADMIN_EMAIL"))
     |> subject(subject)
     |> text_body(message)
   end
