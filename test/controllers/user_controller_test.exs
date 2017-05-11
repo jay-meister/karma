@@ -1,6 +1,8 @@
 defmodule Karma.UserControllerTest do
   use Karma.ConnCase
 
+  import Mock
+
   alias Karma.User
   @user_attrs %{email: "test@test.com"}
   @valid_attrs %{email: "test@test.com", first_name: "Joe", last_name: "Blogs", password: "123456", terms_accepted: true}
@@ -37,9 +39,11 @@ defmodule Karma.UserControllerTest do
   end
 
   test "creates resource and redirects when data is valid", %{conn: conn} do
-    conn = post conn, user_path(conn, :create), user: @valid_attrs
-    assert redirected_to(conn) == dashboard_path(conn, :index)
-    assert Repo.get_by(User, @user_attrs)
+    with_mock Karma.Mailer, [deliver_now: fn(_) -> nil end] do
+      conn = post conn, user_path(conn, :create), user: @valid_attrs
+      assert redirected_to(conn) == dashboard_path(conn, :index)
+      assert Repo.get_by(User, @user_attrs)
+    end
   end
 
   test "does not create resource and renders errors when data is invalid", %{conn: conn} do
