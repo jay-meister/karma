@@ -1,0 +1,2 @@
+<h3>Click the link below to verify your email</h3>
+<%= @url %>

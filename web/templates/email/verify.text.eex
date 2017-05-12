@@ -1,0 +1,2 @@
+Click the link below to verify your email
+<%= @url %>
