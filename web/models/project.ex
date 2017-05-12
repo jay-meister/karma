@@ -35,7 +35,51 @@ defmodule Karma.Project do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:type, :budget, :name, :codename, :description, :start_date, :duration, :studio_name, :company_name, :company_address_1, :company_address_2, :company_address_3, :company_address_4, :company_address_5, :operating_base_address_1, :operating_base_address_2, :operating_base_address_3, :operating_base_address_4, :operating_base_address_5, :locations, :holiday_rate, :additional_notes, :active])
-    |> validate_required([:type, :budget, :name, :codename, :description, :start_date, :duration, :studio_name, :company_name, :company_address_1, :company_address_2, :company_address_3, :operating_base_address_1, :operating_base_address_2, :operating_base_address_3, :holiday_rate, :active])
+    |> cast(params, [
+      :type,
+      :budget,
+      :name,
+      :codename,
+      :description,
+      :start_date,
+      :duration,
+      :studio_name,
+      :company_name,
+      :company_address_1,
+      :company_address_2,
+      :company_address_3,
+      :company_address_4,
+      :company_address_5,
+      :operating_base_address_1,
+      :operating_base_address_2,
+      :operating_base_address_3,
+      :operating_base_address_4,
+      :operating_base_address_5,
+      :locations,
+      :holiday_rate,
+      :additional_notes,
+      :active,
+      :user_id])
+    |> validate_required([
+      :type,
+      :budget,
+      :name,
+      :codename,
+      :description,
+      :start_date,
+      :duration,
+      :studio_name,
+      :company_name,
+      :company_address_1,
+      :company_address_2,
+      :company_address_3,
+      :operating_base_address_1,
+      :operating_base_address_2,
+      :operating_base_address_3,
+      :holiday_rate,
+      :active,
+      :user_id])
+  end
+
   end
 end
