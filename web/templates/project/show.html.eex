@@ -64,17 +64,17 @@
 
   <li>
     <strong>Company address 3:</strong>
-    <%= @project.company_address_3 %>
+    <%= @project.company_address_city %>
   </li>
 
   <li>
     <strong>Company address 4:</strong>
-    <%= @project.company_address_4 %>
+    <%= @project.company_address_postcode %>
   </li>
 
   <li>
     <strong>Company address 5:</strong>
-    <%= @project.company_address_5 %>
+    <%= @project.company_address_country %>
   </li>
 
   <li>
@@ -89,17 +89,17 @@
 
   <li>
     <strong>Operating base address 3:</strong>
-    <%= @project.operating_base_address_3 %>
+    <%= @project.operating_base_address_city %>
   </li>
 
   <li>
     <strong>Operating base address 4:</strong>
-    <%= @project.operating_base_address_4 %>
+    <%= @project.operating_base_address_postcode %>
   </li>
 
   <li>
     <strong>Operating base address 5:</strong>
-    <%= @project.operating_base_address_5 %>
+    <%= @project.operating_base_address_country %>
   </li>
 
   <li>

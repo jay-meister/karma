@@ -13,14 +13,14 @@ defmodule Karma.Project do
     field :company_name, :string
     field :company_address_1, :string
     field :company_address_2, :string
-    field :company_address_3, :string
-    field :company_address_4, :string
-    field :company_address_5, :string
+    field :company_address_city, :string
+    field :company_address_postcode, :string
+    field :company_address_country, :string
     field :operating_base_address_1, :string
     field :operating_base_address_2, :string
-    field :operating_base_address_3, :string
-    field :operating_base_address_4, :string
-    field :operating_base_address_5, :string
+    field :operating_base_address_city, :string
+    field :operating_base_address_postcode, :string
+    field :operating_base_address_country, :string
     field :locations, :string
     field :holiday_rate, :float
     field :additional_notes, :string
@@ -47,14 +47,14 @@ defmodule Karma.Project do
       :company_name,
       :company_address_1,
       :company_address_2,
-      :company_address_3,
-      :company_address_4,
-      :company_address_5,
+      :company_address_city,
+      :company_address_postcode,
+      :company_address_country,
       :operating_base_address_1,
       :operating_base_address_2,
-      :operating_base_address_3,
-      :operating_base_address_4,
-      :operating_base_address_5,
+      :operating_base_address_city,
+      :operating_base_address_postcode,
+      :operating_base_address_country,
       :locations,
       :holiday_rate,
       :additional_notes,
@@ -72,10 +72,10 @@ defmodule Karma.Project do
       :company_name,
       :company_address_1,
       :company_address_2,
-      :company_address_3,
+      :company_address_city,
       :operating_base_address_1,
       :operating_base_address_2,
-      :operating_base_address_3,
+      :operating_base_address_city,
       :holiday_rate,
       :active,
       :user_id])
