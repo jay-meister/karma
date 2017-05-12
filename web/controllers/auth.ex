@@ -34,13 +34,15 @@ defmodule Karma.Auth do
     user = repo.get_by(User, email: email)
 
     cond do
-      user && checkpw(given_pass, user.password_hash) ->
+      user && checkpw(given_pass, user.password_hash) && user.verified ->
         {:ok, login(conn, user)}
+      user && checkpw(given_pass, user.password_hash) && !user.verified ->
+        {:error, :not_verified, conn}
       user ->
         {:error, :unauthorized, conn}
       true ->
         dummy_checkpw()
-        {:error, :not_found, conn}
+        {:error, :unauthorized, conn}
     end
   end
 

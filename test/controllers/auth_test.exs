@@ -76,7 +76,7 @@ defmodule Karma.AuthTest do
     end
 
     test "login with a valid username and pass", %{conn: conn} do
-      user = insert_user()
+      user = insert_user(%{verified: true})
       {:ok, conn} =
         Auth.login_by_email_and_pass(conn, "test@test.com", "123456", repo: Repo)
 
@@ -84,14 +84,20 @@ defmodule Karma.AuthTest do
     end
 
     test "login with a not found user", %{conn: conn} do
-      assert {:error, :not_found, _conn} =
+      assert {:error, :unauthorized, _conn} =
         Auth.login_by_email_and_pass(conn, "notemail@nottest.com", "supersecret", repo: Repo)
     end
 
     test "login with password mismatch", %{conn: conn} do
-      insert_user()
+      insert_user(%{verified: true})
       assert {:error, :unauthorized, _conn} =
         Auth.login_by_email_and_pass(conn, "test@test.com", "wrong", repo: Repo)
+    end
+
+    test "login with not verified user", %{conn: conn} do
+      insert_user(%{verified: false})
+      assert {:error, :not_verified, _conn} =
+        Auth.login_by_email_and_pass(conn, "test@test.com", "123456", repo: Repo)
     end
   end
 end

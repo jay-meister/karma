@@ -3,7 +3,7 @@ defmodule Karma.UserController do
 
   plug :authenticate when action in [:index, :show, :edit, :update, :delete]
 
-  alias Karma.{User, Auth}
+  alias Karma.{User}
 
   def index(conn, _params) do
     users = Repo.all(User)
@@ -23,9 +23,9 @@ defmodule Karma.UserController do
         Karma.Email.send_verification_email(user)
         |> Karma.Mailer.deliver_now()
         conn
-        |> Auth.login(user)
-        |> put_flash(:info, "User created successfully.")
-        |> redirect(to: dashboard_path(conn, :index))
+        |> put_flash(:info, "A verification email has been sent to #{user.email}.
+        You must click the link in the email before you can log in.")
+        |> redirect(to: session_path(conn, :new))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
