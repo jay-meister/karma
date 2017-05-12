@@ -41,8 +41,8 @@ defmodule Karma.ProjectControllerTest do
 
   test "creates resource and redirects when data is valid", %{conn: conn} do
     conn = post conn, project_path(conn, :create), project: @valid_attrs
-    # assert redirected_to(conn) == project_path(conn, :index)
-    # assert Repo.get_by(Project, @valid_attrs)
+    assert redirected_to(conn) == project_path(conn, :index)
+    assert Repo.get_by(Project, @valid_attrs)
   end
 
   test "does not create resource and renders errors when data is invalid", %{conn: conn} do
