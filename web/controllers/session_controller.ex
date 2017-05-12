@@ -21,9 +21,13 @@ defmodule Karma.SessionController do
         conn
         |> put_flash(:info, "Welcome Back!")
         |> redirect(to: dashboard_path(conn, :index))
-      {:error, _reason, conn} ->
+      {:error, :unauthorized, conn} ->
         conn
         |> put_flash(:error, "Invalid email/password combination")
+        |> redirect(to: session_path(conn, :new))
+      {:error, :not_verified, conn} ->
+        conn
+        |> put_flash(:error, "Email address not verified!")
         |> redirect(to: session_path(conn, :new))
     end
   end

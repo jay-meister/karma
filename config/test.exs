@@ -16,7 +16,8 @@ config :karma, Karma.Repo,
   password: "postgres",
   database: "karma_test",
   hostname: "localhost",
-  pool: Ecto.Adapters.SQL.Sandbox
+  pool: Ecto.Adapters.SQL.Sandbox,
+  ownership_timeout: 10 * 60 * 1000
 
 # Configure password hashing
 config :comeonin, :bcrypt_log_rounds, 4
