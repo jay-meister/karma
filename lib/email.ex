@@ -3,12 +3,20 @@ defmodule Karma.Email do
 
   alias Karma.RedisCli
 
-  def send_email(recipient, subject, message) do
+  def send_verification_text_email(recipient, subject, url) do
     new_email()
     |> to(recipient) # also needs to be a validated email
     |> from(System.get_env("ADMIN_EMAIL"))
     |> subject(subject)
-    |> text_body(message)
+    |> put_text_layout({Karma.LayoutView, "email.text"})
+    |> render("verify.text", url: url)
+  end
+
+  def send_verification_html_email(recipient, subject, url) do
+    recipient
+    |> send_verification_text_email(subject, url)
+    |> put_html_layout({Karma.LayoutView, "email.html"})
+    |> render("verify.html", url: url)
   end
 
   def send_verification_email(user) do
@@ -17,12 +25,10 @@ defmodule Karma.Email do
     dev_env? = Mix.env == :dev
     url =
     case dev_env? do
-      true -> System.get_env("DEV_URL")
-      false -> System.get_env("PROD_URL")
+      true -> "#{System.get_env("DEV_URL")}/verification/#{rand_string}"
+      false -> "#{System.get_env("PROD_URL")}/verification/#{rand_string}"
     end
-    message = "Follow the link below to verify your email address:
-    #{url}/verification/#{rand_string}"
-    send_email(user.email, "Email Verification", message)
+    send_verification_html_email(user.email, "Email Verification", url)
   end
 
   defp gen_rand_string(length) do

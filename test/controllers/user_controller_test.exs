@@ -40,7 +40,7 @@ defmodule Karma.UserControllerTest do
   end
 
   test "creates resource and redirects when data is valid DEV", %{conn: conn} do
-    with_mock Karma.Mailer, [deliver_now: fn(_) -> nil end] do
+    with_mock Karma.Mailer, [deliver_later: fn(_) -> nil end] do
       Mix.env(:dev)
       conn = post conn, user_path(conn, :create), user: @valid_attrs
       assert redirected_to(conn) == session_path(conn, :new)
@@ -49,12 +49,12 @@ defmodule Karma.UserControllerTest do
   end
 
   test "creates resource and redirects when data is valid not DEV", %{conn: conn} do
-    with_mock Karma.Mailer, [deliver_now: fn(_) -> nil end] do
+    with_mock Karma.Mailer, [deliver_later: fn(_) -> nil end] do
       Mix.env(:prod)
       conn = post conn, user_path(conn, :create), user: @valid_attrs
       assert redirected_to(conn) == session_path(conn, :new)
       assert Repo.get_by(User, @user_attrs)
-      assert called Karma.Mailer.deliver_now(:_)
+      assert called Karma.Mailer.deliver_later(:_)
     end
   end
 
@@ -128,11 +128,11 @@ defmodule Karma.UserControllerTest do
     assert html_response(conn, 200) =~ "You must agree to the terms and conditions"
   end
 
-  test "structure of email is ok" do
-    email = Email.send_email("test@email.com", "Welcome", "Hello there")
+  test "structure of verification email is ok" do
+    email = Email.send_verification_html_email("test@email.com", "Welcome", "Hello!")
     assert email.to == "test@email.com"
     assert email.subject == "Welcome"
-    assert email.text_body =~ "Hello there"
+    assert email.text_body =~ "Hello!"
   end
 
 end
