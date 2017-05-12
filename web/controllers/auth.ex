@@ -32,12 +32,11 @@ defmodule Karma.Auth do
   def login_by_email_and_pass(conn, email, given_pass, opts) do
     repo = Keyword.fetch!(opts, :repo)
     user = repo.get_by(User, email: email)
-    user_verified? = user && user.verified
 
     cond do
-      user && checkpw(given_pass, user.password_hash) && user_verified? ->
+      user && checkpw(given_pass, user.password_hash) && user.verified ->
         {:ok, login(conn, user)}
-      user && checkpw(given_pass, user.password_hash) && !user_verified? ->
+      user && checkpw(given_pass, user.password_hash) && !user.verified ->
         {:error, :not_verified, conn}
       user ->
         {:error, :unauthorized, conn}

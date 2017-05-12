@@ -46,7 +46,7 @@ defmodule Karma.SessionControllerTest do
     end
 
     test "Login: Not verified", %{conn: conn} do
-      insert_user(%{email: "test2@test.com"})
+      insert_user(%{email: "test2@test.com", verified: false})
       conn = post conn, session_path(conn, :create,
       %{"session" => %{"email" => "test2@test.com", "password" => "123456"}})
       assert html_response(conn, 302) =~ "/sessions/new"

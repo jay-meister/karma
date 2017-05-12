@@ -95,7 +95,7 @@ defmodule Karma.AuthTest do
     end
 
     test "login with not verified user", %{conn: conn} do
-      insert_user()
+      insert_user(%{verified: false})
       assert {:error, :not_verified, _conn} =
         Auth.login_by_email_and_pass(conn, "test@test.com", "123456", repo: Repo)
     end

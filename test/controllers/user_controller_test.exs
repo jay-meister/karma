@@ -54,6 +54,7 @@ defmodule Karma.UserControllerTest do
       conn = post conn, user_path(conn, :create), user: @valid_attrs
       assert redirected_to(conn) == session_path(conn, :new)
       assert Repo.get_by(User, @user_attrs)
+      assert called Karma.Mailer.deliver_now(:_)
     end
   end
 

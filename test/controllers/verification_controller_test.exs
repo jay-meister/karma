@@ -8,14 +8,14 @@ defmodule Karma.VerificationControllerTest do
   end
 
   test "/verification/:hash email exists", %{conn: conn} do
-    user = insert_user()
+    user = insert_user(%{verified: false})
     RedisCli.set("RAND0M5TR1NG", user.email)
     conn = get conn, "/verification/RAND0M5TR1NG"
     assert redirected_to(conn, 302) == "/"
   end
 
   test "/verification/:hash email exists verified user", %{conn: conn} do
-    user = insert_user(%{verified: true})
+    user = insert_user()
     RedisCli.set("RAND0M5TR1NG", user.email)
     conn = get conn, "/verification/RAND0M5TR1NG"
     assert redirected_to(conn, 302) == "/"
