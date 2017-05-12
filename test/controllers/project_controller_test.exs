@@ -29,7 +29,23 @@ defmodule Karma.ProjectControllerTest do
 
   @invalid_attrs %{}
 
-  test "lists all entries on index", %{conn: conn} do
+
+  test "all project paths require user to be logged in", %{conn: conn} do
+    Enum.each([
+      get(conn, project_path(conn, :index)),
+      get(conn, project_path(conn, :new)),
+      post(conn, project_path(conn, :create)),
+      get(conn, project_path(conn, :show, 1)),
+      get(conn, project_path(conn, :edit, 1)),
+      put(conn, project_path(conn, :update, 1)),
+      delete(conn, project_path(conn, :delete, 1))
+    ], fn conn ->
+      assert redirected_to(conn, 302) == session_path(conn, :new)
+      assert conn.halted
+    end)
+  end
+
+  test "/projects lists all projects created by logged in use", %{conn: conn} do
     conn = get conn, project_path(conn, :index)
     assert html_response(conn, 200) =~ "Listing projects"
   end

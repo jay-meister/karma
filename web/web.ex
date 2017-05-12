@@ -60,6 +60,8 @@ defmodule Karma.Web do
   def router do
     quote do
       use Phoenix.Router
+      # Authenticate entire controllers from the router
+      import Karma.Auth, only: [authenticate: 2]
     end
   end
 
@@ -71,6 +73,7 @@ defmodule Karma.Web do
       import Ecto
       import Ecto.Query
       import Karma.Gettext
+
     end
   end
 
