@@ -1,7 +1,7 @@
 defmodule Karma.Email do
   use Bamboo.Phoenix, view: Karma.EmailView
 
-  alias Karma.RedisCli
+  alias Karma.{RedisCli, Controllers.Helpers}
 
   def send_verification_text_email(recipient, subject, url) do
     new_email()
@@ -20,7 +20,7 @@ defmodule Karma.Email do
   end
 
   def send_verification_email(user) do
-    rand_string = gen_rand_string(30)
+    rand_string = Helpers.gen_rand_string(30)
     RedisCli.query(["SET", rand_string, user.email])
     dev_env? = Mix.env == :dev
     url =
@@ -31,9 +31,4 @@ defmodule Karma.Email do
     send_verification_html_email(user.email, "Email Verification", url)
   end
 
-  defp gen_rand_string(length) do
-    :crypto.strong_rand_bytes(length)
-    |> Base.url_encode64()
-    |> binary_part(0, length)
-  end
 end

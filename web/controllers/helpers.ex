@@ -9,4 +9,10 @@ defmodule Karma.Controllers.Helpers do
     end
   end
 
+  def gen_rand_string(length) do
+    :crypto.strong_rand_bytes(length)
+    |> Base.url_encode64()
+    |> binary_part(0, length)
+  end
+
 end
