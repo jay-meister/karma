@@ -81,5 +81,11 @@ defmodule Karma.Project do
       :user_id])
   end
 
+
+  # queries
+  # get projects created by specified user
+  def users_projects(query, user) do
+    from p in query,
+    where: p.user_id == ^user.id
   end
 end

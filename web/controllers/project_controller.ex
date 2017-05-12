@@ -4,7 +4,12 @@ defmodule Karma.ProjectController do
   alias Karma.Project
 
   def index(conn, _params) do
-    projects = Repo.all(Project)
+    user = conn.assigns.current_user
+    projects =
+      Project
+      |> Project.users_projects(user)
+      |> Repo.all()
+
     render(conn, "index.html", projects: projects)
   end
 
@@ -14,7 +19,11 @@ defmodule Karma.ProjectController do
   end
 
   def create(conn, %{"project" => project_params}) do
-    changeset = Project.changeset(%Project{}, project_params)
+    user = conn.assigns.current_user
+    changeset =
+      user
+      |> build_assoc(:projects)
+      |> Project.changeset(project_params)
     case Repo.insert(changeset) do
       {:ok, _project} ->
         conn
@@ -25,9 +34,9 @@ defmodule Karma.ProjectController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    project = Repo.get!(Project, id)
-    render(conn, "show.html", project: project)
+
+  def show(conn, %{"id" => _id}) do
+    render(conn, "show.html", project: conn.assigns.project)
   end
 
   def edit(conn, %{"id" => id}) do
@@ -53,8 +62,6 @@ defmodule Karma.ProjectController do
   def delete(conn, %{"id" => id}) do
     project = Repo.get!(Project, id)
 
-    # Here we use delete! (with a bang) because we expect
-    # it to always work (and if it does not, it will raise).
     Repo.delete!(project)
 
     conn
