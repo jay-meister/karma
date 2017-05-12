@@ -21,7 +21,7 @@ defmodule Karma.UserController do
     case Repo.insert(changeset) do
       {:ok, user} ->
         Karma.Email.send_verification_email(user)
-        |> Karma.Mailer.deliver_now()
+        |> Karma.Mailer.deliver_later()
         conn
         |> put_flash(:info, "A verification email has been sent to #{user.email}.
         You must click the link in the email before you can log in.")
