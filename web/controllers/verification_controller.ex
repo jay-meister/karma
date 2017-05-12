@@ -1,7 +1,7 @@
 defmodule Karma.VerificationController do
   use Karma.Web, :controller
 
-  alias Karma.{User}
+  alias Karma.{User, Auth}
 
   def verify(conn, %{"hash" => hash}) do
     case get_email_from_hash(hash) do
@@ -25,11 +25,12 @@ defmodule Karma.VerificationController do
                 changeset = User.email_verification_changeset(user, %{verified: true})
                 {:ok, user} = Repo.update(changeset)
                 conn
+                |> Auth.login(user)
                 |> put_flash(:info, "Email #{user.email} verified!")
                 |> redirect(to: dashboard_path(conn, :index))
             end
         end
     end
   end
-  
+
 end
