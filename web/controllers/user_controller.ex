@@ -24,7 +24,8 @@ defmodule Karma.UserController do
         |> Karma.Mailer.deliver_later()
         conn
         |> put_flash(:info, "A verification email has been sent to #{user.email}.
-        You must click the link in the email before you can log in.")
+        You must click the link in the email before you can gain full access.
+         If you need a new verification link, follow the log in flow.")
         |> redirect(to: session_path(conn, :new))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)

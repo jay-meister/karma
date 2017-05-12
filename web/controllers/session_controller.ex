@@ -1,6 +1,6 @@
 defmodule Karma.SessionController do
   use Karma.Web, :controller
-  alias Karma.User
+  alias Karma.{User, RedisCli}
 
   def new(conn, _params) do
     case conn.assigns.current_user do
@@ -26,9 +26,12 @@ defmodule Karma.SessionController do
         |> put_flash(:error, "Invalid email/password combination")
         |> redirect(to: session_path(conn, :new))
       {:error, :not_verified, conn} ->
+        rand_string = gen_rand_string(30)
+        RedisCli.query(["SET", rand_string, email])
+        RedisCli.query(["SET", email, rand_string])
         conn
         |> put_flash(:error, "Email address not verified!")
-        |> redirect(to: session_path(conn, :new))
+        |> redirect(to: verification_path(conn, :verify_again, rand_string))
     end
   end
 

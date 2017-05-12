@@ -19,6 +19,8 @@ defmodule Karma.Router do
     resources "/users", UserController
     resources "/sessions", SessionController, only: [:new, :create, :delete]
     get "/verification/:hash", VerificationController, :verify
+    get "/verification/verify/:hash", VerificationController, :verify_again
+    get "/verification/resend/:hash", VerificationController, :resend
     get "/", DashboardController, :index
   end
 

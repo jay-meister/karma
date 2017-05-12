@@ -33,4 +33,19 @@ defmodule Karma.VerificationController do
     end
   end
 
+  def verify_again(conn, %{"hash" => hash}) do
+    render conn, "verify_again.html", hash: hash
+  end
+
+  def resend(conn, %{"hash" => hash}) do
+    {:ok, email} = get_email_from_hash(hash)
+    user = Repo.get_by(User, email: email)
+
+    Karma.Email.send_verification_email(user)
+    |> Karma.Mailer.deliver_later()
+    conn
+    |> put_flash(:info, "A new verification email has been sent to #{user.email}")
+    |> redirect(to: session_path(conn, :new))
+  end
+
 end

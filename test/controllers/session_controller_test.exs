@@ -1,7 +1,7 @@
 defmodule Karma.SessionControllerTest do
   use Karma.ConnCase, async: false
 
-  alias Karma.User
+  alias Karma.{User, RedisCli}
 
   describe "session routes that don't need authentication" do
     test "Get /sessions/new", %{conn: conn} do
@@ -46,10 +46,11 @@ defmodule Karma.SessionControllerTest do
     end
 
     test "Login: Not verified", %{conn: conn} do
-      insert_user(%{email: "test2@test.com", verified: false})
+      user = insert_user(%{email: "test2@test.com", verified: false})
       conn = post conn, session_path(conn, :create,
       %{"session" => %{"email" => "test2@test.com", "password" => "123456"}})
-      assert html_response(conn, 302) =~ "/sessions/new"
+      {:ok, hash} = RedisCli.get(user.email)
+      assert html_response(conn, 302) =~ "/verification/verify/#{hash}"
     end
 
     test "Logout", %{conn: conn} do
