@@ -3,6 +3,34 @@ defmodule Karma.ProjectController do
 
   alias Karma.Project
 
+
+  plug :project_owner when action in [:show, :edit, :update, :delete]
+
+  # project owner plug
+  def project_owner(conn, _) do
+    # if project doesn't exist, it should render a 404
+    # if current user is owner of the project, add project to assigns
+    # if current user is not owner, put permission flash, redirect and halt
+    %{"id" => id} = conn.params
+    user_id = conn.assigns.current_user.id
+    case Repo.get(Project, id) do
+      nil ->
+        conn
+        |> put_flash(:error, "Project could not be found")
+        |> render(Karma.ErrorView, "404.html")
+        |> halt()
+      %Project{user_id: ^user_id} = project ->
+        assign(conn, :project, project)
+      %Project{} ->
+        conn
+        |> put_flash(:error, "You do not have permission to view that project")
+        |> redirect(to: dashboard_path(conn, :index))
+        |> halt()
+    end
+  end
+
+
+
   def index(conn, _params) do
     user = conn.assigns.current_user
     projects =

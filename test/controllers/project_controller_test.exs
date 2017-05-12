@@ -54,7 +54,25 @@ defmodule Karma.ProjectControllerTest do
     end)
   end
 
-  test "/projects lists all projects created by logged in use", %{conn: conn} do
+
+  test "users can't touch other user's projects", %{conn: conn} do
+    # add a different user and project to db
+    # ensure the different user's project is not listed
+    diff_user = insert_user(%{email: "different@test.com"})
+    diff_project = insert_project(diff_user, %{name: "Different Movie"})
+
+    Enum.each([
+      get(conn, project_path(conn, :show, diff_project)),
+      get(conn, project_path(conn, :edit, diff_project)),
+      put(conn, project_path(conn, :update, diff_project)),
+      delete(conn, project_path(conn, :delete, diff_project))
+    ], fn conn ->
+      assert redirected_to(conn, 302) == dashboard_path(conn, :index)
+      assert Phoenix.Controller.get_flash(conn, :error) =~ "You do not have permission"
+      assert conn.halted
+    end)
+  end
+
 
   test "/projects lists all projects created by logged in user", %{conn: conn, project: project} do
     conn = get conn, project_path(conn, :index)
