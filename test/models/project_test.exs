@@ -15,7 +15,7 @@ defmodule Karma.ProjectTest do
     company_name: "some content",
     description: "some content",
     duration: 42,
-    holiday_rate: "120.5",
+    holiday_rate: 120.5,
     locations: "some content",
     name: "some content",
     operating_base_address_1: "some content",
@@ -25,7 +25,8 @@ defmodule Karma.ProjectTest do
     operating_base_address_5: "some content",
     start_date: %{"day" => 17, "month" => 4, "year" => 2010},
     studio_name: "some content",
-    type: "some content"
+    type: "some content",
+    user_id: 1
   }
   @invalid_attrs %{}
 
