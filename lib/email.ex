@@ -31,9 +31,4 @@ defmodule Karma.Email do
     send_verification_html_email(user.email, "Email Verification", url)
   end
 
-  # def gen_rand_string(length) do
-  #   :crypto.strong_rand_bytes(length)
-  #   |> Base.url_encode64()
-  #   |> binary_part(0, length)
-  # end
 end
