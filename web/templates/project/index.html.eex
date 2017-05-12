@@ -1,0 +1,72 @@
+<h2>Listing projects</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Type</th>
+      <th>Budget</th>
+      <th>Name</th>
+      <th>Codename</th>
+      <th>Description</th>
+      <th>Start date</th>
+      <th>Duration</th>
+      <th>Studio name</th>
+      <th>Company name</th>
+      <th>Company address 1</th>
+      <th>Company address 2</th>
+      <th>Company address 3</th>
+      <th>Company address 4</th>
+      <th>Company address 5</th>
+      <th>Operating base address 1</th>
+      <th>Operating base address 2</th>
+      <th>Operating base address 3</th>
+      <th>Operating base address 4</th>
+      <th>Operating base address 5</th>
+      <th>Locations</th>
+      <th>Holiday rate</th>
+      <th>Additional notes</th>
+      <th>Active</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for project <- @projects do %>
+    <tr>
+      <td><%= project.user_id %></td>
+      <td><%= project.type %></td>
+      <td><%= project.budget %></td>
+      <td><%= project.name %></td>
+      <td><%= project.codename %></td>
+      <td><%= project.description %></td>
+      <td><%= project.start_date %></td>
+      <td><%= project.duration %></td>
+      <td><%= project.studio_name %></td>
+      <td><%= project.company_name %></td>
+      <td><%= project.company_address_1 %></td>
+      <td><%= project.company_address_2 %></td>
+      <td><%= project.company_address_city %></td>
+      <td><%= project.company_address_postcode %></td>
+      <td><%= project.company_address_country %></td>
+      <td><%= project.operating_base_address_1 %></td>
+      <td><%= project.operating_base_address_2 %></td>
+      <td><%= project.operating_base_address_city %></td>
+      <td><%= project.operating_base_address_postcode %></td>
+      <td><%= project.operating_base_address_country %></td>
+      <td><%= project.locations %></td>
+      <td><%= project.holiday_rate %></td>
+      <td><%= project.additional_notes %></td>
+      <td><%= project.active %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: project_path(@conn, :show, project), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: project_path(@conn, :edit, project), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: project_path(@conn, :delete, project), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New project", to: project_path(@conn, :new) %>

@@ -22,6 +22,12 @@ defmodule Karma.Router do
     get "/", DashboardController, :index
   end
 
+  # authed routes
+  scope "/", Karma do
+    pipe_through [:browser, :authenticate]
+    resources "/projects", ProjectController
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", Karma do
   #   pipe_through :api

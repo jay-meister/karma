@@ -10,6 +10,7 @@ defmodule Karma.User do
     field :password, :string, virtual: true
     field :verified, :boolean
     field :terms_accepted, :boolean
+    has_many :projects, Karma.Project
 
     timestamps()
   end
