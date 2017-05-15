@@ -3,8 +3,6 @@ defmodule Karma.ComponentHelpersTest do
 
   alias Karma.ComponentHelpers
 
-  import Phoenix.View
-
   test "component(template, assigns)" do
     component = Phoenix.HTML.safe_to_string(ComponentHelpers.component("submit_button.html", title: "Test"))
     assert component =~ "Test"
