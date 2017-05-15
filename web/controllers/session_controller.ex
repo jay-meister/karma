@@ -1,12 +1,12 @@
 defmodule Karma.SessionController do
   use Karma.Web, :controller
-  alias Karma.{User, RedisCli}
+  alias Karma.{User, RedisCli, LayoutView}
 
   def new(conn, _params) do
     case conn.assigns.current_user do
       nil ->
         changeset = User.changeset(%User{})
-        render conn, "new.html", changeset: changeset
+        render conn, "new.html", layout: {LayoutView, "login.html"}, changeset: changeset
       _user ->
         conn
         |> put_flash(:info, "You are already logged in!")
