@@ -26,6 +26,15 @@ defmodule Karma.User do
     |> unique_constraint(:email)
   end
 
+  def new_password_changeset(struct, params \\ %{}) do
+    struct
+    |> cast(params, [:password])
+    |> validate_required([:password])
+    |> validate_confirmation(:password, required: true, message: "Passwords do not match")
+    |> validate_password()
+    |> put_password_hash()
+  end
+
   def email_changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:email])

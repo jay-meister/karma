@@ -27,17 +27,21 @@ defmodule Karma.PasswordController do
         conn
         |> put_flash(:info, "A password reset email has been sent to #{user.email}, it will expire in 5 minutes")
         |> redirect(to: session_path(conn, :new))
-
-        # store random key in redis table
-        # set to expire
     end
-    IO.inspect user
-    # render conn, "new.html"
   end
 
-  def edit(conn, params) do
+  def edit(conn, %{"hash" => hash} = params) do
     # render form for create new password and confirm new password
-    render conn, "new.html"
+    case get_email_from_hash(hash) do
+      {:error, _} ->
+        conn
+        |> put_flash(:error, "That link has expired, please enter your email address to receive a new password reset email")
+        |> redirect(to: password_path(conn, :new))
+      {:ok, email} ->
+        changeset = User.new_password_changeset(%User{})
+        IO.inspect changeset
+        render conn, "edit.html", changeset: changeset, hash: hash
+    end
   end
   def update(conn, _params) do
     # if password valid, update user
