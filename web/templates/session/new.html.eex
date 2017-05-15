@@ -1,6 +1,6 @@
 <div class="pa4 tc">
   <h4>New to Karma?</h4>
-  <%= link "Create an account", to: user_path(@conn, :new), class: "karma-dark-indigo" %>
+  <%= link "Create an account", to: user_path(@conn, :new), class: "karma-dark-indigo underline" %>
 </div>
 
 <div class="mw6 m-auto pl4 pr4">

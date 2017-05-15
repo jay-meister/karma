@@ -1,6 +1,8 @@
 <div class="pl4 pr4">
-
   <div class="tc">
+  <h4>Already have an account?</h4>
+  <%= link "Click here to login", to: session_path(@conn, :new), class: "karma-dark-indigo underline" %>
+
     <h2>Create account</h2>
   </div>
 
