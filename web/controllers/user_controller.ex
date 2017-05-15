@@ -3,7 +3,7 @@ defmodule Karma.UserController do
 
   plug :authenticate when action in [:index, :show, :edit, :update, :delete]
 
-  alias Karma.{User}
+  alias Karma.{User, LayoutView}
 
   def index(conn, _params) do
     users = Repo.all(User)
@@ -12,7 +12,7 @@ defmodule Karma.UserController do
 
   def new(conn, _params) do
     changeset = User.changeset(%User{})
-    render(conn, "new.html", changeset: changeset)
+    render(conn, "new.html", layout: {LayoutView, "login.html"}, changeset: changeset)
   end
 
   def create(conn, %{"user" => user_params}) do

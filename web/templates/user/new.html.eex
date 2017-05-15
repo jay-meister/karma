@@ -1,44 +1,49 @@
-<h2>New user</h2>
+<div class="pl4 pr4">
 
-  <%= form_for @changeset, user_path(@conn, :create), fn f -> %>
-  <%= if @changeset.action do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
-    </div>
-  <% end %>
-
-  <div class="form-group">
-    <%= label f, :email, class: "control-label" %>
-    <%= text_input f, :email, class: "form-control" %>
-    <%= error_tag f, :email %>
+  <div class="tc">
+    <h2>Create account</h2>
   </div>
 
-  <div class="form-group">
-    <%= label f, :first_name, class: "control-label" %>
-    <%= text_input f, :first_name, class: "form-control" %>
-    <%= error_tag f, :first_name %>
-  </div>
+  <div class="mw6 m-auto pl4 pr4">
+      <%= form_for @changeset, user_path(@conn, :create), fn f -> %>
+      <%= if @changeset.action do %>
+        <div class="alert alert-danger">
+          <p>Oops, something went wrong! Please check the errors below.</p>
+        </div>
+      <% end %>
 
-  <div class="form-group">
-    <%= label f, :last_name, class: "control-label" %>
-    <%= text_input f, :last_name, class: "form-control" %>
-    <%= error_tag f, :last_name %>
-  </div>
+      <%= component "input.html",
+      form: f,
+      atom: :email,
+      placeholder: "example@email.com"
+      %>
 
-  <div class="form-group">
-    <%= label f, :password, class: "control-label" %>
-    <%= password_input f, :password, class: "form-control" %>
-    <%= error_tag f, :password %>
-  </div>
+      <%= component "input.html",
+      form: f,
+      atom: :first_name,
+      placeholder: "Brad"
+      %>
 
-  <div class="form-group">
-    <%= label f, :terms_accepted, "I have read and accept the ", class: "control-label" %>
-    <%= link "terms and conditions", to: "#" %>
-    <%= checkbox f, :terms_accepted, class: "form-control" %>
-    <%= error_tag f, :terms_accepted %>
-  </div>
+      <%= component "input.html",
+      form: f,
+      atom: :last_name,
+      placeholder: "Pitt"
+      %>
 
-  <div class="form-group">
-    <%= submit "Submit", class: "btn btn-primary" %>
+      <%= component "input.html",
+      form: f,
+      atom: :password,
+      placeholder: "Must contain at least 6 characters"
+      %>
+
+      <div class="form-group">
+        <%= label f, :terms_accepted, "I have read and accept the ", class: "control-label" %>
+        <%= link "terms and conditions", to: "#" %>
+        <%= checkbox f, :terms_accepted, class: "form-control" %>
+        <%= error_tag f, :terms_accepted %>
+      </div>
+
+      <%= component "submit_button.html", title: "Create" %>
+    <% end %>
   </div>
-<% end %>
+</div>

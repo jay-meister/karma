@@ -6,28 +6,19 @@
 <div class="mw6 m-auto pl4 pr4">
   <%= form_for @conn, session_path(@conn, :create), [as: :session], fn f -> %>
 
-    <div class="form-group">
-      <%= label f, :email, class: "control-label fw4" %>
-      </br>
-      <div class="relative">
-        <%= text_input f, :email, placeholder: "example@email.com", class: "bg-karma-input karma-dark-grey pa3 bn br3 w-100 outline-0 pl4-5" %>
-        <img src="/images/user.svg" class="absolute w2 top-1 left-0-5"/>
-      </div>
-    </div>
+    <%= component "input.html",
+    form: f,
+    image_name: "user",
+    atom: :email,
+    placeholder: "example@email.com"
+    %>
+    <%= component "input.html",
+    form: f,
+    image_name: "locked",
+    atom: :password,
+    placeholder: "Must contain at least 6 characters"
+    %>
 
-    <div class="form-group">
-      <%= label f, :password, class: "control-label fw4" %>
-      </br>
-      <div class="relative">
-        <%= password_input f, :password, placeholder: "Must have at least 6 characters", class: "bg-karma-input karma-dark-grey pa3 bn br3 w-100 outline-0 pl4-5" %>
-        <img src="/images/locked.svg" class="absolute w2 top-1 left-0-5"/>
-      </div>
-    </div>
-
-    <div class="tc">
-      <div class="form-group">
-        <%= submit "Log in", class: "ttu bg-karma-light-indigo bn pa3 pl4 pr4 f2-5 br3 white w-100 mt3" %>
-      </div>
-    </div>
+    <%= component "submit_button.html", title: "Log in" %>
   <% end %>
 </div>
