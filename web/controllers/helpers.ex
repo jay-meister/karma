@@ -9,6 +9,14 @@ defmodule Karma.Controllers.Helpers do
     end
   end
 
+  def get_base_url() do
+    dev_env? = Mix.env == :dev
+    case dev_env? do
+      true -> System.get_env("DEV_URL")
+      false -> System.get_env("PROD_URL")
+    end
+  end
+
   def gen_rand_string(length) do
     :crypto.strong_rand_bytes(length)
     |> Base.url_encode64()
