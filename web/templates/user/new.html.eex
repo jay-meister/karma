@@ -1,12 +1,11 @@
 <div class="pl4 pr4">
-  <div class="tc">
-  <h4>Already have an account?</h4>
-  <%= link "Click here to login", to: session_path(@conn, :new), class: "karma-dark-indigo underline" %>
-
-    <h2>Create account</h2>
-  </div>
-
   <div class="mw6 m-auto pl4 pr4">
+    <div class="tc">
+    <h4>Already have an account?</h4>
+    <%= link "Login", to: session_path(@conn, :new), class: "karma-dark-indigo underline" %>
+
+      <h2>Create account</h2>
+    </div>
       <%= form_for @changeset, user_path(@conn, :create), fn f -> %>
       <%= if @changeset.action do %>
         <div class="alert alert-danger">
