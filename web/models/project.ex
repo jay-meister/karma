@@ -81,6 +81,14 @@ defmodule Karma.Project do
       :holiday_rate,
       :active,
       :user_id])
+    |> validate_dropdowns
+  end
+
+  def validate_dropdowns (changeset) do
+    changeset
+    |> validate_inclusion(:type, ["feature", "television"])
+    |> validate_inclusion(:budget, ["low", "mid", "big"])
+    |> validate_inclusion(:holiday_rate, [0.1077, 0.1207])
   end
 
 

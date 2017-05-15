@@ -10,6 +10,18 @@ defmodule Karma.ProjectTest do
     assert changeset.valid?
   end
 
+  test "changeset with invalid type" do
+    changeset = Project.changeset(%Project{}, default_project(%{type: "Feature"}))
+    refute changeset.valid?
+  end
+  test "changeset with invalid holiday rate" do
+    changeset = Project.changeset(%Project{}, default_project(%{holiday_rate: 0.1078}))
+    refute changeset.valid?
+  end
+  test "changeset with invalid budget" do
+    changeset = Project.changeset(%Project{}, default_project(%{budget: "huge"}))
+    refute changeset.valid?
+  end
   test "changeset with invalid attributes" do
     changeset = Project.changeset(%Project{}, @invalid_attrs)
     refute changeset.valid?
