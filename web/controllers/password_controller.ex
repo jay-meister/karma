@@ -43,8 +43,26 @@ defmodule Karma.PasswordController do
         render conn, "edit.html", changeset: changeset, hash: hash
     end
   end
-  def update(conn, _params) do
+
+  def update(conn, %{"user" => password_params, "hash" => hash} = params) do
     # if password valid, update user
-    render conn, "new.html"
+    case get_email_from_hash(hash) do
+      {:error, _} ->
+        conn
+        |> put_flash(:error, "That link has expired, please enter your email address to receive a new password reset email")
+        |> redirect(to: password_path(conn, :new))
+      {:ok, email} ->
+        user = Repo.get_by(User, email: email)
+        changeset = User.new_password_changeset(user, password_params)
+        IO.inspect changeset
+        case Repo.update(changeset) do
+          {:ok, user} ->
+            conn
+            |> put_flash(:info, "Password updated successfully")
+            |> redirect(to: project_path(conn, :index))
+          {:error, changeset} ->
+            render(conn, "edit.html", hash: hash, changeset: changeset)
+        end
+    end
   end
 end
