@@ -30,7 +30,7 @@ defmodule Karma.Email do
   def send_reset_password_email(user, url) do
     rand_string = Helpers.gen_rand_string(30)
     RedisCli.query(["SET", rand_string, user.email])
-    # Also expire it
+    RedisCli.expire(rand_string, 60*5)
     url = url <> "?hash=#{rand_string}"
     send_verification_html_email(user.email, "Reset Password", url, "password_reset")
   end
