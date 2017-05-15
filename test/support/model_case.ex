@@ -22,6 +22,7 @@ defmodule Karma.ModelCase do
       import Ecto.Changeset
       import Ecto.Query
       import Karma.ModelCase
+      import Karma.TestHelpers
     end
   end
 

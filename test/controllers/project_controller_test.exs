@@ -2,30 +2,6 @@ defmodule Karma.ProjectControllerTest do
   use Karma.ConnCase
 
   alias Karma.Project
-  @valid_attrs %{ active: true,
-    additional_notes: "some content",
-    budget: "high",
-    codename: "Finickity Spicket",
-    company_address_1: "some content",
-    company_address_2: "some content",
-    company_address_city: "some content",
-    company_address_postcode: "some content",
-    company_address_country: "some content",
-    company_name: "some content",
-    description: "some content",
-    duration: 12,
-    holiday_rate: "0.1077",
-    locations: "London, Paris",
-    name: "Mission Impossible 10",
-    operating_base_address_1: "some content",
-    operating_base_address_2: "some content",
-    operating_base_address_city: "some content",
-    operating_base_address_postcode: "some content",
-    operating_base_address_country: "some content",
-    start_date: %{"day" => 1, "month" => 1, "year" => 2019},
-    studio_name: "some content",
-    type: "some content"
-  }
 
   @invalid_attrs %{}
 
@@ -92,12 +68,10 @@ defmodule Karma.ProjectControllerTest do
     assert html_response(conn, 200) =~ "New project"
   end
 
-
- # get rid of valid attrs
-  test "post /project creates project and redirects when data is valid", %{conn: conn} do
-    conn = post conn, project_path(conn, :create), project: @valid_attrs
+  test "post /project creates project and redirects when data is valid", %{conn: conn, project: project} do
+    conn = post conn, project_path(conn, :create), project: default_project(%{name: "AAAA"})
     assert redirected_to(conn) == project_path(conn, :index)
-    assert Repo.get_by(Project, @valid_attrs)
+    assert Repo.get_by(Project, name: "AAAA")
   end
 
   test "/project/:id does not create project and renders errors when data is invalid", %{conn: conn} do
