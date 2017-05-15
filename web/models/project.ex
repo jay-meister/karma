@@ -71,14 +71,24 @@ defmodule Karma.Project do
       :studio_name,
       :company_name,
       :company_address_1,
-      :company_address_2,
       :company_address_city,
+      :company_address_postcode,
+      :company_address_country,
       :operating_base_address_1,
-      :operating_base_address_2,
       :operating_base_address_city,
+      :operating_base_address_postcode,
+      :operating_base_address_country,
       :holiday_rate,
       :active,
       :user_id])
+    |> validate_dropdowns
+  end
+
+  def validate_dropdowns (changeset) do
+    changeset
+    |> validate_inclusion(:type, ["feature", "television"])
+    |> validate_inclusion(:budget, ["low", "mid", "big"])
+    |> validate_inclusion(:holiday_rate, [0.1077, 0.1207])
   end
 
 

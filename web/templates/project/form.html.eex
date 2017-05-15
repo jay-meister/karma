@@ -13,7 +13,7 @@
 
   <div class="form-group">
     <%= label f, :budget, class: "control-label" %>
-    <%= select f, :budget, ["None/Low": "none/low", "Mid": "mid", "Big": "big"], prompt: "Budget..." %>
+    <%= select f, :budget, ["None/Low": "low", "Mid": "mid", "Big": "big"], prompt: "Budget..." %>
     <%= error_tag f, :budget %>
   </div>
 
