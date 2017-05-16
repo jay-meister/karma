@@ -1,7 +1,7 @@
 <div class="tc">
-  <img src="/images/logo-blue.png" class="w4-5"/>
+  <img src="/images/logo-blue.png" class="k-w4-5"/>
 </div>
-<div class="mw6 m-auto pl4 pr4">
+<div class="mw6 k-m-auto pl4 pr4">
   <%= form_for @conn, session_path(@conn, :create), [as: :session], fn f -> %>
 
     <%= component "input.html",
@@ -23,5 +23,5 @@
 <div class="pa4 tc">
   <%= component "divider.html" %>
   <h4 class="mt5">New to Karma?</h4>
-  <%= link "Create an account", to: user_path(@conn, :new), class: "karma-dark-indigo underline" %>
+  <%= link "Create an account", to: user_path(@conn, :new), class: "k-dark-indigo underline" %>
 </div>
