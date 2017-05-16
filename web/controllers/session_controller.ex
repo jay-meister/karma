@@ -6,7 +6,7 @@ defmodule Karma.SessionController do
     case conn.assigns.current_user do
       nil ->
         changeset = User.changeset(%User{})
-        render conn, "new.html", layout: {LayoutView, "login.html"}, changeset: changeset
+        render conn, "new.html", layout: {LayoutView, "pre_login.html"}, changeset: changeset
       _user ->
         conn
         |> put_flash(:info, "You are already logged in!")

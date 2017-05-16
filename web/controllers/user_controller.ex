@@ -12,7 +12,7 @@ defmodule Karma.UserController do
 
   def new(conn, _params) do
     changeset = User.changeset(%User{})
-    render(conn, "new.html", layout: {LayoutView, "login.html"}, changeset: changeset)
+    render(conn, "new.html", layout: {LayoutView, "pre_login.html"}, changeset: changeset)
   end
 
   def create(conn, %{"user" => user_params}) do
