@@ -21,6 +21,7 @@ defmodule Karma.Router do
     get "/verification/:hash", VerificationController, :verify
     get "/verification/verify/:hash", VerificationController, :verify_again
     get "/verification/resend/:hash", VerificationController, :resend
+    resources "/password", PasswordController, only: [:new, :create, :edit, :update]
     get "/", DashboardController, :index
   end
 
