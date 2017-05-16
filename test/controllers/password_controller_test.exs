@@ -62,7 +62,7 @@ defmodule Karma.PasswordControllerTest do
   end
 
   test "password :update with good email", %{conn: conn} do
-    user = insert_user()
+    insert_user()
     RedisCli.set("RAND0M5TR1NG", "test@test.com")
     conn = put conn, password_path(conn, :update, 1, hash: "RAND0M5TR1NG"), %{user: @valid_password}
     assert Phoenix.Controller.get_flash(conn, :info) =~ "Password updated successfully"
@@ -76,7 +76,7 @@ defmodule Karma.PasswordControllerTest do
   end
 
   test "password :update with good email, but bad password/confirm password", %{conn: conn} do
-    user = insert_user()
+    insert_user()
     RedisCli.set("RAND0M5TR1NG", "test@test.com")
     invalid_passwords = %{@valid_password | password_confirmation: "11111111"}
     conn = put conn, password_path(conn, :update, 1, hash: "RAND0M5TR1NG"), %{user: invalid_passwords}
