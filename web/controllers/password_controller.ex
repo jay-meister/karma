@@ -39,7 +39,6 @@ defmodule Karma.PasswordController do
         |> redirect(to: password_path(conn, :new))
       {:ok, email} ->
         changeset = User.new_password_changeset(%User{})
-        IO.inspect changeset
         render conn, "edit.html", changeset: changeset, hash: hash
     end
   end
@@ -54,7 +53,6 @@ defmodule Karma.PasswordController do
       {:ok, email} ->
         user = Repo.get_by(User, email: email)
         changeset = User.new_password_changeset(user, password_params)
-        IO.inspect changeset
         case Repo.update(changeset) do
           {:ok, user} ->
             conn
