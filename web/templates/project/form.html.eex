@@ -42,10 +42,11 @@
   atom: :start_date
   %>
 
-  <%= component "input.html",
+  <%= component "number_input.html",
   form: f,
   atom: :duration,
-  placeholder: "e.g. 16 Weeks"
+  placeholder: "e.g. 16",
+  label: "Duration (weeks)"
   %>
 
   <%= component "input.html",
