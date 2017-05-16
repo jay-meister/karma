@@ -26,6 +26,10 @@ body {
   height: 1px;
 }
 
+.k-h3-5r {
+  height: 3.5rem;
+}
+
 /*backgrounds*/
 .k-bg-indigo {
   background-color: #3f51b5;
@@ -119,12 +123,20 @@ body {
   color: #cfcfcf;
 }
 
+.k-lh-3 {
+  line-height: 3;
+}
+
 .k-left-0-5 {
   left: 0.5rem
 }
 
 .k-m-auto {
   margin: 0 auto;
+}
+
+.k-mb0-5r {
+  margin-bottom: 0.5rem;
 }
 
 /* 4-5 =~ 4.5 because it's between 4 and 5 in tachyons*/
@@ -134,4 +146,8 @@ body {
 
 .k-w4-5 {
   width: 10rem;
+}
+
+.k-w1px {
+  width: 1px;
 }

@@ -55,6 +55,7 @@ defmodule Karma.Web do
       import Karma.ErrorHelpers
       import Karma.Gettext
       import Karma.ComponentHelpers
+      import Karma.ViewHelpers
     end
   end
 
