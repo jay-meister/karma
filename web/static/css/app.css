@@ -26,6 +26,7 @@ body {
   height: 1px;
 }
 
+/*backgrounds*/
 .k-bg-indigo {
   background-color: #3f51b5;
 }
@@ -53,6 +54,24 @@ body {
 .k-bg-light-grey {
   background-color: #cfcfcf;
 }
+
+
+/*borders*/
+
+.k-b-indigo {
+  border-color: #3f51b5;
+}
+
+.k-b-dark-indigo {
+  border-color: #002984;
+}
+
+.k-b-light-indigo {
+  border-color: #757de8;
+}
+
+
+
 
 .k-f2-5 {
   font-size: 2rem;
