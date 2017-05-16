@@ -1,126 +1,53 @@
-<h2>Show project</h2>
+<h2><%= @project.name %></h2>
+<ul class="list pl0">
 
-<ul>
+  <%= component "form_divider.html", title: "Project details" %>
+  <%= for {atom, label} <- [
+    {:type, nil},
+    {:budget, nil},
+    {:codename, nil},
+    {:description, nil},
+    {:start_date, nil},
+    {:duration, nil},
+    {:studio_name, nil},
+    {:holiday_rate, nil},
+    {:locations, nil},
+    {:additional_notes, nil}
+  ] do %>
+    <%= component "data.html",
+    data: @project,
+    atom: atom
+    %>
+  <% end %>
 
-  <li>
-    <strong>User:</strong>
-    <%= @project.user_id %>
-  </li>
+  <%= component "form_divider.html", title: "Company details" %>
+  <%= for {atom, label} <- [
+    {:company_name, nil},
+    {:company_address_1, nil},
+    {:company_address_2, nil},
+    {:company_address_city, nil},
+    {:company_address_postcode, nil},
+    {:company_address_country, nil}
+  ] do %>
+    <%= component "data.html",
+    data: @project,
+    atom: atom
+    %>
+  <% end %>
 
-  <li>
-    <strong>Type:</strong>
-    <%= @project.type %>
-  </li>
-
-  <li>
-    <strong>Budget:</strong>
-    <%= @project.budget %>
-  </li>
-
-  <li>
-    <strong>Name:</strong>
-    <%= @project.name %>
-  </li>
-
-  <li>
-    <strong>Codename:</strong>
-    <%= @project.codename %>
-  </li>
-
-  <li>
-    <strong>Description:</strong>
-    <%= @project.description %>
-  </li>
-
-  <li>
-    <strong>Start date:</strong>
-    <%= @project.start_date %>
-  </li>
-
-  <li>
-    <strong>Duration:</strong>
-    <%= @project.duration %>
-  </li>
-
-  <li>
-    <strong>Studio name:</strong>
-    <%= @project.studio_name %>
-  </li>
-
-  <li>
-    <strong>Company name:</strong>
-    <%= @project.company_name %>
-  </li>
-
-  <li>
-    <strong>Company address 1:</strong>
-    <%= @project.company_address_1 %>
-  </li>
-
-  <li>
-    <strong>Company address 2:</strong>
-    <%= @project.company_address_2 %>
-  </li>
-
-  <li>
-    <strong>Company address 3:</strong>
-    <%= @project.company_address_city %>
-  </li>
-
-  <li>
-    <strong>Company address 4:</strong>
-    <%= @project.company_address_postcode %>
-  </li>
-
-  <li>
-    <strong>Company address 5:</strong>
-    <%= @project.company_address_country %>
-  </li>
-
-  <li>
-    <strong>Operating base address 1:</strong>
-    <%= @project.operating_base_address_1 %>
-  </li>
-
-  <li>
-    <strong>Operating base address 2:</strong>
-    <%= @project.operating_base_address_2 %>
-  </li>
-
-  <li>
-    <strong>Operating base address 3:</strong>
-    <%= @project.operating_base_address_city %>
-  </li>
-
-  <li>
-    <strong>Operating base address 4:</strong>
-    <%= @project.operating_base_address_postcode %>
-  </li>
-
-  <li>
-    <strong>Operating base address 5:</strong>
-    <%= @project.operating_base_address_country %>
-  </li>
-
-  <li>
-    <strong>Locations:</strong>
-    <%= @project.locations %>
-  </li>
-
-  <li>
-    <strong>Holiday rate:</strong>
-    <%= @project.holiday_rate %>
-  </li>
-
-  <li>
-    <strong>Additional notes:</strong>
-    <%= @project.additional_notes %>
-  </li>
-
-  <li>
-    <strong>Active:</strong>
-    <%= @project.active %>
-  </li>
+  <%= component "form_divider.html", title: "Operating base" %>
+  <%= for {atom, label} <- [
+    {:operating_base_address_1, nil},
+    {:operating_base_address_2, nil},
+    {:operating_base_address_city, nil},
+    {:operating_base_address_postcode, nil},
+    {:operating_base_address_country, nil}
+  ] do %>
+    <%= component "data.html",
+    data: @project,
+    atom: atom
+    %>
+  <% end %>
 
 </ul>
 
