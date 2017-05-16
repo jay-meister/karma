@@ -1,7 +1,9 @@
 <div class="form-group">
   <%= label assigns[:form], assigns[:atom], class: "control-label fw4" %>
-  <div>
-    <%= date_select assigns[:form], assigns[:atom], class: "form-control w-100 k-bg-input bn" %>
+  <div class="k-bg-input b-h3 pt3 k-date-select pl3 br3">
+    <%= date_select assigns[:form], assigns[:atom], class: "form-control w-100 k-bg-input bn", builder: fn b -> %>
+      <%= b.(:day, []) %> / <%= b.(:month, []) %> / <%= b.(:year, []) %>
+    <% end %>
   </div>
   <%= error_tag assigns[:form], assigns[:atom] %>
 </div>
