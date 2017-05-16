@@ -1,0 +1,8 @@
+<div class="mt4 mb2 f3 k-light-indigo bb k-b-light-indigo">
+  <%= assigns[:title] %>
+</div>
+
+<!--
+assigns:
+title
+-->
