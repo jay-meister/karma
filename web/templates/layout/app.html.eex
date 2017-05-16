@@ -19,7 +19,9 @@
         <nav role="navigation">
           <ul class="nav nav-pills pull-left">
             <%= if @current_user do %>
-            <%= link "Home", to: dashboard_path(@conn, :index), class: "back-button link pa3" %>
+            <a href="/">
+              <img src="/images/logo-blue.png" class="w3"  />
+            </a>
             <% end %>
           </ul>
           <ul class="nav nav-pills pull-right">
