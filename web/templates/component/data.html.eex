@@ -1,0 +1,11 @@
+<li class="pt2 f4">
+  <strong><%= assigns[:label] || assigns[:atom] %>:</strong>
+  <%= Map.get(assigns[:data], assigns[:atom]) %>
+</li>
+
+<!--
+assigns:
+label, (optional label override atom to string)
+data, (eg project)
+atom, (value column name)
+-->
