@@ -1,8 +1,6 @@
-<div class="pa4 tc">
-  <h4>New to Karma?</h4>
-  <%= link "Create an account", to: user_path(@conn, :new), class: "karma-dark-indigo underline" %>
+<div class="tc">
+  <img src="/images/logo-blue.png" class="w4-5"/>
 </div>
-
 <div class="mw6 m-auto pl4 pr4">
   <%= form_for @conn, session_path(@conn, :create), [as: :session], fn f -> %>
 
@@ -21,4 +19,9 @@
 
     <%= component "submit_button.html", title: "Log in" %>
   <% end %>
+</div>
+<div class="pa4 tc">
+  <%= component "divider.html", divider: true %>
+  <h4 class="mt5">New to Karma?</h4>
+  <%= link "Create an account", to: user_path(@conn, :new), class: "karma-dark-indigo underline" %>
 </div>

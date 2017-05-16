@@ -19,13 +19,13 @@
         <nav role="navigation">
           <ul class="nav nav-pills pull-left">
             <%= if @current_user do %>
-            <li><%= link "Home", to: dashboard_path(@conn, :index), class: "back-button link" %></li>
+            <%= link "Home", to: dashboard_path(@conn, :index), class: "back-button link pa3" %>
             <% end %>
           </ul>
           <ul class="nav nav-pills pull-right">
             <%= if @current_user do %>
-            <li><%= link "My Profile", to: user_path(@conn, :show, @current_user), class: "back-button link" %></li>
-            <li><%= link "Log Out", to: session_path(@conn, :delete, @current_user), method: "delete", class: "back-button link" %></li>
+            <%= link "My Profile", to: user_path(@conn, :show, @current_user), class: "back-button link pa3" %>
+            <%= link "Log Out", to: session_path(@conn, :delete, @current_user), method: "delete", class: "back-button link pa3" %>
             <% end %>
           </ul>
         </nav>

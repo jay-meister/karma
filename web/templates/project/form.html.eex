@@ -5,18 +5,19 @@
     </div>
   <% end %>
 
+  <%= component "dropdown.html",
+  form: f,
+  atom: :type,
+  options: ["Feature Film": "feature", "Television": "television"],
+  prompt: "Project type..."
+  %>
 
-  <div class="form-group">
-    <%= label f, :type, class: "control-label" %>
-    <%= select f, :type, ["Feature Film": "feature", "Television": "television"], prompt: "Project type..." %>
-    <%= error_tag f, :type %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, :budget, class: "control-label" %>
-    <%= select f, :budget, ["None/Low": "none/low", "Mid": "mid", "Big": "big"], prompt: "Budget..." %>
-    <%= error_tag f, :budget %>
-  </div>
+  <%= component "dropdown.html",
+  form: f,
+  atom: :budget,
+  options: ["None/Low": "none/low", "Mid": "mid", "Big": "big"],
+  prompt: "Budget..."
+  %>
 
   <%= component "input.html",
   form: f,
@@ -30,22 +31,21 @@
   placeholder: "Project Code-name"
   %>
 
-  <div class="form-group">
-    <%= label f, :description, class: "control-label" %>
-    <%= textarea f, :description, class: "form-control" %>
-    <%= error_tag f, :description %>
-  </div>
+  <%= component "textarea.html",
+  form: f,
+  atom: :description,
+  placeholder: "Describe the project"
+  %>
 
-  <div class="form-group">
-    <%= label f, :start_date, class: "control-label" %>
-    <%= date_select f, :start_date, class: "form-control" %>
-    <%= error_tag f, :start_date %>
-  </div>
+  <%= component "date.html",
+  form: f,
+  atom: :start_date
+  %>
 
   <%= component "input.html",
   form: f,
   atom: :duration,
-  placeholder: "16 Weeks"
+  placeholder: "e.g. 16 Weeks"
   %>
 
   <%= component "input.html",
@@ -126,23 +126,18 @@
   placeholder: "London, Somerset etc..."
   %>
 
-  <div class="form-group">
-    <%= label f, :holiday_rate, class: "control-label" %>
-    <%= select f, :holiday_rate, ["10.77%": 0.1077, "12.07%": 0.1207], prompt: "Select rate..." %>
-    <%= error_tag f, :holiday_rate %>
-  </div>
+  <%= component "dropdown.html",
+  form: f,
+  atom: :holiday_rate,
+  options: ["10.77%": 0.1077, "12.07%": 0.1207],
+  prompt: "Select rate..."
+  %>
 
-  <div class="form-group">
-    <%= label f, :additional_notes, class: "control-label" %>
-    <%= textarea f, :additional_notes, class: "form-control" %>
-    <%= error_tag f, :additional_notes %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, :active, class: "control-label" %>
-    <%= checkbox f, :active, class: "form-control" %>
-    <%= error_tag f, :active %>
-  </div>
+  <%= component "textarea.html",
+  form: f,
+  atom: :additional_notes,
+  placeholder: "Add any other notes"
+  %>
 
   <%= component "submit_button.html", title: "Create" %>
 <% end %>
