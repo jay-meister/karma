@@ -15,7 +15,7 @@
   <%= component "dropdown.html",
   form: f,
   atom: :budget,
-  options: ["None/Low": "none/low", "Mid": "mid", "Big": "big"],
+  options: ["None/Low": "low", "Mid": "mid", "Big": "big"],
   prompt: "Budget..."
   %>
 
