@@ -21,7 +21,7 @@
   <% end %>
 </div>
 <div class="pa4 tc">
-  <%= component "divider.html", divider: true %>
+  <%= component "divider.html" %>
   <h4 class="mt5">New to Karma?</h4>
   <%= link "Create an account", to: user_path(@conn, :new), class: "karma-dark-indigo underline" %>
 </div>

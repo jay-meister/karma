@@ -1,5 +1,5 @@
 defmodule Karma.ComponentHelpers do
-  def component(template, assigns) do
+  def component(template, assigns \\ []) do
     Karma.ComponentView.render(template, assigns)
   end
 
