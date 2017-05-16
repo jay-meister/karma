@@ -2,7 +2,7 @@
   <div class="tc">
     <img src="/images/logo-blue.png" class="w4-5"/>
     <div class="tc">
-    <h4>Already have an account?</h4>
+    <h4 class="mt4">Already have an account?</h4>
     <%= link "Login", to: session_path(@conn, :new), class: "karma-dark-indigo underline" %>
     </div>
     <h2>Create account</h2>
