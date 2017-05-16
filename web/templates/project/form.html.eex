@@ -5,145 +5,140 @@
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= label f, :type, class: "control-label" %>
-    <%= select f, :type, ["Feature Film": "feature", "Television": "television"], prompt: "Project type..." %>
-    <%= error_tag f, :type %>
-  </div>
+  <%= component "dropdown.html",
+  form: f,
+  atom: :type,
+  options: ["Feature Film": "feature", "Television": "television"],
+  prompt: "Project type..."
+  %>
 
-  <div class="form-group">
-    <%= label f, :budget, class: "control-label" %>
-    <%= select f, :budget, ["None/Low": "low", "Mid": "mid", "Big": "big"], prompt: "Budget..." %>
-    <%= error_tag f, :budget %>
-  </div>
+  <%= component "dropdown.html",
+  form: f,
+  atom: :budget,
+  options: ["None/Low": "low", "Mid": "mid", "Big": "big"],
+  prompt: "Budget..."
+  %>
 
-  <div class="form-group">
-    <%= label f, :name, "Project name", class: "control-label" %>
-    <%= text_input f, :name, class: "form-control" %>
-    <%= error_tag f, :name %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :name,
+  placeholder: "Project Name"
+  %>
 
-  <div class="form-group">
-    <%= label f, :codename, "Project code-name", class: "control-label" %>
-    <%= text_input f, :codename, class: "form-control" %>
-    <%= error_tag f, :codename %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :codename,
+  placeholder: "Project Code-name"
+  %>
 
-  <div class="form-group">
-    <%= label f, :description, class: "control-label" %>
-    <%= textarea f, :description, class: "form-control" %>
-    <%= error_tag f, :description %>
-  </div>
+  <%= component "textarea.html",
+  form: f,
+  atom: :description,
+  placeholder: "Describe the project"
+  %>
 
-  <div class="form-group">
-    <%= label f, :start_date, class: "control-label" %>
-    <%= date_select f, :start_date, class: "form-control" %>
-    <%= error_tag f, :start_date %>
-  </div>
+  <%= component "date.html",
+  form: f,
+  atom: :start_date
+  %>
 
-  <div class="form-group">
-    <%= label f, :duration, "Duration (weeks)", class: "control-label" %>
-    <%= number_input f, :duration, class: "form-control" %>
-    <%= error_tag f, :duration %>
-  </div>
+  <%= component "number_input.html",
+  form: f,
+  atom: :duration,
+  placeholder: "e.g. 16",
+  label: "Duration (weeks)"
+  %>
 
-  <div class="form-group">
-    <%= label f, :studio_name, class: "control-label" %>
-    <%= text_input f, :studio_name, class: "form-control" %>
-    <%= error_tag f, :studio_name %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :studio_name,
+  placeholder: "Universal etc..."
+  %>
 
-  <div class="form-group">
-    <%= label f, :company_name, class: "control-label" %>
-    <%= text_input f, :company_name, class: "form-control" %>
-    <%= error_tag f, :company_name %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :company_name,
+  placeholder: "Company Ltd."
+  %>
 
-  <div class="form-group">
-    <%= label f, :company_address_1, class: "control-label" %>
-    <%= text_input f, :company_address_1, class: "form-control" %>
-    <%= error_tag f, :company_address_1 %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :company_address_1,
+  placeholder: "Company Address Line 1"
+  %>
 
-  <div class="form-group">
-    <%= label f, :company_address_2, class: "control-label" %>
-    <%= text_input f, :company_address_2, class: "form-control" %>
-    <%= error_tag f, :company_address_2 %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :company_address_2,
+  placeholder: "Company Address Line 2"
+  %>
 
-  <div class="form-group">
-    <%= label f, :company_address_city, class: "control-label" %>
-    <%= text_input f, :company_address_city, class: "form-control" %>
-    <%= error_tag f, :company_address_city %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :company_address_city,
+  placeholder: "City"
+  %>
 
-  <div class="form-group">
-    <%= label f, :company_address_postcode, class: "control-label" %>
-    <%= text_input f, :company_address_postcode, class: "form-control" %>
-    <%= error_tag f, :company_address_postcode %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :company_address_postcode,
+  placeholder: "Company Postcode"
+  %>
 
-  <div class="form-group">
-    <%= label f, :company_address_country, class: "control-label" %>
-    <%= text_input f, :company_address_country, class: "form-control" %>
-    <%= error_tag f, :company_address_country %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :company_address_country,
+  placeholder: "Country"
+  %>
 
-  <div class="form-group">
-    <%= label f, :operating_base_address_1, class: "control-label" %>
-    <%= text_input f, :operating_base_address_1, class: "form-control" %>
-    <%= error_tag f, :operating_base_address_1 %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :operating_base_address_1,
+  placeholder: "Operating Base Address Line 1"
+  %>
 
-  <div class="form-group">
-    <%= label f, :operating_base_address_2, class: "control-label" %>
-    <%= text_input f, :operating_base_address_2, class: "form-control" %>
-    <%= error_tag f, :operating_base_address_2 %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :operating_base_address_2,
+  placeholder: "Operating Base Address Line 2"
+  %>
 
-  <div class="form-group">
-    <%= label f, :operating_base_address_city, class: "control-label" %>
-    <%= text_input f, :operating_base_address_city, class: "form-control" %>
-    <%= error_tag f, :operating_base_address_city %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :operating_base_address_city,
+  placeholder: "City"
+  %>
 
-  <div class="form-group">
-    <%= label f, :operating_base_address_postcode, class: "control-label" %>
-    <%= text_input f, :operating_base_address_postcode, class: "form-control" %>
-    <%= error_tag f, :operating_base_address_postcode %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :operating_base_address_postcode,
+  placeholder: "Operating Base Postcode"
+  %>
 
-  <div class="form-group">
-    <%= label f, :operating_base_address_country, class: "control-label" %>
-    <%= text_input f, :operating_base_address_country, class: "form-control" %>
-    <%= error_tag f, :operating_base_address_country %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :operating_base_address_country,
+  placeholder: "Country"
+  %>
 
-  <div class="form-group">
-    <%= label f, :locations, class: "control-label" %>
-    <%= text_input f, :locations, class: "form-control" %>
-    <%= error_tag f, :locations %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :locations,
+  placeholder: "London, Somerset etc..."
+  %>
 
-  <div class="form-group">
-    <%= label f, :holiday_rate, class: "control-label" %>
-    <%= select f, :holiday_rate, ["10.77%": 0.1077, "12.07%": 0.1207], prompt: "Select rate..." %>
-    <%= error_tag f, :holiday_rate %>
-  </div>
+  <%= component "dropdown.html",
+  form: f,
+  atom: :holiday_rate,
+  options: ["10.77%": 0.1077, "12.07%": 0.1207],
+  prompt: "Select rate..."
+  %>
 
-  <div class="form-group">
-    <%= label f, :additional_notes, class: "control-label" %>
-    <%= textarea f, :additional_notes, class: "form-control" %>
-    <%= error_tag f, :additional_notes %>
-  </div>
+  <%= component "textarea.html",
+  form: f,
+  atom: :additional_notes,
+  placeholder: "Add any other notes"
+  %>
 
-  <div class="form-group">
-    <%= label f, :active, class: "control-label" %>
-    <%= checkbox f, :active, class: "form-control" %>
-    <%= error_tag f, :active %>
-  </div>
-
-  <div class="form-group">
-    <%= submit "Submit", class: "btn btn-primary" %>
-  </div>
+  <%= component "submit_button.html", title: "Create" %>
 <% end %>

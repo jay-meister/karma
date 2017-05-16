@@ -65,7 +65,7 @@ defmodule Karma.ProjectControllerTest do
 
   test "/project/new renders form for new project", %{conn: conn} do
     conn = get conn, project_path(conn, :new)
-    assert html_response(conn, 200) =~ "New project"
+    assert html_response(conn, 200) =~ "Create project"
   end
 
   test "post /project creates project and redirects when data is valid", %{conn: conn} do
@@ -76,7 +76,7 @@ defmodule Karma.ProjectControllerTest do
 
   test "/project/:id does not create project and renders errors when data is invalid", %{conn: conn} do
     conn = post conn, project_path(conn, :create), project: @invalid_attrs
-    assert html_response(conn, 200) =~ "New project"
+    assert html_response(conn, 200) =~ "Create project"
   end
 
   test "/project/:id shows specific project", %{conn: conn, project: project} do

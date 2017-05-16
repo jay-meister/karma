@@ -1,6 +1,118 @@
 /* This file is for your main application css. */
+
+.arrow {
+  right: 50%;
+  margin-right: -16px;
+  top: -4rem;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+}
 .header {
   height: 9rem;
   border-bottom: 1px solid #eeeeee;
   margin-bottom: 3rem;
+}
+
+.k-date-select select {
+  background-color: #E9EAEB;
+  border: none;
+  outline: 0;
+}
+
+
+.k-h1px {
+  height: 1px;
+}
+
+.k-bg-indigo {
+  background-color: #3f51b5;
+}
+
+.k-bg-dark-indigo {
+  background-color: #002984;
+}
+
+.k-bg-light-indigo {
+  background-color: #757de8;
+}
+
+.k-bg-grey {
+  background-color: #9e9e9e;
+}
+
+.k-bg-dark-grey {
+  background-color: #707070;
+}
+
+.k-bg-input {
+  background-color: #E9EAEB;
+}
+
+.k-bg-light-grey {
+  background-color: #cfcfcf;
+}
+
+.k-f2-5 {
+  font-size: 2rem;
+}
+
+.b-h3 {
+  height: 4rem;
+}
+
+.karma-input {
+
+}
+
+.karma-input::after {
+  content : "";
+  position: absolute;
+  left    : 0;
+  bottom  : 0;
+  height  : 1px;
+  width   : 50%;  /* or 100px */
+  border-bottom: 3px solid #707070;
+}
+
+.k-indigo {
+  color: #3f51b5;
+}
+
+.k-dark-indigo {
+  color: #002984;
+}
+
+.k-light-indigo {
+  color: #757de8;
+}
+
+.k-grey {
+  color: #9e9e9e;
+}
+
+.k-dark-grey {
+  color: #707070;
+}
+
+.k-light-grey {
+  color: #cfcfcf;
+}
+
+.k-left-0-5 {
+  left: 0.5rem
+}
+
+.k-m-auto {
+  margin: 0 auto;
+}
+
+/* 4-5 =~ 4.5 because it's between 4 and 5 in tachyons*/
+.k-pl4-5 {
+  padding-left: 3rem;
+}
+
+.k-w4-5 {
+  width: 10rem;
 }

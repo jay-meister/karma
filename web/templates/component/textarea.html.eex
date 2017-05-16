@@ -1,0 +1,12 @@
+<div class="form-group">
+  <%= label assigns[:form], assigns[:atom], class: "control-label fw4" %>
+  <%= textarea assigns[:form], assigns[:atom], placeholder: assigns[:placeholder], class: "k-bg-input k-dark-grey pa3 bn br3 w-100 outline-0" %>
+  <%= error_tag assigns[:form], assigns[:atom] %>
+</div>
+
+<!--
+assigns:
+form,
+atom,
+placeholder
+-->

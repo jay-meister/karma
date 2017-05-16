@@ -1,7 +1,7 @@
 <div class="jumbotron">
   <h2>My projects</h2>
   <p class="lead">You have not created any projects yet</p>
-  <p>Why don't you <%= link "create one?", to: "#" %>
+  <p>Why don't you <%= link "create one?", to: project_path(@conn, :new), class: "fw4" %>
 </div>
 <div class="jumbotron">
   <h2>My offers</h2>

@@ -1,0 +1,29 @@
+<div class="form-group">
+  <% label =
+    case assigns[:label] do
+      nil -> assigns[:atom]
+      _label -> assigns[:label]
+    end %>
+  <%= label assigns[:form], label, class: "control-label fw4" %>
+  </br>
+  <div class="relative">
+    <% padding = case assigns[:image_name] do
+      nil -> "pl3"
+      _ -> "k-pl4-5"
+    end %>
+    <%= number_input assigns[:form], assigns[:atom], placeholder: assigns[:placeholder], type: assigns[:atom], class: "k-bg-input k-dark-grey pa3 bn br3 w-100 outline-0 #{padding}" %>
+    <%= if assigns[:image_name] do %>
+      <img src="/images/<%= assigns[:image_name] %>.svg" class="absolute w2 top-1 k-left-0-5"/>
+    <% end %>
+    <%= error_tag assigns[:form], assigns[:atom] %>
+  </div>
+</div>
+
+
+<!--
+assigns:
+form,
+atom,
+placeholder,
+image_name (optional)
+-->
