@@ -68,7 +68,7 @@ defmodule Karma.ProjectControllerTest do
     assert html_response(conn, 200) =~ "Create project"
   end
 
-  test "post /project creates project and redirects when data is valid", %{conn: conn, project: _project} do
+  test "post /project creates project and redirects when data is valid", %{conn: conn} do
     conn = post conn, project_path(conn, :create), project: default_project(%{name: "AAAA"})
     assert redirected_to(conn) == project_path(conn, :index)
     assert Repo.get_by(Project, name: "AAAA")
