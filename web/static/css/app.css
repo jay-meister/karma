@@ -52,7 +52,7 @@ body {
   font-size: 2rem;
 }
 
-.k-h3 {
+.b-h3 {
   height: 4rem;
 }
 
@@ -102,6 +102,7 @@ body {
   margin: 0 auto;
 }
 
+/* 4-5 =~ 4.5 because it's between 4 and 5 in tachyons*/
 .k-pl4-5 {
   padding-left: 3rem;
 }
