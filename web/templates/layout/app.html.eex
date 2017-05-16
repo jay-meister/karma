@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
-  <body class="bg-white karma-indigo">
+  <body class="bg-white k-indigo">
     <div class="container">
       <header class="header">
         <nav role="navigation">

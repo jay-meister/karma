@@ -15,43 +15,44 @@ body {
   margin-bottom: 3rem;
 }
 
-.h1px {
+
+.k-h1px {
   height: 1px;
 }
 
-.bg-karma-indigo {
+.k-bg-indigo {
   background-color: #3f51b5;
 }
 
-.bg-karma-dark-indigo {
+.k-bg-dark-indigo {
   background-color: #002984;
 }
 
-.bg-karma-light-indigo {
+.k-bg-light-indigo {
   background-color: #757de8;
 }
 
-.bg-karma-grey {
+.k-bg-grey {
   background-color: #9e9e9e;
 }
 
-.bg-karma-dark-grey {
+.k-bg-dark-grey {
   background-color: #707070;
 }
 
-.bg-karma-input {
+.k-bg-input {
   background-color: #E9EAEB;
 }
 
-.bg-karma-light-grey {
+.k-bg-light-grey {
   background-color: #cfcfcf;
 }
 
-.f2-5 {
+.k-f2-5 {
   font-size: 2rem;
 }
 
-.hk3 {
+.k-h3 {
   height: 4rem;
 }
 
@@ -69,42 +70,42 @@ body {
   border-bottom: 3px solid #707070;
 }
 
-.karma-indigo {
+.k-indigo {
   color: #3f51b5;
 }
 
-.karma-dark-indigo {
+.k-dark-indigo {
   color: #002984;
 }
 
-.karma-light-indigo {
+.k-light-indigo {
   color: #757de8;
 }
 
-.karma-grey {
+.k-grey {
   color: #9e9e9e;
 }
 
-.karma-dark-grey {
+.k-dark-grey {
   color: #707070;
 }
 
-.karma-light-grey {
+.k-light-grey {
   color: #cfcfcf;
 }
 
-.left-0-5 {
+.k-left-0-5 {
   left: 0.5rem
 }
 
-.m-auto {
+.k-m-auto {
   margin: 0 auto;
 }
 
-.pl4-5 {
+.k-pl4-5 {
   padding-left: 3rem;
 }
 
-.w4-5 {
+.k-w4-5 {
   width: 10rem;
 }
