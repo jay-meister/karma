@@ -3,38 +3,25 @@ defmodule Karma.ProjectTest do
 
   alias Karma.Project
 
-  @valid_attrs %{active: true,
-    additional_notes: "some content",
-    budget: "some content",
-    codename: "some content",
-    company_address_1: "some content",
-    company_address_2: "some content",
-    company_address_city: "some content",
-    company_address_postcode: "some content",
-    company_address_country: "some content",
-    company_name: "some content",
-    description: "some content",
-    duration: 42,
-    holiday_rate: 120.5,
-    locations: "some content",
-    name: "some content",
-    operating_base_address_1: "some content",
-    operating_base_address_2: "some content",
-    operating_base_address_city: "some content",
-    operating_base_address_postcode: "some content",
-    operating_base_address_country: "some content",
-    start_date: %{"day" => 17, "month" => 4, "year" => 2010},
-    studio_name: "some content",
-    type: "some content",
-    user_id: 1
-  }
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
-    changeset = Project.changeset(%Project{}, @valid_attrs)
+    changeset = Project.changeset(%Project{}, default_project(%{user_id: 1}))
     assert changeset.valid?
   end
 
+  test "changeset with invalid type" do
+    changeset = Project.changeset(%Project{}, default_project(%{type: "Feature"}))
+    refute changeset.valid?
+  end
+  test "changeset with invalid holiday rate" do
+    changeset = Project.changeset(%Project{}, default_project(%{holiday_rate: 0.1078}))
+    refute changeset.valid?
+  end
+  test "changeset with invalid budget" do
+    changeset = Project.changeset(%Project{}, default_project(%{budget: "huge"}))
+    refute changeset.valid?
+  end
   test "changeset with invalid attributes" do
     changeset = Project.changeset(%Project{}, @invalid_attrs)
     refute changeset.valid?

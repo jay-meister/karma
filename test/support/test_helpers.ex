@@ -36,16 +36,16 @@ defmodule Karma.TestHelpers do
   |> Repo.insert!
   end
 
-  def default_project do
-    %{ active: true,
-      additional_notes: "some content",
-      budget: "high",
+  def default_project (attrs \\ %{}) do
+    default = %{active: true,
+      additional_notes: "",
+      budget: "big",
       codename: "Finickity Spicket",
       company_address_1: "22 Birchmore",
-      company_address_2: "London",
-      company_address_city: "N7 4TB",
-      company_address_postcode: "UK",
-      company_address_country: "",
+      company_address_2: "Mossy Nill",
+      company_address_city: "London",
+      company_address_postcode: "N7 4TB",
+      company_address_country: "UK",
       company_name: "Varner",
       description: "A new film",
       duration: 12,
@@ -53,13 +53,14 @@ defmodule Karma.TestHelpers do
       locations: "London, Paris",
       name: "Mission Impossible 10",
       operating_base_address_1: "22 Birchmore",
-      operating_base_address_2: "London",
-      operating_base_address_city: "N7 4TB",
-      operating_base_address_postcode: "UK",
-      operating_base_address_country: "",
-      start_date: %{"day" => 1, "month" => 1, "year" => 2019},
+      operating_base_address_2: "Mossy Nill",
+      operating_base_address_city: "London",
+      operating_base_address_postcode: "N7 4TB",
+      operating_base_address_country: "UK",
+      start_date: %{"day" => 1, "month" => 1, "year" => 2018},
       studio_name: "Warner",
       type: "feature"
     }
+    Map.merge(default, attrs)
   end
 end
