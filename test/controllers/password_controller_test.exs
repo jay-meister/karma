@@ -1,9 +1,9 @@
-defmodule Karma.UserControllerTest do
+defmodule Karma.PasswordControllerTest do
   use Karma.ConnCase
 
   import Mock
 
-  alias Karma.{Password, Email, RedisCli}
+  alias Karma.{Email, RedisCli}
 
   setup do
     RedisCli.flushdb()
