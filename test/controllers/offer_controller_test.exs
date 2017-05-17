@@ -2,65 +2,73 @@ defmodule Karma.OfferControllerTest do
   use Karma.ConnCase
 
   alias Karma.Offer
-  @valid_attrs %{accepted: true, active: true, additional_notes: "some content", box_rental_cap: 42, box_rental_description: "some content", box_rental_fee_per_week: 42, box_rental_period: "some content", contract_type: "some content", contractor_details_accepted: true, currency: "some content", daily_or_weekly: "some content", department: "some content", equipment_rental_cap: 42, equipment_rental_description: "some content", equipment_rental_fee_per_week: 42, equipment_rental_period: "some content", fee_per_day_exc_holiday: 42, fee_per_day_inc_holiday: 42, fee_per_week_exc_holiday: 42, fee_per_week_inc_holiday: 42, holiday_pay_per_day: 42, holiday_pay_per_week: 42, job_title: "some content", other_deal_provisions: "some content", overtime_rate_per_hour: 42, seventh_day_fee: 42, sixth_day_fee: 42, start_date: %{day: 17, month: 4, year: 2010}, target_email: "some content", vehicle_allowance_per_week: 42, working_week: "120.5"}
   @invalid_attrs %{}
 
-  test "lists all entries on index", %{conn: conn} do
-    conn = get conn, project_offer_path(conn, :index)
+
+  setup do
+    user = insert_user() # This represents the user that created the project (PM)
+    project = insert_project(user)
+    offer = insert_offer(project)
+    conn = login_user(build_conn(), user)
+    {:ok, conn: conn, user: user, project: project, offer: offer}
+  end
+
+  test "lists all entries on index", %{conn: conn, offer: offer, project: _project} do
+    conn = get conn, project_offer_path(conn, :index, offer.project_id)
     assert html_response(conn, 200) =~ "Listing offers"
   end
 
-  test "renders form for new resources", %{conn: conn} do
-    conn = get conn, project_offer_path(conn, :new)
+  test "renders form for new resources", %{conn: conn, offer: _offer, project: _project} do
+    conn = get conn, project_offer_path(conn, :new, 1)
     assert html_response(conn, 200) =~ "New offer"
   end
 
-  test "creates resource and redirects when data is valid", %{conn: conn} do
-    conn = post conn, project_offer_path(conn, :create), offer: @valid_attrs
-    assert redirected_to(conn) == project_offer_path(conn, :index)
-    assert Repo.get_by(Offer, @valid_attrs)
+  test "creates resource and redirects when data is valid", %{conn: conn, offer: _offer, project: _project} do
+    conn = post conn, project_offer_path(conn, :create, 1), offer: default_offer()
+    assert redirected_to(conn) == project_offer_path(conn, :index, 1)
+    assert Repo.get_by(Offer, default_offer())
   end
 
-  test "does not create resource and renders errors when data is invalid", %{conn: conn} do
-    conn = post conn, project_offer_path(conn, :create), offer: @invalid_attrs
+  test "does not create resource and renders errors when data is invalid", %{conn: conn, offer: _offer, project: _project} do
+    conn = post conn, project_offer_path(conn, :create, 1), offer: @invalid_attrs
     assert html_response(conn, 200) =~ "New offer"
   end
 
-  test "shows chosen resource", %{conn: conn} do
+  test "shows chosen resource", %{conn: conn, offer: _offer, project: _project} do
     offer = Repo.insert! %Offer{}
-    conn = get conn, project_offer_path(conn, :show, project, offer)
+    conn = get conn, project_offer_path(conn, :show, 1, offer)
     assert html_response(conn, 200) =~ "Show offer"
   end
 
-  test "renders page not found when id is nonexistent", %{conn: conn} do
+  test "renders page not found when id is nonexistent", %{conn: conn, offer: _offer, project: _project} do
     assert_error_sent 404, fn ->
       get conn, project_offer_path(conn, :show, -1)
     end
   end
 
-  test "renders form for editing chosen resource", %{conn: conn} do
+  test "renders form for editing chosen resource", %{conn: conn, offer: _offer, project: _project} do
     offer = Repo.insert! %Offer{}
-    conn = get conn, project_offer_path(conn, :edit, project, offer)
+    conn = get conn, project_offer_path(conn, :edit, 1, offer)
     assert html_response(conn, 200) =~ "Edit offer"
   end
 
-  test "updates chosen resource and redirects when data is valid", %{conn: conn} do
+  test "updates chosen resource and redirects when data is valid", %{conn: conn, offer: _offer, project: _project} do
     offer = Repo.insert! %Offer{}
-    conn = put conn, project_offer_path(conn, :update, project, offer), offer: @valid_attrs
-    assert redirected_to(conn) == project_offer_path(conn, :show, project, offer)
-    assert Repo.get_by(Offer, @valid_attrs)
+    conn = put conn, project_offer_path(conn, :update, 1, offer), offer: default_offer()
+    assert redirected_to(conn) == project_offer_path(conn, :show, 1, offer)
+    assert Repo.get_by(Offer, default_offer())
   end
 
-  test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
+  test "does not update chosen resource and renders errors when data is invalid", %{conn: conn, offer: _offer, project: _project} do
     offer = Repo.insert! %Offer{}
-    conn = put conn, project_offer_path(conn, :update, project, offer), offer: @invalid_attrs
+    conn = put conn, project_offer_path(conn, :update, 1, offer), offer: @invalid_attrs
     assert html_response(conn, 200) =~ "Edit offer"
   end
 
-  test "deletes chosen resource", %{conn: conn} do
+  test "deletes chosen resource", %{conn: conn, offer: _offer, project: _project} do
     offer = Repo.insert! %Offer{}
-    conn = delete conn, project_offer_path(conn, :delete, project, offer)
-    assert redirected_to(conn) == project_offer_path(conn, :index)
+    conn = delete conn, project_offer_path(conn, :delete, 1, offer)
+    assert redirected_to(conn) == project_offer_path(conn, :index, 1)
     refute Repo.get(Offer, offer.id)
   end
 end
