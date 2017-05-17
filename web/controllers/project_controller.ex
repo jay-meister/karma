@@ -1,10 +1,10 @@
 defmodule Karma.ProjectController do
   use Karma.Web, :controller
 
-  alias Karma.Project
+  alias Karma.{Project, LayoutView}
 
 
-  plug :project_owner when action in [:show, :edit, :update, :delete]
+  plug :project_owner when action in [:show, :edit, :update, :delete, :offers]
 
   # project owner plug
   def project_owner(conn, _) do

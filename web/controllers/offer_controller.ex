@@ -1,14 +1,12 @@
 defmodule Karma.OfferController do
   use Karma.Web, :controller
 
-  alias Karma.Offer
+  alias Karma.{Offer, Project, LayoutView}
 
   def index(conn, %{"project_id" => project_id}) do
     IO.puts "--------- inside offers index ----------"
-    offers = Repo.all(Offer)
-    IO.inspect offers
-    # we should know project id here, placeholder to 1
-    render(conn, "index.html", offers: offers, project_id: 1)
+    project = Repo.get!(Project, project_id)
+    render conn, "index.html", layout: {LayoutView, "no_container.html"}, project: project
   end
 
   def new(conn, %{"project_id" => project_id}) do
