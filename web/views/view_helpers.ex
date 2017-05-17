@@ -36,12 +36,9 @@ defmodule Karma.ViewHelpers do
   end
 
   def format_type(type) do
-    formatted_type =
-      case type do
-        "feature" -> "Feature Film"
-        "television" -> "Television"
-      end
-
-    formatted_type
+    case type do
+      "feature" -> "Feature Film"
+      "television" -> "Television"
+    end
   end
 end
