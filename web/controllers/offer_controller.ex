@@ -4,15 +4,18 @@ defmodule Karma.OfferController do
   alias Karma.{Offer, Project, LayoutView}
 
   def index(conn, %{"project_id" => project_id}) do
-    IO.puts "--------- inside offers index ----------"
     project = Repo.get!(Project, project_id)
-    render conn, "index.html", layout: {LayoutView, "no_container.html"}, project: project
+    offers =
+      Offer
+      |> Offer.projects_offers(project)
+      |> Repo.all()
+
+    render conn, "index.html", layout: {LayoutView, "no_container.html"}, offers: offers, project: project
   end
 
   def new(conn, %{"project_id" => project_id}) do
     changeset = Offer.changeset(%Offer{})
     # we should know project id here, placeholder to 1
-    IO.inspect changeset
     render(conn, "new.html", changeset: changeset, project_id: 1)
   end
 
