@@ -5,193 +5,185 @@
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= label f, :target_email, class: "control-label" %>
-    <%= text_input f, :target_email, class: "form-control" %>
-    <%= error_tag f, :target_email %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :target_email,
+  placeholder: "example@email.com"
+  %>
 
-  <div class="form-group">
-    <%= label f, :department, class: "control-label" %>
-    <%= text_input f, :department, class: "form-control" %>
-    <%= error_tag f, :department %>
-  </div>
+  <%= component "dropdown.html",
+  form: f,
+  atom: :department,
+  options: @job_departments,
+  prompt: "Pick a job department..."
+  %>
 
-  <div class="form-group">
-    <%= label f, :job_title, class: "control-label" %>
-    <%= text_input f, :job_title, class: "form-control" %>
-    <%= error_tag f, :job_title %>
-  </div>
+  <%= component "dropdown.html",
+  form: f,
+  atom: :job_title,
+  options: @job_titles,
+  prompt: "Pick a job title..."
+  %>
 
-  <div class="form-group">
-    <%= label f, :contract_type, class: "control-label" %>
-    <%= text_input f, :contract_type, class: "form-control" %>
-    <%= error_tag f, :contract_type %>
-  </div>
+  <!-- Determined by department + job_title -->
+  <!--  component "input.html",
+  form: f,
+  atom: :contract_type,
+  placeholder: "Enter the contract type"
+  %> -->
 
-  <div class="form-group">
-    <%= label f, :start_date, class: "control-label" %>
-    <%= date_select f, :start_date, class: "form-control" %>
-    <%= error_tag f, :start_date %>
-  </div>
+  <%= component "date.html",
+  form: f,
+  atom: :start_date
+  %>
 
-  <div class="form-group">
-    <%= label f, :daily_or_weekly, class: "control-label" %>
-    <%= text_input f, :daily_or_weekly, class: "form-control" %>
-    <%= error_tag f, :daily_or_weekly %>
-  </div>
+  <!-- dropdown -->
 
-  <div class="form-group">
-    <%= label f, :working_week, class: "control-label" %>
-    <%= number_input f, :working_week, step: "any", class: "form-control" %>
-    <%= error_tag f, :working_week %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :daily_or_weekly,
+  placeholder: "Daily or weekly?"
+  %>
 
-  <div class="form-group">
-    <%= label f, :currency, class: "control-label" %>
-    <%= text_input f, :currency, class: "form-control" %>
-    <%= error_tag f, :currency %>
-  </div>
+  <!-- dropdown -->
 
-  <div class="form-group">
-    <%= label f, :overtime_rate_per_hour, class: "control-label" %>
-    <%= number_input f, :overtime_rate_per_hour, class: "form-control" %>
-    <%= error_tag f, :overtime_rate_per_hour %>
-  </div>
+  <%= component "number_input.html",
+  form: f,
+  atom: :working_week,
+  placeholder: "Working week"
+  %>
 
-  <div class="form-group">
-    <%= label f, :other_deal_provisions, class: "control-label" %>
-    <%= textarea f, :other_deal_provisions, class: "form-control" %>
-    <%= error_tag f, :other_deal_provisions %>
-  </div>
+  <!-- dropdown -->
 
-  <div class="form-group">
-    <%= label f, :box_rental_description, class: "control-label" %>
-    <%= textarea f, :box_rental_description, class: "form-control" %>
-    <%= error_tag f, :box_rental_description %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :currency,
+  placeholder: "Enter the currency you want to pay in"
+  %>
 
-  <div class="form-group">
-    <%= label f, :box_rental_fee_per_week, class: "control-label" %>
-    <%= number_input f, :box_rental_fee_per_week, class: "form-control" %>
-    <%= error_tag f, :box_rental_fee_per_week %>
-  </div>
+  <%= component "number_input.html",
+  form: f,
+  atom: :overtime_rate_per_hour,
+  placeholder: "What's your overtime rate per hour?"
+  %>
 
-  <div class="form-group">
-    <%= label f, :box_rental_cap, class: "control-label" %>
-    <%= number_input f, :box_rental_cap, class: "form-control" %>
-    <%= error_tag f, :box_rental_cap %>
-  </div>
+  <%= component "textarea.html",
+  form: f,
+  atom: :other_deal_provisions,
+  placeholder: "Any other deal provisions?"
+  %>
 
-  <div class="form-group">
-    <%= label f, :box_rental_period, class: "control-label" %>
-    <%= text_input f, :box_rental_period, class: "form-control" %>
-    <%= error_tag f, :box_rental_period %>
-  </div>
+  <%= component "textarea.html",
+  form: f,
+  atom: :box_rental_description,
+  placeholder: "Describe the box rental"
+  %>
 
-  <div class="form-group">
-    <%= label f, :equipment_rental_description, class: "control-label" %>
-    <%= text_input f, :equipment_rental_description, class: "form-control" %>
-    <%= error_tag f, :equipment_rental_description %>
-  </div>
+  <%= component "number_input.html",
+  form: f,
+  atom: :box_rental_fee_per_week,
+  placeholder: "Enter the box rental fee per week"
+  %>
 
-  <div class="form-group">
-    <%= label f, :equipment_rental_fee_per_week, class: "control-label" %>
-    <%= number_input f, :equipment_rental_fee_per_week, class: "form-control" %>
-    <%= error_tag f, :equipment_rental_fee_per_week %>
-  </div>
+  <%= component "number_input.html",
+  form: f,
+  atom: :box_rental_cap,
+  placeholder: "What's the box rental cap?"
+  %>
 
-  <div class="form-group">
-    <%= label f, :equipment_rental_cap, class: "control-label" %>
-    <%= number_input f, :equipment_rental_cap, class: "form-control" %>
-    <%= error_tag f, :equipment_rental_cap %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :box_rental_period,
+  placeholder: "Enter the period you need box rental for"
+  %>
 
-  <div class="form-group">
-    <%= label f, :equipment_rental_period, class: "control-label" %>
-    <%= text_input f, :equipment_rental_period, class: "form-control" %>
-    <%= error_tag f, :equipment_rental_period %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :equipment_rental_description,
+  placeholder: "Describe the equipment rental you need"
+  %>
 
-  <div class="form-group">
-    <%= label f, :vehicle_allowance_per_week, class: "control-label" %>
-    <%= number_input f, :vehicle_allowance_per_week, class: "form-control" %>
-    <%= error_tag f, :vehicle_allowance_per_week %>
-  </div>
+  <%= component "number_input.html",
+  form: f,
+  atom: :equipment_rental_fee_per_week,
+  placeholder: "What's the equipment rental fee per week?"
+  %>
 
-  <div class="form-group">
-    <%= label f, :fee_per_day_inc_holiday, class: "control-label" %>
-    <%= number_input f, :fee_per_day_inc_holiday, class: "form-control" %>
-    <%= error_tag f, :fee_per_day_inc_holiday %>
-  </div>
+  <%= component "number_input.html",
+  form: f,
+  atom: :equipment_rental_cap,
+  placeholder: "What's the equipment rental cap?"
+  %>
 
-  <div class="form-group">
-    <%= label f, :fee_per_day_exc_holiday, class: "control-label" %>
-    <%= number_input f, :fee_per_day_exc_holiday, class: "form-control" %>
-    <%= error_tag f, :fee_per_day_exc_holiday %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :equipment_rental_period,
+  placeholder: "Enter the period you need equipment rental for"
+  %>
 
-  <div class="form-group">
-    <%= label f, :fee_per_week_inc_holiday, class: "control-label" %>
-    <%= number_input f, :fee_per_week_inc_holiday, class: "form-control" %>
-    <%= error_tag f, :fee_per_week_inc_holiday %>
-  </div>
+  <%= component "number_input.html",
+  form: f,
+  atom: :vehicle_allowance_per_week,
+  placeholder: "What's the vehical allowance per week?"
+  %>
 
-  <div class="form-group">
-    <%= label f, :fee_per_week_exc_holiday, class: "control-label" %>
-    <%= number_input f, :fee_per_week_exc_holiday, class: "form-control" %>
-    <%= error_tag f, :fee_per_week_exc_holiday %>
-  </div>
+  <%= component "number_input.html",
+  form: f,
+  atom: :fee_per_day_inc_holiday,
+  placeholder: "Enter the fee per day inc holiday"
+  %>
 
-  <div class="form-group">
-    <%= label f, :holiday_pay_per_day, class: "control-label" %>
-    <%= number_input f, :holiday_pay_per_day, class: "form-control" %>
-    <%= error_tag f, :holiday_pay_per_day %>
-  </div>
+  <%= component "number_input.html",
+  form: f,
+  atom: :fee_per_day_exc_holiday,
+  placeholder: "Enter the fee per day exc holiday"
+  %>
 
-  <div class="form-group">
-    <%= label f, :holiday_pay_per_week, class: "control-label" %>
-    <%= number_input f, :holiday_pay_per_week, class: "form-control" %>
-    <%= error_tag f, :holiday_pay_per_week %>
-  </div>
+  <%= component "number_input.html",
+  form: f,
+  atom: :fee_per_week_inc_holiday,
+  placeholder: "Enter the fee per week inc holiday"
+  %>
 
-  <div class="form-group">
-    <%= label f, :sixth_day_fee, class: "control-label" %>
-    <%= number_input f, :sixth_day_fee, class: "form-control" %>
-    <%= error_tag f, :sixth_day_fee %>
-  </div>
+  <%= component "number_input.html",
+  form: f,
+  atom: :fee_per_weel_exc_holiday,
+  placeholder: "Enter the fee per week exc holiday"
+  %>
 
-  <div class="form-group">
-    <%= label f, :seventh_day_fee, class: "control-label" %>
-    <%= number_input f, :seventh_day_fee, class: "form-control" %>
-    <%= error_tag f, :seventh_day_fee %>
-  </div>
+  <%= component "number_input.html",
+  form: f,
+  atom: :holiday_pay_per_day,
+  placeholder: "Enter the holiday pay per day"
+  %>
 
-  <div class="form-group">
-    <%= label f, :additional_notes, class: "control-label" %>
-    <%= textarea f, :additional_notes, class: "form-control" %>
-    <%= error_tag f, :additional_notes %>
-  </div>
+  <%= component "number_input.html",
+  form: f,
+  atom: :holiday_pay_per_week,
+  placeholder: "Enter the holiday pay per week"
+  %>
 
-  <div class="form-group">
-    <%= label f, :accepted, class: "control-label" %>
-    <%= checkbox f, :accepted, class: "form-control" %>
-    <%= error_tag f, :accepted %>
-  </div>
+  <!-- dropdown -->
 
-  <div class="form-group">
-    <%= label f, :active, class: "control-label" %>
-    <%= checkbox f, :active, class: "form-control" %>
-    <%= error_tag f, :active %>
-  </div>
+  <%= component "number_input.html",
+  form: f,
+  atom: :sixth_day_fee,
+  placeholder: "Enter the sixth day fee"
+  %>
 
-  <div class="form-group">
-    <%= label f, :contractor_details_accepted, class: "control-label" %>
-    <%= checkbox f, :contractor_details_accepted, class: "form-control" %>
-    <%= error_tag f, :contractor_details_accepted %>
-  </div>
+  <!-- dropdown -->
 
-  <div class="form-group">
-    <%= submit "Submit", class: "btn btn-primary" %>
-  </div>
+  <%= component "number_input.html",
+  form: f,
+  atom: :seventh_day_fee,
+  placeholder: "Enter the seventh day fee"
+  %>
+
+  <%= component "textarea.html",
+  form: f,
+  atom: :additional_notes,
+  placeholder: "Any additional notes?"
+  %>
+
+  <%= component "submit_button.html", title: "Make Offer" %>
 <% end %>

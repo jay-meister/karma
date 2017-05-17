@@ -103,4 +103,5 @@ defmodule Karma.Offer do
       # :active
       ])
   end
+
 end

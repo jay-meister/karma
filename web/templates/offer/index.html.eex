@@ -19,7 +19,7 @@
   </div>
 </div>
 <div class="k-m-auto w-90 mt4">
-  <%= component "button.html", title: "Make new offer", link: "/" %>
+  <%= component "button.html", title: "Make new offer", link: "/projects/#{@project.id}/offers/new" %>
   <div class="f1">Offers</div>
   <div class="mt3 mb2 f3 k-light-indigo bb k-b-light-indigo"></div>
   <%= if false do %>

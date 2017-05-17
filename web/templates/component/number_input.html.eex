@@ -24,6 +24,5 @@
 assigns:
 form,
 atom,
-placeholder,
-image_name (optional)
+placeholder
 -->
