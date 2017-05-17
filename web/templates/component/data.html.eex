@@ -1,5 +1,5 @@
 <li class="pt2 f4">
-  <strong><%= assigns[:label] || assigns[:atom] %>:</strong>
+  <strong><%= assigns[:label] %>:</strong>
   <%= assigns[:data] %>
 </li>
 

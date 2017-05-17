@@ -41,4 +41,11 @@ defmodule Karma.ViewHelpers do
       "television" -> "Television"
     end
   end
+
+  def format_label(atom) do
+    atom
+    |> Atom.to_string()
+    |> String.replace("_", " ")
+    |> String.capitalize()
+  end
 end
