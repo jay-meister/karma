@@ -12,7 +12,7 @@ defmodule Karma.PasswordController do
   def create(conn, %{"user" => password_params}) do
     # if they are there, send email, store in redis, expire
     email = password_params["email"]
-    user = case user = Repo.get_by(User, email: email) do
+    case user = Repo.get_by(User, email: email) do
       nil ->
         # if user not found, just let them know something not working
         conn
@@ -30,20 +30,20 @@ defmodule Karma.PasswordController do
     end
   end
 
-  def edit(conn, %{"hash" => hash} = params) do
+  def edit(conn, %{"hash" => hash}) do
     # render form for create new password and confirm new password
     case get_email_from_hash(hash) do
       {:error, _} ->
         conn
         |> put_flash(:error, "That link has expired, please enter your email address to receive a new password reset email")
         |> redirect(to: password_path(conn, :new))
-      {:ok, email} ->
+      {:ok, _email} ->
         changeset = User.new_password_changeset(%User{})
         render conn, "edit.html", changeset: changeset, hash: hash
     end
   end
 
-  def update(conn, %{"user" => password_params, "hash" => hash} = params) do
+  def update(conn, %{"user" => password_params, "hash" => hash}) do
     # if password valid, update user
     case get_email_from_hash(hash) do
       {:error, _} ->
@@ -54,7 +54,7 @@ defmodule Karma.PasswordController do
         user = Repo.get_by(User, email: email)
         changeset = User.new_password_changeset(user, password_params)
         case Repo.update(changeset) do
-          {:ok, user} ->
+          {:ok, _user} ->
             conn
             |> put_flash(:info, "Password updated successfully")
             |> redirect(to: project_path(conn, :index))

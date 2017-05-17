@@ -1,0 +1,11 @@
+<li class="pt2 f4">
+  <strong><%= assigns[:label] %>:</strong>
+  <%= assigns[:data] %>
+</li>
+
+<!--
+assigns:
+label, (optional label override atom to string)
+data, (eg project)
+atom, (value column name)
+-->

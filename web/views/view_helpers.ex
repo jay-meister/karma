@@ -36,12 +36,16 @@ defmodule Karma.ViewHelpers do
   end
 
   def format_type(type) do
-    formatted_type =
-      case type do
-        "feature" -> "Feature Film"
-        "television" -> "Television"
-      end
+    case type do
+      "feature" -> "Feature Film"
+      "television" -> "Television"
+    end
+  end
 
-    formatted_type
+  def format_label(atom) do
+    atom
+    |> Atom.to_string()
+    |> String.replace("_", " ")
+    |> String.capitalize()
   end
 end

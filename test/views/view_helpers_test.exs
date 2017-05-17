@@ -41,4 +41,10 @@ defmodule Karma.ViewHelpersTest do
     assert formatted_feature == "Feature Film"
     assert formatted_television == "Television"
   end
+
+  test "format_label" do
+    formatted_address = ViewHelpers.format_label(:company_address_2)
+
+    assert formatted_address == "Company address 2"
+  end
 end
