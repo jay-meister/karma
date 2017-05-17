@@ -170,4 +170,4 @@
 </ul>
 
 <%= link "Edit", to: project_offer_path(@conn, :edit, @offer.project_id, @offer) %>
-<%= link "Back", to: project_offer_path(@conn, :index, @project) %>
+<%= link "Back", to: project_offer_path(@conn, :index, @offer.project_id) %>
