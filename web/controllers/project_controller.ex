@@ -11,9 +11,12 @@ defmodule Karma.ProjectController do
     # if project doesn't exist, it should render a 404
     # if current user is owner of the project, add project to assigns
     # if current user is not owner, put permission flash, redirect and halt
-    %{"id" => id} = conn.params
+    project_id = case conn.params do
+      %{"project_id" => project_id} -> project_id # if we are in an offers route
+      %{"id" => project_id} -> project_id # if we are in a projects route
+    end
     user_id = conn.assigns.current_user.id
-    case Repo.get(Project, id) do
+    case Repo.get(Project, project_id) do
       nil ->
         conn
         |> put_flash(:error, "Project could not be found")
