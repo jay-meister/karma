@@ -13,9 +13,19 @@ defmodule Karma.OfferControllerTest do
     {:ok, conn: conn, user: user, project: project, offer: offer}
   end
 
-  test "lists all entries on index", %{conn: conn, offer: offer, project: _project} do
-    conn = get conn, project_offer_path(conn, :index, offer.project_id)
-    assert html_response(conn, 200) =~ "Listing offers"
+
+  test "offers index: a PM can view the offers", %{conn: conn, offer: pending_offer, project: project} do
+    accepted_offer = insert_offer(project, %{accepted: true, target_email: "email_1@gmail.com"})
+    rejected_offer = insert_offer(project, %{accepted: false, target_email: "email_2@gmail.com"})
+
+    conn1 = get conn, project_offer_path(conn, :index, pending_offer.project_id)
+    assert html_response(conn1, 200) =~ pending_offer.target_email
+
+    conn2 = get conn, project_offer_path(conn, :index, accepted_offer.project_id)
+    assert html_response(conn2, 200) =~ accepted_offer.target_email
+
+    conn3 = get conn, project_offer_path(conn, :index, rejected_offer.project_id)
+    assert html_response(conn3, 200) =~ rejected_offer.target_email
   end
 
   test "renders form for new resources", %{conn: conn, offer: _offer, project: _project} do

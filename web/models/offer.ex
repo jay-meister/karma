@@ -103,4 +103,11 @@ defmodule Karma.Offer do
       :active
       ])
   end
+
+  # queries
+  # get projects created by specified user
+  def projects_offers(query, project) do
+    from p in query,
+    where: p.project_id == ^project.id
+  end
 end
