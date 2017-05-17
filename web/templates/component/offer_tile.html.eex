@@ -1,16 +1,19 @@
 <%
+  offer = assigns[:offer]
   status =
-  case "pending" do
-    "pending" -> "bg-gold"
-    "accepted" -> "bg-green"
-    "rejected" -> "bg-red"
+  case offer.accepted do
+    nil -> "bg-gold"
+    true -> "bg-green"
+    false -> "bg-red"
   end
 %>
   <div class="<%= status %> pa3 br3 white k-shadow-1 relative mb3">
-    <div class="dib ma1">example@gmail.com</div>
-    <div class="absolute right-1 top-2 f2">£200/day</div>
+    <div class="dib ma1">
+      <%= offer.target_email %>
+    </div>
+    <div class="absolute right-1 top-2 f2">£<%= offer.fee_per_day_inc_holiday %>/day</div>
     <div>
-      <div class="dib ma1">Crew</div>
-      <div class="dib ma1">Makeup-Artist</div>
+      <div class="dib ma1"><%= offer.department %></div>
+      <div class="dib ma1"><%= offer.job_title %></div>
     </div>
   </div>
