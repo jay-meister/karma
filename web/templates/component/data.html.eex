@@ -1,6 +1,6 @@
 <li class="pt2 f4">
   <strong><%= assigns[:label] || assigns[:atom] %>:</strong>
-  <%= Map.get(assigns[:data], assigns[:atom]) %>
+  <%= assigns[:data] %>
 </li>
 
 <!--

@@ -2,21 +2,22 @@
 <ul class="list pl0">
 
   <%= component "form_divider.html", title: "Project details" %>
-  <%= for {atom, label} <- [
-    {:type, nil},
-    {:budget, nil},
-    {:codename, nil},
-    {:description, nil},
-    {:start_date, nil},
-    {:duration, nil},
-    {:studio_name, nil},
-    {:holiday_rate, nil},
-    {:locations, nil},
-    {:additional_notes, nil}
+  <%= for {atom, label, formatted} <- [
+    {:type, nil, format_type(@project.type)},
+    {:budget, nil, format_budget(@project.budget)},
+    {:codename, nil, nil},
+    {:description, nil, nil},
+    {:start_date, nil, format_date(@project.start_date)},
+    {:duration, nil, format_duration(@project.duration)},
+    {:studio_name, nil, nil},
+    {:holiday_rate, nil, format_holiday_rate(@project.holiday_rate)},
+    {:locations, nil, nil},
+    {:additional_notes, nil, nil}
   ] do %>
     <%= component "data.html",
-    data: @project,
-    atom: atom
+    data: formatted || Map.get(@project, atom),
+    atom: atom,
+    label: label
     %>
   <% end %>
 
@@ -30,7 +31,7 @@
     {:company_address_country, nil}
   ] do %>
     <%= component "data.html",
-    data: @project,
+    data: Map.get(@project, atom),
     atom: atom
     %>
   <% end %>
@@ -44,7 +45,7 @@
     {:operating_base_address_country, nil}
   ] do %>
     <%= component "data.html",
-    data: @project,
+    data: Map.get(@project, atom),
     atom: atom
     %>
   <% end %>
