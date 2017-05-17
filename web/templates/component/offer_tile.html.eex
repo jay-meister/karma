@@ -1,0 +1,16 @@
+<%
+  status =
+  case "pending" do
+    "pending" -> "bg-gold"
+    "accepted" -> "bg-green"
+    "rejected" -> "bg-red"
+  end
+%>
+  <div class="<%= status %> pa3 br3 white k-shadow-1 relative mb3">
+    <div class="dib ma1">example@gmail.com</div>
+    <div class="absolute right-1 top-2 f2">£200/day</div>
+    <div>
+      <div class="dib ma1">Crew</div>
+      <div class="dib ma1">Makeup-Artist</div>
+    </div>
+  </div>
