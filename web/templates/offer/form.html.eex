@@ -1,0 +1,197 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= label f, :target_email, class: "control-label" %>
+    <%= text_input f, :target_email, class: "form-control" %>
+    <%= error_tag f, :target_email %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :department, class: "control-label" %>
+    <%= text_input f, :department, class: "form-control" %>
+    <%= error_tag f, :department %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :job_title, class: "control-label" %>
+    <%= text_input f, :job_title, class: "form-control" %>
+    <%= error_tag f, :job_title %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :contract_type, class: "control-label" %>
+    <%= text_input f, :contract_type, class: "form-control" %>
+    <%= error_tag f, :contract_type %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :start_date, class: "control-label" %>
+    <%= date_select f, :start_date, class: "form-control" %>
+    <%= error_tag f, :start_date %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :daily_or_weekly, class: "control-label" %>
+    <%= text_input f, :daily_or_weekly, class: "form-control" %>
+    <%= error_tag f, :daily_or_weekly %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :working_week, class: "control-label" %>
+    <%= number_input f, :working_week, step: "any", class: "form-control" %>
+    <%= error_tag f, :working_week %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :currency, class: "control-label" %>
+    <%= text_input f, :currency, class: "form-control" %>
+    <%= error_tag f, :currency %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :overtime_rate_per_hour, class: "control-label" %>
+    <%= number_input f, :overtime_rate_per_hour, class: "form-control" %>
+    <%= error_tag f, :overtime_rate_per_hour %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :other_deal_provisions, class: "control-label" %>
+    <%= textarea f, :other_deal_provisions, class: "form-control" %>
+    <%= error_tag f, :other_deal_provisions %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :box_rental_description, class: "control-label" %>
+    <%= textarea f, :box_rental_description, class: "form-control" %>
+    <%= error_tag f, :box_rental_description %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :box_rental_fee_per_week, class: "control-label" %>
+    <%= number_input f, :box_rental_fee_per_week, class: "form-control" %>
+    <%= error_tag f, :box_rental_fee_per_week %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :box_rental_cap, class: "control-label" %>
+    <%= number_input f, :box_rental_cap, class: "form-control" %>
+    <%= error_tag f, :box_rental_cap %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :box_rental_start_date, class: "control-label" %>
+    <%= text_input f, :box_rental_start_date, class: "form-control" %>
+    <%= error_tag f, :box_rental_start_date %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :equipment_rental_description, class: "control-label" %>
+    <%= text_input f, :equipment_rental_description, class: "form-control" %>
+    <%= error_tag f, :equipment_rental_description %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :equipment_rental_fee_per_week, class: "control-label" %>
+    <%= number_input f, :equipment_rental_fee_per_week, class: "form-control" %>
+    <%= error_tag f, :equipment_rental_fee_per_week %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :equipment_rental_cap, class: "control-label" %>
+    <%= number_input f, :equipment_rental_cap, class: "form-control" %>
+    <%= error_tag f, :equipment_rental_cap %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :equipment_rental_start_date, class: "control-label" %>
+    <%= text_input f, :equipment_rental_start_date, class: "form-control" %>
+    <%= error_tag f, :equipment_rental_start_date %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :vehicle_allowance_per_week, class: "control-label" %>
+    <%= number_input f, :vehicle_allowance_per_week, class: "form-control" %>
+    <%= error_tag f, :vehicle_allowance_per_week %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :fee_per_day_inc_holiday, class: "control-label" %>
+    <%= number_input f, :fee_per_day_inc_holiday, class: "form-control" %>
+    <%= error_tag f, :fee_per_day_inc_holiday %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :fee_per_day_exc_holiday, class: "control-label" %>
+    <%= number_input f, :fee_per_day_exc_holiday, class: "form-control" %>
+    <%= error_tag f, :fee_per_day_exc_holiday %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :fee_per_week_inc_holiday, class: "control-label" %>
+    <%= number_input f, :fee_per_week_inc_holiday, class: "form-control" %>
+    <%= error_tag f, :fee_per_week_inc_holiday %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :fee_per_week_exc_holiday, class: "control-label" %>
+    <%= number_input f, :fee_per_week_exc_holiday, class: "form-control" %>
+    <%= error_tag f, :fee_per_week_exc_holiday %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :holiday_pay_per_day, class: "control-label" %>
+    <%= number_input f, :holiday_pay_per_day, class: "form-control" %>
+    <%= error_tag f, :holiday_pay_per_day %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :holiday_pay_per_week, class: "control-label" %>
+    <%= number_input f, :holiday_pay_per_week, class: "form-control" %>
+    <%= error_tag f, :holiday_pay_per_week %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :sixth_day_fee, class: "control-label" %>
+    <%= number_input f, :sixth_day_fee, class: "form-control" %>
+    <%= error_tag f, :sixth_day_fee %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :seventh_day_fee, class: "control-label" %>
+    <%= number_input f, :seventh_day_fee, class: "form-control" %>
+    <%= error_tag f, :seventh_day_fee %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :additional_notes, class: "control-label" %>
+    <%= textarea f, :additional_notes, class: "form-control" %>
+    <%= error_tag f, :additional_notes %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :accepted, class: "control-label" %>
+    <%= checkbox f, :accepted, class: "form-control" %>
+    <%= error_tag f, :accepted %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :active, class: "control-label" %>
+    <%= checkbox f, :active, class: "form-control" %>
+    <%= error_tag f, :active %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :contractor_details_verified, class: "control-label" %>
+    <%= checkbox f, :contractor_details_verified, class: "form-control" %>
+    <%= error_tag f, :contractor_details_verified %>
+  </div>
+
+  <div class="form-group">
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>

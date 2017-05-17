@@ -1,0 +1,173 @@
+<h2>Show offer</h2>
+
+<ul>
+
+  <li>
+    <strong>Target email:</strong>
+    <%= @offer.target_email %>
+  </li>
+
+  <li>
+    <strong>User:</strong>
+    <%= @offer.user_id %>
+  </li>
+
+  <li>
+    <strong>Project:</strong>
+    <%= @offer.project_id %>
+  </li>
+
+  <li>
+    <strong>Department:</strong>
+    <%= @offer.department %>
+  </li>
+
+  <li>
+    <strong>Job title:</strong>
+    <%= @offer.job_title %>
+  </li>
+
+  <li>
+    <strong>Contract type:</strong>
+    <%= @offer.contract_type %>
+  </li>
+
+  <li>
+    <strong>Start date:</strong>
+    <%= @offer.start_date %>
+  </li>
+
+  <li>
+    <strong>Daily or weekly:</strong>
+    <%= @offer.daily_or_weekly %>
+  </li>
+
+  <li>
+    <strong>Working week:</strong>
+    <%= @offer.working_week %>
+  </li>
+
+  <li>
+    <strong>Currency:</strong>
+    <%= @offer.currency %>
+  </li>
+
+  <li>
+    <strong>Overtime rate per hour:</strong>
+    <%= @offer.overtime_rate_per_hour %>
+  </li>
+
+  <li>
+    <strong>Other deal provisions:</strong>
+    <%= @offer.other_deal_provisions %>
+  </li>
+
+  <li>
+    <strong>Box rental description:</strong>
+    <%= @offer.box_rental_description %>
+  </li>
+
+  <li>
+    <strong>Box rental fee per week:</strong>
+    <%= @offer.box_rental_fee_per_week %>
+  </li>
+
+  <li>
+    <strong>Box rental cap:</strong>
+    <%= @offer.box_rental_cap %>
+  </li>
+
+  <li>
+    <strong>Box rental start date:</strong>
+    <%= @offer.box_rental_start_date %>
+  </li>
+
+  <li>
+    <strong>Equipment rental description:</strong>
+    <%= @offer.equipment_rental_description %>
+  </li>
+
+  <li>
+    <strong>Equipment rental fee per week:</strong>
+    <%= @offer.equipment_rental_fee_per_week %>
+  </li>
+
+  <li>
+    <strong>Equipment rental cap:</strong>
+    <%= @offer.equipment_rental_cap %>
+  </li>
+
+  <li>
+    <strong>Equipment rental start date:</strong>
+    <%= @offer.equipment_rental_start_date %>
+  </li>
+
+  <li>
+    <strong>Vehicle allowance per week:</strong>
+    <%= @offer.vehicle_allowance_per_week %>
+  </li>
+
+  <li>
+    <strong>Fee per day inc holiday:</strong>
+    <%= @offer.fee_per_day_inc_holiday %>
+  </li>
+
+  <li>
+    <strong>Fee per day exc holiday:</strong>
+    <%= @offer.fee_per_day_exc_holiday %>
+  </li>
+
+  <li>
+    <strong>Fee per week inc holiday:</strong>
+    <%= @offer.fee_per_week_inc_holiday %>
+  </li>
+
+  <li>
+    <strong>Fee per week exc holiday:</strong>
+    <%= @offer.fee_per_week_exc_holiday %>
+  </li>
+
+  <li>
+    <strong>Holiday pay per day:</strong>
+    <%= @offer.holiday_pay_per_day %>
+  </li>
+
+  <li>
+    <strong>Holiday pay per week:</strong>
+    <%= @offer.holiday_pay_per_week %>
+  </li>
+
+  <li>
+    <strong>Sixth day fee:</strong>
+    <%= @offer.sixth_day_fee %>
+  </li>
+
+  <li>
+    <strong>Seventh day fee:</strong>
+    <%= @offer.seventh_day_fee %>
+  </li>
+
+  <li>
+    <strong>Additional notes:</strong>
+    <%= @offer.additional_notes %>
+  </li>
+
+  <li>
+    <strong>Accepted:</strong>
+    <%= @offer.accepted %>
+  </li>
+
+  <li>
+    <strong>Active:</strong>
+    <%= @offer.active %>
+  </li>
+
+  <li>
+    <strong>Contractor details verified:</strong>
+    <%= @offer.contractor_details_verified %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: offer_path(@conn, :edit, @offer) %>
+<%= link "Back", to: offer_path(@conn, :index) %>

@@ -1,0 +1,90 @@
+<h2>Listing offers</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Target email</th>
+      <th>User</th>
+      <th>Project</th>
+      <th>Department</th>
+      <th>Job title</th>
+      <th>Contract type</th>
+      <th>Start date</th>
+      <th>Daily or weekly</th>
+      <th>Working week</th>
+      <th>Currency</th>
+      <th>Overtime rate per hour</th>
+      <th>Other deal provisions</th>
+      <th>Box rental description</th>
+      <th>Box rental fee per week</th>
+      <th>Box rental cap</th>
+      <th>Box rental start date</th>
+      <th>Equipment rental description</th>
+      <th>Equipment rental fee per week</th>
+      <th>Equipment rental cap</th>
+      <th>Equipment rental start date</th>
+      <th>Vehicle allowance per week</th>
+      <th>Fee per day inc holiday</th>
+      <th>Fee per day exc holiday</th>
+      <th>Fee per week inc holiday</th>
+      <th>Fee per week exc holiday</th>
+      <th>Holiday pay per day</th>
+      <th>Holiday pay per week</th>
+      <th>Sixth day fee</th>
+      <th>Seventh day fee</th>
+      <th>Additional notes</th>
+      <th>Accepted</th>
+      <th>Active</th>
+      <th>Contractor details verified</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for offer <- @offers do %>
+    <tr>
+      <td><%= offer.target_email %></td>
+      <td><%= offer.user_id %></td>
+      <td><%= offer.project_id %></td>
+      <td><%= offer.department %></td>
+      <td><%= offer.job_title %></td>
+      <td><%= offer.contract_type %></td>
+      <td><%= offer.start_date %></td>
+      <td><%= offer.daily_or_weekly %></td>
+      <td><%= offer.working_week %></td>
+      <td><%= offer.currency %></td>
+      <td><%= offer.overtime_rate_per_hour %></td>
+      <td><%= offer.other_deal_provisions %></td>
+      <td><%= offer.box_rental_description %></td>
+      <td><%= offer.box_rental_fee_per_week %></td>
+      <td><%= offer.box_rental_cap %></td>
+      <td><%= offer.box_rental_start_date %></td>
+      <td><%= offer.equipment_rental_description %></td>
+      <td><%= offer.equipment_rental_fee_per_week %></td>
+      <td><%= offer.equipment_rental_cap %></td>
+      <td><%= offer.equipment_rental_start_date %></td>
+      <td><%= offer.vehicle_allowance_per_week %></td>
+      <td><%= offer.fee_per_day_inc_holiday %></td>
+      <td><%= offer.fee_per_day_exc_holiday %></td>
+      <td><%= offer.fee_per_week_inc_holiday %></td>
+      <td><%= offer.fee_per_week_exc_holiday %></td>
+      <td><%= offer.holiday_pay_per_day %></td>
+      <td><%= offer.holiday_pay_per_week %></td>
+      <td><%= offer.sixth_day_fee %></td>
+      <td><%= offer.seventh_day_fee %></td>
+      <td><%= offer.additional_notes %></td>
+      <td><%= offer.accepted %></td>
+      <td><%= offer.active %></td>
+      <td><%= offer.contractor_details_verified %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: offer_path(@conn, :show, offer), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: offer_path(@conn, :edit, offer), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: offer_path(@conn, :delete, offer), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New offer", to: offer_path(@conn, :new) %>
