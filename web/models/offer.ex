@@ -15,11 +15,11 @@ defmodule Karma.Offer do
     field :box_rental_description, :string
     field :box_rental_fee_per_week, :integer
     field :box_rental_cap, :integer
-    field :box_rental_start_date, :string
+    field :box_rental_period, :string
     field :equipment_rental_description, :string
     field :equipment_rental_fee_per_week, :integer
     field :equipment_rental_cap, :integer
-    field :equipment_rental_start_date, :string
+    field :equipment_rental_period, :string
     field :vehicle_allowance_per_week, :integer
     field :fee_per_day_inc_holiday, :integer
     field :fee_per_day_exc_holiday, :integer
@@ -27,12 +27,12 @@ defmodule Karma.Offer do
     field :fee_per_week_exc_holiday, :integer
     field :holiday_pay_per_day, :integer
     field :holiday_pay_per_week, :integer
-    field :sixth_day_fee, :integer
-    field :seventh_day_fee, :integer
+    field :sixth_day_fee, :float
+    field :seventh_day_fee, :float
     field :additional_notes, :string
-    field :accepted, :boolean, default: false
-    field :active, :boolean, default: false
-    field :contractor_details_verified, :boolean, default: false
+    field :accepted, :boolean, default: nil
+    field :active, :boolean, default: true
+    field :contractor_details_accepted, :boolean, default: nil
     belongs_to :user, Karma.User
     belongs_to :project, Karma.Project
 
@@ -44,7 +44,63 @@ defmodule Karma.Offer do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:target_email, :department, :job_title, :contract_type, :start_date, :daily_or_weekly, :working_week, :currency, :overtime_rate_per_hour, :other_deal_provisions, :box_rental_description, :box_rental_fee_per_week, :box_rental_cap, :box_rental_start_date, :equipment_rental_description, :equipment_rental_fee_per_week, :equipment_rental_cap, :equipment_rental_start_date, :vehicle_allowance_per_week, :fee_per_day_inc_holiday, :fee_per_day_exc_holiday, :fee_per_week_inc_holiday, :fee_per_week_exc_holiday, :holiday_pay_per_day, :holiday_pay_per_week, :sixth_day_fee, :seventh_day_fee, :additional_notes, :accepted, :active, :contractor_details_verified])
-    |> validate_required([:target_email, :department, :job_title, :contract_type, :start_date, :daily_or_weekly, :working_week, :currency, :overtime_rate_per_hour, :other_deal_provisions, :box_rental_description, :box_rental_fee_per_week, :box_rental_cap, :box_rental_start_date, :equipment_rental_description, :equipment_rental_fee_per_week, :equipment_rental_cap, :equipment_rental_start_date, :vehicle_allowance_per_week, :fee_per_day_inc_holiday, :fee_per_day_exc_holiday, :fee_per_week_inc_holiday, :fee_per_week_exc_holiday, :holiday_pay_per_day, :holiday_pay_per_week, :sixth_day_fee, :seventh_day_fee, :additional_notes, :accepted, :active, :contractor_details_verified])
+    |> cast(params, [
+      :target_email,
+      :department,
+      :job_title,
+      :contract_type,
+      :start_date,
+      :daily_or_weekly,
+      :working_week,
+      :currency,
+      :overtime_rate_per_hour,
+      :other_deal_provisions,
+      :box_rental_description,
+      :box_rental_fee_per_week,
+      :box_rental_cap,
+      :box_rental_period,
+      :equipment_rental_description,
+      :equipment_rental_fee_per_week,
+      :equipment_rental_cap,
+      :equipment_rental_period,
+      :vehicle_allowance_per_week,
+      :fee_per_day_inc_holiday,
+      :fee_per_day_exc_holiday,
+      :fee_per_week_inc_holiday,
+      :fee_per_week_exc_holiday,
+      :holiday_pay_per_day,
+      :holiday_pay_per_week,
+      :sixth_day_fee,
+      :seventh_day_fee,
+      :additional_notes,
+      :accepted,
+      :active,
+      :contractor_details_accepted,
+      :project_id])
+    |> validate_required([
+      :target_email
+      # :department,
+      # :job_title,
+      # :contract_type,
+      # :start_date,
+      # :daily_or_weekly,
+      # :working_week,
+      # :currency,
+      # :overtime_rate_per_hour,
+      # :other_deal_provisions,
+      # :box_rental_description,
+      # :box_rental_fee_per_week,
+      # :box_rental_cap,
+      # :box_rental_period,
+      # :equipment_rental_description,
+      # :equipment_rental_fee_per_week,
+      # :equipment_rental_cap,
+      # :equipment_rental_period,
+      # :vehicle_allowance_per_week,
+      # :fee_per_day_inc_holiday,
+      # :sixth_day_fee,
+      # :seventh_day_fee,
+      # :active
+      ])
   end
 end

@@ -79,7 +79,7 @@
 
   <li>
     <strong>Box rental start date:</strong>
-    <%= @offer.box_rental_start_date %>
+    <%= @offer.box_rental_period %>
   </li>
 
   <li>
@@ -99,7 +99,7 @@
 
   <li>
     <strong>Equipment rental start date:</strong>
-    <%= @offer.equipment_rental_start_date %>
+    <%= @offer.equipment_rental_period %>
   </li>
 
   <li>
@@ -164,10 +164,10 @@
 
   <li>
     <strong>Contractor details verified:</strong>
-    <%= @offer.contractor_details_verified %>
+    <%= @offer.contractor_details_accepted %>
   </li>
 
 </ul>
 
-<%= link "Edit", to: offer_path(@conn, :edit, @offer) %>
-<%= link "Back", to: offer_path(@conn, :index) %>
+<%= link "Edit", to: project_offer_path(@conn, :edit, @offer.project_id, @offer) %>
+<%= link "Back", to: project_offer_path(@conn, :index, @project) %>

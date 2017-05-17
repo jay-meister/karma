@@ -84,9 +84,9 @@
   </div>
 
   <div class="form-group">
-    <%= label f, :box_rental_start_date, class: "control-label" %>
-    <%= text_input f, :box_rental_start_date, class: "form-control" %>
-    <%= error_tag f, :box_rental_start_date %>
+    <%= label f, :box_rental_period, class: "control-label" %>
+    <%= text_input f, :box_rental_period, class: "form-control" %>
+    <%= error_tag f, :box_rental_period %>
   </div>
 
   <div class="form-group">
@@ -108,9 +108,9 @@
   </div>
 
   <div class="form-group">
-    <%= label f, :equipment_rental_start_date, class: "control-label" %>
-    <%= text_input f, :equipment_rental_start_date, class: "form-control" %>
-    <%= error_tag f, :equipment_rental_start_date %>
+    <%= label f, :equipment_rental_period, class: "control-label" %>
+    <%= text_input f, :equipment_rental_period, class: "form-control" %>
+    <%= error_tag f, :equipment_rental_period %>
   </div>
 
   <div class="form-group">
@@ -186,9 +186,9 @@
   </div>
 
   <div class="form-group">
-    <%= label f, :contractor_details_verified, class: "control-label" %>
-    <%= checkbox f, :contractor_details_verified, class: "form-control" %>
-    <%= error_tag f, :contractor_details_verified %>
+    <%= label f, :contractor_details_accepted, class: "control-label" %>
+    <%= checkbox f, :contractor_details_accepted, class: "form-control" %>
+    <%= error_tag f, :contractor_details_accepted %>
   </div>
 
   <div class="form-group">

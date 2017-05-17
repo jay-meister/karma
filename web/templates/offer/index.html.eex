@@ -58,11 +58,11 @@
       <td><%= offer.box_rental_description %></td>
       <td><%= offer.box_rental_fee_per_week %></td>
       <td><%= offer.box_rental_cap %></td>
-      <td><%= offer.box_rental_start_date %></td>
+      <td><%= offer.box_rental_period %></td>
       <td><%= offer.equipment_rental_description %></td>
       <td><%= offer.equipment_rental_fee_per_week %></td>
       <td><%= offer.equipment_rental_cap %></td>
-      <td><%= offer.equipment_rental_start_date %></td>
+      <td><%= offer.equipment_rental_period %></td>
       <td><%= offer.vehicle_allowance_per_week %></td>
       <td><%= offer.fee_per_day_inc_holiday %></td>
       <td><%= offer.fee_per_day_exc_holiday %></td>
@@ -75,16 +75,16 @@
       <td><%= offer.additional_notes %></td>
       <td><%= offer.accepted %></td>
       <td><%= offer.active %></td>
-      <td><%= offer.contractor_details_verified %></td>
+      <td><%= offer.contractor_details_accepted %></td>
 
       <td class="text-right">
-        <%= link "Show", to: offer_path(@conn, :show, offer), class: "btn btn-default btn-xs" %>
-        <%= link "Edit", to: offer_path(@conn, :edit, offer), class: "btn btn-default btn-xs" %>
-        <%= link "Delete", to: offer_path(@conn, :delete, offer), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+        <%= link "Show", to: project_offer_path(@conn, :show, @project_id, offer), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: project_offer_path(@conn, :edit, @project_id, offer), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: project_offer_path(@conn, :delete, @project_id, offer), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
       </td>
     </tr>
 <% end %>
   </tbody>
 </table>
 
-<%= link "New offer", to: offer_path(@conn, :new) %>
+<%= link "New offer", to: project_offer_path(@conn, :new, 1) %>

@@ -16,11 +16,11 @@ defmodule Karma.Repo.Migrations.CreateOffer do
       add :box_rental_description, :text
       add :box_rental_fee_per_week, :integer
       add :box_rental_cap, :integer
-      add :box_rental_start_date, :string
+      add :box_rental_period, :string
       add :equipment_rental_description, :string
       add :equipment_rental_fee_per_week, :integer
       add :equipment_rental_cap, :integer
-      add :equipment_rental_start_date, :string
+      add :equipment_rental_period, :string
       add :vehicle_allowance_per_week, :integer
       add :fee_per_day_inc_holiday, :integer
       add :fee_per_day_exc_holiday, :integer
@@ -28,12 +28,12 @@ defmodule Karma.Repo.Migrations.CreateOffer do
       add :fee_per_week_exc_holiday, :integer
       add :holiday_pay_per_day, :integer
       add :holiday_pay_per_week, :integer
-      add :sixth_day_fee, :integer
-      add :seventh_day_fee, :integer
+      add :sixth_day_fee, :float
+      add :seventh_day_fee, :float
       add :additional_notes, :text
-      add :accepted, :boolean, default: false, null: false
-      add :active, :boolean, default: false, null: false
-      add :contractor_details_verified, :boolean, default: false, null: false
+      add :accepted, :boolean, default: nil
+      add :active, :boolean, default: true
+      add :contractor_details_accepted, :boolean, default: nil
       add :user_id, references(:users, on_delete: :nothing)
       add :project_id, references(:projects, on_delete: :nothing)
 
