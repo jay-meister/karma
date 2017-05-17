@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Hello Karma!</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/tachyons@4.7.0/css/tachyons.min.css"/>
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+  </head>
+
+  <body class="bg-white k-indigo mt0">
+    <div class="container">
+        <nav role="navigation">
+          <ul class="nav nav-pills pull-left">
+            <%= if @current_user do %>
+            <a href="/">
+              <img src="/images/logo-blue.png" class="w3"  />
+            </a>
+            <% end %>
+          </ul>
+          <ul class="nav nav-pills pull-right">
+            <%= if @current_user do %>
+            <%= link "My Profile", to: user_path(@conn, :show, @current_user), class: "back-button link pa3" %>
+            <%= link "Log Out", to: session_path(@conn, :delete, @current_user), method: "delete", class: "back-button link pa3 k-lh-3" %>
+            <% end %>
+          </ul>
+        </nav>
+    </div>
+
+      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+
+      <main role="main">
+        <%= render @view_module, @view_template, assigns %>
+      </main>
+
+    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+  </body>
+</html>

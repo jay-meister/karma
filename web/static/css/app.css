@@ -21,6 +21,10 @@ body {
   outline: 0;
 }
 
+.k-ftitle {
+  font-size: 7rem;
+}
+
 
 .k-h1px {
   height: 1px;
@@ -146,6 +150,10 @@ body {
 
 .k-w4-5 {
   width: 10rem;
+}
+
+.k-w6 {
+  width: 24rem;
 }
 
 .k-w1px {

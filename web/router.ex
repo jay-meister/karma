@@ -29,6 +29,7 @@ defmodule Karma.Router do
   scope "/", Karma do
     pipe_through [:browser, :authenticate]
     resources "/projects", ProjectController
+    get "/projects/:id/offers", ProjectController, :offers
   end
 
   # Other scopes may use custom stacks.

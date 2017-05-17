@@ -1,10 +1,10 @@
 defmodule Karma.ProjectController do
   use Karma.Web, :controller
 
-  alias Karma.Project
+  alias Karma.{Project, LayoutView}
 
 
-  plug :project_owner when action in [:show, :edit, :update, :delete]
+  plug :project_owner when action in [:show, :edit, :update, :delete, :offers]
 
   # project owner plug
   def project_owner(conn, _) do
@@ -95,5 +95,10 @@ defmodule Karma.ProjectController do
     conn
     |> put_flash(:info, "Project deleted successfully.")
     |> redirect(to: project_path(conn, :index))
+  end
+
+  def offers(conn, %{"id" => id}) do
+    project = Repo.get!(Project, id)
+    render conn, "offers.html", layout: {LayoutView, "no_container.html"}, project: project
   end
 end
