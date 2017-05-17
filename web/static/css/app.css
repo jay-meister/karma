@@ -148,6 +148,14 @@ body {
   padding-left: 3rem;
 }
 
+.k-top-2-5 {
+  top: 2.5rem;
+}
+
+.k-shadow-1 {
+  box-shadow: 2px 2px 5px #888888;
+}
+
 .k-w4-5 {
   width: 10rem;
 }
