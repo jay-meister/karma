@@ -28,9 +28,9 @@ defmodule Karma.OfferControllerTest do
     assert html_response(conn3, 200) =~ rejected_offer.target_email
   end
 
-  test "renders form for new resources", %{conn: conn, offer: _offer, project: _project} do
-    conn = get conn, project_offer_path(conn, :new, 1)
-    assert html_response(conn, 200) =~ "New offer"
+  test "renders form for new resources", %{conn: conn, offer: _offer, project: project} do
+    conn = get conn, project_offer_path(conn, :new, project)
+    assert html_response(conn, 200) =~ "Make new offer"
   end
 
   test "creates resource and redirects when data is valid", %{conn: conn, offer: _offer, project: _project} do
@@ -39,9 +39,9 @@ defmodule Karma.OfferControllerTest do
     assert Repo.get_by(Offer, default_offer())
   end
 
-  test "does not create resource and renders errors when data is invalid", %{conn: conn, offer: _offer, project: _project} do
-    conn = post conn, project_offer_path(conn, :create, 1), offer: @invalid_attrs
-    assert html_response(conn, 200) =~ "New offer"
+  test "does not create resource and renders errors when data is invalid", %{conn: conn, offer: _offer, project: project} do
+    conn = post conn, project_offer_path(conn, :create, project), offer: @invalid_attrs
+    assert html_response(conn, 200) =~ "Make new offer"
   end
 
   # test cant view offers for other projects not involved with

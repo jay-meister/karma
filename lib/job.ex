@@ -20,7 +20,7 @@ defmodule Karma.Job do
       "Electrical",
       "Greens",
       "Grip",
-      "Hair and Makeup",
+      "Hair And Makeup",
       "IT",
       "Locations",
       "Medical",

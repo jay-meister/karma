@@ -39,27 +39,23 @@ defmodule Karma.Controllers.Helpers do
   def determine_contract_type(department, job_title) do
     case department do
       "Accounts" ->
-        
           case job_title == "Financial Controller" || job_title == "Production Accountant" do
             true -> sch_d()
             false -> paye()
           end
       "Action Vehicles" -> paye()
       "Assistant Director" ->
-        
           case job_title == "1st Assistant Director" do
             true -> sch_d()
             false -> paye()
           end
       "Aerial" -> sch_d()
       "Animals" ->
-        
           case job_title == "Animal Wrangler" || job_title == "Horse Master" do
             true -> sch_d()
             false -> paye()
           end
       "Armoury" ->
-        
           case Enum.member?(["Archery Instructor",
           "Armourer",
           "Firearms Supervisor",
@@ -69,7 +65,6 @@ defmodule Karma.Controllers.Helpers do
           "Standby Armourer"], job_title) do
             true -> sch_d()
             false ->
-              
                 case Enum.member?(["Armoury Model Maker",
                 "Senior Model Maker"], job_title) do
                   true -> conditional()
@@ -77,7 +72,6 @@ defmodule Karma.Controllers.Helpers do
                 end
           end
       "Art" ->
-        
           case Enum.member?(["Art Director",
           "Production Designer",
           "Senior Art Director",
@@ -87,7 +81,6 @@ defmodule Karma.Controllers.Helpers do
           "Supervising Art Director"], job_title) do
             true -> sch_d()
             false ->
-              
                 case Enum.member?(["Graphic Artist",
                 "Graphic Designer",
                 "Model Maker",
@@ -98,21 +91,18 @@ defmodule Karma.Controllers.Helpers do
                 end
           end
       "Camera" ->
-        
-          case Enum.member?(["Director of Photography",
+          case Enum.member?(["Director Of Photography",
           "DIT",
           "Steadicam Operator",
           "Stills Photographer"], job_title) do
             true -> sch_d()
             false ->
-              
                 case job_title == "Camera Operator" do
                   true -> conditional()
                   false -> paye()
                 end
           end
       "Cast" ->
-        
           case Enum.member?(["Actor Double",
           "Cast Assistant",
           "Cast Chef",
@@ -121,14 +111,12 @@ defmodule Karma.Controllers.Helpers do
           "Stand In"], job_title) do
             true -> paye()
             false ->
-              
                 case job_title == "Unit Driver" do
                   true -> conditional()
                   false -> sch_d()
                 end
           end
       "Construction" ->
-        
           case Enum.member?(["Buyer",
           "Construction Manager",
           "Cast Chef",
@@ -136,7 +124,6 @@ defmodule Karma.Controllers.Helpers do
           "Sculptor"], job_title) do
             true -> sch_d()
             false ->
-              
                 case job_title == "Scenic Painter" do
                   true -> conditional()
                   false -> paye()
@@ -148,7 +135,6 @@ defmodule Karma.Controllers.Helpers do
           false -> paye()
         end
       "Costume" ->
-        
           case Enum.member?(["Buyer",
           "Costume Consultant",
           "Costume Designer",
@@ -159,7 +145,6 @@ defmodule Karma.Controllers.Helpers do
           "Jewellery Modeller"], job_title) do
             true -> sch_d()
             false ->
-              
                 case Enum.member?(["Assistant Costume Designer",
                 "Costume Illustrator",
                 "Costume Supervisor",
@@ -171,19 +156,16 @@ defmodule Karma.Controllers.Helpers do
                 end
           end
       "DIT" ->
-        
           case job_title == "Array DIT" || job_title == "DIT" do
             true -> conditional()
             false -> paye()
           end
       "Drapes" ->
-        
           case job_title == "Drapes Master" do
             true -> conditional()
             false -> paye()
           end
       "Editorial" ->
-        
           case Enum.member?(["Assembly Editor",
           "Associate Editor",
           "Editor",
@@ -192,15 +174,14 @@ defmodule Karma.Controllers.Helpers do
              false -> paye()
           end
       "Electrical" ->
-        
           case Enum.member?(["Gaffer",
           "HOD Electrical Rigger",
           "HOD Rigger",
           "Rigging Gaffer",
-          "Underwater Gaffer"], job_title) do
+          "Underwater Gaffer",
+          "VFX Editor"], job_title) do
             true -> sch_d()
             false ->
-              
                 case job_title == "Balloon Technician" do
                   true -> conditional()
                   false -> paye()
@@ -208,7 +189,6 @@ defmodule Karma.Controllers.Helpers do
           end
       "Greens" -> paye()
       "Grip" ->
-        
           case Enum.member?(["Assistant Grip",
           "Grip Rigger",
           "Grip Trainee"], job_title) do
@@ -222,8 +202,7 @@ defmodule Karma.Controllers.Helpers do
                 false -> sch_d()
               end
           end
-      "Hair and Makeup" ->
-        
+      "Hair And Makeup" ->
           case Enum.member?(["Crowd Hair/Makeup Supervisor",
           "Crowd Makeup Artist",
           "Hair & Makeup Artist",
@@ -237,7 +216,6 @@ defmodule Karma.Controllers.Helpers do
           end
       "IT" -> paye()
       "Locations" ->
-        
           case Enum.member?(["Location Manager",
           "Supervising Location Manager"], job_title) do
             true -> sch_d()
@@ -247,13 +225,11 @@ defmodule Karma.Controllers.Helpers do
       "Military" -> sch_d()
       "Photography" -> conditional()
       "Post Production" ->
-        
           case job_title == "Coordinator" do
             true -> paye()
             false -> sch_d()
           end
       "Production" ->
-        
           case Enum.member?(["Co-Producer",
           "Executive Producer",
           "Line Producer",
@@ -266,7 +242,6 @@ defmodule Karma.Controllers.Helpers do
             false -> paye()
           end
       "Props" ->
-        
           case Enum.member?(["3D Modeller",
           "Action Prop Buyer",
           "HOD Prop Modeller",
@@ -279,7 +254,6 @@ defmodule Karma.Controllers.Helpers do
           "Senior Modeller"], job_title) do
             true -> sch_d()
             false ->
-              
                 case Enum.member?(["Chargehand Dressing Prop",
                 "Chargehand Prop",
                 "Drapesmaster",
@@ -292,16 +266,15 @@ defmodule Karma.Controllers.Helpers do
                   true -> conditional()
                   false -> paye()
                 end
+          end
       "Publicity" -> sch_d()
       "Rigging" ->
-        
           case job_title == "HOD Rigger" do
             true -> sch_d()
             false -> paye()
           end
       "Security" -> paye()
       "Set Dec" ->
-        
           case Enum.member?(["Art Director",
           "Graphic Designer",
           "Location Buyer",
@@ -309,14 +282,12 @@ defmodule Karma.Controllers.Helpers do
           "Set Decorator"], job_title) do
              true -> sch_d()
              false ->
-               
                  case job_title == "Scenic Textile Artist" do
                    true -> conditional()
                    false -> paye()
                  end
           end
       "SFX" ->
-        
           case Enum.member?(["Floor Director",
           "Lead Snr SFX Technician",
           "Prep Lead Senior Tech",
@@ -331,7 +302,6 @@ defmodule Karma.Controllers.Helpers do
              false -> paye()
           end
       "Sound" ->
-        
           case Enum.member?(["Production Sound Mixer",
           "Sound Maintenance",
           "Sound Mixer"], job_title) do
@@ -341,13 +311,11 @@ defmodule Karma.Controllers.Helpers do
       "Standby" -> paye()
       "Studio Unit" -> paye()
       "Stunts" ->
-        
           case Enum.member?(["Rigger",
           "Stunt Department Coordinator",
           "Stunt Department Supervisor"], job_title) do
              true -> paye()
              false ->
-               
                  case job_title == "Wire Rigger" do
                    true -> conditional()
                    false -> sch_d()
@@ -355,12 +323,10 @@ defmodule Karma.Controllers.Helpers do
           end
       "Supporting Artist" -> sch_d()
       "Transport" ->
-        
           case Enum.member?(["Transport Captain",
           "Transport Manager"], job_title) do
             true -> sch_d()
             false ->
-              
                 case job_title == "Unit Driver" do
                   true -> conditional()
                   false -> paye()
@@ -368,14 +334,12 @@ defmodule Karma.Controllers.Helpers do
           end
       "Underwater" -> sch_d()
       "VFX" ->
-        
           case job_title == "VFX Producer" do
             true -> sch_d()
             false -> paye()
           end
       "Video" -> paye()
       "Voice" -> sch_d()
-      end
     end
   end
 end
