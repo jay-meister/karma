@@ -96,9 +96,15 @@ defmodule Karma.OfferControllerTest do
     end
   end
 
-  test "renders form for editing chosen resource", %{conn: conn, offer: _offer, project: _project} do
-    offer = Repo.insert! %Offer{}
-    conn = get conn, project_offer_path(conn, :edit, 1, offer)
+  test "editing offer forbidden if offer is not pending", %{conn: conn, offer: offer, project: project} do
+    accepted_offer = insert_offer(project, %{target_email: "different@gmail.com", accepted: false})
+    conn = get conn, project_offer_path(conn, :edit, offer.project_id, accepted_offer)
+    assert Phoenix.Controller.get_flash(conn, :error) =~ "You can only edit pending offers"
+    assert redirected_to(conn) == project_offer_path(conn, :index, project)
+  end
+
+  test "renders form for editing if offer is still pending", %{conn: conn, offer: offer} do
+    conn = get conn, project_offer_path(conn, :edit, offer.project_id, offer)
     assert html_response(conn, 200) =~ "Edit offer"
   end
 

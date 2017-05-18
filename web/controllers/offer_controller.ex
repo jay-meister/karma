@@ -57,9 +57,15 @@ defmodule Karma.OfferController do
   end
 
   def edit(conn, %{"project_id" => project_id, "id" => id}) do
-    offer = Repo.get!(Offer, id)
-    changeset = Offer.changeset(offer)
-    render(conn, "edit.html", offer: offer, changeset: changeset)
+    case offer = Repo.get!(Offer, id) do
+      %Offer{accepted: nil} ->
+        changeset = Offer.changeset(offer)
+        render(conn, "edit.html", offer: offer, changeset: changeset)
+      %Offer{} ->
+        conn
+        |> put_flash(:error, "You can only edit pending offers")
+        |> redirect(to: project_offer_path(conn, :index, project_id))
+    end
   end
 
   def update(conn, %{"project_id" => project_id, "id" => id, "offer" => offer_params}) do
