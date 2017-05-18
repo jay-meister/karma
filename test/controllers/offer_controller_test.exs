@@ -2,7 +2,7 @@ defmodule Karma.OfferControllerTest do
   use Karma.ConnCase
 
   alias Karma.Offer
-  @invalid_attrs %{}
+  @invalid_attrs default_offer(%{daily_or_weekly: "monthly"})
 
 
   setup do
@@ -39,8 +39,8 @@ defmodule Karma.OfferControllerTest do
     assert Repo.get_by(Offer, default_offer())
   end
 
-  test "does not create resource and renders errors when data is invalid", %{conn: conn, offer: _offer, project: _project} do
-    conn = post conn, project_offer_path(conn, :create, 1), offer: @invalid_attrs
+  test "does not create resource and renders errors when data is invalid", %{conn: conn, project: project} do
+    conn = post conn, project_offer_path(conn, :create, project), offer: @invalid_attrs
     assert html_response(conn, 200) =~ "New offer"
   end
 
