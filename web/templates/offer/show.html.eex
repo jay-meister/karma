@@ -8,7 +8,7 @@
     {:contractor_details_accepted, nil, nil}
   ] do %>
     <%= component "data.html",
-    data: formatted || Map.get(@project, atom),
+    data: formatted || Map.get(@offer, atom),
     label: label || format_label(atom)
     %>
   <% end %>
@@ -19,13 +19,13 @@
     {:department, nil, nil},
     {:job_title, nil, nil},
     {:contract_type, nil, nil},
-    {:start_date, nil, format_date(@project.start_date)},
+    {:start_date, nil, format_date(@offer.start_date)},
     {:daily_or_weekly, nil, nil},
     {:working_week, nil, nil},
     {:additional_notes, nil, nil}
   ] do %>
     <%= component "data.html",
-    data: formatted || Map.get(@project, atom),
+    data: formatted || Map.get(@offer, atom),
     label: label || format_label(atom)
     %>
   <% end %>
@@ -44,7 +44,7 @@
     {:seventh_day_fee, nil, nil}
   ] do %>
     <%= component "data.html",
-    data: formatted || Map.get(@project, atom),
+    data: formatted || Map.get(@offer, atom),
     label: label || format_label(atom)
     %>
   <% end %>
@@ -63,7 +63,7 @@
     {:vehicle_allowance_per_week, nil, nil}
   ] do %>
     <%= component "data.html",
-    data: formatted || Map.get(@project, atom),
+    data: formatted || Map.get(@offer, atom),
     label: label || format_label(atom)
     %>
   <% end %>

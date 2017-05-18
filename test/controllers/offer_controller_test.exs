@@ -96,22 +96,34 @@ defmodule Karma.OfferControllerTest do
     end
   end
 
-  test "renders form for editing chosen resource", %{conn: conn, offer: _offer, project: _project} do
-    offer = Repo.insert! %Offer{}
-    conn = get conn, project_offer_path(conn, :edit, 1, offer)
+  test "edit/update/delete offer forbidden if offer is not pending", %{conn: conn, project: proj} do
+    accepted = insert_offer(proj, %{target_email: "different@gmail.com", accepted: false})
+
+    Enum.each([
+      get(conn, project_offer_path(conn, :edit, proj, accepted)),
+      put(conn, project_offer_path(conn, :update, proj, accepted), offer: accepted),
+      delete(conn, project_offer_path(conn, :delete, proj, accepted), offer: accepted)
+    ], fn conn ->
+      assert Phoenix.Controller.get_flash(conn, :error) =~ "You can only edit pending offers"
+      assert redirected_to(conn) == project_offer_path(conn, :index, proj)
+      assert conn.halted
+    end)
+  end
+
+  test "renders form for editing if offer is still pending", %{conn: conn, offer: offer} do
+    conn = get conn, project_offer_path(conn, :edit, offer.project_id, offer)
     assert html_response(conn, 200) =~ "Edit offer"
   end
 
-  test "updates chosen resource and redirects when data is valid", %{conn: conn, offer: _offer, project: _project} do
-    offer = Repo.insert! %Offer{}
-    conn = put conn, project_offer_path(conn, :update, 1, offer), offer: default_offer()
-    assert redirected_to(conn) == project_offer_path(conn, :show, 1, offer)
-    assert Repo.get_by(Offer, default_offer())
+  test "updates offer and redirects when data is valid", %{conn: conn, offer: offer} do
+    updated = default_offer(%{additional_notes: "Sneaky peaky"})
+    conn = put conn, project_offer_path(conn, :update, offer.project_id, offer), offer: updated
+    assert redirected_to(conn) == project_offer_path(conn, :show, offer.project_id, offer)
+    assert Repo.get_by(Offer, additional_notes: "Sneaky peaky")
   end
 
-  test "does not update chosen resource and renders errors when data is invalid", %{conn: conn, offer: _offer, project: _project} do
-    offer = Repo.insert! %Offer{}
-    conn = put conn, project_offer_path(conn, :update, 1, offer), offer: @invalid_attrs
+  test "cannot update offer and renders errors when data is invalid", %{conn: conn, offer: offer, project: project} do
+    conn = put conn, project_offer_path(conn, :update, project, offer), offer: @invalid_attrs
     assert html_response(conn, 200) =~ "Edit offer"
   end
 
