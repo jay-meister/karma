@@ -28,8 +28,8 @@ defmodule Karma.OfferControllerTest do
     assert html_response(conn3, 200) =~ rejected_offer.target_email
   end
 
-  test "renders form for new resources", %{conn: conn, offer: _offer, project: _project} do
-    conn = get conn, project_offer_path(conn, :new, 1)
+  test "renders form for new resources", %{conn: conn, project: project} do
+    conn = get conn, project_offer_path(conn, :new, project)
     assert html_response(conn, 200) =~ "New offer"
   end
 
