@@ -90,9 +90,9 @@ defmodule Karma.OfferControllerTest do
     assert html_response(conn, 200) =~ offer.additional_notes
   end
 
-  test "renders page not found when id is nonexistent", %{conn: conn, offer: _offer, project: _project} do
+  test "renders page not found when id is nonexistent", %{conn: conn, project: project} do
     assert_error_sent 404, fn ->
-      get conn, project_offer_path(conn, :show, -1)
+      conn = get conn, project_offer_path(conn, :show, project, -1)
     end
   end
 
@@ -127,10 +127,9 @@ defmodule Karma.OfferControllerTest do
     assert html_response(conn, 200) =~ "Edit offer"
   end
 
-  test "deletes chosen resource", %{conn: conn, offer: _offer, project: _project} do
-    offer = Repo.insert! %Offer{}
-    conn = delete conn, project_offer_path(conn, :delete, 1, offer)
-    assert redirected_to(conn) == project_offer_path(conn, :index, 1)
+  test "deletes chosen resource", %{conn: conn, offer: offer} do
+    conn = delete conn, project_offer_path(conn, :delete, offer.project_id, offer)
+    assert redirected_to(conn) == project_offer_path(conn, :index, offer.project_id)
     refute Repo.get(Offer, offer.id)
   end
 end
