@@ -20,10 +20,12 @@ defmodule Karma.OfferController do
 
   def new(conn, %{"project_id" => project_id}) do
     changeset = Offer.changeset(%Offer{})
-    render(conn, "new.html", changeset: changeset, project_id: project_id)
+    job_titles = Karma.Job.titles()
+    job_departments = Karma.Job.departments()
+    render(conn, "new.html", changeset: changeset, project_id: project_id, job_titles: job_titles, job_departments: job_departments)
   end
 
-  def create(conn, %{"project_id" => project_id, "offer" => offer_params} = params) do
+  def create(conn, %{"offer" => offer_params, "project_id" => project_id}) do
     project = Repo.get(Project, project_id)
     %{"target_email" => user_email} = offer_params
 
@@ -47,7 +49,9 @@ defmodule Karma.OfferController do
         |> put_flash(:info, "Offer sent")
         |> redirect(to: project_offer_path(conn, :index, project_id))
       {:error, changeset} ->
-        render(conn, "new.html", changeset: changeset, project_id: project_id)
+        job_titles = Karma.Job.titles()
+        job_departments = Karma.Job.departments()
+        render(conn, "new.html", changeset: changeset, project_id: project_id, job_titles: job_titles, job_departments: job_departments)
     end
   end
 

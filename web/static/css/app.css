@@ -15,6 +15,10 @@ body {
   margin-bottom: 3rem;
 }
 
+.k-button-no-underline:hover {
+  text-decoration: none;
+}
+
 .k-date-select select {
   background-color: #E9EAEB;
   border: none;
