@@ -1,7 +1,7 @@
 defmodule Karma.OfferController do
   use Karma.Web, :controller
 
-  alias Karma.{Offer, Project, LayoutView}
+  alias Karma.{User, Offer, Project, LayoutView}
 
   import Karma.ProjectController, only: [project_owner: 2]
   plug :project_owner when action in [:index, :new, :create, :show, :edit, :update, :delete]
@@ -20,20 +20,34 @@ defmodule Karma.OfferController do
 
   def new(conn, %{"project_id" => project_id}) do
     changeset = Offer.changeset(%Offer{})
-    # we should know project id here, placeholder to 1
-    render(conn, "new.html", changeset: changeset, project_id: 1)
+    render(conn, "new.html", changeset: changeset, project_id: project_id)
   end
 
-  def create(conn, %{"offer" => offer_params} = params) do
-    changeset = Offer.changeset(%Offer{}, offer_params)
-    IO.inspect changeset
+  def create(conn, %{"project_id" => project_id, "offer" => offer_params} = params) do
+    project = Repo.get(Project, project_id)
+    %{"target_email" => user_email} = offer_params
+
+    user = Repo.get_by(User, email: user_email)
+
+    changeset = case user do
+      nil -> # user is not yet registered or target_email is empty
+        project
+        |> build_assoc(:offers)
+        |> Offer.changeset(offer_params)
+      user -> # user is already registered
+        project
+        |> build_assoc(:offers)
+        |> Offer.changeset(offer_params)
+        |> Ecto.Changeset.put_assoc(:user, user)
+    end
+
     case Repo.insert(changeset) do
       {:ok, offer} ->
         conn
-        |> put_flash(:info, "Offer created successfully.")
-        |> redirect(to: project_offer_path(conn, :index, 1))
+        |> put_flash(:info, "Offer sent")
+        |> redirect(to: project_offer_path(conn, :index, project_id))
       {:error, changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "new.html", changeset: changeset, project_id: project_id)
     end
   end
 
@@ -48,7 +62,7 @@ defmodule Karma.OfferController do
     render(conn, "edit.html", offer: offer, changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "offer" => offer_params}) do
+  def update(conn, %{"project_id" => project_id, "id" => id, "offer" => offer_params}) do
     offer = Repo.get!(Offer, id)
     changeset = Offer.changeset(offer, offer_params)
 

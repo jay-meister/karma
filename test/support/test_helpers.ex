@@ -84,7 +84,7 @@ defmodule Karma.TestHelpers do
       box_rental_period: "from 10/01/19 for 3 weeks",
       contract_type: "PAYE",
       contractor_details_accepted: true,
-      currency: "GBP",
+      currency: "gbp",
       daily_or_weekly: "daily",
       department: "Accounts",
       equipment_rental_cap: 0,
