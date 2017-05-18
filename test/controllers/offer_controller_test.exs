@@ -33,10 +33,19 @@ defmodule Karma.OfferControllerTest do
     assert html_response(conn, 200) =~ "New offer"
   end
 
-  test "creates resource and redirects when data is valid", %{conn: conn, offer: _offer, project: _project} do
-    conn = post conn, project_offer_path(conn, :create, 1), offer: default_offer()
-    assert redirected_to(conn) == project_offer_path(conn, :index, 1)
-    assert Repo.get_by(Offer, default_offer())
+  # if contractor not registered
+  test "creates creates offer to an unregistered user and redirects them", %{conn: conn, project: project} do
+    new_offer = default_offer(%{target_email: "different@test.com"})
+
+    post_conn = post conn, project_offer_path(conn, :create, project), offer: new_offer
+    assert redirected_to(post_conn) == project_offer_path(conn, :index, project)
+    assert Phoenix.Controller.get_flash(post_conn, :info) =~ "Offer sent"
+
+    # test the email is shown on the index view
+    get_conn = get conn, project_offer_path(conn, :index, project)
+    assert html_response(get_conn, 200) =~ new_offer.target_email
+    assert Repo.get_by(Offer, target_email: new_offer.target_email)
+  end
   end
 
   test "does not create resource and renders errors when data is invalid", %{conn: conn, project: project} do

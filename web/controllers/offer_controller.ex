@@ -23,14 +23,16 @@ defmodule Karma.OfferController do
     render(conn, "new.html", changeset: changeset, project_id: project_id)
   end
 
-  def create(conn, %{"offer" => offer_params} = params) do
-    changeset = Offer.changeset(%Offer{}, offer_params)
-    IO.inspect changeset
+  def create(conn, %{"project_id" => project_id, "offer" => offer_params} = params) do
+    project = Repo.get(Project, project_id)
+        project
+        |> build_assoc(:offers)
+        |> Offer.changeset(offer_params)
     case Repo.insert(changeset) do
       {:ok, offer} ->
         conn
-        |> put_flash(:info, "Offer created successfully.")
-        |> redirect(to: project_offer_path(conn, :index, 1))
+        |> put_flash(:info, "Offer sent")
+        |> redirect(to: project_offer_path(conn, :index, project_id))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset, project_id: project_id)
     end
