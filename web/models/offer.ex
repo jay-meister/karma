@@ -76,7 +76,8 @@ defmodule Karma.Offer do
       :accepted,
       :active,
       :contractor_details_accepted,
-      :project_id])
+      :project_id,
+      :user_id])
     |> validate_required([
       :target_email,
       :department,
@@ -100,7 +101,8 @@ defmodule Karma.Offer do
       :fee_per_day_inc_holiday,
       :sixth_day_fee,
       :seventh_day_fee,
-      :active
+      :active,
+      :project_id
       ])
   end
 
