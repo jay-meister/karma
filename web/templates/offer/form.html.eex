@@ -1,0 +1,142 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <%= component "input.html",
+  form: f,
+  atom: :target_email,
+  placeholder: "example@email.com"
+  %>
+
+  <%= component "dropdown.html",
+  form: f,
+  atom: :department,
+  options: @job_departments,
+  prompt: "Pick a job department..."
+  %>
+
+  <%= component "dropdown.html",
+  form: f,
+  atom: :job_title,
+  options: @job_titles,
+  prompt: "Pick a job title..."
+  %>
+
+  <!-- Determined by department + job_title -->
+  <!--  component "input.html",
+  form: f,
+  atom: :contract_type,
+  placeholder: "Enter the contract type"
+  %> -->
+
+  <%= component "date.html",
+  form: f,
+  atom: :start_date
+  %>
+
+
+  <%= component "dropdown.html",
+  form: f,
+  atom: :daily_or_weekly,
+  options: ["daily", "weekly"],
+  prompt: "Select an option..."
+  %>
+
+  <%= component "dropdown.html",
+  form: f,
+  atom: :working_week,
+  options: ["5 days": 5, "5.5 days": 5.5, "6 days": 6],
+  prompt: "Select an option..."
+  %>
+
+  <%= component "dropdown.html",
+  form: f,
+  atom: :currency,
+  options: ["GBP": "gbp", "EUR": "eur", "USD": "usd"],
+  prompt: "Select an option..."
+  %>
+
+
+  <%= component "number_input.html",
+  form: f,
+  atom: :overtime_rate_per_hour,
+  placeholder: "What's your overtime rate per hour?"
+  %>
+
+  <%= component "textarea.html",
+  form: f,
+  atom: :other_deal_provisions,
+  placeholder: "Any other deal provisions?"
+  %>
+
+  <%= component "textarea.html",
+  form: f,
+  atom: :box_rental_description,
+  placeholder: "Describe the box rental"
+  %>
+
+  <%= component "number_input.html",
+  form: f,
+  atom: :box_rental_fee_per_week,
+  placeholder: "Enter the box rental fee per week"
+  %>
+
+  <%= component "number_input.html",
+  form: f,
+  atom: :box_rental_cap,
+  placeholder: "What's the box rental cap?"
+  %>
+
+  <%= component "input.html",
+  form: f,
+  atom: :box_rental_period,
+  placeholder: "Enter the period you need box rental for"
+  %>
+
+  <%= component "input.html",
+  form: f,
+  atom: :equipment_rental_description,
+  placeholder: "Describe the equipment rental you need"
+  %>
+
+  <%= component "number_input.html",
+  form: f,
+  atom: :equipment_rental_fee_per_week,
+  placeholder: "What's the equipment rental fee per week?"
+  %>
+
+  <%= component "number_input.html",
+  form: f,
+  atom: :equipment_rental_cap,
+  placeholder: "What's the equipment rental cap?"
+  %>
+
+  <%= component "input.html",
+  form: f,
+  atom: :equipment_rental_period,
+  placeholder: "Enter the period you need equipment rental for"
+  %>
+
+  <%= component "number_input.html",
+  form: f,
+  atom: :vehicle_allowance_per_week,
+  placeholder: "What's the vehical allowance per week?"
+  %>
+
+  <%= component "number_input.html",
+  form: f,
+  atom: :fee_per_day_inc_holiday,
+  placeholder: "Enter the fee per day inc holiday"
+  %>
+
+  <%= component "textarea.html",
+  form: f,
+  atom: :additional_notes,
+  placeholder: "Any additional notes?"
+  %>
+
+  <%= component "submit_button.html", title: "Make Offer" %>
+<% end %>

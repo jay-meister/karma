@@ -7,3 +7,10 @@
   </div>
   <%= error_tag assigns[:form], assigns[:atom] %>
 </div>
+
+
+<!--
+assigns:
+atom,
+form
+ -->

@@ -1,0 +1,74 @@
+<h2>Offer for <%= @offer.target_email %></h2>
+<ul class="list pl0">
+
+  <%= component "form_divider.html", title: "Offer status" %>
+  <%= for {atom, label, formatted} <- [
+    {:accepted, nil, nil},
+    {:active, nil, nil},
+    {:contractor_details_accepted, nil, nil}
+  ] do %>
+    <%= component "data.html",
+    data: formatted || Map.get(@offer, atom),
+    label: label || format_label(atom)
+    %>
+  <% end %>
+
+  <%= component "form_divider.html", title: "Offer details" %>
+  <%= for {atom, label, formatted} <- [
+    {:target_email, nil, nil},
+    {:department, nil, nil},
+    {:job_title, nil, nil},
+    {:contract_type, nil, nil},
+    {:start_date, nil, format_date(@offer.start_date)},
+    {:daily_or_weekly, nil, nil},
+    {:working_week, nil, nil},
+    {:additional_notes, nil, nil}
+  ] do %>
+    <%= component "data.html",
+    data: formatted || Map.get(@offer, atom),
+    label: label || format_label(atom)
+    %>
+  <% end %>
+
+  <%= component "form_divider.html", title: "Fees" %>
+  <%= for {atom, label, formatted} <- [
+    {:currency, nil, nil},
+    {:overtime_rate_per_hour, nil, nil},
+    {:fee_per_day_inc_holiday, nil, nil},
+    {:fee_per_day_exc_holiday, nil, nil},
+    {:fee_per_week_inc_holiday, nil, nil},
+    {:fee_per_week_exc_holiday, nil, nil},
+    {:holiday_pay_per_day, nil, nil},
+    {:holiday_pay_per_week, nil, nil},
+    {:sixth_day_fee, nil, nil},
+    {:seventh_day_fee, nil, nil}
+  ] do %>
+    <%= component "data.html",
+    data: formatted || Map.get(@offer, atom),
+    label: label || format_label(atom)
+    %>
+  <% end %>
+
+  <%= component "form_divider.html", title: "Allowances" %>
+  <%= for {atom, label, formatted} <- [
+    {:other_deal_provisions, nil, nil},
+    {:box_rental_description, nil, nil},
+    {:box_rental_fee_per_week, nil, nil},
+    {:box_rental_cap, nil, nil},
+    {:box_rental_period, nil, nil},
+    {:equipment_rental_description, nil, nil},
+    {:equipment_rental_fee_per_week, nil, nil},
+    {:equipment_rental_cap, nil, nil},
+    {:equipment_rental_period, nil, nil},
+    {:vehicle_allowance_per_week, nil, nil}
+  ] do %>
+    <%= component "data.html",
+    data: formatted || Map.get(@offer, atom),
+    label: label || format_label(atom)
+    %>
+  <% end %>
+
+</ul>
+
+<%= link "Edit", to: project_offer_path(@conn, :edit, @offer.project_id, @offer) %>
+<%= link "Back", to: project_offer_path(@conn, :index, @offer.project_id) %>
