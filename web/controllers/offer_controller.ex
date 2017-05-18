@@ -20,8 +20,7 @@ defmodule Karma.OfferController do
 
   def new(conn, %{"project_id" => project_id}) do
     changeset = Offer.changeset(%Offer{})
-    # we should know project id here, placeholder to 1
-    render(conn, "new.html", changeset: changeset, project_id: 1)
+    render(conn, "new.html", changeset: changeset, project_id: project_id)
   end
 
   def create(conn, %{"offer" => offer_params} = params) do
@@ -48,7 +47,7 @@ defmodule Karma.OfferController do
     render(conn, "edit.html", offer: offer, changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "offer" => offer_params}) do
+  def update(conn, %{"project_id" => project_id, "id" => id, "offer" => offer_params}) do
     offer = Repo.get!(Offer, id)
     changeset = Offer.changeset(offer, offer_params)
 
