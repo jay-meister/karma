@@ -11,6 +11,7 @@ defmodule Karma.User do
     field :verified, :boolean
     field :terms_accepted, :boolean
     has_many :projects, Karma.Project
+    has_many :offers, Karma.Offer
 
     timestamps()
   end

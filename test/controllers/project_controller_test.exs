@@ -117,9 +117,4 @@ defmodule Karma.ProjectControllerTest do
     assert redirected_to(conn) == project_path(conn, :index)
     refute Repo.get(Project, project.id)
   end
-
-  test "get /projects/:id/offers", %{conn: conn, project: project} do
-    conn = get conn, project_path(conn, :offers, project)
-    assert html_response(conn, 200) =~ "Offers"
-  end
 end

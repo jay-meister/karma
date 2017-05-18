@@ -3,10 +3,19 @@ defmodule Karma.OfferController do
 
   alias Karma.{Offer, Project, LayoutView}
 
+  import Karma.ProjectController, only: [project_owner: 2]
+  plug :project_owner when action in [:index, :new, :create, :show, :edit, :update, :delete]
+
+
+
   def index(conn, %{"project_id" => project_id}) do
-    IO.puts "--------- inside offers index ----------"
     project = Repo.get!(Project, project_id)
-    render conn, "index.html", layout: {LayoutView, "no_container.html"}, project: project
+    offers =
+      Offer
+      |> Offer.projects_offers(project)
+      |> Repo.all()
+
+    render conn, "index.html", layout: {LayoutView, "no_container.html"}, offers: offers, project: project
   end
 
   def new(conn, %{"project_id" => project_id}) do
