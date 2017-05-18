@@ -33,172 +33,174 @@ defmodule Karma.Controllers.Helpers do
 
   defp conditional() do
     "CONDITIONAL"
+    "PAYE"
   end
 
   def determine_contract_type(department, job_title) do
     case department do
       "Accounts" ->
-        contract =
+        
           case job_title == "Financial Controller" || job_title == "Production Accountant" do
             true -> sch_d()
             false -> paye()
           end
       "Action Vehicles" -> paye()
       "Assistant Director" ->
-        contract =
+        
           case job_title == "1st Assistant Director" do
             true -> sch_d()
             false -> paye()
           end
       "Aerial" -> sch_d()
       "Animals" ->
-        contract =
+        
           case job_title == "Animal Wrangler" || job_title == "Horse Master" do
             true -> sch_d()
             false -> paye()
           end
       "Armoury" ->
-        contract =
-          case job_title == "Archery Instructor"
-          || job_title == "Armourer"
-          || job_title == "Firearms Supervisor"
-          || job_title == "HOD Armoury"
-          || job_title == "Mechanical Engineer"
-          || job_title == "Modeller"
-          || job_title == "Standby Armourer" do
+        
+          case Enum.member?(["Archery Instructor",
+          "Armourer",
+          "Firearms Supervisor",
+          "HOD Armoury",
+          "Mechanical Engineer",
+          "Modeller",
+          "Standby Armourer"], job_title) do
             true -> sch_d()
             false ->
-              contract =
-                case job_title == "Armoury Model Maker" || job_title == "Senior Model Maker" do
+              
+                case Enum.member?(["Armoury Model Maker",
+                "Senior Model Maker"], job_title) do
                   true -> conditional()
                   false -> paye()
                 end
           end
       "Art" ->
-        contract =
-          case job_title == "Art Director"
-          || job_title == "Production Designer"
-          || job_title == "Senior Art Director"
-          || job_title == "Set Designer"
-          || job_title == "Standby Art Director"
-          || job_title == "Storyboard Artist"
-          || job_title == "Supervising Art Director" do
+        
+          case Enum.member?(["Art Director",
+          "Production Designer",
+          "Senior Art Director",
+          "Set Designer",
+          "Standby Art Director",
+          "Storyboard Artist",
+          "Supervising Art Director"], job_title) do
             true -> sch_d()
             false ->
-              contract =
-                case job_title == "Graphic Artist"
-                || job_title == "Graphic Designer"
-                || job_title == "Model Maker"
-                || job_title == "Researcher/Consultancy"
-                || job_title == "Scenic Painter" do
+              
+                case Enum.member?(["Graphic Artist",
+                "Graphic Designer",
+                "Model Maker",
+                "Researcher/Consultancy",
+                "Scenic Painter"], job_title) do
                   true -> conditional()
                   false -> paye()
                 end
           end
       "Camera" ->
-        contract =
-          case job_title == "Director of Photography"
-          || job_title == "DIT"
-          || job_title == "Steadicam Operator"
-          || job_title == "Stills Photographer" do
+        
+          case Enum.member?(["Director of Photography",
+          "DIT",
+          "Steadicam Operator",
+          "Stills Photographer"], job_title) do
             true -> sch_d()
             false ->
-              contract =
+              
                 case job_title == "Camera Operator" do
                   true -> conditional()
                   false -> paye()
                 end
           end
       "Cast" ->
-        contract =
-          case job_title == "Actor Double"
-          || job_title == "Cast Assistant"
-          || job_title == "Cast Chef"
-          || job_title == "Casting Assistant"
-          || job_title == "Casting Associate"
-          || job_title == "Stand In" do
+        
+          case Enum.member?(["Actor Double",
+          "Cast Assistant",
+          "Cast Chef",
+          "Casting Assistant",
+          "Casting Associate",
+          "Stand In"], job_title) do
             true -> paye()
             false ->
-              contract =
+              
                 case job_title == "Unit Driver" do
                   true -> conditional()
                   false -> sch_d()
                 end
           end
       "Construction" ->
-        contract =
-          case job_title == "Buyer"
-          || job_title == "Construction Manager"
-          || job_title == "Cast Chef"
-          || job_title == "Modeller"
-          || job_title == "Sculptor" do
+        
+          case Enum.member?(["Buyer",
+          "Construction Manager",
+          "Cast Chef",
+          "Modeller",
+          "Sculptor"], job_title) do
             true -> sch_d()
             false ->
-              contract =
+              
                 case job_title == "Scenic Painter" do
                   true -> conditional()
                   false -> paye()
                 end
           end
       "Continuity" ->
-        contract = case job_title == "Script Supervisor" do
+         case job_title == "Script Supervisor" do
           true -> sch_d()
           false -> paye()
         end
       "Costume" ->
-        contract =
-          case job_title == "Buyer"
-          || job_title == "Costume Consultant"
-          || job_title == "Costume Designer"
-          || job_title == "Costume Prop Modeller"
-          || job_title == "Modeller"
-          || job_title == "Researcher"
-          || job_title == "Sculptor"
-          || job_title == "Jewellery Modeller" do
+        
+          case Enum.member?(["Buyer",
+          "Costume Consultant",
+          "Costume Designer",
+          "Costume Prop Modeller",
+          "Modeller",
+          "Researcher",
+          "Sculptor",
+          "Jewellery Modeller"], job_title) do
             true -> sch_d()
             false ->
-              contract =
-                case job_title == "Assistant Costume Designer"
-                || job_title == "Costume Illustrator"
-                || job_title == "Costume Supervisor"
-                || job_title == "Head Milliner"
-                || job_title == "Principal Seamstress"
-                || job_title == "Seamstress" do
+              
+                case Enum.member?(["Assistant Costume Designer",
+                "Costume Illustrator",
+                "Costume Supervisor",
+                "Head Milliner",
+                "Principal Seamstress",
+                "Seamstress"], job_title) do
                   true -> conditional()
                   false -> paye()
                 end
           end
       "DIT" ->
-        contract =
+        
           case job_title == "Array DIT" || job_title == "DIT" do
             true -> conditional()
             false -> paye()
           end
       "Drapes" ->
-        contract =
+        
           case job_title == "Drapes Master" do
             true -> conditional()
             false -> paye()
           end
       "Editorial" ->
-        contract =
-          case job_title == "Assembly Editor"
-          || job_title == "Associate Editor"
-          || job_title == "Editor"
-          || job_title == "VFX Editor" do
+        
+          case Enum.member?(["Assembly Editor",
+          "Associate Editor",
+          "Editor",
+          "VFX Editor"], job_title) do
              true -> sch_d()
              false -> paye()
           end
       "Electrical" ->
-        contract =
-          case job_title == "Gaffer"
-          || job_title == "HOD Electrical Rigger"
-          || job_title == "HOD Rigger"
-          || job_title == "Rigging Gaffer"
-          || job_title == "Underwater Gaffer" do
+        
+          case Enum.member?(["Gaffer",
+          "HOD Electrical Rigger",
+          "HOD Rigger",
+          "Rigging Gaffer",
+          "Underwater Gaffer"], job_title) do
             true -> sch_d()
             false ->
-              contract =
+              
                 case job_title == "Balloon Technician" do
                   true -> conditional()
                   false -> paye()
@@ -206,61 +208,174 @@ defmodule Karma.Controllers.Helpers do
           end
       "Greens" -> paye()
       "Grip" ->
-        contract =
-          case job_title == "Assistant Grip"
-          || job_title == "Grip Rigger"
-          || job_title == "Grip Trainee" do
+        
+          case Enum.member?(["Assistant Grip",
+          "Grip Rigger",
+          "Grip Trainee"], job_title) do
             true -> paye()
             false ->
-              case job_title == "Best Boy Grip"
-              || job_title == "Dolly Grip"
-              || job_title == "Grip"
-              || job_title == "Key Grip" do
+              case Enum.member?(["Best Boy Grip",
+              "Dolly Grip",
+              "Grip",
+              "Key Grip"], job_title) do
                 true -> conditional()
                 false -> sch_d()
               end
           end
       "Hair and Makeup" ->
-        contract =
-          case job_title == "Crowd Hair/Makeup Supervisor"
-          || job_title == "Crowd Makeup Artist"
-          || job_title == "Hair & Makeup Artist"
-          || job_title == "Makeup Artist"
-          || job_title == "Makeup Designer"
-          || job_title == "Key Hair And Make Up Artist"
-          || job_title == "Hair & Makeup Designer"
-          || job_title == "Hair Designer" do
+        
+          case Enum.member?(["Crowd Hair/Makeup Supervisor",
+          "Crowd Makeup Artist",
+          "Hair & Makeup Artist",
+          "Makeup Artist",
+          "Makeup Designer",
+          "Key Hair And Make Up Artist",
+          "Hair & Makeup Designer",
+          "Hair Designer"], job_title) do
             true -> sch_d()
             false -> paye()
           end
       "IT" -> paye()
       "Locations" ->
-        case job_title == "Location Manager"
-        || job_title == "Supervising Location Manager" do
-          true -> sch_d()
-          false -> paye()
-        end
+        
+          case Enum.member?(["Location Manager",
+          "Supervising Location Manager"], job_title) do
+            true -> sch_d()
+            false -> paye()
+          end
       "Medical" -> sch_d()
       "Military" -> sch_d()
       "Photography" -> conditional()
       "Post Production" ->
-        case job_title == "Coordinator" do
-          true -> paye()
-          false -> sch_d()
-        end
+        
+          case job_title == "Coordinator" do
+            true -> paye()
+            false -> sch_d()
+          end
       "Production" ->
-        case job_title == "Co-Producer"
-        || job_title == "Executive Producer"
-        || job_title == "Line Producer"
-        || job_title == "Producer"
-        || job_title == "Production Manager"
-        || job_title == "Production Supervisor"
-        || job_title == "Script Supervisor"
-        || job_title == "Unit Production Manager" do
-          true -> sch_d()
-          false -> paye() 
-        end
+        
+          case Enum.member?(["Co-Producer",
+          "Executive Producer",
+          "Line Producer",
+          "Producer",
+          "Production Manager",
+          "Production Supervisor",
+          "Script Supervisor",
+          "Unit Production Manager"], job_title) do
+            true -> sch_d()
+            false -> paye()
+          end
+      "Props" ->
+        
+          case Enum.member?(["3D Modeller",
+          "Action Prop Buyer",
+          "HOD Prop Modeller",
+          "Modeller",
+          "On Set Props Master",
+          "Property Master",
+          "Props Buyer",
+          "Props Buyer/Researcher",
+          "Sculptor",
+          "Senior Modeller"], job_title) do
+            true -> sch_d()
+            false ->
+              
+                case Enum.member?(["Chargehand Dressing Prop",
+                "Chargehand Prop",
+                "Drapesmaster",
+                "Model Maker",
+                "Prophand",
+                "Propman",
+                "Senior Model Maker",
+                "Senior Prop Hand",
+                "Supervising Prop Hand"], job_title) do
+                  true -> conditional()
+                  false -> paye()
+                end
+      "Publicity" -> sch_d()
+      "Rigging" ->
+        
+          case job_title == "HOD Rigger" do
+            true -> sch_d()
+            false -> paye()
+          end
+      "Security" -> paye()
+      "Set Dec" ->
+        
+          case Enum.member?(["Art Director",
+          "Graphic Designer",
+          "Location Buyer",
+          "Production Buyer",
+          "Set Decorator"], job_title) do
+             true -> sch_d()
+             false ->
+               
+                 case job_title == "Scenic Textile Artist" do
+                   true -> conditional()
+                   false -> paye()
+                 end
+          end
+      "SFX" ->
+        
+          case Enum.member?(["Floor Director",
+          "Lead Snr SFX Technician",
+          "Prep Lead Senior Tech",
+          "Senior SFX Floor Technician",
+          "Senior SFX Technician",
+          "SFX Buyer",
+          "SFX Floor Supervisor",
+          "SFX Senior Technician",
+          "SFX Supervisor",
+          "Workshop Supervisor"], job_title) do
+             true -> sch_d()
+             false -> paye()
+          end
+      "Sound" ->
+        
+          case Enum.member?(["Production Sound Mixer",
+          "Sound Maintenance",
+          "Sound Mixer"], job_title) do
+             true -> sch_d()
+             false -> paye()
+          end
+      "Standby" -> paye()
+      "Studio Unit" -> paye()
+      "Stunts" ->
+        
+          case Enum.member?(["Rigger",
+          "Stunt Department Coordinator",
+          "Stunt Department Supervisor"], job_title) do
+             true -> paye()
+             false ->
+               
+                 case job_title == "Wire Rigger" do
+                   true -> conditional()
+                   false -> sch_d()
+                 end
+          end
+      "Supporting Artist" -> sch_d()
+      "Transport" ->
+        
+          case Enum.member?(["Transport Captain",
+          "Transport Manager"], job_title) do
+            true -> sch_d()
+            false ->
+              
+                case job_title == "Unit Driver" do
+                  true -> conditional()
+                  false -> paye()
+                end
+          end
+      "Underwater" -> sch_d()
+      "VFX" ->
+        
+          case job_title == "VFX Producer" do
+            true -> sch_d()
+            false -> paye()
+          end
+      "Video" -> paye()
+      "Voice" -> sch_d()
+      end
     end
   end
-
 end
