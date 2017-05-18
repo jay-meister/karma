@@ -3,6 +3,36 @@ defmodule Karma.Controllers.HelpersTest do
 
   alias Karma.Controllers.Helpers
 
+  test "calc_fee_per_day_exc_holiday(fee_per_day_inc_holiday, project_holiday_rate)" do
+    fee_per_day_exc_holiday =  Helpers.calc_fee_per_day_exc_holiday(1, 1)
+
+    assert fee_per_day_exc_holiday == 0.5
+  end
+
+  test "calc_holiday_pay_per_day(fee_per_day_inc_holiday, fee_per_day_exc_holiday)" do
+    holiday_pay_per_day = Helpers.calc_holiday_pay_per_day(2, 1)
+
+    assert holiday_pay_per_day == 1
+  end
+
+  test "calc_fee_per_week_inc_holiday(fee_per_day_inc_holiday, working_week)" do
+    fee_per_week_inc_holiday = Helpers.calc_fee_per_week_inc_holiday(1, 1)
+
+    assert fee_per_week_inc_holiday == 1
+  end
+
+  test "calc_fee_per_week_exc_holiday(fee_per_week_inc_holiday, project_holiday_rate)" do
+    fee_per_week_exc_holiday = Helpers.calc_fee_per_week_exc_holiday(2, 1)
+
+    assert fee_per_week_exc_holiday == 1
+  end
+
+  test "calc_holiday_pay_per_week(fee_per_week_inc_holiday, fee_per_week_exc_holiday)" do
+    holiday_pay_per_week = Helpers.calc_holiday_pay_per_week(2, 1)
+
+    assert holiday_pay_per_week == 1
+  end
+
   test "determine_contract_type(department, job_title) Accounts" do
     sch_d_contract = Helpers.determine_contract_type("Accounts", "Financial Controller")
     paye_contract = Helpers.determine_contract_type("Accounts", "Accounts Clerk")
