@@ -41,7 +41,7 @@
   <%= component "dropdown.html",
   form: f,
   atom: :daily_or_weekly,
-  options: ["daily", "weekly"],
+  options: ["Daily": "daily", "Weekly": "weekly"],
   prompt: "Select an option..."
   %>
 
