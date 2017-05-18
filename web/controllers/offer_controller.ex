@@ -32,7 +32,7 @@ defmodule Karma.OfferController do
         |> put_flash(:info, "Offer created successfully.")
         |> redirect(to: project_offer_path(conn, :index, 1))
       {:error, changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "new.html", changeset: changeset, project_id: project_id)
     end
   end
 
