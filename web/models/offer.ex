@@ -104,6 +104,16 @@ defmodule Karma.Offer do
       :active,
       :project_id
       ])
+    |> validate_required_dropdowns()
+  end
+
+  def validate_required_dropdowns(changeset) do
+    changeset
+    |> validate_inclusion(:contract_type, ["PAYE", "SCH D"])
+    |> validate_inclusion(:daily_or_weekly, ["daily", "weekly"])
+    |> validate_inclusion(:working_week, [5, 5.5, 6])
+    |> validate_inclusion(:currency, ["gbp", "eur", "usd"])
+
   end
 
   # queries
