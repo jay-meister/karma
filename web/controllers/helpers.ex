@@ -23,6 +23,26 @@ defmodule Karma.Controllers.Helpers do
     |> binary_part(0, length)
   end
 
+  def calc_fee_per_day_exc_holiday(fee_per_day_inc_holiday, project_holiday_rate) do
+    div(fee_per_day_inc_holiday, (1 + project_holiday_rate))
+  end
+
+  def calc_holiday_pay_per_day(fee_per_day_inc_holiday, fee_per_day_exc_holiday) do
+    fee_per_day_inc_holiday - fee_per_day_exc_holiday
+  end
+
+  def calc_fee_per_week_inc_holiday(fee_per_day_inc_holiday, working_week) do
+    fee_per_day_inc_holiday * working_week
+  end
+
+  def calc_fee_per_week_exc_holiday(fee_per_week_inc_holiday, project_holiday_rate) do
+    div(fee_per_week_inc_holiday, (1 + project_holiday_rate))
+  end
+
+  def calc_holiday_pay_per_week(fee_per_week_inc_holiday, fee_per_week_exc_holiday) do
+    fee_per_week_inc_holiday - fee_per_week_exc_holiday
+  end
+
   defp sch_d() do
     "SCH D"
   end

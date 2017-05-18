@@ -37,29 +37,28 @@
   atom: :start_date
   %>
 
-  <!-- dropdown -->
 
-  <%= component "input.html",
+  <%= component "dropdown.html",
   form: f,
   atom: :daily_or_weekly,
-  placeholder: "Daily or weekly?"
+  options: ["daily", "weekly"],
+  prompt: "Select an option..."
   %>
 
-  <!-- dropdown -->
-
-  <%= component "number_input.html",
+  <%= component "dropdown.html",
   form: f,
   atom: :working_week,
-  placeholder: "Working week"
+  options: ["5 days": 5, "5.5 days": 5.5, "6 days": 6],
+  prompt: "Select an option..."
   %>
 
-  <!-- dropdown -->
-
-  <%= component "input.html",
+  <%= component "dropdown.html",
   form: f,
   atom: :currency,
-  placeholder: "Enter the currency you want to pay in"
+  options: ["GBP": "gbp", "EUR": "eur", "USD": "usd"],
+  prompt: "Select an option..."
   %>
+
 
   <%= component "number_input.html",
   form: f,
@@ -131,52 +130,6 @@
   form: f,
   atom: :fee_per_day_inc_holiday,
   placeholder: "Enter the fee per day inc holiday"
-  %>
-
-  <%= component "number_input.html",
-  form: f,
-  atom: :fee_per_day_exc_holiday,
-  placeholder: "Enter the fee per day exc holiday"
-  %>
-
-  <%= component "number_input.html",
-  form: f,
-  atom: :fee_per_week_inc_holiday,
-  placeholder: "Enter the fee per week inc holiday"
-  %>
-
-  <%= component "number_input.html",
-  form: f,
-  atom: :fee_per_weel_exc_holiday,
-  placeholder: "Enter the fee per week exc holiday"
-  %>
-
-  <%= component "number_input.html",
-  form: f,
-  atom: :holiday_pay_per_day,
-  placeholder: "Enter the holiday pay per day"
-  %>
-
-  <%= component "number_input.html",
-  form: f,
-  atom: :holiday_pay_per_week,
-  placeholder: "Enter the holiday pay per week"
-  %>
-
-  <!-- dropdown -->
-
-  <%= component "number_input.html",
-  form: f,
-  atom: :sixth_day_fee,
-  placeholder: "Enter the sixth day fee"
-  %>
-
-  <!-- dropdown -->
-
-  <%= component "number_input.html",
-  form: f,
-  atom: :seventh_day_fee,
-  placeholder: "Enter the seventh day fee"
   %>
 
   <%= component "textarea.html",
