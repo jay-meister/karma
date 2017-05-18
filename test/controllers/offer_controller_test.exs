@@ -44,10 +44,19 @@ defmodule Karma.OfferControllerTest do
     assert html_response(conn, 200) =~ "New offer"
   end
 
-  test "shows chosen resource", %{conn: conn, offer: _offer, project: _project} do
-    offer = Repo.insert! %Offer{}
-    conn = get conn, project_offer_path(conn, :show, 1, offer)
-    assert html_response(conn, 200) =~ "Show offer"
+  # test cant view offers for other projects not involved with
+  test "offers show: user cannot view an offer of a project they did not create", %{offer: offer} do
+    new_user = insert_user(%{email: "imposter@gmail.com"})
+
+    conn = login_user(build_conn(), new_user)
+    conn = get conn, project_offer_path(conn, :show, offer.project_id, offer)
+    assert redirected_to(conn) == dashboard_path(conn, :index)
+    assert Phoenix.Controller.get_flash(conn, :error) =~ "You do not have permission"
+  end
+
+  test "offers show: shows an offer to PM", %{conn: conn, offer: offer} do
+    conn = get conn, project_offer_path(conn, :show, offer.project_id, offer)
+    assert html_response(conn, 200) =~ offer.additional_notes
   end
 
   test "renders page not found when id is nonexistent", %{conn: conn, offer: _offer, project: _project} do
