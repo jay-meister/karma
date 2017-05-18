@@ -92,7 +92,7 @@ defmodule Karma.OfferControllerTest do
 
   test "renders page not found when id is nonexistent", %{conn: conn, project: project} do
     assert_error_sent 404, fn ->
-      conn = get conn, project_offer_path(conn, :show, project, -1)
+      get conn, project_offer_path(conn, :show, project, -1)
     end
   end
 

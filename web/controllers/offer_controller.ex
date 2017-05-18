@@ -79,7 +79,9 @@ defmodule Karma.OfferController do
   def edit(conn, %{"project_id" => project_id, "id" => id}) do
     offer = Repo.get!(Offer, id)
     changeset = Offer.changeset(offer)
-    render(conn, "edit.html", offer: offer, changeset: changeset)
+    job_titles = Karma.Job.titles()
+    job_departments = Karma.Job.departments()
+    render(conn, "edit.html", offer: offer, changeset: changeset, project_id: project_id, job_titles: job_titles, job_departments: job_departments)
   end
 
 
@@ -93,7 +95,9 @@ defmodule Karma.OfferController do
         |> put_flash(:info, "Offer updated successfully.")
         |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
       {:error, changeset} ->
-        render(conn, "edit.html", offer: offer, changeset: changeset)
+        job_titles = Karma.Job.titles()
+        job_departments = Karma.Job.departments()
+        render(conn, "edit.html", offer: offer, changeset: changeset, project_id: project_id, job_titles: job_titles, job_departments: job_departments)
     end
   end
 
