@@ -1,7 +1,7 @@
 defmodule Karma.OfferController do
   use Karma.Web, :controller
 
-  alias Karma.{Offer, Project, LayoutView}
+  alias Karma.{User, Offer, Project, LayoutView}
 
   import Karma.ProjectController, only: [project_owner: 2]
   plug :project_owner when action in [:index, :new, :create, :show, :edit, :update, :delete]
@@ -25,9 +25,22 @@ defmodule Karma.OfferController do
 
   def create(conn, %{"project_id" => project_id, "offer" => offer_params} = params) do
     project = Repo.get(Project, project_id)
+    %{"target_email" => user_email} = offer_params
+
+    user = Repo.get_by(User, email: user_email)
+
+    changeset = case user do
+      nil -> # user is not yet registered or target_email is empty
         project
         |> build_assoc(:offers)
         |> Offer.changeset(offer_params)
+      user -> # user is already registered
+        project
+        |> build_assoc(:offers)
+        |> Offer.changeset(offer_params)
+        |> Ecto.Changeset.put_assoc(:user, user)
+    end
+
     case Repo.insert(changeset) do
       {:ok, offer} ->
         conn
