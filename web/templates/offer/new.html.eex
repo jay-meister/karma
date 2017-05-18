@@ -1,0 +1,8 @@
+<h2>Make new offer</h2>
+
+<%= render "form.html", changeset: @changeset,
+                        action: project_offer_path(@conn, :create, @project_id),
+                        job_titles: @job_titles,
+                        job_departments: @job_departments %>
+
+<%= link "Back", to: project_offer_path(@conn, :index, @project_id) %>

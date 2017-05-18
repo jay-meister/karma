@@ -26,6 +26,7 @@ defmodule Karma.Project do
     field :additional_notes, :string
     field :active, :boolean, default: true
     belongs_to :user, Karma.User
+    has_many :offers, Karma.Offer
 
     timestamps()
   end

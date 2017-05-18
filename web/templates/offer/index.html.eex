@@ -19,14 +19,15 @@
   </div>
 </div>
 <div class="k-m-auto w-90 mt4">
-  <%= component "button.html", title: "Make new offer", link: "/" %>
+  <%= component "button.html", title: "Make new offer", link: "/projects/#{@project.id}/offers/new" %>
   <div class="f1">Offers</div>
   <div class="mt3 mb2 f3 k-light-indigo bb k-b-light-indigo"></div>
-  <%= if false do %>
+  <%= if @offers == [] do %>
     <div class="k-bg-light-grey pa3 pa4-l br3 tc mt4 f2">You haven't made any offers yet for this project</div>
   <% end %>
-  <%= if true do %>
-  <%= component "offer_tile.html" %>
-  <%= component "offer_tile.html" %>
+  <%= if @offers != [] do %>
+    <%= for offer <- @offers do %>
+      <%= component "offer_tile.html", offer: offer %>
+    <% end %>
   <% end %>
 </div>
