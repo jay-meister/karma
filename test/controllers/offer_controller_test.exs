@@ -1,6 +1,7 @@
 defmodule Karma.OfferControllerTest do
   use Karma.ConnCase
 
+  import Mock
   alias Karma.Offer
   @invalid_attrs default_offer(%{daily_or_weekly: "monthly"})
 
@@ -37,32 +38,53 @@ defmodule Karma.OfferControllerTest do
   test "creates offer to an unregistered user and redirects them", %{conn: conn, project: project} do
     new_offer = default_offer(%{target_email: "different@test.com"})
 
-    post_conn = post conn, project_offer_path(conn, :create, project), offer: new_offer
-    assert redirected_to(post_conn) == project_offer_path(conn, :index, project)
-    assert Phoenix.Controller.get_flash(post_conn, :info) =~ "Offer sent"
+    with_mock Karma.Mailer, [deliver_later: fn(email) ->
+      assert email.html_body =~ "You have a new offer waiting for you on Karma."
+      assert email.html_body =~ "Please create a new account using the following link to view the offer."
+      assert email.to == new_offer.target_email
+     end] do
 
-    # test the email is shown on the index view
-    get_conn = get conn, project_offer_path(conn, :index, project)
-    assert html_response(get_conn, 200) =~ new_offer.target_email
-    assert Repo.get_by(Offer, target_email: new_offer.target_email)
+      post_conn = post conn, project_offer_path(conn, :create, project), offer: new_offer
+      assert redirected_to(post_conn) == project_offer_path(conn, :index, project)
+      assert Phoenix.Controller.get_flash(post_conn, :info) =~ "Offer sent"
+
+      # test the email is shown on the index view
+      get_conn = get conn, project_offer_path(conn, :index, project)
+      assert html_response(get_conn, 200) =~ new_offer.target_email
+      assert Repo.get_by(Offer, target_email: new_offer.target_email)
+
+      # ensure email was sent
+      assert called Karma.Mailer.deliver_later(:_)
+    end
   end
 
   # if contractor is already registered
   test "creates creates offer to a registered user", %{conn: conn, project: project} do
+
     contractor = insert_user(%{first_name: "Dave", last_name: "Seaman", email: "contractor@gmail.com"})
     new_offer = default_offer(%{target_email: "contractor@gmail.com"})
 
-    post_conn = post conn, project_offer_path(conn, :create, project), offer: new_offer
-    assert redirected_to(post_conn) == project_offer_path(conn, :index, project)
-    assert Phoenix.Controller.get_flash(post_conn, :info) =~ "Offer sent"
+    with_mock Karma.Mailer, [deliver_later: fn(email) ->
+      assert email.html_body =~ "You have a new offer waiting for you on Karma."
+      refute email.html_body =~ "Please create a new account using the following link to view the offer."
+      assert email.to == new_offer.target_email
+     end] do
 
-    # test the contractor's email is shown on the index view
-    get_conn = get conn, project_offer_path(conn, :index, project)
-    assert html_response(get_conn, 200) =~ contractor.email
-    offer = Repo.get_by(Offer, target_email: new_offer.target_email)
+      post_conn = post conn, project_offer_path(conn, :create, project), offer: new_offer
+      assert redirected_to(post_conn) == project_offer_path(conn, :index, project)
+      assert Phoenix.Controller.get_flash(post_conn, :info) =~ "Offer sent"
 
-    # test the user has been linked to the offer
-    assert offer.user_id == contractor.id
+      # test the contractor's email is shown on the index view
+      get_conn = get conn, project_offer_path(conn, :index, project)
+      assert html_response(get_conn, 200) =~ contractor.email
+      offer = Repo.get_by(Offer, target_email: new_offer.target_email)
+
+      # test the user has been linked to the offer
+      assert offer.user_id == contractor.id
+
+      # ensure email was sent
+      assert called Karma.Mailer.deliver_later(:_)
+    end
   end
 
   test "does not create offer and renders error if target_email is not given", %{conn: conn, project: project} do
@@ -117,9 +139,20 @@ defmodule Karma.OfferControllerTest do
 
   test "updates offer and redirects when data is valid", %{conn: conn, offer: offer} do
     updated = default_offer(%{additional_notes: "Sneaky peaky"})
-    conn = put conn, project_offer_path(conn, :update, offer.project_id, offer), offer: updated
-    assert redirected_to(conn) == project_offer_path(conn, :show, offer.project_id, offer)
-    assert Repo.get_by(Offer, additional_notes: "Sneaky peaky")
+
+    with_mock Karma.Mailer, [deliver_later: fn(email) ->
+      assert email.html_body =~ "Your offer on Karma has been updated."
+      assert email.html_body =~ "Please log in to view the offer."
+      assert email.to == updated.target_email
+     end] do
+
+      conn = put conn, project_offer_path(conn, :update, offer.project_id, offer), offer: updated
+      assert redirected_to(conn) == project_offer_path(conn, :show, offer.project_id, offer)
+      assert Repo.get_by(Offer, additional_notes: "Sneaky peaky")
+
+      # ensure email was sent
+      assert called Karma.Mailer.deliver_later(:_)
+    end
   end
 
   test "cannot update offer and renders errors when data is invalid", %{conn: conn, offer: offer, project: project} do

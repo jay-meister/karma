@@ -176,3 +176,7 @@ body {
 .k-w1px {
   width: 1px;
 }
+
+input[type=checkbox] {
+  width: 2rem;
+}

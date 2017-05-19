@@ -1,0 +1,5 @@
+Your offer on Karma has been updated.
+
+Please log in to view the offer.
+
+<%= @url %>
