@@ -46,4 +46,11 @@ defmodule Karma.Email do
     subject = "You have a new offer on Karma"
     send_html_email(offer.target_email, subject, url, template)
   end
+
+  def send_updated_offer_email(conn, offer) do
+    template = "updated_offer"
+    url = R_Helpers.project_offer_url(conn, :show, offer.project_id, offer)
+    subject = "Your offer has been updated on Karma"
+    send_html_email(offer.target_email, subject, url, template)
+  end
 end
