@@ -52,17 +52,8 @@ defmodule Karma.OfferController do
     "sixth_day_fee_multiplier" => sixth_day_fee_multiplier,
     "seventh_day_fee_multiplier" => seventh_day_fee_multiplier} = offer_params
 
-    sixth_day_fee_multiplier =
-      case String.contains?(sixth_day_fee_multiplier, ".") do
-        true -> String.to_float(sixth_day_fee_multiplier)
-        false -> String.to_integer(sixth_day_fee_multiplier)
-      end
-
-    seventh_day_fee_multiplier =
-      case String.contains?(seventh_day_fee_multiplier, ".") do
-        true -> String.to_float(seventh_day_fee_multiplier)
-        false -> String.to_integer(seventh_day_fee_multiplier)
-      end
+    sixth_day_fee_multiplier = String.to_float(sixth_day_fee_multiplier)
+    seventh_day_fee_multiplier = String.to_float(seventh_day_fee_multiplier)
 
     working_week =
       case working_week do
@@ -86,9 +77,9 @@ defmodule Karma.OfferController do
     seventh_day_fee_inc_holiday = calc_day_fee_inc_holidays(fee_per_day_inc_holiday, seventh_day_fee_multiplier)
     seventh_day_fee_exc_holiday = calc_day_fee_exc_holidays(fee_per_day_exc_holiday, seventh_day_fee_multiplier)
 
-    offer_params = Map.delete(offer_params, "seventh_day_fee_multiplier")
-    offer_params = Map.delete(offer_params, "sixth_day_fee_multiplier")
     offer_params = Map.put(offer_params, "fee_per_day_exc_holiday", fee_per_day_exc_holiday)
+    offer_params = Map.put(offer_params, "sixth_day_fee_multiplier", sixth_day_fee_multiplier)
+    offer_params = Map.put(offer_params, "seventh_day_fee_multiplier", seventh_day_fee_multiplier)
     offer_params = Map.put(offer_params, "holiday_pay_per_day", holiday_pay_per_day)
     offer_params = Map.put(offer_params, "fee_per_week_inc_holiday", fee_per_week_inc_holiday)
     offer_params = Map.put(offer_params, "fee_per_week_exc_holiday", fee_per_week_exc_holiday)
@@ -122,7 +113,6 @@ defmodule Karma.OfferController do
         |> put_flash(:info, "Offer sent to #{offer.target_email}")
         |> redirect(to: project_offer_path(conn, :index, project_id))
       {:error, changeset} ->
-        IO.inspect changeset
         job_titles = Karma.Job.titles()
         job_departments = Karma.Job.departments()
         render(conn, "new.html", changeset: changeset, project_id: project_id, job_titles: job_titles, job_departments: job_departments)

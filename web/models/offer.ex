@@ -28,8 +28,10 @@ defmodule Karma.Offer do
     field :holiday_pay_per_week, :integer
     field :sixth_day_fee_inc_holiday, :float
     field :sixth_day_fee_exc_holiday, :float
+    field :sixth_day_fee_multiplier, :float
     field :seventh_day_fee_inc_holiday, :float
     field :seventh_day_fee_exc_holiday, :float
+    field :seventh_day_fee_multiplier, :float
     field :additional_notes, :string
     field :accepted, :boolean, default: nil
     field :active, :boolean, default: true
@@ -72,8 +74,10 @@ defmodule Karma.Offer do
       :holiday_pay_per_week,
       :sixth_day_fee_inc_holiday,
       :sixth_day_fee_exc_holiday,
+      :sixth_day_fee_multiplier,
       :seventh_day_fee_inc_holiday,
       :seventh_day_fee_exc_holiday,
+      :seventh_day_fee_multiplier,
       :additional_notes,
       :accepted,
       :active,
@@ -102,8 +106,10 @@ defmodule Karma.Offer do
       :fee_per_day_inc_holiday,
       :sixth_day_fee_inc_holiday,
       :sixth_day_fee_exc_holiday,
+      :sixth_day_fee_multiplier,
       :seventh_day_fee_inc_holiday,
       :seventh_day_fee_exc_holiday,
+      :seventh_day_fee_multiplier,
       :active,
       :project_id
       ])
@@ -116,6 +122,8 @@ defmodule Karma.Offer do
     |> validate_inclusion(:daily_or_weekly, ["daily", "weekly"])
     |> validate_inclusion(:working_week, [5.0, 5.5, 6.0])
     |> validate_inclusion(:currency, ["gbp", "eur", "usd"])
+    |> validate_inclusion(:sixth_day_fee_multiplier, [1.0, 1.5, 2.0])
+    |> validate_inclusion(:seventh_day_fee_multiplier, [1.0, 1.5, 2.0])
 
   end
 
