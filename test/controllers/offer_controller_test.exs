@@ -140,9 +140,20 @@ defmodule Karma.OfferControllerTest do
 
   test "updates offer and redirects when data is valid", %{conn: conn, offer: offer} do
     updated = default_offer(%{additional_notes: "Sneaky peaky"})
-    conn = put conn, project_offer_path(conn, :update, offer.project_id, offer), offer: updated
-    assert redirected_to(conn) == project_offer_path(conn, :show, offer.project_id, offer)
-    assert Repo.get_by(Offer, additional_notes: "Sneaky peaky")
+
+    with_mock Karma.Mailer, [deliver_later: fn(email) ->
+      assert email.html_body =~ "Your offer on Karma has been updated."
+      assert email.html_body =~ "Please log in to view the offer."
+      assert email.to == updated.target_email
+     end] do
+
+      conn = put conn, project_offer_path(conn, :update, offer.project_id, offer), offer: updated
+      assert redirected_to(conn) == project_offer_path(conn, :show, offer.project_id, offer)
+      assert Repo.get_by(Offer, additional_notes: "Sneaky peaky")
+
+      # ensure email was sent
+      assert called Karma.Mailer.deliver_later(:_)
+    end
   end
 
   test "cannot update offer and renders errors when data is invalid", %{conn: conn, offer: offer, project: project} do
