@@ -1,6 +1,7 @@
 defmodule Karma.OfferControllerTest do
   use Karma.ConnCase
 
+  import Mock
   alias Karma.Offer
   @invalid_attrs default_offer(%{daily_or_weekly: "monthly"})
 
@@ -40,11 +41,17 @@ defmodule Karma.OfferControllerTest do
     post_conn = post conn, project_offer_path(conn, :create, project), offer: new_offer
     assert redirected_to(post_conn) == project_offer_path(conn, :index, project)
     assert Phoenix.Controller.get_flash(post_conn, :info) =~ "Offer sent"
+    with_mock Karma.Mailer, [deliver_later: fn(email) ->
 
     # test the email is shown on the index view
     get_conn = get conn, project_offer_path(conn, :index, project)
     assert html_response(get_conn, 200) =~ new_offer.target_email
     assert Repo.get_by(Offer, target_email: new_offer.target_email)
+     end] do
+
+      # ensure email was sent
+      assert called Karma.Mailer.deliver_later(:_)
+    end
   end
 
   # if contractor is already registered
@@ -55,6 +62,8 @@ defmodule Karma.OfferControllerTest do
     post_conn = post conn, project_offer_path(conn, :create, project), offer: new_offer
     assert redirected_to(post_conn) == project_offer_path(conn, :index, project)
     assert Phoenix.Controller.get_flash(post_conn, :info) =~ "Offer sent"
+    with_mock Karma.Mailer, [deliver_later: fn(email) ->
+     end] do
 
     # test the contractor's email is shown on the index view
     get_conn = get conn, project_offer_path(conn, :index, project)
@@ -63,6 +72,10 @@ defmodule Karma.OfferControllerTest do
 
     # test the user has been linked to the offer
     assert offer.user_id == contractor.id
+      
+      # ensure email was sent
+      assert called Karma.Mailer.deliver_later(:_)
+    end
   end
 
   test "does not create offer and renders error if target_email is not given", %{conn: conn, project: project} do
