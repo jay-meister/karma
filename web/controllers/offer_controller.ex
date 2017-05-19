@@ -43,7 +43,27 @@ defmodule Karma.OfferController do
 
   def create(conn, %{"offer" => offer_params, "project_id" => project_id}) do
     project = Repo.get(Project, project_id)
-    %{"target_email" => user_email} = offer_params
+
+    %{"target_email" => user_email,
+    "fee_per_day_inc_holiday" => fee_per_day_inc_holiday,
+    "working_week" => working_week} = offer_params
+
+    fee_per_day_exc_holiday = calc_fee_per_day_exc_holiday(fee_per_day_inc_holiday, project.holiday_rate)
+    holiday_pay_per_day = calc_holiday_pay_per_day(fee_per_day_inc_holiday, fee_per_day_exc_holiday)
+    fee_per_week_inc_holiday = calc_fee_per_week_inc_holiday(fee_per_day_inc_holiday, working_week)
+    fee_per_week_exc_holiday = calc_fee_per_week_exc_holiday(fee_per_week_inc_holiday, project.holiday_rate)
+    holiday_pay_per_week = calc_holiday_pay_per_week(fee_per_week_inc_holiday, fee_per_week_exc_holiday)
+
+    derived_params = %{
+      "fee_per_day_exc_holiday": fee_per_day_exc_holiday,
+      "holiday_pay_per_day": holiday_pay_per_day,
+      "fee_per_week_inc_holiday": fee_per_week_inc_holiday,
+      "fee_per_week_exc_holiday": fee_per_week_exc_holiday,
+      "holiday_pay_per_week": holiday_pay_per_week
+    }
+
+    new_params = Map.merge(offer_params, derived_params)
+    IO.inspect new_params
 
     user = Repo.get_by(User, email: user_email)
 

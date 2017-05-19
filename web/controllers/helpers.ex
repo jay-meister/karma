@@ -24,19 +24,23 @@ defmodule Karma.Controllers.Helpers do
   end
 
   def calc_fee_per_day_exc_holiday(fee_per_day_inc_holiday, project_holiday_rate) do
-    div(fee_per_day_inc_holiday, (1 + project_holiday_rate))
+    divisible_rate = 1 + project_holiday_rate
+    String.to_integer(fee_per_day_inc_holiday) / divisible_rate
   end
 
   def calc_holiday_pay_per_day(fee_per_day_inc_holiday, fee_per_day_exc_holiday) do
-    fee_per_day_inc_holiday - fee_per_day_exc_holiday
+    String.to_integer(fee_per_day_inc_holiday) - fee_per_day_exc_holiday
   end
 
   def calc_fee_per_week_inc_holiday(fee_per_day_inc_holiday, working_week) do
-    fee_per_day_inc_holiday * working_week
+    IO.inspect fee_per_day_inc_holiday
+    IO.inspect working_week
+    String.to_integer(fee_per_day_inc_holiday) * String.to_float(working_week)
   end
 
   def calc_fee_per_week_exc_holiday(fee_per_week_inc_holiday, project_holiday_rate) do
-    div(fee_per_week_inc_holiday, (1 + project_holiday_rate))
+    IO.inspect project_holiday_rate
+    fee_per_week_inc_holiday / (1 + project_holiday_rate)
   end
 
   def calc_holiday_pay_per_week(fee_per_week_inc_holiday, fee_per_week_exc_holiday) do
