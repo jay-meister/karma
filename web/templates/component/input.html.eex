@@ -1,5 +1,8 @@
 <div class="form-group">
-  <%= label assigns[:form], assigns[:atom], class: "control-label fw4" %>
+  <%= case assigns[:label] do
+   nil -> label assigns[:form], assigns[:atom], class: "control-label fw4"
+   _ -> label assigns[:form], assigns[:atom], assigns[:label], class: "control-label fw4"
+   end %>
   </br>
   <div class="relative">
     <% padding = case assigns[:image_name] do
@@ -20,5 +23,6 @@ assigns:
 form,
 atom,
 placeholder,
+label, (optional)
 image_name (optional)
 -->
