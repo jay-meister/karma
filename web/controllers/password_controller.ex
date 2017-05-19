@@ -54,8 +54,9 @@ defmodule Karma.PasswordController do
         user = Repo.get_by(User, email: email)
         changeset = User.new_password_changeset(user, password_params)
         case Repo.update(changeset) do
-          {:ok, _user} ->
+          {:ok, user} ->
             conn
+            |> Karma.Auth.login(user)
             |> put_flash(:info, "Password updated successfully")
             |> redirect(to: project_path(conn, :index))
           {:error, changeset} ->
