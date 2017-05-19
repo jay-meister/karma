@@ -24,7 +24,7 @@ defmodule Karma.PasswordControllerTest do
 
   test "/password/new renders form", %{conn: conn} do
     conn = get(conn, password_path(conn, :new))
-    assert html_response(conn, 200) =~ "Forgot your password?"
+    assert html_response(conn, 200) =~ "Send reset email"
   end
 
   test "password :create with recognised email address", %{conn: conn} do

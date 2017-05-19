@@ -1,26 +1,29 @@
-<h2>Reset your password</h2>
+<div class="tc">
+  <img src="/images/logo-blue.png" class="k-w4-5"/>
+</div>
+<div class="mw6 k-m-auto pl4 pr4">
+  <%= form_for @changeset, password_path(@conn, :update, 1, hash: "test"), [method: "put"] , fn f -> %>
+  <h2>Reset your password</h2>
+    <%= if @changeset.action do %>
+      <div class="alert alert-danger">
+        <p>Oops, something went wrong! Please check the errors below.</p>
+      </div>
+    <% end %>
 
-<%= form_for @changeset, password_path(@conn, :update, 1, hash: "test"), [method: "put"] , fn f -> %>
-  <%= if @changeset.action do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
-    </div>
+
+    <%= component "input.html",
+    form: f,
+    atom: :password,
+    placeholder: "Must contain at least 6 characters"
+    %>
+    <%= component "input.html",
+    form: f,
+    atom: :password_confirmation,
+    placeholder: "Must match password"
+    %>
+
+    <%= component "submit_button.html", title: "Reset password" %>
   <% end %>
-  <div class="form-group">
-    <%= label f, :password, "New password", class: "control-label" %>
-    <%= password_input f, :password, class: "form-control" %>
-    <%= error_tag f, :password %>
-  </div>
 
-  <div class="form-group">
-    <%= label f, :password_confirmation, "Confirm password", class: "control-label" %>
-    <%= password_input f, :password_confirmation, class: "form-control" %>
-    <%= error_tag f, :password_confirmation %>
-  </div>
-
-  <div class="form-group">
-    <%= submit "Submit", class: "btn btn-primary" %>
-  </div>
-<% end %>
-
-<%= link "Back to log in", to: session_path(@conn, :new) %>
+  <%= link "Back to log in", to: session_path(@conn, :new) %>
+</div>
