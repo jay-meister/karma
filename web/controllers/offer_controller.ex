@@ -68,9 +68,12 @@ defmodule Karma.OfferController do
         |> Offer.changeset(offer_params)
         |> Ecto.Changeset.put_assoc(:user, user)
     end
+    # first check the values provided by the user are valid
+    validation_changeset = Offer.form_validation(%Offer{}, offer_params)
 
-    if !changeset.valid? do
-      changeset = %{changeset | action: :insert} # manually set the action so errors are shown
+    # if not valid, return to user with errors
+    if !validation_changeset.valid? do
+      changeset = %{validation_changeset | action: :insert} # manually set the action so errors are shown
       job_titles = Karma.Job.titles()
       job_departments = Karma.Job.departments()
       render(conn, "new.html", changeset: changeset, project_id: project_id, job_titles: job_titles, job_departments: job_departments)
