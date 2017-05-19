@@ -58,7 +58,7 @@ defmodule Karma.PasswordController do
             conn
             |> Karma.Auth.login(user)
             |> put_flash(:info, "Password updated successfully")
-            |> redirect(to: project_path(conn, :index))
+            |> redirect(to: dashboard_path(conn, :index))
           {:error, changeset} ->
             render(conn, "edit.html", hash: hash, changeset: changeset)
         end
