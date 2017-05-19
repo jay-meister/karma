@@ -44,17 +44,6 @@ defmodule Karma.OfferController do
   def create(conn, %{"offer" => offer_params, "project_id" => project_id}) do
     project = Repo.get(Project, project_id)
 
-    %{"target_email" => user_email,
-    "fee_per_day_inc_holiday" => fee_per_day_inc_holiday,
-    "working_week" => working_week,
-    "department" => department,
-    "job_title" => job_title,
-    "sixth_day_fee_multiplier" => sixth_day_fee_multiplier,
-    "seventh_day_fee_multiplier" => seventh_day_fee_multiplier} = offer_params
-
-    sixth_day_fee_multiplier = String.to_float(sixth_day_fee_multiplier)
-    seventh_day_fee_multiplier = String.to_float(seventh_day_fee_multiplier)
-
     user = Repo.get_by(User, email: user_email)
 
     changeset = case user do
@@ -79,16 +68,6 @@ defmodule Karma.OfferController do
       render(conn, "new.html", changeset: changeset, project_id: project_id, job_titles: job_titles, job_departments: job_departments)
     else
 
-      working_week =
-        case working_week do
-          "" -> ""
-          _ww -> String.to_float(working_week)
-        end
-      fee_per_day_inc_holiday =
-        case fee_per_day_inc_holiday do
-           "" -> ""
-           _fpdih -> String.to_integer(fee_per_day_inc_holiday)
-        end
       calculations = run_calculations(validation_changeset.changes, project)
 
       offer_params = Map.merge(offer_params, calculations)
