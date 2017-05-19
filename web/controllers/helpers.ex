@@ -2,21 +2,6 @@ defmodule Karma.Controllers.Helpers do
 
   alias Karma.RedisCli
 
-  # def format_offer_integers(offer_map) do
-  #   integer_strings = [
-  #     "box_rental_cap",
-  #     "box_rental_fee_per_week",
-  #     "equipment_rental_cap",
-  #     "equipment_rental_fee_per_week",
-  #     "vehicle_allowance_per_week",
-  #     "fee_per_day_inc_holiday"
-  #   ]
-  #   for integer_string <- integer_strings do
-  #     Map.put(offer_map, integer_string, String.to_integer(offer_map[integer_string]))
-  #   end
-  #   offer_map
-  # end
-
   def get_email_from_hash(hash) do
     case RedisCli.get(hash) do
       {:ok, nil} -> {:error, "User not in Redis"}
