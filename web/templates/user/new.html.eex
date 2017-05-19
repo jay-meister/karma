@@ -17,12 +17,6 @@
 
       <%= component "input.html",
       form: f,
-      atom: :email,
-      placeholder: "example@email.com"
-      %>
-
-      <%= component "input.html",
-      form: f,
       atom: :first_name,
       placeholder: "Brad"
       %>
@@ -31,6 +25,12 @@
       form: f,
       atom: :last_name,
       placeholder: "Pitt"
+      %>
+      
+      <%= component "input.html",
+      form: f,
+      atom: :email,
+      placeholder: "example@email.com"
       %>
 
       <%= component "input.html",
