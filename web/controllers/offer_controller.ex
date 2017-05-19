@@ -44,7 +44,6 @@ defmodule Karma.OfferController do
   def create(conn, %{"offer" => offer_params, "project_id" => project_id}) do
     project = Repo.get(Project, project_id)
 
-    user = Repo.get_by(User, email: user_email)
     # first check the values provided by the user are valid
     validation_changeset = Offer.form_validation(%Offer{}, offer_params)
 
@@ -59,6 +58,9 @@ defmodule Karma.OfferController do
       calculations = run_calculations(validation_changeset.changes, project)
 
       offer_params = Map.merge(offer_params, calculations)
+
+      %{"target_email" => user_email} = offer_params
+      user = Repo.get_by(User, email: user_email)
 
 
       changeset = case user do
