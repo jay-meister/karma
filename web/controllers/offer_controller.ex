@@ -89,30 +89,9 @@ defmodule Karma.OfferController do
            "" -> ""
            _fpdih -> String.to_integer(fee_per_day_inc_holiday)
         end
+      calculations = run_calculations(validation_changeset.changes, project)
 
-      fee_per_day_exc_holiday = calc_fee_per_day_exc_holiday(fee_per_day_inc_holiday, project.holiday_rate)
-      holiday_pay_per_day = calc_holiday_pay_per_day(fee_per_day_inc_holiday, fee_per_day_exc_holiday)
-      fee_per_week_inc_holiday = calc_fee_per_week_inc_holiday(fee_per_day_inc_holiday, working_week)
-      fee_per_week_exc_holiday = calc_fee_per_week_exc_holiday(fee_per_week_inc_holiday, project.holiday_rate)
-      holiday_pay_per_week = calc_holiday_pay_per_week(fee_per_week_inc_holiday, fee_per_week_exc_holiday)
-      contract_type = determine_contract_type(department, job_title)
-      sixth_day_fee_inc_holiday = calc_day_fee_inc_holidays(fee_per_day_inc_holiday, sixth_day_fee_multiplier)
-      sixth_day_fee_exc_holiday = calc_day_fee_exc_holidays(fee_per_day_exc_holiday, sixth_day_fee_multiplier)
-      seventh_day_fee_inc_holiday = calc_day_fee_inc_holidays(fee_per_day_inc_holiday, seventh_day_fee_multiplier)
-      seventh_day_fee_exc_holiday = calc_day_fee_exc_holidays(fee_per_day_exc_holiday, seventh_day_fee_multiplier)
-
-      offer_params = Map.put(offer_params, "fee_per_day_exc_holiday", fee_per_day_exc_holiday)
-      offer_params = Map.put(offer_params, "sixth_day_fee_multiplier", sixth_day_fee_multiplier)
-      offer_params = Map.put(offer_params, "seventh_day_fee_multiplier", seventh_day_fee_multiplier)
-      offer_params = Map.put(offer_params, "holiday_pay_per_day", holiday_pay_per_day)
-      offer_params = Map.put(offer_params, "fee_per_week_inc_holiday", fee_per_week_inc_holiday)
-      offer_params = Map.put(offer_params, "fee_per_week_exc_holiday", fee_per_week_exc_holiday)
-      offer_params = Map.put(offer_params, "holiday_pay_per_week", holiday_pay_per_week)
-      offer_params = Map.put_new(offer_params, "contract_type", contract_type)
-      offer_params = Map.put_new(offer_params, "sixth_day_fee_inc_holiday", sixth_day_fee_inc_holiday)
-      offer_params = Map.put_new(offer_params, "sixth_day_fee_exc_holiday", sixth_day_fee_exc_holiday)
-      offer_params = Map.put_new(offer_params, "seventh_day_fee_inc_holiday", seventh_day_fee_inc_holiday)
-      offer_params = Map.put_new(offer_params, "seventh_day_fee_exc_holiday", seventh_day_fee_exc_holiday)
+      offer_params = Map.merge(offer_params, calculations)
 
 
       changeset = case user do
@@ -187,5 +166,40 @@ defmodule Karma.OfferController do
     conn
     |> put_flash(:info, "Offer deleted successfully.")
     |> redirect(to: project_offer_path(conn, :index, offer.project_id))
+  end
+
+  def run_calculations(changes, project) do
+    %{fee_per_day_inc_holiday: fee_per_day_inc_holiday,
+      working_week: working_week,
+      job_title: job_title,
+      department: department,
+      sixth_day_fee_multiplier: sixth_day_fee_multiplier,
+      seventh_day_fee_multiplier: seventh_day_fee_multiplier
+    } = changes
+
+
+    fee_per_day_exc_holiday = calc_fee_per_day_exc_holiday(fee_per_day_inc_holiday, project.holiday_rate)
+    holiday_pay_per_day = calc_holiday_pay_per_day(fee_per_day_inc_holiday, fee_per_day_exc_holiday)
+    fee_per_week_inc_holiday = calc_fee_per_week_inc_holiday(fee_per_day_inc_holiday, working_week)
+    fee_per_week_exc_holiday = calc_fee_per_week_exc_holiday(fee_per_week_inc_holiday, project.holiday_rate)
+    holiday_pay_per_week = calc_holiday_pay_per_week(fee_per_week_inc_holiday, fee_per_week_exc_holiday)
+    contract_type = determine_contract_type(department, job_title)
+    sixth_day_fee_inc_holiday = calc_day_fee_inc_holidays(fee_per_day_inc_holiday, sixth_day_fee_multiplier)
+    sixth_day_fee_exc_holiday = calc_day_fee_exc_holidays(fee_per_day_exc_holiday, sixth_day_fee_multiplier)
+    seventh_day_fee_inc_holiday = calc_day_fee_inc_holidays(fee_per_day_inc_holiday, seventh_day_fee_multiplier)
+    seventh_day_fee_exc_holiday = calc_day_fee_exc_holidays(fee_per_day_exc_holiday, seventh_day_fee_multiplier)
+
+    %{
+    "fee_per_day_exc_holiday" => fee_per_day_exc_holiday,
+    "holiday_pay_per_day" => holiday_pay_per_day,
+    "fee_per_week_inc_holiday" => fee_per_week_inc_holiday,
+    "fee_per_week_exc_holiday" => fee_per_week_exc_holiday,
+    "holiday_pay_per_week" => holiday_pay_per_week,
+    "contract_type" => contract_type,
+    "sixth_day_fee_inc_holiday" => sixth_day_fee_inc_holiday,
+    "sixth_day_fee_exc_holiday" => sixth_day_fee_exc_holiday,
+    "seventh_day_fee_inc_holiday" => seventh_day_fee_inc_holiday,
+    "seventh_day_fee_exc_holiday" => seventh_day_fee_exc_holiday
+    }
   end
 end
