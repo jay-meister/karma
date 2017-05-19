@@ -45,18 +45,6 @@ defmodule Karma.OfferController do
     project = Repo.get(Project, project_id)
 
     user = Repo.get_by(User, email: user_email)
-
-    changeset = case user do
-      nil -> # user is not yet registered or target_email is empty
-        project
-        |> build_assoc(:offers)
-        |> Offer.changeset(offer_params)
-      user -> # user is already registered
-        project
-        |> build_assoc(:offers)
-        |> Offer.changeset(offer_params)
-        |> Ecto.Changeset.put_assoc(:user, user)
-    end
     # first check the values provided by the user are valid
     validation_changeset = Offer.form_validation(%Offer{}, offer_params)
 
