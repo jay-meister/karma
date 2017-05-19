@@ -115,6 +115,18 @@ defmodule Karma.OfferController do
       offer_params = Map.put_new(offer_params, "seventh_day_fee_exc_holiday", seventh_day_fee_exc_holiday)
 
 
+      changeset = case user do
+        nil -> # user is not yet registered or target_email is empty
+          project
+          |> build_assoc(:offers)
+          |> Offer.changeset(offer_params)
+        user -> # user is already registered
+          project
+          |> build_assoc(:offers)
+          |> Offer.changeset(offer_params)
+          |> Ecto.Changeset.put_assoc(:user, user)
+      end
+
       case Repo.insert(changeset) do
         {:ok, offer} ->
           # email function decides whether this is a registered user
