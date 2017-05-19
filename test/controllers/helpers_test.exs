@@ -3,6 +3,18 @@ defmodule Karma.Controllers.HelpersTest do
 
   alias Karma.Controllers.Helpers
 
+  test "calc_day_fee_inc_holidays(fee_per_day_inc_holiday, day_fee_multiplier)" do
+    day_fee_inc_holidays =  Helpers.calc_day_fee_inc_holidays(2, 1)
+
+    assert day_fee_inc_holidays == 2
+  end
+
+  test "calc_day_fee_exc_holidays(fee_per_day_exc_holiday, day_fee_multiplier)" do
+    day_fee_exc_holidays =  Helpers.calc_day_fee_exc_holidays(2, 1)
+
+    assert day_fee_exc_holidays == 2
+  end
+
   test "calc_fee_per_day_exc_holiday(fee_per_day_inc_holiday, project_holiday_rate)" do
     fee_per_day_exc_holiday =  Helpers.calc_fee_per_day_exc_holiday(2, 1)
 
