@@ -24,60 +24,32 @@ defmodule Karma.Controllers.Helpers do
   end
 
   def calc_day_fee_inc_holidays(fee_per_day_inc_holiday, day_fee_multiplier) do
-      case fee_per_day_inc_holiday == "" || day_fee_multiplier == "" do
-        true -> ""
-        false ->
-          fee_per_day_inc_holiday * day_fee_multiplier
-      end
+    fee_per_day_inc_holiday * day_fee_multiplier
   end
 
   def calc_day_fee_exc_holidays(fee_per_day_exc_holiday, day_fee_multiplier) do
-      case fee_per_day_exc_holiday == "" || day_fee_multiplier == "" do
-        true -> ""
-        false ->
-          fee_per_day_exc_holiday * day_fee_multiplier
-      end
+    fee_per_day_exc_holiday * day_fee_multiplier
   end
 
   def calc_fee_per_day_exc_holiday(fee_per_day_inc_holiday, project_holiday_rate) do
-      case fee_per_day_inc_holiday == "" || project_holiday_rate == "" do
-        true -> ""
-        false ->
-          divisible_rate = 1 + project_holiday_rate
-          round(fee_per_day_inc_holiday / divisible_rate)
-      end
+    divisible_rate = 1 + project_holiday_rate
+    round(fee_per_day_inc_holiday / divisible_rate)
   end
 
   def calc_holiday_pay_per_day(fee_per_day_inc_holiday, fee_per_day_exc_holiday) do
-      case fee_per_day_inc_holiday == "" || fee_per_day_exc_holiday == "" do
-        true -> ""
-        false ->
-          round(fee_per_day_inc_holiday - fee_per_day_exc_holiday)
-      end
+    round(fee_per_day_inc_holiday - fee_per_day_exc_holiday)
   end
 
   def calc_fee_per_week_inc_holiday(fee_per_day_inc_holiday, working_week) do
-      case fee_per_day_inc_holiday == "" || working_week == "" do
-        true -> ""
-        false ->
-          round(fee_per_day_inc_holiday * working_week)
-      end
+    round(fee_per_day_inc_holiday * working_week)
   end
 
   def calc_fee_per_week_exc_holiday(fee_per_week_inc_holiday, project_holiday_rate) do
-      case fee_per_week_inc_holiday == "" || project_holiday_rate == "" do
-        true -> ""
-        false ->
-          round(fee_per_week_inc_holiday / (1 + project_holiday_rate))
-      end
+    round(fee_per_week_inc_holiday / (1 + project_holiday_rate))
   end
 
   def calc_holiday_pay_per_week(fee_per_week_inc_holiday, fee_per_week_exc_holiday) do
-      case fee_per_week_inc_holiday == "" || fee_per_week_exc_holiday == "" do
-        true -> ""
-        false ->
-          round(fee_per_week_inc_holiday - fee_per_week_exc_holiday)
-      end
+    round(fee_per_week_inc_holiday - fee_per_week_exc_holiday)
   end
 
   defp sch_d() do
