@@ -1,0 +1,5 @@
+You have a new offer waiting for you on Karma.
+
+Please create a new account using the following link to view the offer.
+
+<%= @url %>

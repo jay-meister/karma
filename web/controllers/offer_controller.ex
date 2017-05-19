@@ -61,6 +61,9 @@ defmodule Karma.OfferController do
 
     case Repo.insert(changeset) do
       {:ok, offer} ->
+        # email function decides whether this is a registered user
+        Karma.Email.send_new_offer_email(conn, offer)
+        |> Karma.Mailer.deliver_later()
         conn
         |> put_flash(:info, "Offer sent")
         |> redirect(to: project_offer_path(conn, :index, project_id))
