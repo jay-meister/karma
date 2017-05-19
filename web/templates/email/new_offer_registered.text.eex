@@ -1,0 +1,5 @@
+You have a new offer waiting for you on Karma.
+
+Please follow the link to view the offer.
+
+<%= @url %>
