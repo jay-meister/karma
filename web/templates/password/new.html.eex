@@ -1,21 +1,23 @@
-<h2>Forgot your password?</h2>
+<div class="tc">
+  <img src="/images/logo-blue.png" class="k-w4-5"/>
+</div>
 
-<%= form_for @changeset, password_path(@conn, :create) , fn f -> %>
-  <%= if @changeset.action do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
-    </div>
+<div class="mw6 k-m-auto pl4 pr4">
+  <%= form_for @changeset, password_path(@conn, :create), [method: "put"] , fn f -> %>
+    <%= if @changeset.action do %>
+      <div class="alert alert-danger">
+        <p>Oops, something went wrong! Please check the errors below.</p>
+      </div>
+    <% end %>
+
+    <%= component "input.html",
+    form: f,
+    atom: :email,
+    placeholder: "Enter your email address"
+    %>
+
+    <%= component "submit_button.html", title: "Send reset email" %>
   <% end %>
 
-  <div class="form-group">
-    <%= label f, :email, "Enter your email address", class: "control-label" %>
-    <%= text_input f, :email, class: "form-control" %>
-    <%= error_tag f, :email %>
-  </div>
-
-  <div class="form-group">
-    <%= submit "Submit", class: "btn btn-primary" %>
-  </div>
-<% end %>
-
-<%= link "Back to log in", to: session_path(@conn, :new) %>
+  <%= link "Back to log in", to: session_path(@conn, :new) %>
+</div>

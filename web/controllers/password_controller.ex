@@ -1,12 +1,12 @@
 defmodule Karma.PasswordController do
   use Karma.Web, :controller
 
-  alias Karma.User
+  alias Karma.{User, LayoutView}
 
   def new(conn, _params) do
     # render form allowing user to enter email address
     changeset = User.email_changeset(%User{})
-    render conn, "new.html", changeset: changeset
+    render conn, "new.html", layout: {LayoutView, "pre_login.html"}, changeset: changeset
   end
 
   def create(conn, %{"user" => password_params}) do
@@ -39,7 +39,7 @@ defmodule Karma.PasswordController do
         |> redirect(to: password_path(conn, :new))
       {:ok, _email} ->
         changeset = User.new_password_changeset(%User{})
-        render conn, "edit.html", changeset: changeset, hash: hash
+        render conn, "edit.html", layout: {LayoutView, "pre_login.html"}, changeset: changeset, hash: hash
     end
   end
 
@@ -60,7 +60,7 @@ defmodule Karma.PasswordController do
             |> put_flash(:info, "Password updated successfully")
             |> redirect(to: dashboard_path(conn, :index))
           {:error, changeset} ->
-            render(conn, "edit.html", hash: hash, changeset: changeset)
+            render(conn, "edit.html", layout: {LayoutView, "pre_login.html"}, hash: hash, changeset: changeset)
         end
     end
   end
