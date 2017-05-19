@@ -26,7 +26,7 @@
       atom: :last_name,
       placeholder: "Pitt"
       %>
-      
+
       <%= component "input.html",
       form: f,
       atom: :email,
@@ -36,6 +36,7 @@
       <%= component "input.html",
       form: f,
       atom: :password,
+      label: "Password (for KARMA)",
       placeholder: "Must contain at least 6 characters"
       %>
 
