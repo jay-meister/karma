@@ -34,7 +34,7 @@ defmodule Karma.OfferControllerTest do
   end
 
   # if contractor not registered
-  test "creates creates offer to an unregistered user and redirects them", %{conn: conn, project: project} do
+  test "creates offer to an unregistered user and redirects them", %{conn: conn, project: project} do
     new_offer = default_offer(%{target_email: "different@test.com"})
 
     post_conn = post conn, project_offer_path(conn, :create, project), offer: new_offer

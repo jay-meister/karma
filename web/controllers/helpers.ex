@@ -2,6 +2,21 @@ defmodule Karma.Controllers.Helpers do
 
   alias Karma.RedisCli
 
+  # def format_offer_integers(offer_map) do
+  #   integer_strings = [
+  #     "box_rental_cap",
+  #     "box_rental_fee_per_week",
+  #     "equipment_rental_cap",
+  #     "equipment_rental_fee_per_week",
+  #     "vehicle_allowance_per_week",
+  #     "fee_per_day_inc_holiday"
+  #   ]
+  #   for integer_string <- integer_strings do
+  #     Map.put(offer_map, integer_string, String.to_integer(offer_map[integer_string]))
+  #   end
+  #   offer_map
+  # end
+
   def get_email_from_hash(hash) do
     case RedisCli.get(hash) do
       {:ok, nil} -> {:error, "User not in Redis"}
@@ -23,28 +38,61 @@ defmodule Karma.Controllers.Helpers do
     |> binary_part(0, length)
   end
 
+  def calc_day_fee_inc_holidays(fee_per_day_inc_holiday, day_fee_multiplier) do
+      case fee_per_day_inc_holiday == "" || day_fee_multiplier == "" do
+        true -> ""
+        false ->
+          fee_per_day_inc_holiday * day_fee_multiplier
+      end
+  end
+
+  def calc_day_fee_exc_holidays(fee_per_day_exc_holiday, day_fee_multiplier) do
+      case fee_per_day_exc_holiday == "" || day_fee_multiplier == "" do
+        true -> ""
+        false ->
+          fee_per_day_exc_holiday * day_fee_multiplier
+      end
+  end
+
   def calc_fee_per_day_exc_holiday(fee_per_day_inc_holiday, project_holiday_rate) do
-    divisible_rate = 1 + project_holiday_rate
-    String.to_integer(fee_per_day_inc_holiday) / divisible_rate
+      case fee_per_day_inc_holiday == "" || project_holiday_rate == "" do
+        true -> ""
+        false ->
+          divisible_rate = 1 + project_holiday_rate
+          round(fee_per_day_inc_holiday / divisible_rate)
+      end
   end
 
   def calc_holiday_pay_per_day(fee_per_day_inc_holiday, fee_per_day_exc_holiday) do
-    String.to_integer(fee_per_day_inc_holiday) - fee_per_day_exc_holiday
+      case fee_per_day_inc_holiday == "" || fee_per_day_exc_holiday == "" do
+        true -> ""
+        false ->
+          round(fee_per_day_inc_holiday - fee_per_day_exc_holiday)
+      end
   end
 
   def calc_fee_per_week_inc_holiday(fee_per_day_inc_holiday, working_week) do
-    IO.inspect fee_per_day_inc_holiday
-    IO.inspect working_week
-    String.to_integer(fee_per_day_inc_holiday) * String.to_float(working_week)
+      case fee_per_day_inc_holiday == "" || working_week == "" do
+        true -> ""
+        false ->
+          round(fee_per_day_inc_holiday * working_week)
+      end
   end
 
   def calc_fee_per_week_exc_holiday(fee_per_week_inc_holiday, project_holiday_rate) do
-    IO.inspect project_holiday_rate
-    fee_per_week_inc_holiday / (1 + project_holiday_rate)
+      case fee_per_week_inc_holiday == "" || project_holiday_rate == "" do
+        true -> ""
+        false ->
+          round(fee_per_week_inc_holiday / (1 + project_holiday_rate))
+      end
   end
 
   def calc_holiday_pay_per_week(fee_per_week_inc_holiday, fee_per_week_exc_holiday) do
-    fee_per_week_inc_holiday - fee_per_week_exc_holiday
+      case fee_per_week_inc_holiday == "" || fee_per_week_exc_holiday == "" do
+        true -> ""
+        false ->
+          round(fee_per_week_inc_holiday - fee_per_week_exc_holiday)
+      end
   end
 
   defp sch_d() do
@@ -62,6 +110,7 @@ defmodule Karma.Controllers.Helpers do
 
   def determine_contract_type(department, job_title) do
     case department do
+      "" -> ""
       "Accounts" ->
           case job_title == "Financial Controller" || job_title == "Production Accountant" do
             true -> sch_d()
