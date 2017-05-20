@@ -23,24 +23,33 @@ defmodule Karma.Controllers.Helpers do
     |> binary_part(0, length)
   end
 
+  def calc_day_fee_inc_holidays(fee_per_day_inc_holiday, day_fee_multiplier) do
+    fee_per_day_inc_holiday * day_fee_multiplier
+  end
+
+  def calc_day_fee_exc_holidays(fee_per_day_exc_holiday, day_fee_multiplier) do
+    fee_per_day_exc_holiday * day_fee_multiplier
+  end
+
   def calc_fee_per_day_exc_holiday(fee_per_day_inc_holiday, project_holiday_rate) do
-    div(fee_per_day_inc_holiday, (1 + project_holiday_rate))
+    divisible_rate = 1 + project_holiday_rate
+    round(fee_per_day_inc_holiday / divisible_rate)
   end
 
   def calc_holiday_pay_per_day(fee_per_day_inc_holiday, fee_per_day_exc_holiday) do
-    fee_per_day_inc_holiday - fee_per_day_exc_holiday
+    round(fee_per_day_inc_holiday - fee_per_day_exc_holiday)
   end
 
   def calc_fee_per_week_inc_holiday(fee_per_day_inc_holiday, working_week) do
-    fee_per_day_inc_holiday * working_week
+    round(fee_per_day_inc_holiday * working_week)
   end
 
   def calc_fee_per_week_exc_holiday(fee_per_week_inc_holiday, project_holiday_rate) do
-    div(fee_per_week_inc_holiday, (1 + project_holiday_rate))
+    round(fee_per_week_inc_holiday / (1 + project_holiday_rate))
   end
 
   def calc_holiday_pay_per_week(fee_per_week_inc_holiday, fee_per_week_exc_holiday) do
-    fee_per_week_inc_holiday - fee_per_week_exc_holiday
+    round(fee_per_week_inc_holiday - fee_per_week_exc_holiday)
   end
 
   defp sch_d() do
@@ -52,12 +61,13 @@ defmodule Karma.Controllers.Helpers do
   end
 
   defp conditional() do
-    "CONDITIONAL"
+    # "CONDITIONAL"
     "PAYE"
   end
 
   def determine_contract_type(department, job_title) do
     case department do
+      "" -> ""
       "Accounts" ->
           case job_title == "Financial Controller" || job_title == "Production Accountant" do
             true -> sch_d()

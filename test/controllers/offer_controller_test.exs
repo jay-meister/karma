@@ -35,8 +35,7 @@ defmodule Karma.OfferControllerTest do
   end
 
   # if contractor not registered
-  test "creates creates offer to an unregistered user and redirects them", %{conn: conn, project: project} do
-
+  test "creates offer to an unregistered user and redirects them", %{conn: conn, project: project} do
     new_offer = default_offer(%{target_email: "different@test.com"})
 
     with_mock Karma.Mailer, [deliver_later: fn(email) ->
@@ -82,7 +81,7 @@ defmodule Karma.OfferControllerTest do
 
       # test the user has been linked to the offer
       assert offer.user_id == contractor.id
-      
+
       # ensure email was sent
       assert called Karma.Mailer.deliver_later(:_)
     end
@@ -93,7 +92,7 @@ defmodule Karma.OfferControllerTest do
     assert html_response(conn, 200) =~ "can&#39;t be blank"
   end
 
-  test "does not create resource and renders errors when data is invalid", %{conn: conn, offer: _offer, project: project} do
+  test "does not create resource and renders errors when data is invalid", %{conn: conn, project: project} do
     conn = post conn, project_offer_path(conn, :create, project), offer: @invalid_attrs
     assert html_response(conn, 200) =~ "Make new offer"
   end

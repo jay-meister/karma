@@ -1,5 +1,10 @@
 /* This file is for your main application css. */
 
+.help-block {
+  text-transform: capitalize;
+  color: #757de8;
+}
+
 .arrow {
   right: 50%;
   margin-right: -16px;

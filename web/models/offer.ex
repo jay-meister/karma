@@ -10,7 +10,6 @@ defmodule Karma.Offer do
     field :daily_or_weekly, :string
     field :working_week, :float
     field :currency, :string
-    field :overtime_rate_per_hour, :integer
     field :other_deal_provisions, :string
     field :box_rental_description, :string
     field :box_rental_fee_per_week, :integer
@@ -27,8 +26,12 @@ defmodule Karma.Offer do
     field :fee_per_week_exc_holiday, :integer
     field :holiday_pay_per_day, :integer
     field :holiday_pay_per_week, :integer
-    field :sixth_day_fee, :float
-    field :seventh_day_fee, :float
+    field :sixth_day_fee_inc_holiday, :float
+    field :sixth_day_fee_exc_holiday, :float
+    field :sixth_day_fee_multiplier, :float
+    field :seventh_day_fee_inc_holiday, :float
+    field :seventh_day_fee_exc_holiday, :float
+    field :seventh_day_fee_multiplier, :float
     field :additional_notes, :string
     field :accepted, :boolean, default: nil
     field :active, :boolean, default: true
@@ -53,7 +56,6 @@ defmodule Karma.Offer do
       :daily_or_weekly,
       :working_week,
       :currency,
-      :overtime_rate_per_hour,
       :other_deal_provisions,
       :box_rental_description,
       :box_rental_fee_per_week,
@@ -70,8 +72,12 @@ defmodule Karma.Offer do
       :fee_per_week_exc_holiday,
       :holiday_pay_per_day,
       :holiday_pay_per_week,
-      :sixth_day_fee,
-      :seventh_day_fee,
+      :sixth_day_fee_inc_holiday,
+      :sixth_day_fee_exc_holiday,
+      :sixth_day_fee_multiplier,
+      :seventh_day_fee_inc_holiday,
+      :seventh_day_fee_exc_holiday,
+      :seventh_day_fee_multiplier,
       :additional_notes,
       :accepted,
       :active,
@@ -87,7 +93,6 @@ defmodule Karma.Offer do
       :daily_or_weekly,
       :working_week,
       :currency,
-      :overtime_rate_per_hour,
       :other_deal_provisions,
       :box_rental_description,
       :box_rental_fee_per_week,
@@ -99,20 +104,67 @@ defmodule Karma.Offer do
       :equipment_rental_period,
       :vehicle_allowance_per_week,
       :fee_per_day_inc_holiday,
-      :sixth_day_fee,
-      :seventh_day_fee,
+      :sixth_day_fee_inc_holiday,
+      :sixth_day_fee_exc_holiday,
+      :sixth_day_fee_multiplier,
+      :seventh_day_fee_inc_holiday,
+      :seventh_day_fee_exc_holiday,
+      :seventh_day_fee_multiplier,
       :active,
       :project_id
       ])
     |> validate_required_dropdowns()
   end
 
+
+  def form_validation(struct, params \\ %{}) do
+    struct
+    |> cast(params, [
+      :target_email,
+      :department,
+      :job_title,
+      :start_date,
+      :daily_or_weekly,
+      :working_week,
+      :currency,
+      :other_deal_provisions,
+      :box_rental_description,
+      :box_rental_fee_per_week,
+      :box_rental_cap,
+      :box_rental_period,
+      :equipment_rental_description,
+      :equipment_rental_fee_per_week,
+      :equipment_rental_cap,
+      :equipment_rental_period,
+      :vehicle_allowance_per_week,
+      :fee_per_day_inc_holiday,
+      :sixth_day_fee_multiplier,
+      :seventh_day_fee_multiplier,
+      :additional_notes,
+      ])
+    |> validate_required([
+      :target_email,
+      :department,
+      :job_title,
+      :start_date,
+      :daily_or_weekly,
+      :working_week,
+      :currency,
+      :vehicle_allowance_per_week,
+      :fee_per_day_inc_holiday,
+      :sixth_day_fee_multiplier,
+      :seventh_day_fee_multiplier,
+      ])
+  end
+
   def validate_required_dropdowns(changeset) do
     changeset
     |> validate_inclusion(:contract_type, ["PAYE", "SCH D"])
     |> validate_inclusion(:daily_or_weekly, ["daily", "weekly"])
-    |> validate_inclusion(:working_week, [5, 5.5, 6])
+    |> validate_inclusion(:working_week, [5.0, 5.5, 6.0])
     |> validate_inclusion(:currency, ["gbp", "eur", "usd"])
+    |> validate_inclusion(:sixth_day_fee_multiplier, [1.0, 1.5, 2.0])
+    |> validate_inclusion(:seventh_day_fee_multiplier, [1.0, 1.5, 2.0])
 
   end
 
