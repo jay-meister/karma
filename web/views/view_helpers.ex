@@ -1,5 +1,9 @@
 defmodule Karma.ViewHelpers do
 
+  def get_offers(project, eval) do
+    Integer.to_string(length(Enum.filter(project.offers, fn(offer) -> offer.accepted == eval end)))
+  end
+
   def format_date(date) do
     day = Integer.to_string(date.day)
     month = Integer.to_string(date.month)

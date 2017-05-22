@@ -7,17 +7,17 @@
   <div class="tc dib">
     <div class="tc dib w-32 ma1 pa3">
       <div class="f4 k-light-indigo">PENDING</div>
-      <div class="k-ftitle">1</div>
+      <div class="k-ftitle"><%= get_offers(@project, nil) %></div>
     </div>
     <div class="k-w1px bg-white k-h3-5r dib"></div>
     <div class="tc dib w-32 ma1 pa3">
       <div class="f4 k-light-indigo">ACCEPTED</div>
-      <div class="k-ftitle">0</div>
+      <div class="k-ftitle"><%= get_offers(@project, true) %></div>
     </div>
     <div class="k-w1px bg-white k-h3-5r dib"></div>
     <div class="tc dib w-32 ma1 pa3">
       <div class="f4 k-light-indigo">REJECTED</div>
-      <div class="k-ftitle">2</div>
+      <div class="k-ftitle"><%= get_offers(@project, false) %></div>
     </div>
   </div>
 </div>
