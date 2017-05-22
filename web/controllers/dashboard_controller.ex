@@ -1,13 +1,18 @@
 defmodule Karma.DashboardController do
   use Karma.Web, :controller
 
-  plug :authenticate when action in [:index]
-
   def index(conn, _params, user) do
-    projects =
-      Repo.all(user_projects(user))
-      |> Repo.preload(:offers)
-    render conn, "index.html", projects: projects
+    case user == nil do
+      true ->
+        conn
+        |> redirect(to: session_path(conn, :new))
+        |> halt()
+      false ->
+        projects =
+          Repo.all(user_projects(user))
+          |> Repo.preload(:offers)
+        render conn, "index.html", projects: projects
+    end
   end
 
   defp user_projects(user) do
