@@ -36,15 +36,18 @@
   <%= component "form_divider.html", title: "Fees" %>
   <%= for {atom, label, formatted} <- [
     {:currency, nil, nil},
-    {:overtime_rate_per_hour, nil, nil},
     {:fee_per_day_inc_holiday, nil, nil},
     {:fee_per_day_exc_holiday, nil, nil},
     {:fee_per_week_inc_holiday, nil, nil},
     {:fee_per_week_exc_holiday, nil, nil},
     {:holiday_pay_per_day, nil, nil},
     {:holiday_pay_per_week, nil, nil},
-    {:sixth_day_fee, nil, nil},
-    {:seventh_day_fee, nil, nil}
+    {:sixth_day_fee_inc_holiday, nil, nil},
+    {:sixth_day_fee_exc_holiday, nil, nil},
+    {:seventh_day_fee_inc_holiday, nil, nil},
+    {:seventh_day_fee_exc_holiday, nil, nil},
+    {:holiday_pay_per_day, nil, nil},
+    {:holiday_pay_per_week, nil, nil}
   ] do %>
     <%= component "data.html",
     data: formatted || Map.get(@offer, atom),
@@ -70,5 +73,6 @@
     label: label || format_label(atom)
     %>
   <% end %>
+
 
 </ul>
