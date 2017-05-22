@@ -6,15 +6,9 @@ defmodule Karma.DashboardViewTest do
   test "get_offers(project, eval)" do
     project = %{
       offers: [
-        %{
-          accepted: nil
-        },
-        %{
-          accepted: nil
-        },
-        %{
-          accepted: true
-        }
+        %{accepted: nil},
+        %{accepted: nil},
+        %{accepted: true}
       ]
     }
     pending_offers = DashboardView.get_offers(project, nil)
