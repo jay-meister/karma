@@ -7,17 +7,17 @@
   <div class="tc dib">
     <div class="tc dib w-32 ma1 pa3">
       <div class="f4 k-light-indigo">PENDING</div>
-      <div class="k-ftitle">1</div>
+      <div class="k-ftitle"><%= @pending_offers %></div>
     </div>
     <div class="k-w1px bg-white k-h3-5r dib"></div>
     <div class="tc dib w-32 ma1 pa3">
       <div class="f4 k-light-indigo">ACCEPTED</div>
-      <div class="k-ftitle">0</div>
+      <div class="k-ftitle"><%= @accepted_offers %></div>
     </div>
     <div class="k-w1px bg-white k-h3-5r dib"></div>
     <div class="tc dib w-32 ma1 pa3">
       <div class="f4 k-light-indigo">REJECTED</div>
-      <div class="k-ftitle">2</div>
+      <div class="k-ftitle"><%= @rejected_offers %></div>
     </div>
   </div>
 </div>

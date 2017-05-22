@@ -13,9 +13,9 @@
     project_name: project.name,
     project_codename: project.codename,
     project_start_date: format_date(project.start_date),
-    project_pending: "3",
-    project_accepted: "2",
-    project_rejected: "0"
+    project_pending: get_offers(project, nil),
+    project_accepted: get_offers(project, true),
+    project_rejected: get_offers(project, false)
     %>
     <% end %>
     <%= component "plus_button.html", link: "/projects/new" %>
