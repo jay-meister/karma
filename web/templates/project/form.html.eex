@@ -28,7 +28,7 @@
   <%= component "input.html",
   form: f,
   atom: :codename,
-  placeholder: "Project Code-name"
+  placeholder: "Project Codename"
   %>
 
   <%= component "textarea.html",
@@ -39,14 +39,15 @@
 
   <%= component "date.html",
   form: f,
-  atom: :start_date
+  atom: :start_date,
+  label: "Start Date (of shoot)"
   %>
 
   <%= component "number_input.html",
   form: f,
   atom: :duration,
   placeholder: "e.g. 16",
-  label: "Duration (weeks)"
+  label: "Duration (number of weeks)"
   %>
 
   <%= component "input.html",
