@@ -8,12 +8,15 @@
     form: f,
     image_name: "user",
     atom: :email,
+    autofill: "on",
     placeholder: "example@email.com"
     %>
     <%= component "input.html",
     form: f,
     image_name: "locked",
     atom: :password,
+    type: :password,
+    autofill: "on",
     placeholder: "Must contain at least 6 characters"
     %>
 
