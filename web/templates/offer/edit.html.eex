@@ -1,8 +1,8 @@
+<%= link "Back", to: project_offer_path(@conn, :show, @offer, @offer.project_id) %>
+
 <h2>Edit offer</h2>
 
 <%= render "form.html", changeset: @changeset,
                         action: project_offer_path(@conn, :update, @offer.project_id, @offer),
                         job_titles: @job_titles,
                         job_departments: @job_departments %>
-
-<%= link "Back", to: project_offer_path(@conn, :index, @offer.project_id) %>

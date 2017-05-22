@@ -7,6 +7,7 @@
     false -> "bg-red"
   end
 %>
+<a href="<%= assigns[:url] %>" >
   <div class="<%= status %> pa3 br3 white k-shadow-1 relative mb3">
     <div class="dib ma1">
       <%= offer.target_email %>
@@ -17,3 +18,4 @@
       <div class="dib ma1"><%= offer.job_title %></div>
     </div>
   </div>
+</a>

@@ -30,7 +30,7 @@
   <% end %>
   <%= if @offers != [] do %>
     <%= for offer <- @offers do %>
-      <%= component "offer_tile.html", offer: offer %>
+      <%= component "offer_tile.html", offer: offer, url: project_offer_path(@conn, :show, @project, offer) %>
     <% end %>
   <% end %>
 </div>
