@@ -22,13 +22,13 @@
   <%= component "input.html",
   form: f,
   atom: :name,
-  placeholder: "Project Name"
+  placeholder: "Project name"
   %>
 
   <%= component "input.html",
   form: f,
   atom: :codename,
-  placeholder: "Project Codename"
+  placeholder: "Project codename"
   %>
 
   <%= component "textarea.html",
@@ -40,13 +40,13 @@
   <%= component "date.html",
   form: f,
   atom: :start_date,
-  label: "Start Date (of shoot)"
+  label: "Start date (of shoot)"
   %>
 
   <%= component "number_input.html",
   form: f,
   atom: :duration,
-  placeholder: "e.g. 16",
+  placeholder: "Enter a number",
   label: "Duration (number of weeks)"
   %>
 
@@ -59,19 +59,19 @@
   <%= component "input.html",
   form: f,
   atom: :company_name,
-  placeholder: "Company Ltd."
+  placeholder: "Company limited"
   %>
 
   <%= component "input.html",
   form: f,
   atom: :company_address_1,
-  placeholder: "Company Address Line 1"
+  placeholder: "Company address line 1"
   %>
 
   <%= component "input.html",
   form: f,
   atom: :company_address_2,
-  placeholder: "Company Address Line 2"
+  placeholder: "Company address line 2"
   %>
 
   <%= component "input.html",
@@ -83,7 +83,7 @@
   <%= component "input.html",
   form: f,
   atom: :company_address_postcode,
-  placeholder: "Company Postcode"
+  placeholder: "Company postcode"
   %>
 
   <%= component "input.html",
@@ -95,13 +95,13 @@
   <%= component "input.html",
   form: f,
   atom: :operating_base_address_1,
-  placeholder: "Operating Base Address Line 1"
+  placeholder: "Operating base address line 1"
   %>
 
   <%= component "input.html",
   form: f,
   atom: :operating_base_address_2,
-  placeholder: "Operating Base Address Line 2"
+  placeholder: "Operating base address line 2"
   %>
 
   <%= component "input.html",
@@ -113,7 +113,7 @@
   <%= component "input.html",
   form: f,
   atom: :operating_base_address_postcode,
-  placeholder: "Operating Base Postcode"
+  placeholder: "Operating base postcode"
   %>
 
   <%= component "input.html",
