@@ -63,26 +63,8 @@ defmodule Karma.Offer do
   """
   def changeset(struct, params \\ %{}) do
     struct
+    |> form_validation(params)
     |> cast(params, [
-      :target_email,
-      :department,
-      :job_title,
-      :contract_type,
-      :start_date,
-      :daily_or_weekly,
-      :working_week,
-      :currency,
-      :other_deal_provisions,
-      :box_rental_description,
-      :box_rental_fee_per_week,
-      :box_rental_cap,
-      :box_rental_period,
-      :equipment_rental_description,
-      :equipment_rental_fee_per_week,
-      :equipment_rental_cap,
-      :equipment_rental_period,
-      :vehicle_allowance_per_week,
-      :fee_per_day_inc_holiday,
       :fee_per_day_exc_holiday,
       :fee_per_week_inc_holiday,
       :fee_per_week_exc_holiday,
@@ -101,31 +83,10 @@ defmodule Karma.Offer do
       :project_id,
       :user_id])
     |> validate_required([
-      :target_email,
-      :department,
-      :job_title,
-      :contract_type,
-      :start_date,
-      :daily_or_weekly,
-      :working_week,
-      :currency,
-      :other_deal_provisions,
-      :box_rental_description,
-      :box_rental_fee_per_week,
-      :box_rental_cap,
-      :box_rental_period,
-      :equipment_rental_description,
-      :equipment_rental_fee_per_week,
-      :equipment_rental_cap,
-      :equipment_rental_period,
-      :vehicle_allowance_per_week,
-      :fee_per_day_inc_holiday,
       :sixth_day_fee_inc_holiday,
       :sixth_day_fee_exc_holiday,
-      :sixth_day_fee_multiplier,
       :seventh_day_fee_inc_holiday,
       :seventh_day_fee_exc_holiday,
-      :seventh_day_fee_multiplier,
       :active,
       :project_id
       ])
@@ -144,19 +105,13 @@ defmodule Karma.Offer do
       :working_week,
       :currency,
       :other_deal_provisions,
-      :box_rental_description,
-      :box_rental_fee_per_week,
-      :box_rental_cap,
-      :box_rental_period,
-      :equipment_rental_description,
-      :equipment_rental_fee_per_week,
-      :equipment_rental_cap,
-      :equipment_rental_period,
       :vehicle_allowance_per_week,
       :fee_per_day_inc_holiday,
       :sixth_day_fee_multiplier,
       :seventh_day_fee_multiplier,
       :additional_notes,
+      :box_rental_required?,
+      :equipment_rental_required?
       ])
     |> validate_required([
       :target_email,
@@ -175,6 +130,7 @@ defmodule Karma.Offer do
     |> validate_if_required(params, :equipment_rental_required?, @equipment_rental_fields)
   end
 
+
   def validate_required_dropdowns(changeset) do
     changeset
     |> validate_inclusion(:contract_type, ["PAYE", "SCH D"])
@@ -183,6 +139,8 @@ defmodule Karma.Offer do
     |> validate_inclusion(:currency, ["gbp", "eur", "usd"])
     |> validate_inclusion(:sixth_day_fee_multiplier, [1.0, 1.5, 2.0])
     |> validate_inclusion(:seventh_day_fee_multiplier, [1.0, 1.5, 2.0])
+  end
+
 
   def validate_if_required(changeset, params, check, fields) do
     case Map.get(changeset.changes, check) do
