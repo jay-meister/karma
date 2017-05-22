@@ -17,7 +17,6 @@ defmodule Karma.ProjectControllerTest do
     # Don't use the conn with logged in user
     conn = build_conn()
     Enum.each([
-      get(conn, project_path(conn, :index)),
       get(conn, project_path(conn, :new)),
       post(conn, project_path(conn, :create)),
       get(conn, project_path(conn, :show, project)),
@@ -49,20 +48,6 @@ defmodule Karma.ProjectControllerTest do
     end)
   end
 
-
-  test "/projects lists all projects created by logged in user", %{conn: conn, project: project} do
-    conn = get conn, project_path(conn, :index)
-    assert html_response(conn, 200) =~ project.name
-  end
-
-  test "/projects does not list projects created by different user", %{conn: conn} do
-    diff_user = insert_user(%{email: "different@test.com"})
-    diff_project = insert_project(diff_user, %{name: "Different Movie"})
-
-    conn = get conn, project_path(conn, :index)
-    refute html_response(conn, 200) =~ diff_project.name
-  end
-
   test "/project/new renders form for new project", %{conn: conn} do
     conn = get conn, project_path(conn, :new)
     assert html_response(conn, 200) =~ "Create project"
@@ -70,7 +55,7 @@ defmodule Karma.ProjectControllerTest do
 
   test "post /project creates project and redirects when data is valid", %{conn: conn} do
     conn = post conn, project_path(conn, :create), project: default_project(%{name: "AAAA"})
-    assert redirected_to(conn) == project_path(conn, :index)
+    assert redirected_to(conn) == dashboard_path(conn, :index)
     assert Repo.get_by(Project, name: "AAAA")
   end
 

@@ -32,18 +32,6 @@ defmodule Karma.ProjectController do
     end
   end
 
-
-
-  def index(conn, _params) do
-    user = conn.assigns.current_user
-    projects =
-      Project
-      |> Project.users_projects(user)
-      |> Repo.all()
-
-    render(conn, "index.html", projects: projects)
-  end
-
   def new(conn, _params) do
     changeset = Project.changeset(%Project{})
     render(conn, "new.html", changeset: changeset)
@@ -59,7 +47,7 @@ defmodule Karma.ProjectController do
       {:ok, _project} ->
         conn
         |> put_flash(:info, "Project created successfully.")
-        |> redirect(to: project_path(conn, :index))
+        |> redirect(to: dashboard_path(conn, :index))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end

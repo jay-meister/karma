@@ -95,8 +95,9 @@ defmodule Karma.Project do
 
   # queries
   # get projects created by specified user
-  def users_projects(query, user) do
-    from p in query,
-    where: p.user_id == ^user.id
-  end
+  # commenting out for now because we aren't hitting the index anymore
+  # def users_projects(query, user) do
+  #   from p in query,
+  #   where: p.user_id == ^user.id
+  # end
 end
