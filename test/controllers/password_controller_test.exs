@@ -32,7 +32,7 @@ defmodule Karma.PasswordControllerTest do
       user = insert_user()
       conn = post(conn, password_path(conn, :create), user: @valid_attrs)
       # test response
-      assert redirected_to(conn) == session_path(conn, :new)
+      assert redirected_to(conn) == password_path(conn, :new)
       assert Phoenix.Controller.get_flash(conn, :info) =~ "A password reset email has been sent to #{user.email}"
       # test Redis has key, which represents our email
       {:ok, [key]} = RedisCli.query(["keys", "*"])

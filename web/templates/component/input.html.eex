@@ -12,7 +12,7 @@
     <%= text_input assigns[:form],
     assigns[:atom],
     placeholder: assigns[:placeholder],
-    type: assigns[:atom],
+    type: assigns[:type] || "",
     class: "k-bg-input k-dark-grey pa3 bn br3 w-100 outline-0 #{padding}",
     autocomplete: assigns[:autocomplete] || "off"
     %>
@@ -29,6 +29,7 @@ assigns:
 form,
 atom,
 placeholder,
+type, (optional)
 autocomplete, (optional)
 label, (optional)
 image_name (optional)

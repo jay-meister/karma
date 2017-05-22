@@ -26,7 +26,7 @@ defmodule Karma.PasswordController do
         |> Karma.Mailer.deliver_later()
         conn
         |> put_flash(:info, "A password reset email has been sent to #{user.email}, it will expire in 5 minutes")
-        |> redirect(to: session_path(conn, :new))
+        |> redirect(to: password_path(conn, :new))
     end
   end
 

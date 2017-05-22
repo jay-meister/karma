@@ -13,11 +13,13 @@
     <%= component "input.html",
     form: f,
     atom: :password,
+    type: "password",
     placeholder: "Must contain at least 6 characters"
     %>
     <%= component "input.html",
     form: f,
     atom: :password_confirmation,
+    type: :password,
     placeholder: "Must match password"
     %>
 
