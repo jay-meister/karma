@@ -48,7 +48,6 @@
     {:seventh_day_fee_inc_holiday, nil, nil},
     {:seventh_day_fee_exc_holiday, nil, nil},
     {:seventh_day_fee_multiplier, nil, nil},
-    {:holiday_pay_per_day, nil, nil},
     {:holiday_pay_per_week, nil, nil}
   ] do %>
     <%= component "data.html",
