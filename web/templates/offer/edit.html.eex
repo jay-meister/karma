@@ -1,4 +1,4 @@
-<%= link "Back", to: project_offer_path(@conn, :show, @offer, @offer.project_id) %>
+<%= link "Back", to: project_offer_path(@conn, :show, @offer.project_id, @offer) %>
 
 <h2>Edit offer</h2>
 
