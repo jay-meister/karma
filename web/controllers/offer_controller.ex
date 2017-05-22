@@ -25,7 +25,9 @@ defmodule Karma.OfferController do
 
 
   def index(conn, %{"project_id" => project_id}) do
-    project = Repo.get!(Project, project_id)
+    project =
+      Repo.get!(Project, project_id)
+      |> Repo.preload(:offers)
     offers =
       Offer
       |> Offer.projects_offers(project)

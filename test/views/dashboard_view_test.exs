@@ -1,7 +1,7 @@
 defmodule Karma.DashboardViewTest do
   use Karma.ConnCase, async: true
 
-  alias Karma.DashboardView
+  alias Karma.ViewHelpers
 
   test "get_offers(project, eval)" do
     project = %{
@@ -11,7 +11,7 @@ defmodule Karma.DashboardViewTest do
         %{accepted: true}
       ]
     }
-    pending_offers = DashboardView.get_offers(project, nil)
+    pending_offers = ViewHelpers.get_offers(project, nil)
 
     assert pending_offers == "2"
   end
