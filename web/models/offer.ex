@@ -19,7 +19,7 @@ defmodule Karma.Offer do
     field :equipment_rental_fee_per_week, :integer
     field :equipment_rental_cap, :integer
     field :equipment_rental_period, :string
-    field :vehicle_allowance_per_week, :integer
+    field :vehicle_allowance_per_week, :integer, default: 0
     field :fee_per_day_inc_holiday, :integer
     field :fee_per_day_exc_holiday, :integer
     field :fee_per_week_inc_holiday, :integer
