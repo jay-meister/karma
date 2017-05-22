@@ -1,4 +1,4 @@
-<%= link "Back to dashboard", to: project_path(@conn, :index) %>
+<%= link "Back to dashboard", to: dashboard_path(@conn, :index) %>
 
 <h2>Create project</h2>
 
