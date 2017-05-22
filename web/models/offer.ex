@@ -44,6 +44,20 @@ defmodule Karma.Offer do
     timestamps()
   end
 
+  @equipment_rental_fields [
+    :equipment_rental_description,
+    :equipment_rental_fee_per_week,
+    :equipment_rental_cap,
+    :equipment_rental_period
+    ]
+
+  @box_rental_fields [
+    :box_rental_description,
+    :box_rental_fee_per_week,
+    :box_rental_cap,
+    :box_rental_period
+  ]
+
   @doc """
   Builds a changeset based on the `struct` and `params`.
   """
@@ -157,6 +171,8 @@ defmodule Karma.Offer do
       :sixth_day_fee_multiplier,
       :seventh_day_fee_multiplier,
       ])
+    |> validate_if_required(params, :box_rental_required?, @box_rental_fields)
+    |> validate_if_required(params, :equipment_rental_required?, @equipment_rental_fields)
   end
 
   def validate_required_dropdowns(changeset) do
@@ -168,6 +184,15 @@ defmodule Karma.Offer do
     |> validate_inclusion(:sixth_day_fee_multiplier, [1.0, 1.5, 2.0])
     |> validate_inclusion(:seventh_day_fee_multiplier, [1.0, 1.5, 2.0])
 
+  def validate_if_required(changeset, params, check, fields) do
+    case Map.get(changeset.changes, check) do
+      true ->
+        changeset
+        |> cast(params, fields)
+        |> validate_required(fields)
+      _ ->
+        changeset
+    end
   end
 
   # queries
