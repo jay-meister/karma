@@ -1,3 +1,6 @@
+<%= link "Back", to: project_offer_path(@conn, :index, @offer.project_id), class: "ma2" %>
+<%= link "Edit", to: project_offer_path(@conn, :edit, @offer.project_id, @offer), class: "ma2" %>
+
 <h2>Offer for <%= @offer.target_email %></h2>
 <ul class="list pl0">
 
@@ -69,6 +72,3 @@
   <% end %>
 
 </ul>
-
-<%= link "Edit", to: project_offer_path(@conn, :edit, @offer.project_id, @offer) %>
-<%= link "Back", to: project_offer_path(@conn, :index, @offer.project_id) %>

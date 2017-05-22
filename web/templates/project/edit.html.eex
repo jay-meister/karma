@@ -1,6 +1,7 @@
+<%= link "Back to dashboard", to: dashboard_path(@conn, :index) %>
+
 <h2>Edit project</h2>
 
 <%= render "form.html", changeset: @changeset,
-                        action: project_path(@conn, :update, @project) %>
-
-<%= link "Back", to: project_path(@conn, :index) %>
+                        action: project_path(@conn, :update, @project),
+                        button_text: "Edit" %>
