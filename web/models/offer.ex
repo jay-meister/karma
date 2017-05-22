@@ -11,10 +11,12 @@ defmodule Karma.Offer do
     field :working_week, :float
     field :currency, :string
     field :other_deal_provisions, :string
+    field :box_rental_required?, :boolean, virtual: true
     field :box_rental_description, :string
     field :box_rental_fee_per_week, :integer
     field :box_rental_cap, :integer
     field :box_rental_period, :string
+    field :equipment_rental_required?, :boolean, virtual: true
     field :equipment_rental_description, :string
     field :equipment_rental_fee_per_week, :integer
     field :equipment_rental_cap, :integer
