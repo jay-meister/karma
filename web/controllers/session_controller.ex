@@ -19,7 +19,7 @@ defmodule Karma.SessionController do
     case Karma.Auth.login_by_email_and_pass(conn, email, password, repo: Repo) do
       {:ok, conn} ->
         conn
-        |> put_flash(:info, "Welcome Back!")
+        |> put_flash(:info, "Welcome back!")
         |> redirect(to: dashboard_path(conn, :index))
       {:error, :unauthorized, conn} ->
         conn

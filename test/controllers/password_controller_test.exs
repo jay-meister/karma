@@ -71,7 +71,7 @@ defmodule Karma.PasswordControllerTest do
     # Log in user with new password
     valid_login = %{email: "test@test.com", password: "123456"}
     conn = post conn, session_path(conn, :create), %{session: valid_login}
-    assert Phoenix.Controller.get_flash(conn, :info) =~ "Welcome Back"
+    assert Phoenix.Controller.get_flash(conn, :info) =~ "Welcome back"
     assert redirected_to(conn) =~ dashboard_path(conn, :index)
   end
 
