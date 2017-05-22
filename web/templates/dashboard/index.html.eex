@@ -6,7 +6,7 @@
 <% end %>
 <%= if length(@projects) != 0 do %>
   <div class="relative">
-    <div class="absolute right-1 top--2">
+    <div class="absolute right-1 top--1">
       <%= component "plus_button.html", link: "/projects/new" %>
     </div>
     <div class="tl f2 mb5">My projects</div>
