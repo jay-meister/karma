@@ -27,7 +27,6 @@ function setupListeners(job_title) {
   var jobTitleDropdown = document.getElementById('job_title_dropdown');
 
   var initialJobTitleValues = departments_with_jobs.default[departmentDropdown.options[departmentDropdown.selectedIndex].text]
-  console.log(initialJobTitleValues);
 
   if (job_title !== "") {
     initialJobTitleValues.forEach(function (jobTitleValue) {
