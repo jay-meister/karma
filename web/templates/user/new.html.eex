@@ -37,7 +37,8 @@
       form: f,
       atom: :password,
       label: "Password (for KARMA)",
-      placeholder: "Must contain at least 6 characters"
+      placeholder: "Must contain at least 6 characters",
+      type: "password"
       %>
 
       <%= component "checkbox.html",
