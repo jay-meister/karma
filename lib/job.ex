@@ -35,6 +35,7 @@ defmodule Karma.Job do
       "Set Dec",
       "SFX",
       "Sound",
+      "Standby",
       "Studio Unit",
       "Stunts",
       "Supporting Artist",
@@ -45,7 +46,7 @@ defmodule Karma.Job do
       "Voice"
     ]
   end
-
+  
   def titles() do
     [
       "1st Assistant Accountant",

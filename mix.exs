@@ -48,7 +48,8 @@ defmodule Karma.Mixfile do
      {:bamboo, "~> 0.7"},
      {:bamboo_smtp, "~> 1.2.1"},
      {:mock, "~> 0.2.0", only: :test},
-     {:redix, ">= 0.0.0"}
+     {:redix, ">= 0.0.0"},
+     {:poison, ">= 0.0.0", override: true}
    ]
   end
 

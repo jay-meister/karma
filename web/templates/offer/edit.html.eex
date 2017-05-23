@@ -6,4 +6,5 @@
                         action: project_offer_path(@conn, :update, @offer.project_id, @offer),
                         button_text: "Update",
                         job_titles: @job_titles,
-                        job_departments: @job_departments %>
+                        job_departments: @job_departments,
+                        conn: @conn %>
