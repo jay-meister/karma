@@ -58,6 +58,12 @@
   placeholder: "Any other deal provisions?"
   %>
 
+  <%= component "checkbox.html",
+  form: f,
+  atom: :box_rental_required?,
+  label: "box_rental_required?"
+  %>
+
   <%= component "textarea.html",
   form: f,
   atom: :box_rental_description,
@@ -80,6 +86,12 @@
   form: f,
   atom: :box_rental_period,
   placeholder: "Enter the period you need box rental for"
+  %>
+
+  <%= component "checkbox.html",
+  form: f,
+  atom: :equipment_rental_required?,
+  label: "equipment_rental_required?"
   %>
 
   <%= component "input.html",
