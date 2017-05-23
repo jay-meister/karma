@@ -28,15 +28,17 @@ function setupListeners(job_title) {
 
   var initialJobTitleValues = departments_with_jobs.default[departmentDropdown.options[departmentDropdown.selectedIndex].text]
 
-  if (job_title !== "") {
-    initialJobTitleValues.forEach(function (jobTitleValue) {
-      var opt = document.createElement('option');
-      opt.value = jobTitleValue;
-      opt.innerHTML = jobTitleValue;
-      jobTitleDropdown.appendChild(opt)
+  console.log(job_title);
+
+  initialJobTitleValues.forEach(function (jobTitleValue) {
+    var opt = document.createElement('option');
+    opt.value = jobTitleValue;
+    opt.innerHTML = jobTitleValue;
+    jobTitleDropdown.appendChild(opt)
+    if (job_title !== "") {
       jobTitleDropdown.value = job_title.replace("&#39;", '\'');
-    });
-  }
+    }
+  });
 
 
   departmentDropdown.addEventListener("change", function() {

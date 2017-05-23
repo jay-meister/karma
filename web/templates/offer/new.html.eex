@@ -8,4 +8,5 @@
                         job_titles: @job_titles,
                         job_departments: @job_departments,
                         conn: @conn,
-                        offer: %{job_title: ""} %>
+                        offer: %{job_title: ""},
+                        job_title: @job_title %>

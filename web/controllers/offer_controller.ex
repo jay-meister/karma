@@ -46,7 +46,8 @@ defmodule Karma.OfferController do
     changeset: changeset,
     project_id: project_id,
     job_titles: job_titles,
-    job_departments: job_departments)
+    job_departments: job_departments,
+    job_title: "")
   end
 
   def create(conn, %{"offer" => offer_params, "project_id" => project_id}) do
@@ -60,7 +61,19 @@ defmodule Karma.OfferController do
       changeset = %{validation_changeset | action: :insert} # manually set the action so errors are shown
       job_titles = Karma.Job.titles()
       job_departments = Karma.Job.departments()
-      render(conn, "new.html", changeset: changeset, project_id: project_id, job_titles: job_titles, job_departments: job_departments)
+      job_title =
+        case Map.has_key?(changeset.changes, :job_title) do
+          true -> changeset.changes[:job_title]
+          false -> ""
+        end
+        IO.inspect job_title
+      render(conn,
+      "new.html",
+      changeset: changeset,
+      project_id: project_id,
+      job_titles: job_titles,
+      job_departments: job_departments,
+      job_title: job_title)
     else
 
       calculations = run_calculations(validation_changeset.changes, project)
@@ -94,7 +107,12 @@ defmodule Karma.OfferController do
         {:error, changeset} ->
           job_titles = Karma.Job.titles()
           job_departments = Karma.Job.departments()
-          render(conn, "new.html", changeset: changeset, project_id: project_id, job_titles: job_titles, job_departments: job_departments)
+          job_title =
+            case Map.has_key?(changeset.changes, :job_title) do
+              true -> changeset.changes[:job_title]
+              false -> ""
+            end
+          render(conn, "new.html", changeset: changeset, project_id: project_id, job_titles: job_titles, job_departments: job_departments, job_title: job_title)
       end
     end
   end
@@ -120,7 +138,7 @@ defmodule Karma.OfferController do
     changeset = Offer.changeset(offer, offer_params)
     job_titles = Karma.Job.titles()
     job_departments = Karma.Job.departments()
-    ops = [offer: offer, project_id: project_id, job_titles: job_titles, job_departments: job_departments]
+    ops = [offer: offer, project_id: project_id, job_titles: job_titles, job_departments: job_departments, job_title: offer.job_title]
 
     case changeset.changes == %{} do
       true ->

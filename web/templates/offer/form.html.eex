@@ -155,4 +155,4 @@
 
 
 <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
-<script>require("web/static/js/app").App.setupListeners("<%= @offer.job_title || "" %>")</script>
+<script>require("web/static/js/app").App.setupListeners("<%= @job_title || "" %>")</script>
