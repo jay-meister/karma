@@ -60,9 +60,13 @@ defmodule Karma.OfferController do
       render(conn, "new.html", changeset: changeset, project_id: project_id, job_titles: job_titles, job_departments: job_departments)
     else
 
+      integers = ["fee_per_day_inc_holiday"]
+      floats = ["working_week", "sixth_day_fee_multiplier", "seventh_day_fee_multiplier"]
+
       calculations =
         offer_params
-        |> parse_strings
+        |> parse_strings(integers, &String.to_integer/1)
+        |> parse_strings(floats, &String.to_float/1)
         |> run_calculations(project)
 
       offer_params = Map.merge(offer_params, calculations)
@@ -155,12 +159,12 @@ defmodule Karma.OfferController do
     |> redirect(to: project_offer_path(conn, :index, offer.project_id))
   end
 
-  def parse_strings(params) do
-    integers = ["fee_per_day_inc_holiday"]
-    floats = ["working_week", "sixth_day_fee_multiplier", "seventh_day_fee_multiplier"]
+  def parse_strings(params, keys, f) do
+    # integers = ["fee_per_day_inc_holiday"]
+    # floats = ["working_week", "sixth_day_fee_multiplier", "seventh_day_fee_multiplier"]
 
-    params = Enum.reduce(integers, params, fn(i, acc) -> Map.update!(acc, i, &String.to_integer/1) end)
-    params = Enum.reduce(floats, params, fn(i, acc) -> Map.update!(acc, i, &String.to_float/1) end)
+    # params = Enum.reduce(integers, params, fn(i, acc) -> Map.update!(acc, i, &f/1) end)
+    params = Enum.reduce(keys, params, fn(i, acc) -> Map.update!(acc, i, f) end)
     params
   end
 
