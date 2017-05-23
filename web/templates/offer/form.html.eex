@@ -22,7 +22,7 @@
   <%= component "dropdown.html",
   form: f,
   atom: :job_title,
-  options: @job_titles,
+  options: [],
   prompt: "Pick a job title...",
   id: "job_title_dropdown"
   %>

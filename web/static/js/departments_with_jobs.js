@@ -1,4 +1,5 @@
 var departments_with_jobs = {
+  "Pick a job department...": [],
   "Accounts": [
     "1st Assistant Accountant",
     "Accounts Assistant",
