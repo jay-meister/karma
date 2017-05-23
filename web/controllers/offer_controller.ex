@@ -33,18 +33,8 @@ defmodule Karma.OfferController do
       |> Offer.projects_offers(project)
       |> Repo.all()
 
-    pending_offers = length(Enum.filter(offers, fn(offer) -> offer.accepted == nil end))
-    accepted_offers = length(Enum.filter(offers, fn(offer) -> offer.accepted == true end))
-    rejected_offers = length(Enum.filter(offers, fn(offer) -> offer.accepted == false end))
-
-    render conn,
-    "index.html",
-    layout: {LayoutView, "no_container.html"},
-    offers: offers,
-    pending_offers: pending_offers,
-    accepted_offers: accepted_offers,
-    rejected_offers: rejected_offers,
-    project: project
+    ops = [offers: offers, project: project]
+    render conn, "index.html", [layout: {LayoutView, "no_container.html"}] ++ ops
   end
 
   def new(conn, %{"project_id" => project_id}) do
