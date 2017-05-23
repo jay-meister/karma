@@ -8,6 +8,7 @@
   <%= component "input.html",
   form: f,
   atom: :target_email,
+  disabled: @target_email_disabled,
   placeholder: "example@email.com"
   %>
 
