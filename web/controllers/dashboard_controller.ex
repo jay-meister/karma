@@ -11,8 +11,14 @@ defmodule Karma.DashboardController do
         projects =
           Repo.all(user_projects(user))
           |> Repo.preload(:offers)
-        render conn, "index.html", projects: projects
+        offers = Repo.all(user_offers(user))
+          
+        render conn, "index.html", projects: projects, offers: offers
     end
+  end
+
+  defp user_offers(user) do
+    assoc(user, :offers)
   end
 
   defp user_projects(user) do
