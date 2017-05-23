@@ -19,3 +19,29 @@ import "phoenix_html"
 // paths "./socket" or full ones "web/static/js/socket".
 
 // import socket from "./socket"
+
+function setupListeners() {
+  var departments_with_jobs = require("./departments_with_jobs.js")
+
+  var departmentDropdown = document.getElementById('department_dropdown');
+  var jobTitleDropdown = document.getElementById('job_title_dropdown');
+
+  departmentDropdown.addEventListener("change", function() {
+    var jobTitleValues = departments_with_jobs.default[departmentDropdown.options[departmentDropdown.selectedIndex].text]
+    jobTitleDropdown.innerHTML = "";
+    var prompt = document.createElement('option');
+    prompt.value = "";
+    prompt.innerHTML = "Pick a job title..."
+    jobTitleDropdown.appendChild(prompt)
+    jobTitleValues.forEach(function (jobTitleValue) {
+      var opt = document.createElement('option');
+      opt.value = jobTitleValue;
+      opt.innerHTML = jobTitleValue;
+      jobTitleDropdown.appendChild(opt)
+    });
+  });
+}
+
+export var App = {
+  setupListeners: setupListeners
+}

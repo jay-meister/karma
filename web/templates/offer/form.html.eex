@@ -15,14 +15,16 @@
   form: f,
   atom: :department,
   options: @job_departments,
-  prompt: "Pick a job department..."
+  prompt: "Pick a job department...",
+  id: "department_dropdown"
   %>
 
   <%= component "dropdown.html",
   form: f,
   atom: :job_title,
   options: @job_titles,
-  prompt: "Pick a job title..."
+  prompt: "Pick a job title...",
+  id: "job_title_dropdown"
   %>
 
   <%= component "date.html",
@@ -138,3 +140,6 @@
 
   <%= component "submit_button.html", title: "Make Offer" %>
 <% end %>
+
+<script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+<script>require("web/static/js/app").App.setupListeners()</script>
