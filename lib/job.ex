@@ -47,8 +47,8 @@ defmodule Karma.Job do
     ]
   end
 
-  def department_with_jobs() do
-    [
+  def departments_with_jobs() do
+    %{
       "Accounts": [
         "1st Assistant Accountant",
         "Accounts Assistant",
@@ -690,7 +690,7 @@ defmodule Karma.Job do
       "Voice": [
         "Voice Coach"
       ]
-    ]
+    }
   end
 
   def titles() do

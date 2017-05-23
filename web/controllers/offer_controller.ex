@@ -51,7 +51,14 @@ defmodule Karma.OfferController do
     changeset = Offer.changeset(%Offer{})
     job_titles = Karma.Job.titles()
     job_departments = Karma.Job.departments()
-    render(conn, "new.html", changeset: changeset, project_id: project_id, job_titles: job_titles, job_departments: job_departments)
+    departments_with_jobs = Karma.Job.departments_with_jobs()
+    render(conn,
+    "new.html",
+    changeset: changeset,
+    project_id: project_id,
+    job_titles: job_titles,
+    job_departments: job_departments,
+    departments_with_jobs: departments_with_jobs)
   end
 
   def create(conn, %{"offer" => offer_params, "project_id" => project_id}) do
