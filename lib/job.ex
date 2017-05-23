@@ -46,7 +46,7 @@ defmodule Karma.Job do
       "Voice"
     ]
   end
-  
+
   def titles() do
     [
       "1st Assistant Accountant",
@@ -233,7 +233,7 @@ defmodule Karma.Job do
       "Plasterer Improver",
       "Plasterers Labourer",
       "Rigger",
-      "Rigger's Labourer",
+      "Rigger\'s Labourer",
       "Scenic Painter",
       "Sculptor",
       "Sculptors Labourer",
@@ -435,14 +435,14 @@ defmodule Karma.Job do
       "Cast Assistant",
       "Co-Producer",
       "Digital Archivist",
-      "Director's Assistant",
+      "Director\'s Assistant",
       "Environmental Steward",
       "Executive Producer",
       "Franchise Production Supervisor",
       "PA",
       "Line Producer",
       "Producer",
-      "Producer's Assistant",
+      "Producer\'s Assistant",
       "Production Assistant",
       "Production Coordinator",
       "Production Manager",

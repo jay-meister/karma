@@ -153,5 +153,6 @@
   <%= component "submit_button.html", title: "#{@button_text} Offer" %>
 <% end %>
 
+
 <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
-<script>require("web/static/js/app").App.setupListeners()</script>
+<script>require("web/static/js/app").App.setupListeners("<%= @offer.job_title || "" %>")</script>

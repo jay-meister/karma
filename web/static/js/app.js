@@ -20,11 +20,25 @@ import "phoenix_html"
 
 // import socket from "./socket"
 
-function setupListeners() {
+function setupListeners(job_title) {
   var departments_with_jobs = require("./departments_with_jobs.js")
 
   var departmentDropdown = document.getElementById('department_dropdown');
   var jobTitleDropdown = document.getElementById('job_title_dropdown');
+
+  var initialJobTitleValues = departments_with_jobs.default[departmentDropdown.options[departmentDropdown.selectedIndex].text]
+  console.log(initialJobTitleValues);
+
+  if (job_title !== "") {
+    initialJobTitleValues.forEach(function (jobTitleValue) {
+      var opt = document.createElement('option');
+      opt.value = jobTitleValue;
+      opt.innerHTML = jobTitleValue;
+      jobTitleDropdown.appendChild(opt)
+      jobTitleDropdown.value = job_title.replace("&#39;", '\'');
+    });
+  }
+
 
   departmentDropdown.addEventListener("change", function() {
     var jobTitleValues = departments_with_jobs.default[departmentDropdown.options[departmentDropdown.selectedIndex].text]

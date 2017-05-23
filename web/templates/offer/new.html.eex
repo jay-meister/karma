@@ -7,4 +7,5 @@
                         button_text: "Make",
                         job_titles: @job_titles,
                         job_departments: @job_departments,
-                        conn: @conn %>
+                        conn: @conn,
+                        offer: %{job_title: ""} %>
