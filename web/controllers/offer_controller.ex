@@ -63,20 +63,7 @@ defmodule Karma.OfferController do
       calculations = parse_offer_strings(offer_params) |> run_calculations(project)
       offer_params = Map.merge(offer_params, calculations)
 
-      %{"target_email" => user_email} = offer_params
-      user = Repo.get_by(User, email: user_email)
-
-      changeset = case user do
-        nil -> # user is not yet registered or target_email is empty
-          project
-          |> build_assoc(:offers)
-          |> Offer.changeset(offer_params)
-        user -> # user is already registered
-          project
-          |> build_assoc(:offers)
-          |> Offer.changeset(offer_params)
-          |> Ecto.Changeset.put_assoc(:user, user)
-      end
+      changeset = changeset_maybe_with_user(offer_params, project)
 
       case Repo.insert(changeset) do
         {:ok, offer} ->
@@ -150,6 +137,26 @@ defmodule Karma.OfferController do
     |> redirect(to: project_offer_path(conn, :index, offer.project_id))
   end
 
+
+  # changeset helper for create function
+  def changeset_maybe_with_user(params, project) do
+    %{"target_email" => user_email} = params
+    user = Repo.get_by(User, email: user_email)
+
+    case user do
+      nil -> # user is not yet registered or target_email is empty
+        project
+        |> build_assoc(:offers)
+        |> Offer.changeset(params)
+      user -> # user is already registered
+        project
+        |> build_assoc(:offers)
+        |> Offer.changeset(params)
+        |> Ecto.Changeset.put_assoc(:user, user)
+    end
+  end
+
+  # calculations helpers
   def parse_offer_strings(offer_params) do
     integers = ["fee_per_day_inc_holiday"]
     floats = ["working_week", "sixth_day_fee_multiplier", "seventh_day_fee_multiplier"]
