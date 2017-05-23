@@ -141,5 +141,5 @@
   placeholder: "Add any other notes"
   %>
 
-  <%= component "submit_button.html", title: "#{assigns[:button_text]}" %>
+  <%= component "submit_button.html", title: "#{@button_text} Project" %>
 <% end %>

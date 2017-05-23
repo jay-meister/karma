@@ -148,5 +148,5 @@
   placeholder: "Any additional notes?"
   %>
 
-  <%= component "submit_button.html", title: "Make Offer" %>
+  <%= component "submit_button.html", title: "#{@button_text} Offer" %>
 <% end %>

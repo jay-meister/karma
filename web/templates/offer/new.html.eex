@@ -4,5 +4,6 @@
 
 <%= render "form.html", changeset: @changeset,
                         action: project_offer_path(@conn, :create, @project_id),
+                        button_text: "Make",
                         job_titles: @job_titles,
                         job_departments: @job_departments %>
