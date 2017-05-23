@@ -106,7 +106,9 @@ defmodule Karma.OfferController do
     changeset = Offer.changeset(offer)
     job_titles = Karma.Job.titles()
     job_departments = Karma.Job.departments()
-    render(conn, "edit.html", offer: offer, changeset: changeset, project_id: project_id, job_titles: job_titles, job_departments: job_departments)
+
+    ops = [offer: offer, changeset: changeset, project_id: project_id, job_titles: job_titles, job_departments: job_departments]
+    render(conn, "edit.html", ops)
   end
 
 
