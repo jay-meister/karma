@@ -59,21 +59,12 @@ defmodule Karma.OfferController do
       job_departments = Karma.Job.departments()
       render(conn, "new.html", changeset: changeset, project_id: project_id, job_titles: job_titles, job_departments: job_departments)
     else
-
-      integers = ["fee_per_day_inc_holiday"]
-      floats = ["working_week", "sixth_day_fee_multiplier", "seventh_day_fee_multiplier"]
-
-      calculations =
-        offer_params
-        |> parse_strings(integers, &String.to_integer/1)
-        |> parse_strings(floats, &String.to_float/1)
-        |> run_calculations(project)
-
+      # run calculations and add them to the offer_params
+      calculations = parse_offer_strings(offer_params) |> run_calculations(project)
       offer_params = Map.merge(offer_params, calculations)
 
       %{"target_email" => user_email} = offer_params
       user = Repo.get_by(User, email: user_email)
-
 
       changeset = case user do
         nil -> # user is not yet registered or target_email is empty
@@ -159,18 +150,21 @@ defmodule Karma.OfferController do
     |> redirect(to: project_offer_path(conn, :index, offer.project_id))
   end
 
-  def parse_strings(params, keys, f) do
-    # integers = ["fee_per_day_inc_holiday"]
-    # floats = ["working_week", "sixth_day_fee_multiplier", "seventh_day_fee_multiplier"]
+  def parse_offer_strings(offer_params) do
+    integers = ["fee_per_day_inc_holiday"]
+    floats = ["working_week", "sixth_day_fee_multiplier", "seventh_day_fee_multiplier"]
 
-    # params = Enum.reduce(integers, params, fn(i, acc) -> Map.update!(acc, i, &f/1) end)
-    params = Enum.reduce(keys, params, fn(i, acc) -> Map.update!(acc, i, f) end)
-    params
+    offer_params
+    |> update_keys(integers, &String.to_integer/1)
+    |> update_keys(floats, &String.to_float/1)
+  end
+
+  defp update_keys(params, keys, f) do
+    # map over the keys of params, applying function f to each of the keys given
+    Enum.reduce(keys, params, fn(i, acc) -> Map.update!(acc, i, f) end)
   end
 
   def run_calculations(params, project) do
-
-
     %{"fee_per_day_inc_holiday" => fee_per_day_inc_holiday,
     "working_week" => working_week,
     "job_title" => job_title,
