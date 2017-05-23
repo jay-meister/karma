@@ -60,7 +60,10 @@ defmodule Karma.OfferController do
       render(conn, "new.html", changeset: changeset, project_id: project_id, job_titles: job_titles, job_departments: job_departments)
     else
 
-      calculations = run_calculations(validation_changeset.changes, project)
+      calculations =
+        offer_params
+        |> parse_strings
+        |> run_calculations(project)
 
       offer_params = Map.merge(offer_params, calculations)
 
@@ -152,15 +155,25 @@ defmodule Karma.OfferController do
     |> redirect(to: project_offer_path(conn, :index, offer.project_id))
   end
 
-  def run_calculations(changes, project) do
-    %{fee_per_day_inc_holiday: fee_per_day_inc_holiday,
-      working_week: working_week,
-      job_title: job_title,
-      department: department,
-      sixth_day_fee_multiplier: sixth_day_fee_multiplier,
-      seventh_day_fee_multiplier: seventh_day_fee_multiplier
-    } = changes
+  def parse_strings(params) do
+    integers = ["fee_per_day_inc_holiday"]
+    floats = ["working_week", "sixth_day_fee_multiplier", "seventh_day_fee_multiplier"]
 
+    params = Enum.reduce(integers, params, fn(i, acc) -> Map.update!(acc, i, &String.to_integer/1) end)
+    params = Enum.reduce(floats, params, fn(i, acc) -> Map.update!(acc, i, &String.to_float/1) end)
+    params
+  end
+
+  def run_calculations(params, project) do
+
+
+    %{"fee_per_day_inc_holiday" => fee_per_day_inc_holiday,
+    "working_week" => working_week,
+    "job_title" => job_title,
+    "department" => department,
+    "sixth_day_fee_multiplier" => sixth_day_fee_multiplier,
+    "seventh_day_fee_multiplier" => seventh_day_fee_multiplier
+    } = params
 
     fee_per_day_exc_holiday = calc_fee_per_day_exc_holiday(fee_per_day_inc_holiday, project.holiday_rate)
     holiday_pay_per_day = calc_holiday_pay_per_day(fee_per_day_inc_holiday, fee_per_day_exc_holiday)
