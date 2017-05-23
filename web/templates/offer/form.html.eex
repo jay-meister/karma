@@ -8,7 +8,8 @@
   <%= component "input.html",
   form: f,
   atom: :target_email,
-  placeholder: "example@email.com"
+  placeholder: "example@email.com",
+  label: "Recipient email"
   %>
 
   <%= component "dropdown.html",
@@ -63,7 +64,7 @@
   <%= component "checkbox.html",
   form: f,
   atom: :box_rental_required?,
-  label: "box_rental_required?"
+  label: "Box rental required?"
   %>
 
   <%= component "textarea.html",
@@ -93,7 +94,7 @@
   <%= component "checkbox.html",
   form: f,
   atom: :equipment_rental_required?,
-  label: "equipment_rental_required?"
+  label: "Equipment rental required?"
   %>
 
   <%= component "input.html",
