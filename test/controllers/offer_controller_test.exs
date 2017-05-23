@@ -137,6 +137,20 @@ defmodule Karma.OfferControllerTest do
     assert html_response(conn, 200) =~ "Edit offer"
   end
 
+  test "does not update offer or send email when data is valid but unchanged", %{conn: conn, offer: offer} do
+    unchanged = default_offer()
+
+    with_mock Karma.Mailer, [deliver_later: fn(_) -> nil end] do
+
+      conn = put conn, project_offer_path(conn, :update, offer.project_id, offer), offer: unchanged
+      assert html_response(conn, 200) =~ "Nothing to update"
+
+      # ensure email wasnt sent
+      refute called Karma.Mailer.deliver_later(:_)
+    end
+  end
+
+
   test "updates offer and redirects when data is valid", %{conn: conn, offer: offer} do
     updated = default_offer(%{additional_notes: "Sneaky peaky"})
 

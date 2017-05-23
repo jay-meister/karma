@@ -4,4 +4,4 @@
 
 <%= render "form.html", changeset: @changeset,
                         action: project_path(@conn, :update, @project),
-                        button_text: "Edit" %>
+                        button_text: "Update" %>
