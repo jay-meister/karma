@@ -113,20 +113,28 @@ defmodule Karma.OfferController do
   def update(conn, %{"project_id" => project_id, "id" => id, "offer" => offer_params}) do
     offer = Repo.get!(Offer, id)
     changeset = Offer.changeset(offer, offer_params)
+    job_titles = Karma.Job.titles()
+    job_departments = Karma.Job.departments()
+    ops = [offer: offer, project_id: project_id, job_titles: job_titles, job_departments: job_departments]
 
-    case Repo.update(changeset) do
-      {:ok, offer} ->
-        # email function decides whether this is a registered user
-        Karma.Email.send_updated_offer_email(conn, offer)
-        |> Karma.Mailer.deliver_later()
-
+    case changeset.changes == %{} do
+      true ->
         conn
-        |> put_flash(:info, "Offer updated successfully.")
-        |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
-      {:error, changeset} ->
-        job_titles = Karma.Job.titles()
-        job_departments = Karma.Job.departments()
-        render(conn, "edit.html", offer: offer, changeset: changeset, project_id: project_id, job_titles: job_titles, job_departments: job_departments)
+        |> put_flash(:error, "Nothing to update")
+        |> render("edit.html", ops ++ [changeset: changeset])
+      false ->
+        case Repo.update(changeset) do
+          {:ok, offer} ->
+            # email function decides whether this is a registered user
+            Karma.Email.send_updated_offer_email(conn, offer)
+            |> Karma.Mailer.deliver_later()
+
+            conn
+            |> put_flash(:info, "Offer updated successfully.")
+            |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
+          {:error, changeset} ->
+            render(conn, "edit.html", ops ++ [changeset: changeset])
+        end
     end
   end
 
