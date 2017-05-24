@@ -97,6 +97,13 @@ defmodule Karma.OfferControllerTest do
     assert html_response(conn, 200) =~ "Make new offer"
   end
 
+  test "does not create resource and renders errors when data is invalidd", %{conn: conn, project: project} do
+    invalid = %{ default_offer() | contractor_details_accepted: "h" }
+    conn = post conn, project_offer_path(conn, :create, project), offer: invalid
+    assert html_response(conn, 200) =~ "Make new offer"
+  end
+
+
   # test cant view offers for other projects not involved with
   test "offers show: user cannot view an offer of a project they did not create", %{offer: offer} do
     new_user = insert_user(%{email: "imposter@gmail.com"})
@@ -143,7 +150,7 @@ defmodule Karma.OfferControllerTest do
     with_mock Karma.Mailer, [deliver_later: fn(_) -> nil end] do
 
       conn = put conn, project_offer_path(conn, :update, offer.project_id, offer), offer: unchanged
-      assert html_response(conn, 200) =~ "Nothing to update"
+      assert Phoenix.Controller.get_flash(conn, :error) == "Nothing to update"
 
       # ensure email wasnt sent
       refute called Karma.Mailer.deliver_later(:_)
@@ -169,7 +176,8 @@ defmodule Karma.OfferControllerTest do
     end
   end
 
-  test "cannot update offer and renders errors when data is invalid", %{conn: conn, offer: offer, project: project} do
+
+  test "cannot update offer and renders errors when data used in calculation is invalid", %{conn: conn, offer: offer, project: project} do
     conn = put conn, project_offer_path(conn, :update, project, offer), offer: @invalid_attrs
     assert html_response(conn, 200) =~ "Edit offer"
   end
