@@ -84,7 +84,7 @@
 
   <li>
     <strong>Full name as on passport:</stong>
-    <%= @startpack.full_name_as_on_passport %>
+    <%= @startpack.passport_full_name %>
   </li>
 
   <li>

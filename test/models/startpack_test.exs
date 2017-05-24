@@ -46,7 +46,7 @@ defmodule Karma.StartpackTest do
     bank_swift_code: "some content",
     vehicle_model: "some content",
     primary_address_country: "some content",
-    full_name_as_on_passport: "some content",
+    passport_full_name: "some content",
     agent_tel: "some content",
     vehicle_insurance_url: "some content",
     student_loan_finished_before_6_april?: true,

@@ -91,7 +91,7 @@
       <td><%= startpack.passport_number %></td>
       <td><%= startpack.passport_expiry_date %></td>
       <td><%= startpack.passport_issuing_country %></td>
-      <td><%= startpack.full_name_as_on_passport %></td>
+      <td><%= startpack.passport_full_name %></td>
       <td><%= startpack.passport_url %></td>
       <td><%= startpack.primary_address_1 %></td>
       <td><%= startpack.primary_address_2 %></td>
