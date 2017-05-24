@@ -1,0 +1,338 @@
+<h2>Show startpack</h2>
+
+<ul>
+
+  <li>
+    <strong>User:</strong>
+    <%= @startpack.user_id %>
+  </li>
+
+  <li>
+    <strong>Gender:</strong>
+    <%= @startpack.gender %>
+  </li>
+
+  <li>
+    <strong>Middle names:</strong>
+    <%= @startpack.middle_names %>
+  </li>
+
+  <li>
+    <strong>Aka:</strong>
+    <%= @startpack.aka %>
+  </li>
+
+  <li>
+    <strong>Screen credit name:</strong>
+    <%= @startpack.screen_credit_name %>
+  </li>
+
+  <li>
+    <strong>Mobile tel:</strong>
+    <%= @startpack.mobile_tel %>
+  </li>
+
+  <li>
+    <strong>Emergency contact name:</strong>
+    <%= @startpack.emergency_contact_name %>
+  </li>
+
+  <li>
+    <strong>Emergency contact relationship:</strong>
+    <%= @startpack.emergency_contact_relationship %>
+  </li>
+
+  <li>
+    <strong>Emergency contact tel:</strong>
+    <%= @startpack.emergency_contact_tel %>
+  </li>
+
+  <li>
+    <strong>Date of birth:</strong>
+    <%= @startpack.date_of_birth %>
+  </li>
+
+  <li>
+    <strong>Place of birth:</strong>
+    <%= @startpack.place_of_birth %>
+  </li>
+
+  <li>
+    <strong>Country of legal nationality:</strong>
+    <%= @startpack.country_of_legal_nationality %>
+  </li>
+
+  <li>
+    <strong>Country of permanent residence:</strong>
+    <%= @startpack.country_of_permanent_residence %>
+  </li>
+
+  <li>
+    <strong>Passport number:</strong>
+    <%= @startpack.passport_number %>
+  </li>
+
+  <li>
+    <strong>Passport expiry date:</strong>
+    <%= @startpack.passport_expiry_date %>
+  </li>
+
+  <li>
+    <strong>Passport issuing:</strong>
+    <%= @startpack.passport_issuing %>
+  </li>
+
+  <li>
+    <strong>Country:</strong>
+    <%= @startpack.country %>
+  </li>
+
+  <li>
+    <strong>Full name as on passport:</strong>
+    <%= @startpack.full_name_as_on_passport %>
+  </li>
+
+  <li>
+    <strong>Passport url:</strong>
+    <%= @startpack.passport_url %>
+  </li>
+
+  <li>
+    <strong>Primary address 1:</strong>
+    <%= @startpack.primary_address_1 %>
+  </li>
+
+  <li>
+    <strong>Primary address 2:</strong>
+    <%= @startpack.primary_address_2 %>
+  </li>
+
+  <li>
+    <strong>Primary address city:</strong>
+    <%= @startpack.primary_address_city %>
+  </li>
+
+  <li>
+    <strong>Primary address postcode:</strong>
+    <%= @startpack.primary_address_postcode %>
+  </li>
+
+  <li>
+    <strong>Primary address country:</strong>
+    <%= @startpack.primary_address_country %>
+  </li>
+
+  <li>
+    <strong>Primary address tel:</strong>
+    <%= @startpack.primary_address_tel %>
+  </li>
+
+  <li>
+    <strong>Agent deal?:</strong>
+    <%= @startpack.agent_deal? %>
+  </li>
+
+  <li>
+    <strong>Agent name:</strong>
+    <%= @startpack.agent_name %>
+  </li>
+
+  <li>
+    <strong>Agent company:</strong>
+    <%= @startpack.agent_company %>
+  </li>
+
+  <li>
+    <strong>Agent address:</strong>
+    <%= @startpack.agent_address %>
+  </li>
+
+  <li>
+    <strong>Agent tel:</strong>
+    <%= @startpack.agent_tel %>
+  </li>
+
+  <li>
+    <strong>Agent email address:</strong>
+    <%= @startpack.agent_email_address %>
+  </li>
+
+  <li>
+    <strong>Agent bank name:</strong>
+    <%= @startpack.agent_bank_name %>
+  </li>
+
+  <li>
+    <strong>Agent bank address:</strong>
+    <%= @startpack.agent_bank_address %>
+  </li>
+
+  <li>
+    <strong>Agent bank sort code:</strong>
+    <%= @startpack.agent_bank_sort_code %>
+  </li>
+
+  <li>
+    <strong>Agent bank account number:</strong>
+    <%= @startpack.agent_bank_account_number %>
+  </li>
+
+  <li>
+    <strong>Agent bank account name:</strong>
+    <%= @startpack.agent_bank_account_name %>
+  </li>
+
+  <li>
+    <strong>Agent bank account swift code:</strong>
+    <%= @startpack.agent_bank_account_swift_code %>
+  </li>
+
+  <li>
+    <strong>Agent bank account iban:</strong>
+    <%= @startpack.agent_bank_account_iban %>
+  </li>
+
+  <li>
+    <strong>Box rental value:</strong>
+    <%= @startpack.box_rental_value %>
+  </li>
+
+  <li>
+    <strong>Box rental url:</strong>
+    <%= @startpack.box_rental_url %>
+  </li>
+
+  <li>
+    <strong>Equipment rental value:</strong>
+    <%= @startpack.equipment_rental_value %>
+  </li>
+
+  <li>
+    <strong>Equipment rental url:</strong>
+    <%= @startpack.equipment_rental_url %>
+  </li>
+
+  <li>
+    <strong>Vehicle make:</strong>
+    <%= @startpack.vehicle_make %>
+  </li>
+
+  <li>
+    <strong>Vehicle model:</strong>
+    <%= @startpack.vehicle_model %>
+  </li>
+
+  <li>
+    <strong>Vehicle colour:</strong>
+    <%= @startpack.vehicle_colour %>
+  </li>
+
+  <li>
+    <strong>Vehicle registration:</strong>
+    <%= @startpack.vehicle_registration %>
+  </li>
+
+  <li>
+    <strong>Vehicle insurance url:</strong>
+    <%= @startpack.vehicle_insurance_url %>
+  </li>
+
+  <li>
+    <strong>National insurance number:</strong>
+    <%= @startpack.national_insurance_number %>
+  </li>
+
+  <li>
+    <strong>Vat number:</strong>
+    <%= @startpack.vat_number %>
+  </li>
+
+  <li>
+    <strong>P45 url:</strong>
+    <%= @startpack.p45_url %>
+  </li>
+
+  <li>
+    <strong>For paye only:</strong>
+    <%= @startpack.for_paye_only %>
+  </li>
+
+  <li>
+    <strong>Student loan not repayed?:</strong>
+    <%= @startpack.student_loan_not_repayed? %>
+  </li>
+
+  <li>
+    <strong>Student loan repay direct?:</strong>
+    <%= @startpack.student_loan_repay_direct? %>
+  </li>
+
+  <li>
+    <strong>Student loan plan 1?:</strong>
+    <%= @startpack.student_loan_plan_1? %>
+  </li>
+
+  <li>
+    <strong>Student loan finished before 6 april?:</strong>
+    <%= @startpack.student_loan_finished_before_6_april? %>
+  </li>
+
+  <li>
+    <strong>Schedule d letter url:</strong>
+    <%= @startpack.schedule_d_letter_url %>
+  </li>
+
+  <li>
+    <strong>Loan out company registration number:</strong>
+    <%= @startpack.loan_out_company_registration_number %>
+  </li>
+
+  <li>
+    <strong>Loan out company address:</strong>
+    <%= @startpack.loan_out_company_address %>
+  </li>
+
+  <li>
+    <strong>Loan out company cert url:</strong>
+    <%= @startpack.loan_out_company_cert_url %>
+  </li>
+
+  <li>
+    <strong>Bank name:</strong>
+    <%= @startpack.bank_name %>
+  </li>
+
+  <li>
+    <strong>Bank address:</strong>
+    <%= @startpack.bank_address %>
+  </li>
+
+  <li>
+    <strong>Bank account users full name:</strong>
+    <%= @startpack.bank_account_users_full_name %>
+  </li>
+
+  <li>
+    <strong>Bank account number:</strong>
+    <%= @startpack.bank_account_number %>
+  </li>
+
+  <li>
+    <strong>Bank sort code:</strong>
+    <%= @startpack.bank_sort_code %>
+  </li>
+
+  <li>
+    <strong>Bank iban:</strong>
+    <%= @startpack.bank_iban %>
+  </li>
+
+  <li>
+    <strong>Bank swiftcode:</strong>
+    <%= @startpack.bank_swift_code %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: startpack_path(@conn, :edit, @startpack) %>
+<%= link "Back", to: startpack_path(@conn, :index) %>

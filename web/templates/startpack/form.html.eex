@@ -1,0 +1,401 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= label f, :gender, class: "control-label" %>
+    <%= text_input f, :gender, class: "form-control" %>
+    <%= error_tag f, :gender %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :middle_names, class: "control-label" %>
+    <%= text_input f, :middle_names, class: "form-control" %>
+    <%= error_tag f, :middle_names %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :aka, class: "control-label" %>
+    <%= text_input f, :aka, class: "form-control" %>
+    <%= error_tag f, :aka %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :screen_credit_name, class: "control-label" %>
+    <%= text_input f, :screen_credit_name, class: "form-control" %>
+    <%= error_tag f, :screen_credit_name %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :mobile_tel, class: "control-label" %>
+    <%= text_input f, :mobile_tel, class: "form-control" %>
+    <%= error_tag f, :mobile_tel %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :emergency_contact_name, class: "control-label" %>
+    <%= text_input f, :emergency_contact_name, class: "form-control" %>
+    <%= error_tag f, :emergency_contact_name %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :emergency_contact_relationship, class: "control-label" %>
+    <%= text_input f, :emergency_contact_relationship, class: "form-control" %>
+    <%= error_tag f, :emergency_contact_relationship %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :emergency_contact_tel, class: "control-label" %>
+    <%= text_input f, :emergency_contact_tel, class: "form-control" %>
+    <%= error_tag f, :emergency_contact_tel %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :date_of_birth, class: "control-label" %>
+    <%= date_select f, :date_of_birth, class: "form-control" %>
+    <%= error_tag f, :date_of_birth %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :place_of_birth, class: "control-label" %>
+    <%= text_input f, :place_of_birth, class: "form-control" %>
+    <%= error_tag f, :place_of_birth %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :country_of_legal_nationality, class: "control-label" %>
+    <%= text_input f, :country_of_legal_nationality, class: "form-control" %>
+    <%= error_tag f, :country_of_legal_nationality %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :country_of_permanent_residence, class: "control-label" %>
+    <%= text_input f, :country_of_permanent_residence, class: "form-control" %>
+    <%= error_tag f, :country_of_permanent_residence %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :passport_number, class: "control-label" %>
+    <%= text_input f, :passport_number, class: "form-control" %>
+    <%= error_tag f, :passport_number %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :passport_expiry_date, class: "control-label" %>
+    <%= date_select f, :passport_expiry_date, class: "form-control" %>
+    <%= error_tag f, :passport_expiry_date %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :passport_issuing, class: "control-label" %>
+    <%= text_input f, :passport_issuing, class: "form-control" %>
+    <%= error_tag f, :passport_issuing %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :country, class: "control-label" %>
+    <%= text_input f, :country, class: "form-control" %>
+    <%= error_tag f, :country %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :full_name_as_on_passport, class: "control-label" %>
+    <%= text_input f, :full_name_as_on_passport, class: "form-control" %>
+    <%= error_tag f, :full_name_as_on_passport %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :passport_url, class: "control-label" %>
+    <%= text_input f, :passport_url, class: "form-control" %>
+    <%= error_tag f, :passport_url %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :primary_address_1, class: "control-label" %>
+    <%= text_input f, :primary_address_1, class: "form-control" %>
+    <%= error_tag f, :primary_address_1 %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :primary_address_2, class: "control-label" %>
+    <%= text_input f, :primary_address_2, class: "form-control" %>
+    <%= error_tag f, :primary_address_2 %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :primary_address_city, class: "control-label" %>
+    <%= text_input f, :primary_address_city, class: "form-control" %>
+    <%= error_tag f, :primary_address_city %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :primary_address_postcode, class: "control-label" %>
+    <%= text_input f, :primary_address_postcode, class: "form-control" %>
+    <%= error_tag f, :primary_address_postcode %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :primary_address_country, class: "control-label" %>
+    <%= text_input f, :primary_address_country, class: "form-control" %>
+    <%= error_tag f, :primary_address_country %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :primary_address_tel, class: "control-label" %>
+    <%= text_input f, :primary_address_tel, class: "form-control" %>
+    <%= error_tag f, :primary_address_tel %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :agent_deal?, class: "control-label" %>
+    <%= checkbox f, :agent_deal?, class: "form-control" %>
+    <%= error_tag f, :agent_deal? %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :agent_name, class: "control-label" %>
+    <%= text_input f, :agent_name, class: "form-control" %>
+    <%= error_tag f, :agent_name %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :agent_company, class: "control-label" %>
+    <%= text_input f, :agent_company, class: "form-control" %>
+    <%= error_tag f, :agent_company %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :agent_address, class: "control-label" %>
+    <%= text_input f, :agent_address, class: "form-control" %>
+    <%= error_tag f, :agent_address %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :agent_tel, class: "control-label" %>
+    <%= text_input f, :agent_tel, class: "form-control" %>
+    <%= error_tag f, :agent_tel %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :agent_email_address, class: "control-label" %>
+    <%= text_input f, :agent_email_address, class: "form-control" %>
+    <%= error_tag f, :agent_email_address %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :agent_bank_name, class: "control-label" %>
+    <%= text_input f, :agent_bank_name, class: "form-control" %>
+    <%= error_tag f, :agent_bank_name %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :agent_bank_address, class: "control-label" %>
+    <%= text_input f, :agent_bank_address, class: "form-control" %>
+    <%= error_tag f, :agent_bank_address %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :agent_bank_sort_code, class: "control-label" %>
+    <%= text_input f, :agent_bank_sort_code, class: "form-control" %>
+    <%= error_tag f, :agent_bank_sort_code %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :agent_bank_account_number, class: "control-label" %>
+    <%= text_input f, :agent_bank_account_number, class: "form-control" %>
+    <%= error_tag f, :agent_bank_account_number %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :agent_bank_account_name, class: "control-label" %>
+    <%= text_input f, :agent_bank_account_name, class: "form-control" %>
+    <%= error_tag f, :agent_bank_account_name %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :agent_bank_account_swift_code, class: "control-label" %>
+    <%= text_input f, :agent_bank_account_swift_code, class: "form-control" %>
+    <%= error_tag f, :agent_bank_account_swift_code %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :agent_bank_account_iban, class: "control-label" %>
+    <%= text_input f, :agent_bank_account_iban, class: "form-control" %>
+    <%= error_tag f, :agent_bank_account_iban %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :box_rental_value, class: "control-label" %>
+    <%= number_input f, :box_rental_value, class: "form-control" %>
+    <%= error_tag f, :box_rental_value %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :box_rental_url, class: "control-label" %>
+    <%= text_input f, :box_rental_url, class: "form-control" %>
+    <%= error_tag f, :box_rental_url %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :equipment_rental_value, class: "control-label" %>
+    <%= number_input f, :equipment_rental_value, class: "form-control" %>
+    <%= error_tag f, :equipment_rental_value %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :equipment_rental_url, class: "control-label" %>
+    <%= text_input f, :equipment_rental_url, class: "form-control" %>
+    <%= error_tag f, :equipment_rental_url %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :vehicle_make, class: "control-label" %>
+    <%= text_input f, :vehicle_make, class: "form-control" %>
+    <%= error_tag f, :vehicle_make %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :vehicle_model, class: "control-label" %>
+    <%= text_input f, :vehicle_model, class: "form-control" %>
+    <%= error_tag f, :vehicle_model %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :vehicle_colour, class: "control-label" %>
+    <%= text_input f, :vehicle_colour, class: "form-control" %>
+    <%= error_tag f, :vehicle_colour %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :vehicle_registration, class: "control-label" %>
+    <%= text_input f, :vehicle_registration, class: "form-control" %>
+    <%= error_tag f, :vehicle_registration %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :vehicle_insurance_url, class: "control-label" %>
+    <%= text_input f, :vehicle_insurance_url, class: "form-control" %>
+    <%= error_tag f, :vehicle_insurance_url %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :national_insurance_number, class: "control-label" %>
+    <%= text_input f, :national_insurance_number, class: "form-control" %>
+    <%= error_tag f, :national_insurance_number %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :vat_number, class: "control-label" %>
+    <%= text_input f, :vat_number, class: "form-control" %>
+    <%= error_tag f, :vat_number %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :p45_url, class: "control-label" %>
+    <%= text_input f, :p45_url, class: "form-control" %>
+    <%= error_tag f, :p45_url %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :for_paye_only, class: "control-label" %>
+    <%= text_input f, :for_paye_only, class: "form-control" %>
+    <%= error_tag f, :for_paye_only %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :student_loan_not_repayed?, class: "control-label" %>
+    <%= checkbox f, :student_loan_not_repayed?, class: "form-control" %>
+    <%= error_tag f, :student_loan_not_repayed? %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :student_loan_repay_direct?, class: "control-label" %>
+    <%= checkbox f, :student_loan_repay_direct?, class: "form-control" %>
+    <%= error_tag f, :student_loan_repay_direct? %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :student_loan_plan_1?, class: "control-label" %>
+    <%= checkbox f, :student_loan_plan_1?, class: "form-control" %>
+    <%= error_tag f, :student_loan_plan_1? %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :student_loan_finished_before_6_april?, class: "control-label" %>
+    <%= checkbox f, :student_loan_finished_before_6_april?, class: "form-control" %>
+    <%= error_tag f, :student_loan_finished_before_6_april? %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :schedule_d_letter_url, class: "control-label" %>
+    <%= text_input f, :schedule_d_letter_url, class: "form-control" %>
+    <%= error_tag f, :schedule_d_letter_url %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :loan_out_company_registration_number, class: "control-label" %>
+    <%= text_input f, :loan_out_company_registration_number, class: "form-control" %>
+    <%= error_tag f, :loan_out_company_registration_number %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :loan_out_company_address, class: "control-label" %>
+    <%= textarea f, :loan_out_company_address, class: "form-control" %>
+    <%= error_tag f, :loan_out_company_address %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :loan_out_company_cert_url, class: "control-label" %>
+    <%= text_input f, :loan_out_company_cert_url, class: "form-control" %>
+    <%= error_tag f, :loan_out_company_cert_url %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :bank_name, class: "control-label" %>
+    <%= text_input f, :bank_name, class: "form-control" %>
+    <%= error_tag f, :bank_name %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :bank_address, class: "control-label" %>
+    <%= text_input f, :bank_address, class: "form-control" %>
+    <%= error_tag f, :bank_address %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :bank_account_users_full_name, class: "control-label" %>
+    <%= text_input f, :bank_account_users_full_name, class: "form-control" %>
+    <%= error_tag f, :bank_account_users_full_name %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :bank_account_number, class: "control-label" %>
+    <%= text_input f, :bank_account_number, class: "form-control" %>
+    <%= error_tag f, :bank_account_number %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :bank_sort_code, class: "control-label" %>
+    <%= text_input f, :bank_sort_code, class: "form-control" %>
+    <%= error_tag f, :bank_sort_code %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :bank_iban, class: "control-label" %>
+    <%= text_input f, :bank_iban, class: "form-control" %>
+    <%= error_tag f, :bank_iban %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :bank_swift_code, class: "control-label" %>
+    <%= text_input f, :bank_swift_code, class: "form-control" %>
+    <%= error_tag f, :bank_swift_code %>
+  </div>
+
+  <div class="form-group">
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>
