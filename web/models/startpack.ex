@@ -16,8 +16,7 @@ defmodule Karma.Startpack do
     field :country_of_permanent_residence, :string
     field :passport_number, :string
     field :passport_expiry_date, Ecto.Date
-    field :passport_issuing, :string
-    field :country, :string
+    field :passport_issuing_country, :string
     field :full_name_as_on_passport, :string
     field :passport_url, :string
     field :primary_address_1, :string
@@ -92,8 +91,7 @@ defmodule Karma.Startpack do
       :country_of_permanent_residence,
       :passport_number,
       :passport_expiry_date,
-      :passport_issuing,
-      :country,
+      :passport_issuing_country,
       :full_name_as_on_passport,
       :passport_url,
       :primary_address_1,

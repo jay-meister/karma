@@ -18,8 +18,7 @@
       <th>Country of permanent residence</th>
       <th>Passport number</th>
       <th>Passport expiry date</th>
-      <th>Passport issuing</th>
-      <th>Country</th>
+      <th>Passport issuing country</th>
       <th>Full name as on passport</th>
       <th>Passport url</th>
       <th>Primary address 1</th>
@@ -91,8 +90,7 @@
       <td><%= startpack.country_of_permanent_residence %></td>
       <td><%= startpack.passport_number %></td>
       <td><%= startpack.passport_expiry_date %></td>
-      <td><%= startpack.passport_issuing %></td>
-      <td><%= startpack.country %></td>
+      <td><%= startpack.passport_issuing_country %></td>
       <td><%= startpack.full_name_as_on_passport %></td>
       <td><%= startpack.passport_url %></td>
       <td><%= startpack.primary_address_1 %></td>
