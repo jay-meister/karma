@@ -1,0 +1,156 @@
+<h2>Listing startpacks</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Gender</th>
+      <th>Middle names</th>
+      <th>Aka</th>
+      <th>Screen credit name</th>
+      <th>Mobile tel</th>
+      <th>Emergency contact name</th>
+      <th>Emergency contact relationship</th>
+      <th>Emergency contact tel</th>
+      <th>Date of birth</th>
+      <th>Place of birth</th>
+      <th>Country of legal nationality</th>
+      <th>Country of permanent residence</th>
+      <th>Passport number</th>
+      <th>Passport expiry date</th>
+      <th>Passport issuing</th>
+      <th>Country</th>
+      <th>Full name as on passport</th>
+      <th>Passport url</th>
+      <th>Primary address 1</th>
+      <th>Primary address 2</th>
+      <th>Primary address city</th>
+      <th>Primary address postcode</th>
+      <th>Primary address country</th>
+      <th>Primary address tel</th>
+      <th>Agent deal?</th>
+      <th>Agent name</th>
+      <th>Agent company</th>
+      <th>Agent address</th>
+      <th>Agent tel</th>
+      <th>Agent email address</th>
+      <th>Agent bank name</th>
+      <th>Agent bank address</th>
+      <th>Agent bank sort code</th>
+      <th>Agent bank account number</th>
+      <th>Agent bank account name</th>
+      <th>Agent bank account swift code</th>
+      <th>Agent bank account iban</th>
+      <th>Box rental value</th>
+      <th>Box rental url</th>
+      <th>Equipment rental value</th>
+      <th>Equipment rental url</th>
+      <th>Vehicle make</th>
+      <th>Vehicle model</th>
+      <th>Vehicle colour</th>
+      <th>Vehicle registration</th>
+      <th>Vehicle insurance url</th>
+      <th>National insurance number</th>
+      <th>Vat number</th>
+      <th>P45 url</th>
+      <th>For paye only</th>
+      <th>Student loan not repayed?</th>
+      <th>Student loan repay direct?</th>
+      <th>Student loan plan 1?</th>
+      <th>Student loan finished before 6 april?</th>
+      <th>Schedule d letter url</th>
+      <th>Loan out company registration number</th>
+      <th>Loan out company address</th>
+      <th>Loan out company cert url</th>
+      <th>Bank name</th>
+      <th>Bank address</th>
+      <th>Bank account users full name</th>
+      <th>Bank account number</th>
+      <th>Bank sort code</th>
+      <th>Bank iban</th>
+      <th>Bank swiftcode</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for startpack <- @startpacks do %>
+    <tr>
+      <td><%= startpack.user_id %></td>
+      <td><%= startpack.gender %></td>
+      <td><%= startpack.middle_names %></td>
+      <td><%= startpack.aka %></td>
+      <td><%= startpack.screen_credit_name %></td>
+      <td><%= startpack.mobile_tel %></td>
+      <td><%= startpack.emergency_contact_name %></td>
+      <td><%= startpack.emergency_contact_relationship %></td>
+      <td><%= startpack.emergency_contact_tel %></td>
+      <td><%= startpack.date_of_birth %></td>
+      <td><%= startpack.place_of_birth %></td>
+      <td><%= startpack.country_of_legal_nationality %></td>
+      <td><%= startpack.country_of_permanent_residence %></td>
+      <td><%= startpack.passport_number %></td>
+      <td><%= startpack.passport_expiry_date %></td>
+      <td><%= startpack.passport_issuing %></td>
+      <td><%= startpack.country %></td>
+      <td><%= startpack.full_name_as_on_passport %></td>
+      <td><%= startpack.passport_url %></td>
+      <td><%= startpack.primary_address_1 %></td>
+      <td><%= startpack.primary_address_2 %></td>
+      <td><%= startpack.primary_address_city %></td>
+      <td><%= startpack.primary_address_postcode %></td>
+      <td><%= startpack.primary_address_country %></td>
+      <td><%= startpack.primary_address_tel %></td>
+      <td><%= startpack.agent_deal? %></td>
+      <td><%= startpack.agent_name %></td>
+      <td><%= startpack.agent_company %></td>
+      <td><%= startpack.agent_address %></td>
+      <td><%= startpack.agent_tel %></td>
+      <td><%= startpack.agent_email_address %></td>
+      <td><%= startpack.agent_bank_name %></td>
+      <td><%= startpack.agent_bank_address %></td>
+      <td><%= startpack.agent_bank_sort_code %></td>
+      <td><%= startpack.agent_bank_account_number %></td>
+      <td><%= startpack.agent_bank_account_name %></td>
+      <td><%= startpack.agent_bank_account_swift_code %></td>
+      <td><%= startpack.agent_bank_account_iban %></td>
+      <td><%= startpack.box_rental_value %></td>
+      <td><%= startpack.box_rental_url %></td>
+      <td><%= startpack.equipment_rental_value %></td>
+      <td><%= startpack.equipment_rental_url %></td>
+      <td><%= startpack.vehicle_make %></td>
+      <td><%= startpack.vehicle_model %></td>
+      <td><%= startpack.vehicle_colour %></td>
+      <td><%= startpack.vehicle_registration %></td>
+      <td><%= startpack.vehicle_insurance_url %></td>
+      <td><%= startpack.national_insurance_number %></td>
+      <td><%= startpack.vat_number %></td>
+      <td><%= startpack.p45_url %></td>
+      <td><%= startpack.for_paye_only %></td>
+      <td><%= startpack.student_loan_not_repayed? %></td>
+      <td><%= startpack.student_loan_repay_direct? %></td>
+      <td><%= startpack.student_loan_plan_1? %></td>
+      <td><%= startpack.student_loan_finished_before_6_april? %></td>
+      <td><%= startpack.schedule_d_letter_url %></td>
+      <td><%= startpack.loan_out_company_registration_number %></td>
+      <td><%= startpack.loan_out_company_address %></td>
+      <td><%= startpack.loan_out_company_cert_url %></td>
+      <td><%= startpack.bank_name %></td>
+      <td><%= startpack.bank_address %></td>
+      <td><%= startpack.bank_account_users_full_name %></td>
+      <td><%= startpack.bank_account_number %></td>
+      <td><%= startpack.bank_sort_code %></td>
+      <td><%= startpack.bank_iban %></td>
+      <td><%= startpack.bank_swift_code %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: startpack_path(@conn, :show, startpack), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: startpack_path(@conn, :edit, startpack), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: startpack_path(@conn, :delete, startpack), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New startpack", to: startpack_path(@conn, :new) %>

@@ -28,6 +28,7 @@ defmodule Karma.Router do
   # authed routes
   scope "/", Karma do
     pipe_through [:browser, :authenticate]
+    resources "/startpack", StartpackController
     resources "/projects", ProjectController do
       resources "/offers", OfferController
     end
