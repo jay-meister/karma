@@ -62,26 +62,11 @@ defmodule Karma.OfferController do
       job_departments = Karma.Job.departments()
       render(conn, "new.html", changeset: changeset, project_id: project_id, job_titles: job_titles, job_departments: job_departments)
     else
-
-      calculations = run_calculations(validation_changeset.changes, project)
-
+      # run calculations and add them to the offer_params
+      calculations = parse_offer_strings(offer_params) |> run_calculations(project)
       offer_params = Map.merge(offer_params, calculations)
 
-      %{"target_email" => user_email} = offer_params
-      user = Repo.get_by(User, email: user_email)
-
-
-      changeset = case user do
-        nil -> # user is not yet registered or target_email is empty
-          project
-          |> build_assoc(:offers)
-          |> Offer.changeset(offer_params)
-        user -> # user is already registered
-          project
-          |> build_assoc(:offers)
-          |> Offer.changeset(offer_params)
-          |> Ecto.Changeset.put_assoc(:user, user)
-      end
+      changeset = changeset_maybe_with_user(offer_params, project)
 
       case Repo.insert(changeset) do
         {:ok, offer} ->
@@ -117,29 +102,39 @@ defmodule Karma.OfferController do
 
   def update(conn, %{"project_id" => project_id, "id" => id, "offer" => offer_params}) do
     offer = Repo.get!(Offer, id)
-    changeset = Offer.changeset(offer, offer_params)
+    project = Repo.get(Project, project_id)
+
     job_titles = Karma.Job.titles()
     job_departments = Karma.Job.departments()
     ops = [offer: offer, project_id: project_id, job_titles: job_titles, job_departments: job_departments]
 
-    case changeset.changes == %{} do
-      true ->
-        conn
-        |> put_flash(:error, "Nothing to update")
-        |> render("edit.html", ops ++ [changeset: changeset])
-      false ->
-        case Repo.update(changeset) do
-          {:ok, offer} ->
-            # email function decides whether this is a registered user
-            Karma.Email.send_updated_offer_email(conn, offer)
-            |> Karma.Mailer.deliver_later()
+    # first check the values provided by the user are valid
+    validation_changeset = Offer.form_validation(offer, offer_params)
+    # if not valid, return to user with errors
+    if !validation_changeset.valid? do
+      changeset = %{validation_changeset | action: :insert} # manually set the action so errors are shown
+      render(conn, "edit.html", ops ++ [changeset: changeset])
+    else
+      case validation_changeset.changes == %{} do
+        true ->
+          conn
+          |> put_flash(:error, "Nothing to update")
+          |> render("edit.html", ops ++ [changeset: validation_changeset])
+        false ->
+          # run calculations and add them to the offer_params
+          calculations = parse_offer_strings(offer_params) |> run_calculations(project)
+          offer_params = Map.merge(offer_params, calculations)
+          changeset = Offer.changeset(offer, offer_params)
 
-            conn
-            |> put_flash(:info, "Offer updated successfully.")
-            |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
-          {:error, changeset} ->
-            render(conn, "edit.html", ops ++ [changeset: changeset])
-        end
+          {:ok, offer} = Repo.update(changeset)
+          # email function decides whether this is a registered user
+          Karma.Email.send_updated_offer_email(conn, offer)
+          |> Karma.Mailer.deliver_later()
+
+          conn
+          |> put_flash(:info, "Offer updated successfully.")
+          |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
+      end
     end
   end
 
@@ -155,15 +150,48 @@ defmodule Karma.OfferController do
     |> redirect(to: project_offer_path(conn, :index, offer.project_id))
   end
 
-  def run_calculations(changes, project) do
-    %{fee_per_day_inc_holiday: fee_per_day_inc_holiday,
-      working_week: working_week,
-      job_title: job_title,
-      department: department,
-      sixth_day_fee_multiplier: sixth_day_fee_multiplier,
-      seventh_day_fee_multiplier: seventh_day_fee_multiplier
-    } = changes
 
+  # changeset helper for create function
+  def changeset_maybe_with_user(params, project) do
+    %{"target_email" => user_email} = params
+    user = Repo.get_by(User, email: user_email)
+
+    case user do
+      nil -> # user is not yet registered or target_email is empty
+        project
+        |> build_assoc(:offers)
+        |> Offer.changeset(params)
+      user -> # user is already registered
+        project
+        |> build_assoc(:offers)
+        |> Offer.changeset(params)
+        |> Ecto.Changeset.put_assoc(:user, user)
+    end
+  end
+
+  # calculations helpers
+  def parse_offer_strings(offer_params) do
+    integers = ["fee_per_day_inc_holiday"]
+    floats = ["working_week", "sixth_day_fee_multiplier", "seventh_day_fee_multiplier"]
+
+    offer_params
+    |> update_keys(integers, &String.to_integer/1)
+    |> update_keys(floats, &String.to_float/1)
+  end
+
+  defp update_keys(params, keys, f) do
+    # map over the keys of params, applying function f to each of the keys given
+    Enum.reduce(keys, params, fn(i, acc) -> Map.update!(acc, i, f) end)
+  end
+
+  def run_calculations(params, project) do
+    %{"fee_per_day_inc_holiday" => fee_per_day_inc_holiday,
+    "working_week" => working_week,
+    "job_title" => job_title,
+    "department" => department,
+    "sixth_day_fee_multiplier" => sixth_day_fee_multiplier,
+    "seventh_day_fee_multiplier" => seventh_day_fee_multiplier
+    } = params
 
     fee_per_day_exc_holiday = calc_fee_per_day_exc_holiday(fee_per_day_inc_holiday, project.holiday_rate)
     holiday_pay_per_day = calc_holiday_pay_per_day(fee_per_day_inc_holiday, fee_per_day_exc_holiday)

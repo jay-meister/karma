@@ -9,7 +9,8 @@
   form: f,
   atom: :target_email,
   placeholder: "example@email.com",
-  label: "Recipient email"
+  label: "Recipient email",
+  disabled: @target_email_disabled
   %>
 
   <%= component "dropdown.html",
