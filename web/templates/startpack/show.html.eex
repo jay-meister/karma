@@ -79,17 +79,12 @@
 
   <li>
     <strong>Passport issuing:</strong>
-    <%= @startpack.passport_issuing %>
+    <%= @startpack.passport_issuing_country %>
   </li>
 
   <li>
-    <strong>Country:</strong>
-    <%= @startpack.country %>
-  </li>
-
-  <li>
-    <strong>Full name as on passport:</strong>
-    <%= @startpack.full_name_as_on_passport %>
+    <strong>Full name as on passport:</stong>
+    <%= @startpack.passport_full_name %>
   </li>
 
   <li>
