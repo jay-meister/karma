@@ -131,7 +131,8 @@
   <%= component "number_input.html",
   form: f,
   atom: :fee_per_day_inc_holiday,
-  placeholder: "Enter a number"
+  placeholder: "Enter a number",
+  label: "Fee per DAY including holiday (per diem)"
   %>
 
   <%= component "dropdown.html",
