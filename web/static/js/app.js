@@ -28,8 +28,6 @@ function setupListeners(job_title) {
 
   var initialJobTitleValues = departments_with_jobs.default[departmentDropdown.options[departmentDropdown.selectedIndex].text]
 
-  console.log(job_title);
-
   initialJobTitleValues.forEach(function (jobTitleValue) {
     var opt = document.createElement('option');
     opt.value = jobTitleValue;

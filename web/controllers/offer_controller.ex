@@ -61,12 +61,8 @@ defmodule Karma.OfferController do
       changeset = %{validation_changeset | action: :insert} # manually set the action so errors are shown
       job_titles = Karma.Job.titles()
       job_departments = Karma.Job.departments()
-      job_title =
-        case Map.has_key?(changeset.changes, :job_title) do
-          true -> changeset.changes[:job_title]
-          false -> ""
-        end
-        IO.inspect job_title
+      job_title = Map.get(changeset.changes, :job_title, "")
+
       render(conn,
       "new.html",
       changeset: changeset,
@@ -107,11 +103,8 @@ defmodule Karma.OfferController do
         {:error, changeset} ->
           job_titles = Karma.Job.titles()
           job_departments = Karma.Job.departments()
-          job_title =
-            case Map.has_key?(changeset.changes, :job_title) do
-              true -> changeset.changes[:job_title]
-              false -> ""
-            end
+          job_title = Map.get(changeset.changes, :job_title, "")
+
           render(conn, "new.html", changeset: changeset, project_id: project_id, job_titles: job_titles, job_departments: job_departments, job_title: job_title)
       end
     end
