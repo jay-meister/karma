@@ -77,6 +77,7 @@ defmodule Karma.Startpack do
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [
+      :user_id,
       :gender,
       :middle_names,
       :aka,
@@ -141,6 +142,18 @@ defmodule Karma.Startpack do
       :bank_sort_code,
       :bank_iban,
       :bank_swift_code])
-    |> validate_required([:gender])
+    |> validate_required([:user_id])
+  end
+
+  def box_rental_changeset(struct, params \\ %{}) do
+    struct
+    |> cast(params, [:box_rental_value, :box_rental_url])
+    |> validate_required([:box_rental_url, :box_rental_value])
+  end
+
+  def equipment_rental_changeset(struct, params \\ %{}) do
+    struct
+    |> cast(params, [:equipment_rental_value, :equipment_rental_url])
+    |> validate_required([:equipment_rental_url, :equipment_rental_value])
   end
 end

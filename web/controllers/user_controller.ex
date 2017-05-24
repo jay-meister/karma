@@ -3,7 +3,7 @@ defmodule Karma.UserController do
 
   plug :authenticate when action in [:index, :show, :edit, :update, :delete]
 
-  alias Karma.{User, LayoutView}
+  alias Karma.{User, LayoutView, Startpack}
 
   def index(conn, _params) do
     users = Repo.all(User)
@@ -22,6 +22,10 @@ defmodule Karma.UserController do
       {:ok, user} ->
         Karma.Email.send_verification_email(user)
         |> Karma.Mailer.deliver_later()
+
+        startpack_changeset = Startpack.changeset(%Startpack{}, %{user_id: user.id})
+        Repo.insert(startpack_changeset)
+
         conn
         |> put_flash(:info, "A verification email has been sent to #{user.email}.
         You must click the link in the email before you can gain full access.

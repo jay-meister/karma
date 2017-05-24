@@ -1,7 +1,7 @@
 defmodule Karma.OfferController do
   use Karma.Web, :controller
 
-  alias Karma.{User, Offer, Project, LayoutView}
+  alias Karma.{User, Offer, Project, LayoutView, Startpack}
 
   import Karma.ProjectController, only: [project_owner: 2]
   plug :project_owner when action in [:index, :new, :create, :show, :edit, :update, :delete]
@@ -97,7 +97,16 @@ defmodule Karma.OfferController do
 
   def show(conn, %{"project_id" => project_id, "id" => id}) do
     offer = Repo.get!(Offer, id)
-    render(conn, "show.html", offer: offer, project_id: project_id)
+    case Repo.get_by(User, email: offer.target_email) do
+      nil ->
+        render(conn, "show.html", offer: offer, project_id: project_id, valid?: false)
+      user ->
+        user = Repo.preload(user, :startpacks)
+        startpack = Map.from_struct(user.startpacks)
+        IO.inspect Startpack.box_rental_changeset(%Startpack{}, startpack) |> Startpack.equipment_rental_changeset()
+        IO.inspect Map.keys(Enum.into(Startpack.box_rental_changeset(%Startpack{}, startpack).errors, %{}))
+      render(conn, "show.html", offer: offer, project_id: project_id, valid?: false)
+    end
   end
 
   def edit(conn, %{"project_id" => project_id, "id" => id}) do
