@@ -8,8 +8,9 @@
   <%= component "input.html",
   form: f,
   atom: :target_email,
-  disabled: @target_email_disabled,
-  placeholder: "example@email.com"
+  placeholder: "example@email.com",
+  label: "Recipient email",
+  disabled: @target_email_disabled
   %>
 
   <%= component "dropdown.html",
@@ -64,7 +65,7 @@
   <%= component "checkbox.html",
   form: f,
   atom: :box_rental_required?,
-  label: "box_rental_required?"
+  label: "Box rental required?"
   %>
 
   <%= component "textarea.html",
@@ -94,7 +95,7 @@
   <%= component "checkbox.html",
   form: f,
   atom: :equipment_rental_required?,
-  label: "equipment_rental_required?"
+  label: "Equipment rental required?"
   %>
 
   <%= component "input.html",
@@ -130,7 +131,8 @@
   <%= component "number_input.html",
   form: f,
   atom: :fee_per_day_inc_holiday,
-  placeholder: "Enter a number"
+  placeholder: "Enter a number",
+  label: "Fee per DAY including holiday (per diem)"
   %>
 
   <%= component "dropdown.html",
