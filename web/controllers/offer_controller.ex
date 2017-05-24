@@ -46,7 +46,8 @@ defmodule Karma.OfferController do
     changeset: changeset,
     project_id: project_id,
     job_titles: job_titles,
-    job_departments: job_departments)
+    job_departments: job_departments,
+    job_title: "")
   end
 
   def create(conn, %{"offer" => offer_params, "project_id" => project_id}) do
@@ -60,7 +61,15 @@ defmodule Karma.OfferController do
       changeset = %{validation_changeset | action: :insert} # manually set the action so errors are shown
       job_titles = Karma.Job.titles()
       job_departments = Karma.Job.departments()
-      render(conn, "new.html", changeset: changeset, project_id: project_id, job_titles: job_titles, job_departments: job_departments)
+      job_title = Map.get(changeset.changes, :job_title, "")
+
+      render(conn,
+      "new.html",
+      changeset: changeset,
+      project_id: project_id,
+      job_titles: job_titles,
+      job_departments: job_departments,
+      job_title: job_title)
     else
       # run calculations and add them to the offer_params
       calculations = parse_offer_strings(offer_params) |> run_calculations(project)
@@ -79,7 +88,9 @@ defmodule Karma.OfferController do
         {:error, changeset} ->
           job_titles = Karma.Job.titles()
           job_departments = Karma.Job.departments()
-          render(conn, "new.html", changeset: changeset, project_id: project_id, job_titles: job_titles, job_departments: job_departments)
+          job_title = Map.get(changeset.changes, :job_title, "")
+
+          render(conn, "new.html", changeset: changeset, project_id: project_id, job_titles: job_titles, job_departments: job_departments, job_title: job_title)
       end
     end
   end
@@ -106,7 +117,7 @@ defmodule Karma.OfferController do
 
     job_titles = Karma.Job.titles()
     job_departments = Karma.Job.departments()
-    ops = [offer: offer, project_id: project_id, job_titles: job_titles, job_departments: job_departments]
+    ops = [offer: offer, project_id: project_id, job_titles: job_titles, job_departments: job_departments, job_title: offer.job_title]
 
     # first check the values provided by the user are valid
     validation_changeset = Offer.form_validation(offer, offer_params)

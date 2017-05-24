@@ -8,4 +8,5 @@
                         target_email_disabled: true,
                         job_titles: @job_titles,
                         job_departments: @job_departments,
-                        conn: @conn %>
+                        conn: @conn,
+                        job_title: @offer.job_title %>
