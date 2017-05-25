@@ -12,6 +12,7 @@ defmodule Karma.User do
     field :terms_accepted, :boolean
     has_many :projects, Karma.Project
     has_many :offers, Karma.Offer
+    has_one :startpacks, Karma.Startpack
 
     timestamps()
   end
