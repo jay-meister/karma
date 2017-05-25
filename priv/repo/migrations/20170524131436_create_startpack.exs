@@ -17,9 +17,8 @@ defmodule Karma.Repo.Migrations.CreateStartpack do
       add :country_of_permanent_residence, :string
       add :passport_number, :string
       add :passport_expiry_date, :date
-      add :passport_issuing, :string
-      add :country, :string
-      add :full_name_as_on_passport, :string
+      add :passport_issuing_country, :string
+      add :passport_full_name, :string
       add :passport_url, :string
       add :primary_address_1, :string
       add :primary_address_2, :string
