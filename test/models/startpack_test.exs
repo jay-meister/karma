@@ -84,11 +84,12 @@ defmodule Karma.StartpackTest do
   end
 
   test "base changeset for validating startpack with missing basic required data" do
-    invalid = Map.update(@valid_attrs, %{passport_url: ""})
+    invalid = %{ @valid_attrs | passport_url: "" }
+
     changeset = Startpack.base_requirement_changeset(%Startpack{}, invalid)
     refute changeset.valid?
   end
-  
+
   test "base changeset for validating startpack with valid basic data" do
     changeset = Startpack.base_requirement_changeset(%Startpack{}, @valid_attrs)
     assert changeset.valid?

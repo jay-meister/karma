@@ -145,9 +145,6 @@ defmodule Karma.Startpack do
     |> validate_required([:gender])
   end
 
-  def user_requirements do
-    [:first_name, :last_name, :email]
-  end
 
   def base_requirements do
     [
@@ -181,12 +178,12 @@ defmodule Karma.Startpack do
     :bank_sort_code
     ]
   end
-
-  def mother_changeset(struct, startpack, offer) do
-    struct
-    |> base_requirement_changeset(startpack)
-    # |> box_rental_changeset(offer, startpack, users)
-  end
+  #
+  # def mother_changeset(struct, startpack, offer) do
+  #   struct
+  #   |> base_requirement_changeset(startpack)
+  #   # |> box_rental_changeset(offer, startpack, users)
+  # end
 
 
   def base_requirement_changeset(changeset, startpack) do
