@@ -75,4 +75,10 @@ defmodule Karma.StartpackTest do
     changeset = Startpack.changeset(%Startpack{}, @invalid_attrs)
     refute changeset.valid?
   end
+
+  test "base changeset for validating startpack" do
+    changeset = Startpack.base_requirement_changeset(%Startpack{}, @valid_attrs)
+    assert changeset.valid?
+
+  end
 end
