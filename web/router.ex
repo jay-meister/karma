@@ -28,7 +28,8 @@ defmodule Karma.Router do
   # authed routes
   scope "/", Karma do
     pipe_through [:browser, :authenticate]
-    resources "/startpack", StartpackController
+    resources "/startpack", StartpackController, except: [:update]
+    post "/startpack/:id", StartpackController, :update
     resources "/projects", ProjectController do
       resources "/offers", OfferController
     end

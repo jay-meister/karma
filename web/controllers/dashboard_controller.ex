@@ -1,6 +1,8 @@
 defmodule Karma.DashboardController do
   use Karma.Web, :controller
 
+  alias Karma.Controllers.Helpers
+
   def index(conn, _params, user) do
     case user == nil do
       true ->
@@ -9,20 +11,12 @@ defmodule Karma.DashboardController do
         |> halt()
       false ->
         projects =
-          Repo.all(user_projects(user))
+          Repo.all(Helpers.user_projects(user))
           |> Repo.preload(:offers)
-        offers = Repo.all(user_offers(user))
+        offers = Repo.all(Helpers.user_offers(user))
 
         render conn, "index.html", projects: projects, offers: offers
     end
-  end
-
-  defp user_offers(user) do
-    assoc(user, :offers)
-  end
-
-  defp user_projects(user) do
-    assoc(user, :projects)
   end
 
   def action(conn, _) do

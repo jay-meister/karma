@@ -2,5 +2,6 @@
 
 <%= render "form.html", changeset: @changeset,
                         action: startpack_path(@conn, :update, @startpack) %>
+<% IO.inspect @changeset %>                
 
 <%= link "Back", to: startpack_path(@conn, :index) %>

@@ -74,6 +74,6 @@
     label: label || format_label(atom)
     %>
   <% end %>
-
-
 </ul>
+
+<%= component "button.html", title: "Edit Startpack", link: "/startpack?offer_id=#{@offer.id}" %>
