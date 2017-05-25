@@ -11,6 +11,7 @@ defmodule Karma.StartpackTest do
     emergency_contact_name: "some content",
     emergency_contact_tel: "some content",
     bank_account_number: "some content",
+    emergency_contact_relationship: "some content",
     bank_sort_code: "some content",
     loan_out_company_address: "some content",
     agent_bank_name: "some content",
@@ -61,7 +62,14 @@ defmodule Karma.StartpackTest do
     bank_account_number: "some content",
     bank_sort_code: "some content",
     bank_iban: "some content",
-    bank_swift_code: "some content"
+    bank_swift_code: "some content",
+    date_of_birth: %{day: 17, month: 4, year: 2010},
+    place_of_birth: "some content",
+    screen_credit_name: "some content",
+    primary_address_1: "some content",
+    primary_address_city: "some content",
+    passport_number: "some content",
+    passport_url:  "some content",
     }
     @invalid_attrs %{}
 
@@ -73,5 +81,17 @@ defmodule Karma.StartpackTest do
   test "changeset with invalid attributes" do
     changeset = Startpack.changeset(%Startpack{}, @invalid_attrs)
     refute changeset.valid?
+  end
+
+  test "base changeset for validating startpack with missing basic required data" do
+    invalid = %{ @valid_attrs | passport_url: "" }
+
+    changeset = Startpack.base_requirement_changeset(%Startpack{}, invalid)
+    refute changeset.valid?
+  end
+
+  test "base changeset for validating startpack with valid basic data" do
+    changeset = Startpack.base_requirement_changeset(%Startpack{}, @valid_attrs)
+    assert changeset.valid?
   end
 end
