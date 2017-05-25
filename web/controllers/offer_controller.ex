@@ -100,7 +100,7 @@ defmodule Karma.OfferController do
     case Repo.get_by(User, email: offer.target_email) do
       nil ->
         render(conn, "show.html", offer: offer, project_id: project_id, valid?: false)
-      user ->
+      _user ->
         # user = Repo.preload(user, :startpacks)
         # startpack = Map.from_struct(user.startpacks)
         # IO.inspect Startpack.mother_changeset(%Startpack{}, startpack, offer)
