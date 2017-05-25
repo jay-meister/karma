@@ -1,20 +1,33 @@
 # Karma
 
-To start your Phoenix app:
+Application website: https://karmaradio.herokuapp.com
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
-  * Install Node.js dependencies with `npm install`
-  * Start Phoenix endpoint with `mix phoenix.server`
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+### Getting started
+Installations:
+- Install mix
+- Install phoenix
+- Install node (npm)
+- Install redis
+- Install postgres
 
-Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
 
-## Learn more
+To start the app you will need:
+- Postgres running
+- Redis server running (port 6379)
 
-  * Official website: http://www.phoenixframework.org/
-  * Guides: http://phoenixframework.org/docs/overview
-  * Docs: https://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
+Then run:
+- Npm install
+- Mix deps.get
+- Mix ecto.create
+- Mix ecto.migrate
+
+Env variables:
+- Add the .env file
+- Run `source.env`
+
+Start server:
+- Mix phoenix.server
+
+
+Now you can visit [`localhost:4000`](http://localhost:4000).
