@@ -119,9 +119,9 @@ defmodule Karma.OfferControllerTest do
     assert html_response(conn, 200) =~ offer.additional_notes
   end
 
-  test "offers show: shows an offer to existing user", %{conn: conn, offer: offer, user: user} do
+  test "offers show: shows an offer to existing user", %{conn: conn, offer: offer} do
     user = insert_user(%{email: "a_new_email@gmail.com"})
-    startpack = insert_startpack(%{user_id: user.id})
+    insert_startpack(%{user_id: user.id})
     conn = get conn, project_offer_path(conn, :show, offer.project_id, offer)
     assert html_response(conn, 200) =~ offer.additional_notes
   end
