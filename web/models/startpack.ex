@@ -25,7 +25,7 @@ defmodule Karma.Startpack do
     field :primary_address_postcode, :string
     field :primary_address_country, :string
     field :primary_address_tel, :string
-    field :agent_deal?, :boolean, default: false
+    field :agent_deal?, :boolean, default: false, null: false
     field :agent_name, :string
     field :agent_company, :string
     field :agent_address, :string
@@ -147,35 +147,48 @@ defmodule Karma.Startpack do
 
 
   def base_requirements do
-    [
-    # from startpack
-    :date_of_birth,
-    :place_of_birth,
-    :gender,
-    :screen_credit_name,
-    :country_of_legal_nationality,
-    :country_of_permanent_residence,
-    :mobile_tel,
-    :primary_address_1,
-    :primary_address_2,
-    :primary_address_city,
-    :primary_address_postcode,
-    :primary_address_country,
-    :passport_number,
-    :passport_expiry_date,
-    :passport_issuing_country,
-    :passport_full_name,
-    :passport_url,
-    :agent_deal?,
-    :student_loan_not_repayed?,
-    :emergency_contact_name,
-    :emergency_contact_relationship,
-    :emergency_contact_tel,
-    :bank_name,
-    :bank_address,
-    :bank_account_users_full_name,
-    :bank_account_number,
-    :bank_sort_code
+    [ # from startpack
+      :date_of_birth,
+      :place_of_birth,
+      :gender,
+      :screen_credit_name,
+      :country_of_legal_nationality,
+      :country_of_permanent_residence,
+      :mobile_tel,
+      :primary_address_1,
+      :primary_address_2,
+      :primary_address_city,
+      :primary_address_postcode,
+      :primary_address_country,
+      :passport_number,
+      :passport_expiry_date,
+      :passport_issuing_country,
+      :passport_full_name,
+      :passport_url,
+      :agent_deal?,
+      :student_loan_not_repayed?,
+      :emergency_contact_name,
+      :emergency_contact_relationship,
+      :emergency_contact_tel,
+      :bank_name,
+      :bank_address,
+      :bank_account_users_full_name,
+      :bank_account_number,
+      :bank_sort_code
+    ]
+  end
+
+  def agent_requirements do
+    [ :agent_name,
+      :agent_company,
+      :agent_address,
+      :agent_tel,
+      :agent_email_address,
+      :agent_bank_name,
+      :agent_bank_address,
+      :agent_bank_sort_code,
+      :agent_bank_account_number,
+      :agent_bank_account_name,
     ]
   end
   #
@@ -193,6 +206,16 @@ defmodule Karma.Startpack do
   end
 
 
+  def agent_requirement_changeset(changeset, startpack) do
+    case startpack.agent_deal? do
+      true ->
+        changeset
+        |> cast(startpack, agent_requirements())
+        |> validate_required(agent_requirements())
+      false ->
+        changeset
+    end
+  end
   # def box_rental_changeset(changeset, offer, startpack, user, params \\ %{}) do
   #   case offer.box_rental_required? do
   #     true ->

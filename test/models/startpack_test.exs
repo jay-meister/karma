@@ -70,6 +70,9 @@ defmodule Karma.StartpackTest do
     primary_address_city: "some content",
     passport_number: "some content",
     passport_url:  "some content",
+    agent_address: "some content",
+    agent_bank_account_number: "some content",
+    agent_bank_account_name: "some content"
     }
     @invalid_attrs %{}
 
@@ -83,15 +86,38 @@ defmodule Karma.StartpackTest do
     refute changeset.valid?
   end
 
+  # ---- validate startpack changeset tests ---- #
+
+  # base changeset tests (unconditional required fields)
   test "base changeset for validating startpack with missing basic required data" do
     invalid = %{ @valid_attrs | passport_url: "" }
 
     changeset = Startpack.base_requirement_changeset(%Startpack{}, invalid)
     refute changeset.valid?
   end
-
   test "base changeset for validating startpack with valid basic data" do
     changeset = Startpack.base_requirement_changeset(%Startpack{}, @valid_attrs)
+    assert changeset.valid?
+  end
+
+
+  # agent changeset tests (conditionally required fields depending on agent deal?)
+  test "validating startpack with agent_deal? false and missing required data" do
+    valid = %{ @valid_attrs | agent_deal?: false, agent_bank_address: "" }
+
+    changeset = Startpack.agent_requirement_changeset(%Startpack{}, valid)
+    # struct should not be converted to a changeset as agent_deal? == false
+    # so we dont cast or validate required any fields, just return the struct/changeset
+    assert changeset == %Startpack{}
+  end
+  test "validating startpack with agent_deal? true and missing required data" do
+    invalid = %{ @valid_attrs | agent_bank_address: "" }
+
+    changeset = Startpack.agent_requirement_changeset(%Startpack{}, invalid)
+    refute changeset.valid?
+  end
+  test "validating startpack with agent_deal? true and all required data given" do
+    changeset = Startpack.agent_requirement_changeset(%Startpack{}, @valid_attrs)
     assert changeset.valid?
   end
 end
