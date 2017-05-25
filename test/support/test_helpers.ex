@@ -8,14 +8,7 @@ defmodule Karma.TestHelpers do
   end
 
   def insert_user(attrs \\ %{}) do
-    changes = Map.merge(
-      %{first_name: "Joe",
-        last_name: "Blogs",
-        email: "test@test.com",
-        password: "123456",
-        terms_accepted: true,
-        verified: true},
-        attrs)
+    changes = Map.merge(default_user(), attrs)
 
     %User{}
     |> User.registration_changeset(changes)
@@ -51,6 +44,18 @@ defmodule Karma.TestHelpers do
     |> Ecto.build_assoc(:offers, %{})
     |> Offer.changeset(changes)
     |> Repo.insert!
+  end
+
+  def default_user(attrs \\ %{}) do
+    default = %{first_name: "Joe",
+      last_name: "Blogs",
+      email: "test@test.com",
+      password: "123456",
+      terms_accepted: true,
+      verified: true
+    }
+
+    Map.merge(default, attrs)
   end
 
   def default_project (attrs \\ %{}) do
