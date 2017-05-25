@@ -103,8 +103,9 @@ defmodule Karma.OfferController do
       user ->
         user = Repo.preload(user, :startpacks)
         startpack = Map.from_struct(user.startpacks)
-        IO.inspect Startpack.box_rental_changeset(%Startpack{}, startpack) |> Startpack.equipment_rental_changeset()
-        IO.inspect Map.keys(Enum.into(Startpack.box_rental_changeset(%Startpack{}, startpack).errors, %{}))
+        # IO.inspect Startpack.mother_changeset(%Startpack{}, startpack, offer)
+        # IO.inspect Startpack.box_rental_changeset(%Startpack{}, startpack) |> Startpack.equipment_rental_changeset()
+        # IO.inspect Map.keys(Enum.into(Startpack.box_rental_changeset(%Startpack{}, startpack).errors, %{}))
       render(conn, "show.html", offer: offer, project_id: project_id, valid?: false)
     end
   end

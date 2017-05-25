@@ -145,15 +145,31 @@ defmodule Karma.Startpack do
     |> validate_required([:user_id])
   end
 
-  def box_rental_changeset(struct, params \\ %{}) do
+  def mother_changeset(struct, startpack, offer) do
     struct
-    |> cast(params, [:box_rental_value, :box_rental_url])
-    |> validate_required([:box_rental_url, :box_rental_value])
+    |> box_rental_changeset(startpack, offer)
+    |> equipment_rental_changeset(startpack, offer)
   end
 
-  def equipment_rental_changeset(struct, params \\ %{}) do
-    struct
-    |> cast(params, [:equipment_rental_value, :equipment_rental_url])
-    |> validate_required([:equipment_rental_url, :equipment_rental_value])
+  def box_rental_changeset(struct, startpack, offer) do
+    case offer.box_rental_required? do
+      true ->
+        struct
+        |> cast(startpack, [:box_rental_value, :box_rental_url])
+        |> validate_required([:box_rental_url, :box_rental_value])
+      false ->
+        struct
+    end
+  end
+
+  def equipment_rental_changeset(struct, startpack, offer) do
+    case offer.equipment_rental_required? do
+      true ->
+        struct
+        |> cast(startpack, [:equipment_rental_value, :equipment_rental_url])
+        |> validate_required([:equipment_rental_url, :equipment_rental_value])
+      false ->
+        struct
+    end
   end
 end

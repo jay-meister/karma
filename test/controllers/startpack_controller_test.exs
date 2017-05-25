@@ -82,10 +82,10 @@ defmodule Karma.StartpackControllerTest do
     assert html_response(conn, 200) =~ "New startpack"
   end
 
-  test "creates resource and redirects when data is valid", %{conn: conn} do
-    conn = post conn, startpack_path(conn, :create), startpack: @valid_attrs
+  test "creates resource and redirects when data is valid", %{conn: conn, user: user} do
+    conn = post conn, startpack_path(conn, :create), startpack: %{user_id: user.id}
     assert redirected_to(conn) == startpack_path(conn, :index)
-    assert Repo.get_by(Startpack, @valid_attrs)
+    assert Repo.get_by(Startpack, user_id: user.id)
   end
 
   test "does not create resource and renders errors when data is invalid", %{conn: conn} do
@@ -111,11 +111,11 @@ defmodule Karma.StartpackControllerTest do
     assert html_response(conn, 200) =~ "Edit startpack"
   end
 
-  test "updates chosen resource and redirects when data is valid", %{conn: conn} do
-    startpack = Repo.insert! %Startpack{}
+  test "updates chosen resource and redirects when data is valid", %{conn: conn, user: user} do
+    startpack = Repo.insert! %Startpack{user_id: user.id}
     conn = put conn, startpack_path(conn, :update, startpack), startpack: @valid_attrs
     assert redirected_to(conn) == startpack_path(conn, :show, startpack)
-    assert Repo.get_by(Startpack, @valid_attrs)
+    assert Repo.get_by(Startpack, user_id: user.id)
   end
 
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do

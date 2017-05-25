@@ -61,9 +61,27 @@ defmodule Karma.StartpackTest do
     bank_account_number: "some content",
     bank_sort_code: "some content",
     bank_iban: "some content",
-    bank_swift_code: "some content"
+    bank_swift_code: "some content",
+    user_id: 1
     }
     @invalid_attrs %{}
+
+    @valid_box_attrs %{
+      box_rental_url: "box_url.com/image",
+      box_rental_value: 2000
+    }
+
+    @valid_equipment_attrs %{
+      equipment_rental_url: "equipment_url.com/image",
+      equipment_rental_value: 2000
+    }
+
+    @valid_box_equipment_attrs %{
+      equipment_rental_url: "equipment_url.com/image",
+      equipment_rental_value: 2000,
+      box_rental_url: "box_url.com/image",
+      box_rental_value: 2000
+    }
 
   test "changeset with valid attributes" do
     changeset = Startpack.changeset(%Startpack{}, @valid_attrs)
@@ -73,5 +91,59 @@ defmodule Karma.StartpackTest do
   test "changeset with invalid attributes" do
     changeset = Startpack.changeset(%Startpack{}, @invalid_attrs)
     refute changeset.valid?
+  end
+
+  test "box_rental_changeset valid attributes" do
+    with_allowances = %{project_id: 1,
+      equipment_rental_required?: true,
+      box_rental_required?: true,
+      box_rental_cap: 200 # should fail as box rental is required
+    }
+    offer = default_offer(with_allowances)
+    changeset = Startpack.box_rental_changeset(%Startpack{}, @valid_box_attrs, offer)
+    assert changeset.valid?
+  end
+
+  test "box_rental_changeset box not required" do
+    with_allowances = %{project_id: 1,
+      equipment_rental_required?: false,
+      box_rental_required?: false,
+      box_rental_cap: nil # should fail as box rental is required
+    }
+    offer = default_offer(with_allowances)
+    struct = Startpack.box_rental_changeset(%Startpack{}, @valid_box_attrs, offer)
+    assert Map.has_key?(struct, :box_rental_url)
+  end
+
+  test "equipment_rental_changeset valid attributes" do
+    with_allowances = %{project_id: 1,
+      equipment_rental_required?: true,
+      equipment_rental_cap: 200 # should fail as equipment rental is required
+    }
+    offer = default_offer(with_allowances)
+    changeset = Startpack.equipment_rental_changeset(%Startpack{}, @valid_equipment_attrs, offer)
+    assert changeset.valid?
+  end
+
+  test "equipment_rental_changeset equipment not required" do
+    with_allowances = %{project_id: 1,
+      equipment_rental_required?: false,
+      equipment_rental_cap: nil # should fail as equipment rental is required
+    }
+    offer = default_offer(with_allowances)
+    struct = Startpack.equipment_rental_changeset(%Startpack{}, @valid_equipment_attrs, offer)
+    assert Map.has_key?(struct, :equipment_rental_url)
+  end
+
+  test "mother_changeset valid attributes" do
+    with_allowances = %{project_id: 1,
+      box_rental_required?: true,
+      equipment_rental_required?: true,
+      box_rental_cap: 2000, # should fail as equipment rental is required
+      equipment_rental_cap: 2000 # should fail as equipment rental is required
+    }
+    offer = default_offer(with_allowances)
+    changeset = Startpack.mother_changeset(%Startpack{}, @valid_box_equipment_attrs, offer)
+    assert changeset.valid?
   end
 end
