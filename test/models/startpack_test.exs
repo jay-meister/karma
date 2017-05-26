@@ -87,11 +87,21 @@ defmodule Karma.StartpackTest do
       equipment_rental_value: 2000
     }
 
-    @valid_box_equipment_attrs %{
+    @valid_box_equipment_agent_attrs %{
       equipment_rental_url: "equipment_url.com/image",
       equipment_rental_value: 2000,
       box_rental_url: "box_url.com/image",
-      box_rental_value: 2000
+      box_rental_value: 2000,
+      agent_name: "Agent Smith",
+      agent_address: "Agent Address",
+      agent_tel: "2345678",
+      agent_email_address: "agent@email.com",
+      agent_bank_name: "Agent bank",
+      agent_bank_address: "Agent bank address",
+      agent_bank_sort_code: "123456",
+      agent_bank_account_number: "1234567",
+      agent_bank_account_name: "MR SMITH",
+      agent_deal?: true
     }
 
   test "changeset with valid attributes" do
@@ -154,7 +164,8 @@ defmodule Karma.StartpackTest do
       equipment_rental_cap: 2000 # should fail as equipment rental is required
     }
     offer = default_offer(with_allowances)
-    changeset = Startpack.mother_changeset(%Startpack{}, @valid_box_equipment_attrs, offer)
+    changeset = Startpack.mother_changeset(%Startpack{}, @valid_box_equipment_agent_attrs, offer)
+    IO.inspect changeset
     assert changeset.valid?
   end
   # ---- validate startpack changeset tests ---- #

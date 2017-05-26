@@ -1,6 +1,11 @@
+<%= if Map.has_key?(@offer, :project_id) && Map.has_key?(@offer, :id) do %>
+  <%= component "button.html", title: "Back to offer", link: "/projects/#{@offer.project_id}/offers/#{@offer.id}" %>
+<% end %>
+
 <h2>Edit startpack</h2>
 
 <%= render "form.html", changeset: @changeset,
-                        action: startpack_path(@conn, :update, @startpack) %>
+                        action: startpack_path(@conn, :update, @startpack),
+                        offer: @offer %>
 
 <%= link "Back", to: startpack_path(@conn, :index) %>

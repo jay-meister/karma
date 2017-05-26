@@ -1,7 +1,8 @@
 <%= form_for @changeset, @action, fn f -> %>
-  <%= if @changeset.action do %>
+
+  <%= if length(@changeset.errors) != 0 do %>
     <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
+      <p>Fill out the fields below to complete your startpack!</p>
     </div>
   <% end %>
 

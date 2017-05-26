@@ -1,5 +1,40 @@
 <%= link "Back", to: project_offer_path(@conn, :index, @offer.project_id), class: "ma2" %>
-<%= link "Edit", to: project_offer_path(@conn, :edit, @offer.project_id, @offer), class: "ma2" %>
+<%= if @project.user.email == @conn.assigns.current_user.email do %>
+  <%= link "Edit", to: project_offer_path(@conn, :edit, @offer.project_id, @offer), class: "ma2" %>
+<% end %>
+
+<%= if length(@changeset.errors) > 0 do %>
+  <div class="k-bg-indigo white tc pa4 br3 ma2 f2 mt3">You need to fill out more information within your startpack before you can respond to this offer</div>
+<% end %>
+
+<%= if length(@changeset.errors) != 0 && !@offer.accepted == nil do %>
+  <%= component "button.html", title: "Edit Startpack", link: "/startpack?offer_id=#{@offer.id}" %>
+<% end %>
+
+<%= if @offer.accepted do %>
+  <div class="k-bg-indigo white tc pa4 br3 ma2 f2 mt3">Congratulations! <br /> You have accepted this offer!</div>
+<% end %>
+<%= if !@offer.accepted do %>
+  <div class="k-bg-indigo white tc pa4 br3 ma2 f2 mt3">You have rejected this offer!</div>
+<% end %>
+
+<div class="tc mt2">
+  <%= if length(@changeset.errors) == 0 && @offer.accepted == nil do %>
+    <div class="dib ma1">
+      <%= form_for @edit_changeset, project_offer_path(@conn, :update, @offer.project_id, @offer), fn f -> %>
+          <%= hidden_input f, :accepted, value: "true" %>
+          <%= component "submit_button.html", title: "ACCEPT" %>
+      <% end %>
+    </div>
+    <div class="dib ma1">
+      <%= form_for @edit_changeset, project_offer_path(@conn, :update, @offer.project_id, @offer), fn f -> %>
+        <%= hidden_input f, :accepted, value: "false" %>
+        <%= component "submit_button.html", title: "REJECT" %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
 
 <h2>Offer for <%= @offer.target_email %></h2>
 <ul class="list pl0">
@@ -47,8 +82,7 @@
     {:sixth_day_fee_exc_holiday, nil, nil},
     {:seventh_day_fee_inc_holiday, nil, nil},
     {:seventh_day_fee_exc_holiday, nil, nil},
-    {:seventh_day_fee_multiplier, nil, nil},
-    {:holiday_pay_per_week, nil, nil}
+    {:seventh_day_fee_multiplier, nil, nil}
   ] do %>
     <%= component "data.html",
     data: formatted || Map.get(@offer, atom),
@@ -75,5 +109,3 @@
     %>
   <% end %>
 </ul>
-
-<%= component "button.html", title: "Edit Startpack", link: "/startpack?offer_id=#{@offer.id}" %>

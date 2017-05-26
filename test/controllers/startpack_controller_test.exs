@@ -68,13 +68,14 @@ defmodule Karma.StartpackControllerTest do
   setup do
     user = insert_user()
     project = insert_project(user)
+    startpack = insert_startpack(%{user_id: user.id})
     conn = login_user(build_conn(), user)
-    {:ok, conn: conn, user: user, project: project}
+    {:ok, conn: conn, user: user, project: project, startpack: startpack}
   end
 
-  test "lists all entries on index", %{conn: conn} do
+  test "edit startpack view on index", %{conn: conn} do
     conn = get conn, startpack_path(conn, :index)
-    assert html_response(conn, 200) =~ "Listing startpacks"
+    assert html_response(conn, 200) =~ "Edit Startpack"
   end
 
   test "creates resource and redirects when data is valid", %{conn: conn, user: user} do
@@ -88,18 +89,6 @@ defmodule Karma.StartpackControllerTest do
     assert html_response(conn, 200) =~ "New startpack"
   end
 
-  test "shows chosen resource", %{conn: conn} do
-    startpack = Repo.insert! %Startpack{}
-    conn = get conn, startpack_path(conn, :show, startpack)
-    assert html_response(conn, 200) =~ "Show startpack"
-  end
-
-  test "renders page not found when id is nonexistent", %{conn: conn} do
-    assert_error_sent 404, fn ->
-      get conn, startpack_path(conn, :show, -1)
-    end
-  end
-
   test "renders form for editing chosen resource", %{conn: conn} do
     startpack = Repo.insert! %Startpack{}
     conn = get conn, startpack_path(conn, :edit, startpack)
@@ -109,7 +98,7 @@ defmodule Karma.StartpackControllerTest do
   test "updates chosen resource and redirects when data is valid", %{conn: conn, user: user} do
     startpack = Repo.insert! %Startpack{user_id: user.id}
     conn = put conn, startpack_path(conn, :update, startpack), startpack: @valid_attrs
-    assert redirected_to(conn) == startpack_path(conn, :show, startpack)
+    assert redirected_to(conn) == startpack_path(conn, :index)
     assert Repo.get_by(Startpack, user_id: user.id)
   end
 
