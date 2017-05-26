@@ -14,6 +14,24 @@ defmodule Karma.StartpackController do
   end
 
   def create(conn, %{"startpack" => startpack_params}) do
+
+    %{"passport_image" => image_params} = startpack_params
+    file_uuid = UUID.uuid4(:hex)
+    image_filename = image_params.filename
+    unique_filename = "#{file_uuid}-#{image_filename}"
+    {:ok, image_binary} = File.read(image_params.path)
+    bucket_name = System.get_env("BUCKET_NAME")
+
+    image =
+      ExAws.S3.put_object(bucket_name, unique_filename, image_binary)
+      |> ExAws.request!
+
+    # build the image url and add to the params to be stored
+    updated_params =
+      startpack_params
+      |> Map.update(image, image_params, fn _value -> "https://#{bucket_name}.s3.amazonaws.com/#{bucket_name}/#{unique_filename}" end)
+
+    IO.inspect updated_params
     changeset = Startpack.changeset(%Startpack{}, startpack_params)
 
     case Repo.insert(changeset) do

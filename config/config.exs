@@ -36,3 +36,15 @@ config :karma, Karma.Mailer,
   tls: :always, # can be `:always` or `:never`
   ssl: false, # can be `true`
   retries: 1
+
+# Configure S3
+config :ex_aws,
+  access_key_id: System.get_env("AWS_ACCESS_KEY_ID"),
+  secret_access_key: System.get_env("AWS_SECRET_ACCESS_KEY"),
+  region: "eu-west-1",
+  host: "engine-image-uploads.s3.amazonaws.com",
+  s3: [
+   scheme: "https://",
+   host: "engine-image-uploads.s3.amazonaws.com",
+   region: "eu-west-1"
+  ]
