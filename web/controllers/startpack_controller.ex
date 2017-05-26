@@ -14,7 +14,19 @@ defmodule Karma.StartpackController do
   end
 
   def create(conn, %{"startpack" => startpack_params}) do
-    changeset = Startpack.changeset(%Startpack{}, startpack_params)
+    image_params = Map.get(startpack_params, "passport_image", :empty)
+
+    passport_url =
+      case Karma.S3.upload(image_params) do
+        {:ok, string} ->
+          string
+        # {:error, msg} -> # put error flash but continue
+        #   put_flash(conn, :error, msg)
+        #   ""
+      end
+
+    params = Map.merge(startpack_params, %{"passport_url" => passport_url})
+    changeset = Startpack.changeset(%Startpack{}, params)
 
     case Repo.insert(changeset) do
       {:ok, _startpack} ->
