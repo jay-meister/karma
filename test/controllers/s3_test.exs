@@ -31,9 +31,10 @@ defmodule Karma.S3Test do
   end
 
 
-  test "S3.upload with no file uploaded" do
-    res = S3.upload(:empty)
-    assert res == {:ok, ""}
+  test "S3.upload_many with no file uploaded" do
+    keys = [{"passport_image", "passport_url"}]
+    res = S3.upload_many(%{}, keys)
+    assert res == %{}
   end
 
   test "S3.upload failure" do

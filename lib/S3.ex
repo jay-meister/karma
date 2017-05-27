@@ -1,21 +1,27 @@
 defmodule Karma.S3 do
+  def upload_many(params, keys) do
+    keys
+    # remove keys that haven't been uploaded
+    |> Enum.filter(fn({file_key, _url_key}) -> Map.has_key?(params, file_key) end)
+    |> Enum.reduce(%{}, fn({file_key, url_key}, acc) ->
+        file = Map.get(params, file_key)
+        case upload(file) do
+          {:error, _msg} -> acc
+          {:ok, image_url} -> Map.put(acc, url_key, image_url)
+        end
+      end)
+  end
+
   def upload(image_params) do
-
     # first check if user has uploaded an image
-    case image_params do
-      :empty ->
-        # if not, just return with empty string
-        {:ok, ""}
-      _ ->
-      unique_filename = get_unique_filename(image_params.filename)
+    unique_filename = get_unique_filename(image_params.filename)
 
-      case File.read(image_params.path) do
-        {:error, _} ->
-          {:error, "file could not be read"}
-        {:ok, image_binary} ->
-          # returns image url string or error
-          put_object(unique_filename, image_binary)
-      end
+    case File.read(image_params.path) do
+      {:error, _} ->
+        {:error, "file could not be read"}
+      {:ok, image_binary} ->
+        # returns image url string or error
+        put_object(unique_filename, image_binary)
     end
   end
 
