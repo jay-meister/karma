@@ -53,6 +53,23 @@ defmodule Karma.StartpackController do
     startpack = Repo.get!(Startpack, id)
     changeset = Startpack.changeset(startpack, startpack_params)
 
+    # if there is a file in one of these keys, we want to upload it, otherwise remove the key?
+    image_params = Map.get(startpack_params, "passport_image", :empty)
+    passport_url =
+      case Karma.S3.upload(image_params) do
+        {:ok, string} ->
+          string
+        {:empty, nil} ->
+          startpack.passport_url
+        {:error, msg} -> # put error flash but continue
+          put_flash(conn, :error, msg)
+          ""
+      end
+
+    params = Map.merge(startpack_params, %{"passport_url" => passport_url})
+    changeset = Startpack.changeset(startpack, params)
+
+
     case Repo.update(changeset) do
       {:ok, startpack} ->
         conn
