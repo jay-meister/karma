@@ -8,36 +8,6 @@ defmodule Karma.StartpackController do
     render(conn, "index.html", startpacks: startpacks)
   end
 
-  def new(conn, _params) do
-    changeset = Startpack.changeset(%Startpack{})
-    render(conn, "new.html", changeset: changeset)
-  end
-
-  def create(conn, %{"startpack" => startpack_params}) do
-    image_params = Map.get(startpack_params, "passport_image", :empty)
-
-    passport_url =
-      case Karma.S3.upload(image_params) do
-        {:ok, string} ->
-          string
-        # {:error, msg} -> # put error flash but continue
-        #   put_flash(conn, :error, msg)
-        #   ""
-      end
-
-    params = Map.merge(startpack_params, %{"passport_url" => passport_url})
-    changeset = Startpack.changeset(%Startpack{}, params)
-
-    case Repo.insert(changeset) do
-      {:ok, _startpack} ->
-        conn
-        |> put_flash(:info, "Startpack created successfully.")
-        |> redirect(to: startpack_path(conn, :index))
-      {:error, changeset} ->
-        render(conn, "new.html", changeset: changeset)
-    end
-  end
-
   def show(conn, %{"id" => id}) do
     startpack = Repo.get!(Startpack, id)
     render(conn, "show.html", startpack: startpack)
