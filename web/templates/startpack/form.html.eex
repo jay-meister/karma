@@ -107,11 +107,6 @@
     <%= error_tag f, :passport_full_name %>
   </div>
 
-  <div class="form-group">
-    <%= label f, :passport_url, class: "control-label" %>
-    <%= text_input f, :passport_url, class: "form-control" %>
-    <%= error_tag f, :passport_url %>
-  </div>
 
   <div class="form-group">
     <%= label f, :primary_address_1, class: "control-label" %>
@@ -294,9 +289,9 @@
   </div>
 
   <div class="form-group">
-    <%= label f, :p45_url, class: "control-label" %>
-    <%= text_input f, :p45_url, class: "form-control" %>
-    <%= error_tag f, :p45_url %>
+    <%= label f, :p45_image, class: "control-label" %>
+    <%= file_input f, :p45_image, class: "form-control" %>
+    <%= error_tag f, :p45_image %>
   </div>
 
   <div class="form-group">
