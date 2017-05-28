@@ -1,25 +1,24 @@
 defmodule Karma.S3 do
   def upload_many(params, keys) do
+    ops = [max_concurrency: System.schedulers_online() * 3, timeout: 20000]
     keys
     # remove keys that haven't been uploaded
     |> Enum.filter(fn({file_key, _url_key}) -> Map.has_key?(params, file_key) end)
-    |> Enum.reduce([], fn({file_key, url_key}, acc) ->
-        file = Map.get(params, file_key)
-        task = Task.async(Karma.S3, :upload, [url_key, file])
-        [task | acc]
-      end)
+    |> Enum.map(fn({file_key, url_key}) -> {url_key, Map.get(params, file_key)} end)
     |> IO.inspect
-    |> Enum.map(&Task.await/1)
+    |> Task.async_stream(&upload/1, ops)
     |> IO.inspect
-    |> Enum.filter(fn {res, _url_key, _url} -> res != :error end)
+    |> Enum.to_list()
     |> IO.inspect
-    |> Enum.map(fn { _res, url_key, url} -> {url_key, url} end)
+    |> Enum.filter(fn {_async_res, {res, _url_key, _url}} -> res != :error end)
+    |> IO.inspect
+    |> Enum.map(fn {_async_res, { _res, url_key, url}} -> {url_key, url} end)
     |> IO.inspect
     |> Enum.reduce(%{}, fn({url_key, url}, acc) -> Map.put(acc, url_key, url) end)
     |> IO.inspect
   end
 
-  def upload(url_key, image_params) do
+  def upload({url_key, image_params}) do
     # first check if user has uploaded an image
     unique_filename = get_unique_filename(image_params.filename)
 

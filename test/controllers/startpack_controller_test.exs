@@ -116,22 +116,20 @@ defmodule Karma.StartpackControllerTest do
     image_upload = %Plug.Upload{path: "test/fixtures/foxy.png", filename: "foxy.png"}
 
     # possible solution for multiple fields
-    #  @file_upload_keys [
-    #    {"passport_image", "passport_url"},
-    #    {"vehicle_insurance_image", "vehicle_insurance_url"},
-    #    {"box_rental_image", "box_rental_url"},
-    #    {"equipment_rental_image", "equipment_rental_url"},
-    #    {"vehicle_insurance_image", "vehicle_insurance_url"},
-    #    {"p45_image", "p45_url"},
-    #    {"schedule_d_letter_image", "schedule_d_letter_url"},
-    #    {"loan_out_company_cert_image", "loan_out_company_cert_url"}
-    #  ]
+    images = %{
+     "passport_image"  => image_upload,
+     "vehicle_insurance_image"  => image_upload,
+     "box_rental_image"  => image_upload,
+     "equipment_rental_image"  => image_upload,
+     "p45_image"  => image_upload,
+     "schedule_d_letter_image"  => image_upload,
+     "loan_out_company_cert_image"  => image_upload
+   }
 
-    images = %{"passport_image" => image_upload, "vehicle_insurance_image" => image_upload, "box_rental_image" => image_upload}
     valid = Map.merge(@valid_attrs, images)
 
     with_mock ExAws, [request!: fn(_) ->
-      Process.sleep(3000)
+      Process.sleep(4000)
       %{status_code: 200}
     end] do
       conn = put conn, startpack_path(conn, :update, startpack), startpack: valid
