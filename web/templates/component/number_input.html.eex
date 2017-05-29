@@ -1,4 +1,4 @@
-<div class="form-group">
+<div class="mb3">
   <% label =
     case assigns[:label] do
       nil -> assigns[:atom]

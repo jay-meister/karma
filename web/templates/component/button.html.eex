@@ -1,6 +1,6 @@
 <a href="<%= assigns[:link] %>" class="outline-0 no-underline k-button-no-underline">
   <div class="tc">
-    <div class="form-group">
+    <div class="mb3">
       <div class="ttu k-bg-light-indigo bn pa3 pl4 pr4 k-f2-5 br2 white k-w6 mt3 outline-0 k-m-auto"><%= assigns[:title] %></div>
     </div>
   </div>

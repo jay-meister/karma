@@ -1,5 +1,5 @@
 <div class="tc">
-  <div class="form-group">
+  <div class="mb3">
     <%= submit assigns[:title], class: "ttu k-bg-light-indigo bn pa3 pl4 pr4 k-f2-5 br2 white w-100 mt3" %>
   </div>
 </div>

@@ -1,4 +1,4 @@
-<div class="form-group">
+<div class="mb3">
   <%= case assigns[:label] do
    nil -> label assigns[:form], assigns[:atom], class: " fw4"
    _ -> label assigns[:form], assigns[:atom], assigns[:label], class: " fw4"

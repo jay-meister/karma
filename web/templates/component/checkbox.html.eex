@@ -1,4 +1,4 @@
-<div class="form-group">
+<div class="mb3">
   <%= label assigns[:form], assigns[:atom], assigns[:label], class: "" %>
   <%= if assigns[:link] do %>
     <%= link assigns[:link_name], to: assigns[:link] %>
