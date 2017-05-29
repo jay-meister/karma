@@ -19,7 +19,7 @@ defmodule Karma.StartpackController do
         end
       false ->
         render(conn, "index.html", startpack: startpack, changeset: changeset, offer: %{})
-    end
+      end
   end
 
   def edit(conn, %{"id" => id}, user) do
