@@ -15,7 +15,7 @@
 
   <body class="bg-white k-indigo mv4">
     <div class="mw9 pl6 pr6 center">
-      <header class="header">
+      <header class="h4 bb k-b-grey">
         <nav role="navigation">
           <ul class="mv4 pl0 mb0 nested-list-reset ol fl">
             <%= if @current_user do %>

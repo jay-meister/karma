@@ -1,30 +1,15 @@
 
-/* This file is for your main application css. */
-
-.help-block {
-  text-transform: capitalize;
-  color: #757de8;
-}
-
-.arrow {
-  right: 50%;
-  margin-right: -16px;
-  top: -4rem;
-}
-
 html {
 font-size: 10px;
+font-family:sans-serif;
+-webkit-text-size-adjust:100%;
+-ms-text-size-adjust:100%
 }
 
 body {
   font-family: 'Lato', sans-serif;
   font-size: 14px;
-}
-
-.header {
-  height: 9rem;
-  border-bottom: 1px solid #eeeeee;
-  margin-bottom: 3rem;
+  margin:0
 }
 
 .k-button-no-underline:hover {
@@ -94,7 +79,9 @@ body {
   border-color: #757de8;
 }
 
-
+.k-b-grey {
+  border-color: #eeeeee;
+}
 
 
 .k-f2-5 {
@@ -198,4 +185,15 @@ select {
 
 .alert:empty {
   display: none;
+}
+
+.help-block {
+  text-transform: capitalize;
+  color: #757de8;
+}
+
+.arrow {
+  right: 50%;
+  margin-right: -16px;
+  top: -4rem;
 }
