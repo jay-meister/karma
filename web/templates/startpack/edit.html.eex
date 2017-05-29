@@ -1,6 +1,8 @@
 <h2>Edit startpack</h2>
 
 <%= render "form.html", changeset: @changeset,
-                        action: startpack_path(@conn, :update, @startpack) %>
+                        action: startpack_path(@conn, :update, @startpack),
+                        startpack: @startpack
+                        %>
 
 <%= link "Back", to: startpack_path(@conn, :index) %>

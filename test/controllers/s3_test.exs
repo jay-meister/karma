@@ -31,24 +31,25 @@ defmodule Karma.S3Test do
   end
 
 
-  test "S3.upload with no file uploaded" do
-    res = S3.upload(:empty)
-    assert res == {:ok, ""}
+  test "S3.upload_many with no file uploaded" do
+    keys = [{"passport_image", "passport_url"}]
+    res = S3.upload_many(%{}, keys)
+    assert res == %{}
   end
 
   test "S3.upload failure" do
     with_mock ExAws, [request!: fn(_) -> %{status_code: 200} end] do
-      res = S3.upload(@image_params)
-      assert {:error, msg} = res
-      assert msg == "file could not be read"
+      res = S3.upload({"passport_url", @image_params})
+      assert {:error, "passport_url", "file could not be read"} == res
     end
   end
 
   test "S3.upload success" do
+    url_key = "passport_url"
     with_mock ExAws, [request!: fn(_) -> %{status_code: 200} end] do
       with_mock File, [read: fn(_) -> {:ok, "image_binary"} end] do
-        res = S3.upload(@image_params)
-        assert {:ok, url} = res
+        res = S3.upload({url_key, @image_params})
+        assert {:ok, ^url_key, url} = res
         beginning = "https://#{@bucket}.s3.amazonaws.com/#{@bucket}/"
 
         assert String.starts_with?(url, beginning)

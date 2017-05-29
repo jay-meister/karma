@@ -95,11 +95,12 @@
     <%= error_tag f, :passport_issuing_country %>
   </div>
 
-  <div class="form-group">
-    <%= label f, :passport_image, class: "control-label" %>
-    <%= file_input f, :passport_image, class: "form-control" %>
-    <%= error_tag f, :passport_image %>
-  </div>
+  <%= component "file_upload.html",
+  form: f,
+  atom: :passport_image,
+  url_atom: :passport_url,
+  image_url: @startpack.passport_url
+  %>
 
   <div class="form-group">
     <%= label f, :passport_full_name, class: "control-label" %>
@@ -107,11 +108,6 @@
     <%= error_tag f, :passport_full_name %>
   </div>
 
-  <div class="form-group">
-    <%= label f, :passport_url, class: "control-label" %>
-    <%= text_input f, :passport_url, class: "form-control" %>
-    <%= error_tag f, :passport_url %>
-  </div>
 
   <div class="form-group">
     <%= label f, :primary_address_1, class: "control-label" %>
@@ -233,11 +229,12 @@
     <%= error_tag f, :box_rental_value %>
   </div>
 
-  <div class="form-group">
-    <%= label f, :box_rental_url, class: "control-label" %>
-    <%= text_input f, :box_rental_url, class: "form-control" %>
-    <%= error_tag f, :box_rental_url %>
-  </div>
+  <%= component "file_upload.html",
+  form: f,
+  atom: :box_rental_image,
+  url_atom: :box_rental_url,
+  image_url: @startpack.box_rental_url
+  %>
 
   <div class="form-group">
     <%= label f, :equipment_rental_value, class: "control-label" %>
@@ -245,11 +242,12 @@
     <%= error_tag f, :equipment_rental_value %>
   </div>
 
-  <div class="form-group">
-    <%= label f, :equipment_rental_url, class: "control-label" %>
-    <%= text_input f, :equipment_rental_url, class: "form-control" %>
-    <%= error_tag f, :equipment_rental_url %>
-  </div>
+  <%= component "file_upload.html",
+  form: f,
+  atom: :equipment_rental_image,
+  url_atom: :equipment_rental_url,
+  image_url: @startpack.equipment_rental_url
+  %>
 
   <div class="form-group">
     <%= label f, :vehicle_make, class: "control-label" %>
@@ -275,11 +273,12 @@
     <%= error_tag f, :vehicle_registration %>
   </div>
 
-  <div class="form-group">
-    <%= label f, :vehicle_insurance_url, class: "control-label" %>
-    <%= text_input f, :vehicle_insurance_url, class: "form-control" %>
-    <%= error_tag f, :vehicle_insurance_url %>
-  </div>
+  <%= component "file_upload.html",
+  form: f,
+  atom: :vehicle_insurance_image,
+  url_atom: :vehicle_insurance_url,
+  image_url: @startpack.vehicle_insurance_url
+  %>
 
   <div class="form-group">
     <%= label f, :national_insurance_number, class: "control-label" %>
@@ -293,11 +292,12 @@
     <%= error_tag f, :vat_number %>
   </div>
 
-  <div class="form-group">
-    <%= label f, :p45_url, class: "control-label" %>
-    <%= text_input f, :p45_url, class: "form-control" %>
-    <%= error_tag f, :p45_url %>
-  </div>
+  <%= component "file_upload.html",
+  form: f,
+  atom: :p45_image,
+  url_atom: :p45_url,
+  image_url: @startpack.p45_url
+  %>
 
   <div class="form-group">
     <%= label f, :for_paye_only, class: "control-label" %>
@@ -329,11 +329,13 @@
     <%= error_tag f, :student_loan_finished_before_6_april? %>
   </div>
 
-  <div class="form-group">
-    <%= label f, :schedule_d_letter_url, class: "control-label" %>
-    <%= text_input f, :schedule_d_letter_url, class: "form-control" %>
-    <%= error_tag f, :schedule_d_letter_url %>
-  </div>
+  <%= component "file_upload.html",
+  form: f,
+  atom: :schedule_d_letter_image,
+  url_atom: :schedule_d_letter_url,
+  image_url: @startpack.schedule_d_letter_url
+  %>
+
 
   <div class="form-group">
     <%= label f, :loan_out_company_registration_number, class: "control-label" %>
@@ -347,11 +349,12 @@
     <%= error_tag f, :loan_out_company_address %>
   </div>
 
-  <div class="form-group">
-    <%= label f, :loan_out_company_cert_url, class: "control-label" %>
-    <%= text_input f, :loan_out_company_cert_url, class: "form-control" %>
-    <%= error_tag f, :loan_out_company_cert_url %>
-  </div>
+  <%= component "file_upload.html",
+  form: f,
+  atom: :loan_out_company_cert_image,
+  url_atom: :loan_out_company_cert_url,
+  image_url: @startpack.loan_out_company_cert_url
+  %>
 
   <div class="form-group">
     <%= label f, :bank_name, class: "control-label" %>
