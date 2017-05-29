@@ -2,40 +2,20 @@ defmodule Karma.StartpackController do
   use Karma.Web, :controller
 
   alias Karma.Startpack
+  # possible solution for multiple fields
+   @file_upload_keys [
+     {"passport_image", "passport_url"},
+     {"vehicle_insurance_image", "vehicle_insurance_url"},
+     {"box_rental_image", "box_rental_url"},
+     {"equipment_rental_image", "equipment_rental_url"},
+     {"p45_image", "p45_url"},
+     {"schedule_d_letter_image", "schedule_d_letter_url"},
+     {"loan_out_company_cert_image", "loan_out_company_cert_url"}
+   ]
 
   def index(conn, _params) do
     startpacks = Repo.all(Startpack)
     render(conn, "index.html", startpacks: startpacks)
-  end
-
-  def new(conn, _params) do
-    changeset = Startpack.changeset(%Startpack{})
-    render(conn, "new.html", changeset: changeset)
-  end
-
-  def create(conn, %{"startpack" => startpack_params}) do
-    image_params = Map.get(startpack_params, "passport_image", :empty)
-
-    passport_url =
-      case Karma.S3.upload(image_params) do
-        {:ok, string} ->
-          string
-        # {:error, msg} -> # put error flash but continue
-        #   put_flash(conn, :error, msg)
-        #   ""
-      end
-
-    params = Map.merge(startpack_params, %{"passport_url" => passport_url})
-    changeset = Startpack.changeset(%Startpack{}, params)
-
-    case Repo.insert(changeset) do
-      {:ok, _startpack} ->
-        conn
-        |> put_flash(:info, "Startpack created successfully.")
-        |> redirect(to: startpack_path(conn, :index))
-      {:error, changeset} ->
-        render(conn, "new.html", changeset: changeset)
-    end
   end
 
   def show(conn, %{"id" => id}) do
@@ -50,8 +30,14 @@ defmodule Karma.StartpackController do
   end
 
   def update(conn, %{"id" => id, "startpack" => startpack_params}) do
+    # should validate before uploading?
     startpack = Repo.get!(Startpack, id)
-    changeset = Startpack.changeset(startpack, startpack_params)
+
+    urls = Karma.S3.upload_many(startpack_params, @file_upload_keys)
+
+    params = Map.merge(startpack_params, urls)
+
+    changeset = Startpack.changeset(startpack, params)
 
     case Repo.update(changeset) do
       {:ok, startpack} ->

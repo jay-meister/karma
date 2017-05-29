@@ -150,5 +150,3 @@
 <% end %>
   </tbody>
 </table>
-
-<%= link "New startpack", to: startpack_path(@conn, :new) %>
