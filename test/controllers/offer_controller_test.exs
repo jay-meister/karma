@@ -186,12 +186,22 @@ defmodule Karma.OfferControllerTest do
 
   test "cannot update offer and renders errors when data used in calculation is invalid", %{conn: conn, offer: offer, project: project} do
     conn = put conn, project_offer_path(conn, :update, project, offer), offer: @invalid_attrs
-    assert html_response(conn, 200) =~ "Edit offer"
+    assert html_response(conn, 200) =~ "Fee per day including holiday"
   end
 
   test "deletes chosen resource", %{conn: conn, offer: offer} do
     conn = delete conn, project_offer_path(conn, :delete, offer.project_id, offer)
     assert redirected_to(conn) == project_offer_path(conn, :index, offer.project_id)
     refute Repo.get(Offer, offer.id)
+  end
+
+  test "offer accepted", %{conn: conn, project: project, offer: offer} do
+    conn = put conn, project_offer_path(conn, :update, project, offer), offer: %{accepted: true}
+    assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
+  end
+
+  test "error responding to offer", %{conn: conn, project: project, offer: offer} do
+    conn = put conn, project_offer_path(conn, :update, project, offer), offer: %{accepted: :invalid}
+    assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
   end
 end

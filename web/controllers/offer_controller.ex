@@ -1,7 +1,7 @@
 defmodule Karma.OfferController do
   use Karma.Web, :controller
 
-  alias Karma.{User, Offer, Project, LayoutView}
+  alias Karma.{User, Offer, Project, LayoutView, Startpack}
 
   import Karma.ProjectController, only: [project_owner: 2]
   plug :project_owner when action in [:index, :new, :create, :show, :edit, :update, :delete]
@@ -96,17 +96,25 @@ defmodule Karma.OfferController do
   end
 
   def show(conn, %{"project_id" => project_id, "id" => id}) do
-    offer = Repo.get!(Offer, id)
+    offer = Repo.get!(Offer, id) |> Repo.preload(:project) |> Repo.preload(:user)
+    project = offer.project |> Repo.preload(:user)
     case Repo.get_by(User, email: offer.target_email) do
       nil ->
-        render(conn, "show.html", offer: offer, project_id: project_id, valid?: false)
-      _user ->
-        # user = Repo.preload(user, :startpacks)
-        # startpack = Map.from_struct(user.startpacks)
-        # IO.inspect Startpack.mother_changeset(%Startpack{}, startpack, offer)
-        # IO.inspect Startpack.box_rental_changeset(%Startpack{}, startpack) |> Startpack.equipment_rental_changeset()
-        # IO.inspect Map.keys(Enum.into(Startpack.box_rental_changeset(%Startpack{}, startpack).errors, %{}))
-      render(conn, "show.html", offer: offer, project_id: project_id, valid?: false)
+        changeset = Startpack.changeset(%Startpack{})
+        render(conn, "show.html", offer: offer, project_id: project_id, valid?: false, project: project, changeset: changeset)
+      user ->
+        edit_changeset = Offer.changeset(offer)
+        user = Repo.preload(user, :startpacks)
+        startpack = Map.from_struct(user.startpacks)
+        changeset = Startpack.mother_changeset(%Startpack{}, startpack, offer)
+      render(conn,
+      "show.html",
+      offer: offer,
+      project_id: project_id,
+      valid?: false,
+      changeset: changeset,
+      edit_changeset: edit_changeset,
+      project: project)
     end
   end
 
@@ -122,40 +130,65 @@ defmodule Karma.OfferController do
 
 
   def update(conn, %{"project_id" => project_id, "id" => id, "offer" => offer_params}) do
-    offer = Repo.get!(Offer, id)
-    project = Repo.get(Project, project_id)
 
+    offer =
+      Repo.get!(Offer, id)
+      |> Repo.preload(:user)
+      |> Repo.preload(:project)
+
+    project = Repo.get(Project, project_id)
     job_titles = Karma.Job.titles()
     job_departments = Karma.Job.departments()
-    ops = [offer: offer, project_id: project_id, job_titles: job_titles, job_departments: job_departments, job_title: offer.job_title]
+    ops = [
+      offer: offer,
+      project_id: project_id,
+      job_titles: job_titles,
+      job_departments: job_departments,
+      job_title: offer.job_title
+    ]
 
-    # first check the values provided by the user are valid
-    validation_changeset = Offer.form_validation(offer, offer_params)
-    # if not valid, return to user with errors
-    if !validation_changeset.valid? do
-      changeset = %{validation_changeset | action: :insert} # manually set the action so errors are shown
-      render(conn, "edit.html", ops ++ [changeset: changeset])
-    else
-      case validation_changeset.changes == %{} do
-        true ->
-          conn
-          |> put_flash(:error, "Nothing to update")
-          |> render("edit.html", ops ++ [changeset: validation_changeset])
-        false ->
-          # run calculations and add them to the offer_params
-          calculations = parse_offer_strings(offer_params) |> run_calculations(project)
-          offer_params = Map.merge(offer_params, calculations)
-          changeset = Offer.changeset(offer, offer_params)
+    case Map.has_key?(offer_params, "accepted") do
+      true ->
+        changeset = Offer.offer_response_changeset(offer, offer_params)
+        case Repo.update(changeset) do
+          {:ok, offer} ->
+            conn
+            |> put_flash(:info, "Response made!")
+            |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
+          {:error, _changeset} ->
+            conn
+            |> put_flash(:error, "Error making response!")
+            |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
+        end
+      false ->
+        # first check the values provided by the user are valid
+        validation_changeset = Offer.form_validation(offer, offer_params)
+        # if not valid, return to user with errors
+        if !validation_changeset.valid? do
+          changeset = %{validation_changeset | action: :insert} # manually set the action so errors are shown
+          render(conn, "edit.html", ops ++ [changeset: changeset])
+        else
+          case validation_changeset.changes == %{} do
+            true ->
+              conn
+              |> put_flash(:error, "Nothing to update")
+              |> render("edit.html", ops ++ [changeset: validation_changeset])
+            false ->
+              # run calculations and add them to the offer_params
+              calculations = parse_offer_strings(offer_params) |> run_calculations(project)
+              offer_params = Map.merge(offer_params, calculations)
+              changeset = Offer.changeset(offer, offer_params)
 
-          {:ok, offer} = Repo.update(changeset)
-          # email function decides whether this is a registered user
-          Karma.Email.send_updated_offer_email(conn, offer)
-          |> Karma.Mailer.deliver_later()
+              {:ok, offer} = Repo.update(changeset)
+              # email function decides whether this is a registered user
+              Karma.Email.send_updated_offer_email(conn, offer)
+              |> Karma.Mailer.deliver_later()
 
-          conn
-          |> put_flash(:info, "Offer updated successfully.")
-          |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
-      end
+              conn
+              |> put_flash(:info, "Offer updated successfully.")
+              |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
+          end
+        end
     end
   end
 

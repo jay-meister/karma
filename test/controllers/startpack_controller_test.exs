@@ -63,64 +63,81 @@ defmodule Karma.StartpackControllerTest do
     bank_iban: "some content",
     bank_swift_code: "some content"
     }
-  @invalid_attrs %{}
+  @invalid_attrs %{user_id: nil}
 
 
   setup do
     user = insert_user()
     project = insert_project(user)
+    offer = insert_offer(project)
+    startpack = insert_startpack(%{user_id: user.id})
     conn = login_user(build_conn(), user)
-    {:ok, conn: conn, user: user, project: project}
+    {:ok, conn: conn, user: user, project: project, startpack: startpack, offer: offer}
   end
 
-  test "lists all entries on index", %{conn: conn} do
+  test "edit startpack view on index", %{conn: conn} do
     conn = get conn, startpack_path(conn, :index)
-    assert html_response(conn, 200) =~ "Listing startpacks"
+    assert html_response(conn, 200) =~ "Edit startpack"
   end
 
-
-  test "shows chosen resource", %{conn: conn} do
-    startpack = Repo.insert! %Startpack{}
-    conn = get conn, startpack_path(conn, :show, startpack)
-    assert html_response(conn, 200) =~ "Show startpack"
-  end
-
-  test "renders page not found when id is nonexistent", %{conn: conn} do
-    assert_error_sent 404, fn ->
-      get conn, startpack_path(conn, :show, -1)
-    end
-  end
-
-  test "renders form for editing chosen resource", %{conn: conn} do
-    startpack = Repo.insert! %Startpack{}
+  test "renders form for editing chosen resource", %{conn: conn, user: user} do
+    startpack = Repo.insert! %Startpack{user_id: user.id}
     conn = get conn, startpack_path(conn, :edit, startpack)
     assert html_response(conn, 200) =~ "Edit startpack"
   end
 
-  test "updates startpack and file is uploaded", %{conn: conn, user: user} do
-    startpack = Repo.insert! %Startpack{user_id: user.id}
+  test "updates chosen resource and redirects when data is valid", %{conn: conn, user: user, startpack: startpack} do
+    conn = post conn, startpack_path(conn, :update, startpack), startpack: @valid_attrs
+    assert redirected_to(conn) == startpack_path(conn, :index)
+    assert Repo.get_by(Startpack, user_id: user.id)
+  end
+
+  test "does not update chosen resource and renders errors when data is invalid", %{conn: conn, startpack: startpack} do
+    conn = post conn, startpack_path(conn, :update, startpack), startpack: @invalid_attrs
+    assert redirected_to(conn, 302) =~ "/startpack"
+  end
+
+  test "deletes chosen resource", %{conn: conn} do
+    startpack = Repo.insert! %Startpack{}
+    conn = delete conn, startpack_path(conn, :delete, startpack)
+    assert redirected_to(conn) == startpack_path(conn, :index)
+    refute Repo.get(Startpack, startpack.id)
+  end
+
+  test "offer id that doesn't exist :index", %{conn: conn} do
+    conn = get conn, "/startpack?offer_id=1000"
+    assert html_response(conn, 200) =~ "Edit startpack"
+  end
+
+  test "offer id that exists :index", %{conn: conn, offer: offer} do
+    conn = get conn, "/startpack?offer_id=#{offer.id}"
+    assert html_response(conn, 200) =~ "Edit startpack"
+  end
+
+  test "updates startpack and file is uploaded", %{conn: conn, user: user, startpack: startpack} do
     image_upload = %Plug.Upload{path: "test/fixtures/foxy.png", filename: "foxy.png"}
     valid = Map.put(@valid_attrs, "passport_image",  image_upload)
 
     with_mock ExAws, [request!: fn(_) -> %{status_code: 200} end] do
       conn = put conn, startpack_path(conn, :update, startpack), startpack: valid
-      assert redirected_to(conn) == startpack_path(conn, :show, startpack)
+      assert redirected_to(conn) == startpack_path(conn, :index)
       startpack = Repo.get_by(Startpack, user_id: user.id)
       assert startpack.passport_url
     end
   end
 
-  test "update startpack leaves image url in if no file is added", %{conn: conn, user: user} do
+  test "update startpack leaves image url in if no file is added", %{conn: _conn} do
+    user = insert_user(%{email: "new@test.com"})
+    conn = login_user(build_conn(), user)
     startpack = Repo.insert! %Startpack{user_id: user.id, passport_url: "www.passport.com"}
     no_passport_image = Map.delete(@valid_attrs, "passport_url")
     conn = put conn, startpack_path(conn, :update, startpack), startpack: no_passport_image
-    assert redirected_to(conn) == startpack_path(conn, :show, startpack)
+    assert redirected_to(conn) == startpack_path(conn, :index)
     startpack = Repo.get_by(Startpack, user_id: user.id)
     assert startpack.passport_url == "www.passport.com"
   end
 
-  test "updates startpack with many file uploads", %{conn: conn, user: user} do
-    startpack = Repo.insert! %Startpack{user_id: user.id}
+  test "updates startpack with many file uploads", %{conn: conn, user: user, startpack: startpack} do
     image_upload = %Plug.Upload{path: "test/fixtures/foxy.png", filename: "foxy.png"}
 
     # possible solution for multiple fields
@@ -141,37 +158,23 @@ defmodule Karma.StartpackControllerTest do
       %{status_code: 200}
     end] do
       conn = put conn, startpack_path(conn, :update, startpack), startpack: valid
-      assert redirected_to(conn) == startpack_path(conn, :show, startpack)
+      assert redirected_to(conn) == startpack_path(conn, :index)
       startpack = Repo.get_by(Startpack, user_id: user.id)
       assert startpack.passport_url
     end
   end
 
 
-  test "updates chosen resource even if file upload errors", %{conn: conn, user: user} do
-    startpack = Repo.insert! %Startpack{user_id: user.id}
+  test "updates chosen resource even if file upload errors", %{conn: conn, user: user, startpack: startpack} do
     image_upload = %Plug.Upload{path: "test/fixtures/foxy.png", filename: "foxy.png"}
     valid = Map.put(@valid_attrs, "passport_image",  image_upload)
 
     with_mock ExAws, [request!: fn(_) -> %{status_code: 500} end] do
       conn = put conn, startpack_path(conn, :update, startpack), startpack: valid
-      assert redirected_to(conn) == startpack_path(conn, :show, startpack)
+      assert redirected_to(conn) == startpack_path(conn, :index)
       startpack = Repo.get_by(Startpack, user_id: user.id)
       assert startpack.gender == valid.gender
       refute startpack.passport_url
     end
-  end
-
-  test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
-    startpack = Repo.insert! %Startpack{}
-    conn = put conn, startpack_path(conn, :update, startpack), startpack: @invalid_attrs
-    assert html_response(conn, 200) =~ "Edit startpack"
-  end
-
-  test "deletes chosen resource", %{conn: conn} do
-    startpack = Repo.insert! %Startpack{}
-    conn = delete conn, startpack_path(conn, :delete, startpack)
-    assert redirected_to(conn) == startpack_path(conn, :index)
-    refute Repo.get(Startpack, startpack.id)
   end
 end

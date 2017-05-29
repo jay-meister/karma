@@ -25,7 +25,7 @@ defmodule Karma.Startpack do
     field :primary_address_postcode, :string
     field :primary_address_country, :string
     field :primary_address_tel, :string
-    field :agent_deal?, :boolean, default: false, null: false
+    field :agent_deal?, :boolean, default: true, null: false
     field :agent_name, :string
     field :agent_company, :string
     field :agent_address, :string
@@ -149,6 +149,8 @@ defmodule Karma.Startpack do
     struct
     |> box_rental_changeset(startpack, offer)
     |> equipment_rental_changeset(startpack, offer)
+    |> agent_requirement_changeset(startpack)
+    |> base_requirement_changeset(startpack)
   end
 
   def box_rental_changeset(struct, startpack, offer) do
@@ -219,13 +221,6 @@ defmodule Karma.Startpack do
       :agent_bank_account_name,
     ]
   end
-  #
-  # def mother_changeset(struct, startpack, offer) do
-  #   struct
-  #   |> base_requirement_changeset(startpack)
-  #   # |> box_rental_changeset(offer, startpack, users)
-  # end
-
 
   def base_requirement_changeset(changeset, startpack) do
     changeset
@@ -244,14 +239,5 @@ defmodule Karma.Startpack do
         changeset
     end
   end
-  # def box_rental_changeset(changeset, offer, startpack, user, params \\ %{}) do
-  #   case offer.box_rental_required? do
-  #     true ->
-  #       changeset
-  #       |> cast(params, base_requirements())
-  #       |> validate_required(base_requirements())
-  #     false ->
-  #       changeset
-  #   end
-  # end
+
 end
