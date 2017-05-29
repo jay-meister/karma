@@ -5,17 +5,11 @@ defmodule Karma.S3 do
     # remove keys that haven't been uploaded
     |> Enum.filter(fn({file_key, _url_key}) -> Map.has_key?(params, file_key) end)
     |> Enum.map(fn({file_key, url_key}) -> {url_key, Map.get(params, file_key)} end)
-    |> IO.inspect
     |> Task.async_stream(&upload/1, ops)
-    |> IO.inspect
     |> Enum.to_list()
-    |> IO.inspect
     |> Enum.filter(fn {_async_res, {res, _url_key, _url}} -> res != :error end)
-    |> IO.inspect
     |> Enum.map(fn {_async_res, { _res, url_key, url}} -> {url_key, url} end)
-    |> IO.inspect
     |> Enum.reduce(%{}, fn({url_key, url}, acc) -> Map.put(acc, url_key, url) end)
-    |> IO.inspect
   end
 
   def upload({url_key, image_params}) do

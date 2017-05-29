@@ -129,7 +129,7 @@ defmodule Karma.StartpackControllerTest do
     valid = Map.merge(@valid_attrs, images)
 
     with_mock ExAws, [request!: fn(_) ->
-      Process.sleep(4000)
+      Process.sleep(500)
       %{status_code: 200}
     end] do
       conn = put conn, startpack_path(conn, :update, startpack), startpack: valid
@@ -137,6 +137,7 @@ defmodule Karma.StartpackControllerTest do
       startpack = Repo.get_by(Startpack, user_id: user.id)
       assert startpack.passport_url
     end
+
   end
 
 
