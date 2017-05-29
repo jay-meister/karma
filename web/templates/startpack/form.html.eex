@@ -5,95 +5,84 @@
     </div>
   <% end %>
 
-  <div class="mb3">
-    <%= label f, :gender, class: "" %>
-    <%= text_input f, :gender, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :gender %>
-  </div>
 
-  <div class="mb3">
-    <%= label f, :middle_names, class: "" %>
-    <%= text_input f, :middle_names, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :middle_names %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :gender
+  %>
 
-  <div class="mb3">
-    <%= label f, :aka, class: "" %>
-    <%= text_input f, :aka, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :aka %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :middle_names
+  %>
 
-  <div class="mb3">
-    <%= label f, :screen_credit_name, class: "" %>
-    <%= text_input f, :screen_credit_name, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :screen_credit_name %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :class
+  %>
 
-  <div class="mb3">
-    <%= label f, :mobile_tel, class: "" %>
-    <%= text_input f, :mobile_tel, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :mobile_tel %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :screen_credit_name
+  %>
 
-  <div class="mb3">
-    <%= label f, :emergency_contact_name, class: "" %>
-    <%= text_input f, :emergency_contact_name, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :emergency_contact_name %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :mobile_tel
+  %>
 
-  <div class="mb3">
-    <%= label f, :emergency_contact_relationship, class: "" %>
-    <%= text_input f, :emergency_contact_relationship, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :emergency_contact_relationship %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :emergency_contact_name
+  %>
 
-  <div class="mb3">
-    <%= label f, :emergency_contact_tel, class: "" %>
-    <%= text_input f, :emergency_contact_tel, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :emergency_contact_tel %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :emergency_contact_relationship
+  %>
 
-  <div class="mb3">
-    <%= label f, :date_of_birth, class: "" %>
-    <%= date_select f, :date_of_birth, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :date_of_birth %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :emergency_contact_tel
+  %>
 
-  <div class="mb3">
-    <%= label f, :place_of_birth, class: "" %>
-    <%= text_input f, :place_of_birth, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :place_of_birth %>
-  </div>
+  <%= component "date.html",
+  form: f,
+  atom: :date_of_birth
+  %>
 
-  <div class="mb3">
-    <%= label f, :country_of_legal_nationality, class: "" %>
-    <%= text_input f, :country_of_legal_nationality, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :country_of_legal_nationality %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :place_of_birth
+  %>
 
-  <div class="mb3">
-    <%= label f, :country_of_permanent_residence, class: "" %>
-    <%= text_input f, :country_of_permanent_residence, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :country_of_permanent_residence %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :country_of_legal_nationality
+  %>
 
-  <div class="mb3">
-    <%= label f, :passport_number, class: "" %>
-    <%= text_input f, :passport_number, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :passport_number %>
-  </div>
 
-  <div class="mb3">
-    <%= label f, :passport_expiry_date, class: "" %>
-    <%= date_select f, :passport_expiry_date, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :passport_expiry_date %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :country_of_permanent_residence
+  %>
 
-  <div class="mb3">
-    <%= label f, :passport_issuing_country, class: "" %>
-    <%= text_input f, :passport_issuing_country, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :passport_issuing_country %>
-  </div>
+
+  <%= component "input.html",
+  form: f,
+  atom: :passport_number
+  %>
+
+
+  <%= component "date.html",
+  form: f,
+  atom: :passport_expiry_date
+  %>
+
+  <%= component "input.html",
+  form: f,
+  atom: :passport_issuing_country
+  %>
 
   <%= component "file_upload.html",
   form: f,
@@ -102,131 +91,111 @@
   image_url: @startpack.passport_url
   %>
 
-  <div class="mb3">
-    <%= label f, :passport_full_name, class: "" %>
-    <%= text_input f, :passport_full_name, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :passport_full_name %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :passport_full_name
+  %>
 
-  <div class="mb3">
-    <%= label f, :primary_address_1, class: "" %>
-    <%= text_input f, :primary_address_1, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :primary_address_1 %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :primary_address_1
+  %>
 
-  <div class="mb3">
-    <%= label f, :primary_address_2, class: "" %>
-    <%= text_input f, :primary_address_2, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :primary_address_2 %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :primary_address_2
+  %>
 
-  <div class="mb3">
-    <%= label f, :primary_address_city, class: "" %>
-    <%= text_input f, :primary_address_city, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :primary_address_city %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :primary_address_city
+  %>
 
-  <div class="mb3">
-    <%= label f, :primary_address_postcode, class: "" %>
-    <%= text_input f, :primary_address_postcode, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :primary_address_postcode %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :primary_address_postcode
+  %>
 
-  <div class="mb3">
-    <%= label f, :primary_address_country, class: "" %>
-    <%= text_input f, :primary_address_country, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :primary_address_country %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :primary_address_country
+  %>
 
-  <div class="mb3">
-    <%= label f, :primary_address_tel, class: "" %>
-    <%= text_input f, :primary_address_tel, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :primary_address_tel %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :primary_address_tel
+  %>
 
-  <div class="mb3">
-    <%= label f, :agent_deal?, class: "" %>
-    <%= checkbox f, :agent_deal?, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :agent_deal? %>
-  </div>
+  <%= component "checkbox.html",
+  form: f,
+  atom: :agent_deal?
+  %>
 
-  <div class="mb3">
-    <%= label f, :agent_name, class: "" %>
-    <%= text_input f, :agent_name, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :agent_name %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :agent_name
+  %>
 
-  <div class="mb3">
-    <%= label f, :agent_company, class: "" %>
-    <%= text_input f, :agent_company, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :agent_company %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :agent_company
+  %>
 
-  <div class="mb3">
-    <%= label f, :agent_address, class: "" %>
-    <%= text_input f, :agent_address, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :agent_address %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :agent_address
+  %>
 
-  <div class="mb3">
-    <%= label f, :agent_tel, class: "" %>
-    <%= text_input f, :agent_tel, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :agent_tel %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :agent_tel
+  %>
 
-  <div class="mb3">
-    <%= label f, :agent_email_address, class: "" %>
-    <%= text_input f, :agent_email_address, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :agent_email_address %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :agent_email_address
+  %>
 
-  <div class="mb3">
-    <%= label f, :agent_bank_name, class: "" %>
-    <%= text_input f, :agent_bank_name, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :agent_bank_name %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :agent_bank_name
+  %>
 
-  <div class="mb3">
-    <%= label f, :agent_bank_address, class: "" %>
-    <%= text_input f, :agent_bank_address, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :agent_bank_address %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :agent_bank_address
+  %>
 
-  <div class="mb3">
-    <%= label f, :agent_bank_sort_code, class: "" %>
-    <%= text_input f, :agent_bank_sort_code, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :agent_bank_sort_code %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :agent_bank_sort_code
+  %>
 
-  <div class="mb3">
-    <%= label f, :agent_bank_account_number, class: "" %>
-    <%= text_input f, :agent_bank_account_number, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :agent_bank_account_number %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :agent_bank_account_number
+  %>
 
-  <div class="mb3">
-    <%= label f, :agent_bank_account_name, class: "" %>
-    <%= text_input f, :agent_bank_account_name, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :agent_bank_account_name %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :agent_bank_account_name
+  %>
 
-  <div class="mb3">
-    <%= label f, :agent_bank_account_swift_code, class: "" %>
-    <%= text_input f, :agent_bank_account_swift_code, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :agent_bank_account_swift_code %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :agent_bank_account_swift_code
+  %>
 
-  <div class="mb3">
-    <%= label f, :agent_bank_account_iban, class: "" %>
-    <%= text_input f, :agent_bank_account_iban, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :agent_bank_account_iban %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :agent_bank_account_iban
+  %>
 
-  <div class="mb3">
-    <%= label f, :box_rental_value, class: "" %>
-    <%= number_input f, :box_rental_value, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :box_rental_value %>
-  </div>
+  <%= component "number_input.html",
+  form: f,
+  atom: :box_rental_value,
+  placeholder: "Enter a number"
+  %>
 
   <%= component "file_upload.html",
   form: f,
@@ -235,11 +204,11 @@
   image_url: @startpack.box_rental_url
   %>
 
-  <div class="mb3">
-    <%= label f, :equipment_rental_value, class: "" %>
-    <%= number_input f, :equipment_rental_value, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :equipment_rental_value %>
-  </div>
+  <%= component "number_input.html",
+  form: f,
+  atom: :equipment_rental_value,
+  placeholder: "Enter a number"
+  %>
 
   <%= component "file_upload.html",
   form: f,
@@ -248,29 +217,25 @@
   image_url: @startpack.equipment_rental_url
   %>
 
-  <div class="mb3">
-    <%= label f, :vehicle_make, class: "" %>
-    <%= text_input f, :vehicle_make, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :vehicle_make %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :vehicle_make
+  %>
 
-  <div class="mb3">
-    <%= label f, :vehicle_model, class: "" %>
-    <%= text_input f, :vehicle_model, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :vehicle_model %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :vehicle_model
+  %>
 
-  <div class="mb3">
-    <%= label f, :vehicle_colour, class: "" %>
-    <%= text_input f, :vehicle_colour, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :vehicle_colour %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :vehicle_colour
+  %>
 
-  <div class="mb3">
-    <%= label f, :vehicle_registration, class: "" %>
-    <%= text_input f, :vehicle_registration, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :vehicle_registration %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :vehicle_registration
+  %>
 
   <%= component "file_upload.html",
   form: f,
@@ -279,17 +244,15 @@
   image_url: @startpack.vehicle_insurance_url
   %>
 
-  <div class="mb3">
-    <%= label f, :national_insurance_number, class: "" %>
-    <%= text_input f, :national_insurance_number, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :national_insurance_number %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :national_insurance_number
+  %>
 
-  <div class="mb3">
-    <%= label f, :vat_number, class: "" %>
-    <%= text_input f, :vat_number, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :vat_number %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :vat_number
+  %>
 
   <%= component "file_upload.html",
   form: f,
@@ -298,35 +261,30 @@
   image_url: @startpack.p45_url
   %>
 
-  <div class="mb3">
-    <%= label f, :for_paye_only, class: "" %>
-    <%= text_input f, :for_paye_only, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :for_paye_only %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :for_paye_only
+  %>
 
-  <div class="mb3">
-    <%= label f, :student_loan_not_repayed?, class: "" %>
-    <%= checkbox f, :student_loan_not_repayed?, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :student_loan_not_repayed? %>
-  </div>
+  <%= component "checkbox.html",
+  form: f,
+  atom: :student_loan_not_repayed?
+  %>
 
-  <div class="mb3">
-    <%= label f, :student_loan_repay_direct?, class: "" %>
-    <%= checkbox f, :student_loan_repay_direct?, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :student_loan_repay_direct? %>
-  </div>
+  <%= component "checkbox.html",
+  form: f,
+  atom: :student_loan_repay_direct?
+  %>
 
-  <div class="mb3">
-    <%= label f, :student_loan_plan_1?, class: "" %>
-    <%= checkbox f, :student_loan_plan_1?, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :student_loan_plan_1? %>
-  </div>
+  <%= component "checkbox.html",
+  form: f,
+  atom: :student_loan_plan_1?
+  %>
 
-  <div class="mb3">
-    <%= label f, :student_loan_finished_before_6_april?, class: "" %>
-    <%= checkbox f, :student_loan_finished_before_6_april?, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :student_loan_finished_before_6_april? %>
-  </div>
+  <%= component "checkbox.html",
+  form: f,
+  atom: :student_loan_finished_before_6_april?
+  %>
 
   <%= component "file_upload.html",
   form: f,
@@ -335,68 +293,58 @@
   image_url: @startpack.schedule_d_letter_url
   %>
 
-  <div class="mb3">
-    <%= label f, :loan_out_company_registration_number, class: "" %>
-    <%= text_input f, :loan_out_company_registration_number, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :loan_out_company_registration_number %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :loan_out_company_registration_number
+  %>
 
-  <div class="mb3">
-    <%= label f, :loan_out_company_address, class: "" %>
-    <%= textarea f, :loan_out_company_address, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :loan_out_company_address %>
-  </div>
+  <%= component "textarea.html",
+  form: f,
+  atom: :loan_out_company_address
+  %>
 
   <%= component "file_upload.html",
   form: f,
-  atom: :loan_out_company_cert_image,
+  atom: :loan_out_company_ct_image,
   url_atom: :loan_out_company_cert_url,
   image_url: @startpack.loan_out_company_cert_url
   %>
 
-  <div class="mb3">
-    <%= label f, :bank_name, class: "" %>
-    <%= text_input f, :bank_name, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :bank_name %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :bank_name
+  %>
 
-  <div class="mb3">
-    <%= label f, :bank_address, class: "" %>
-    <%= text_input f, :bank_address, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :bank_address %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :bank_address
+  %>
 
-  <div class="mb3">
-    <%= label f, :bank_account_users_full_name, class: "" %>
-    <%= text_input f, :bank_account_users_full_name, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :bank_account_users_full_name %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :bank_account_users_full_name
+  %>
 
-  <div class="mb3">
-    <%= label f, :bank_account_number, class: "" %>
-    <%= text_input f, :bank_account_number, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :bank_account_number %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :bank_account_number
+  %>
 
-  <div class="mb3">
-    <%= label f, :bank_sort_code, class: "" %>
-    <%= text_input f, :bank_sort_code, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :bank_sort_code %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :bank_sort_code
+  %>
 
-  <div class="mb3">
-    <%= label f, :bank_iban, class: "" %>
-    <%= text_input f, :bank_iban, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :bank_iban %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :bank_iban
+  %>
 
-  <div class="mb3">
-    <%= label f, :bank_swift_code, class: "" %>
-    <%= text_input f, :bank_swift_code, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :bank_swift_code %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :bank_swift_code
+  %>
 
-  <div class="mb3">
-    <%= submit "Submit", class: "btn btn-primary" %>
-  </div>
+  <%= component "submit_button.html", title: "Update Startpack" %>
+
 <% end %>

@@ -1,5 +1,8 @@
 <div class="mb4">
-  <%= label assigns[:form], assigns[:atom], class: "dib mw-100 mb2 fw4" %>
+  <%= case assigns[:label] do
+   nil -> label assigns[:form], assigns[:atom], class: "dib mw-100 mb2 fw4"
+   _ -> label assigns[:form], assigns[:atom], assigns[:label], class: "dib mw-100 mb2 fw4"
+   end %>
   <div class="k-bg-input b-h3 pt3 k-date-select pl3 br3">
     <%= date_select assigns[:form],
     assigns[:atom],
@@ -16,5 +19,6 @@
 <!--
 assigns:
 atom,
-form
+form,
+label (optional)
  -->
