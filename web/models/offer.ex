@@ -154,6 +154,12 @@ defmodule Karma.Offer do
     end
   end
 
+  def offer_response_changeset(changeset, params \\ %{}) do
+    changeset
+    |> cast(params, [:accepted])
+    |> validate_required([:accepted])
+  end
+
   # queries
   # get projects created by specified user
   def projects_offers(query, project) do
