@@ -1,10 +1,10 @@
-<div class="form-group">
+<div class="mb4">
   <% label =
     case assigns[:label] do
       nil -> assigns[:atom]
       _label -> assigns[:label]
     end %>
-  <%= label assigns[:form], label, class: "control-label fw4" %>
+  <%= label assigns[:form], label, class: "dib mw-100 mb2 fw4" %>
   </br>
   <div class="relative">
     <% padding = case assigns[:image_name] do
