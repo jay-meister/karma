@@ -1,5 +1,8 @@
 <div class="mb4">
-  <%= label assigns[:form], assigns[:atom], assigns[:label], class: "" %>
+  <%= case assigns[:label] do
+   nil -> label assigns[:form], assigns[:atom], class: "dib mw-100 mb2 fw4"
+   _ -> label assigns[:form], assigns[:atom], assigns[:label], class: "dib mw-100 mb2 fw4"
+   end %>
   <%= if assigns[:link] do %>
     <%= link assigns[:link_name], to: assigns[:link] %>
   <% end %>
