@@ -1,5 +1,5 @@
 <div class="form-group">
-  <%= label assigns[:form], assigns[:atom], class: "control-label fw4" %>
+  <%= label assigns[:form], assigns[:atom], class: " fw4" %>
   <div class="k-bg-input b-h3 pt3 k-date-select pl3 br3">
     <%= date_select assigns[:form],
     assigns[:atom],

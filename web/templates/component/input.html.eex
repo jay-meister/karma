@@ -1,7 +1,7 @@
 <div class="form-group">
   <%= case assigns[:label] do
-   nil -> label assigns[:form], assigns[:atom], class: "control-label fw4"
-   _ -> label assigns[:form], assigns[:atom], assigns[:label], class: "control-label fw4"
+   nil -> label assigns[:form], assigns[:atom], class: " fw4"
+   _ -> label assigns[:form], assigns[:atom], assigns[:label], class: " fw4"
    end %>
   </br>
   <div class="relative">

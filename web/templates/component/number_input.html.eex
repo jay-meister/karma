@@ -4,7 +4,7 @@
       nil -> assigns[:atom]
       _label -> assigns[:label]
     end %>
-  <%= label assigns[:form], label, class: "control-label fw4" %>
+  <%= label assigns[:form], label, class: " fw4" %>
   </br>
   <div class="relative">
     <% padding = case assigns[:image_name] do

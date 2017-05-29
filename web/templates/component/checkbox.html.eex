@@ -1,5 +1,5 @@
 <div class="form-group">
-  <%= label assigns[:form], assigns[:atom], assigns[:label], class: "control-label" %>
+  <%= label assigns[:form], assigns[:atom], assigns[:label], class: "" %>
   <%= if assigns[:link] do %>
     <%= link assigns[:link_name], to: assigns[:link] %>
   <% end %>
