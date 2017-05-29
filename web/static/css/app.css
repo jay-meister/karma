@@ -1,3 +1,4 @@
+
 /* This file is for your main application css. */
 
 .help-block {
@@ -11,9 +12,15 @@
   top: -4rem;
 }
 
+html {
+font-size: 10px;
+}
+
 body {
   font-family: 'Lato', sans-serif;
+  font-size: 14px;
 }
+
 .header {
   height: 9rem;
   border-bottom: 1px solid #eeeeee;
@@ -179,4 +186,71 @@ body {
 
 input[type=checkbox] {
   width: 2rem;
+}
+
+.link {
+  color: #337ab7;
+}
+/*from bootstrap to change into tachyons later*/
+
+select {
+  color: #3f51b5;
+}
+
+.container {
+  max-width: 730px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 768px) {
+  .container {
+    width: 750px;
+  }
+}
+
+.nav {
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+.pull-left {
+  float: left!important;
+}
+
+.pull-right {
+  float: right!important;
+}
+
+.alert:empty {
+  display: none;
+}
+
+.alert-info {
+  color: #333333;
+  background-color: #9EEBCF;
+  border-color: #3F51B5;
+}
+
+.alert-danger {
+  color: white;
+  background-color: #FF725C;
+  border-color: #3F51B5;
+}
+
+.alert {
+  padding: 15px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 30px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-weight: 500;
 }

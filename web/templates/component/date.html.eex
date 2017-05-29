@@ -1,9 +1,9 @@
-<div class="mb3">
-  <%= label assigns[:form], assigns[:atom], class: " fw4" %>
+<div class="mb4">
+  <%= label assigns[:form], assigns[:atom], class: "dib mw-100 mb2 fw4" %>
   <div class="k-bg-input b-h3 pt3 k-date-select pl3 br3">
     <%= date_select assigns[:form],
     assigns[:atom],
-    class: "form-control w-100 k-bg-input bn",
+    class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3 w-100 k-bg-input bn",
     default: Date.utc_today(),
     builder: fn b -> %>
       <%= b.(:day, []) %> / <%= b.(:month, []) %> / <%= b.(:year, []) %>
