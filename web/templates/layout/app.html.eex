@@ -14,17 +14,17 @@
   </head>
 
   <body class="bg-white k-indigo">
-    <div class="container">
+    <div class="mw9 pl6 pr6 center">
       <header class="header">
         <nav role="navigation">
-          <ul class="nav nav-pills pull-left">
+          <ul class="pl0 mb0 nested-list-reset ol fl">
             <%= if @current_user do %>
             <a href="/">
               <img src="/images/logo-blue.png" class="w3"  />
             </a>
             <% end %>
           </ul>
-          <ul class="nav nav-pills pull-right">
+          <ul class="pl0 mb0 nested-list-reset ol fr">
             <%= if @current_user do %>
             <%= link "My Profile", to: user_path(@conn, :show, @current_user), class: "back-button link pa3" %>
             <%= link "Log Out", to: session_path(@conn, :delete, @current_user), method: "delete", class: "back-button link pa3 k-lh-3" %>
@@ -33,8 +33,8 @@
         </nav>
       </header>
 
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+      <p class="alert pa4 br2 mb4 dark-grey bg-light-green b--dark-green" role="alert"><%= get_flash(@conn, :info) %></p>
+      <p class="alert pa4 br2 mb4 white bg-light-red b--red" role="alert"><%= get_flash(@conn, :error) %></p>
 
       <main role="main">
         <%= render @view_module, @view_template, assigns %>
