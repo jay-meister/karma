@@ -28,23 +28,23 @@ defmodule Karma.StartpackController do
     render(conn, "edit.html", startpack: startpack, changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "startpack" => startpack_params}, user) do
+  def update(conn, %{"id" => id, "startpack" => startpack_params}, _user) do
     startpack = Repo.get!(Startpack, id)
     changeset = Startpack.changeset(startpack, startpack_params)
 
     case Repo.update(changeset) do
-      {:ok, startpack} ->
+      {:ok, _startpack} ->
         conn
         |> put_flash(:info, "Startpack updated successfully!")
         |> redirect(to: startpack_path(conn, :index))
-      {:error, changeset} ->
+      {:error, _changeset} ->
         conn
         |> put_flash(:error, "Error updating startpack!")
         |> redirect(to: startpack_path(conn, :index))
     end
   end
 
-  def delete(conn, %{"id" => id}, user) do
+  def delete(conn, %{"id" => id}, _user) do
     startpack = Repo.get!(Startpack, id)
 
     # Here we use delete! (with a bang) because we expect
