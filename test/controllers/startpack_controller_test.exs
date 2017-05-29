@@ -47,7 +47,6 @@ defmodule Karma.StartpackControllerTest do
     vehicle_model: "some content",
     primary_address_country: "some content",
     passport_full_name: "some content",
-    passport_url: "",
     agent_tel: "some content",
     vehicle_insurance_url: "some content",
     student_loan_finished_before_6_april?: true,
@@ -111,6 +110,15 @@ defmodule Karma.StartpackControllerTest do
     end
   end
 
+  test "update startpack leaves image url in if no file is added", %{conn: conn, user: user} do
+    startpack = Repo.insert! %Startpack{user_id: user.id, passport_url: "www.passport.com"}
+    no_passport_image = Map.delete(@valid_attrs, "passport_url")
+    conn = put conn, startpack_path(conn, :update, startpack), startpack: no_passport_image
+    assert redirected_to(conn) == startpack_path(conn, :show, startpack)
+    startpack = Repo.get_by(Startpack, user_id: user.id)
+    assert startpack.passport_url == "www.passport.com"
+  end
+
   test "updates startpack with many file uploads", %{conn: conn, user: user} do
     startpack = Repo.insert! %Startpack{user_id: user.id}
     image_upload = %Plug.Upload{path: "test/fixtures/foxy.png", filename: "foxy.png"}
@@ -137,7 +145,6 @@ defmodule Karma.StartpackControllerTest do
       startpack = Repo.get_by(Startpack, user_id: user.id)
       assert startpack.passport_url
     end
-
   end
 
 
