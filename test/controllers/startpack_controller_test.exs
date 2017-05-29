@@ -126,7 +126,7 @@ defmodule Karma.StartpackControllerTest do
     end
   end
 
-  test "update startpack leaves image url in if no file is added", %{conn: conn} do
+  test "update startpack leaves image url in if no file is added", %{conn: _conn} do
     user = insert_user(%{email: "new@test.com"})
     conn = login_user(build_conn(), user)
     startpack = Repo.insert! %Startpack{user_id: user.id, passport_url: "www.passport.com"}
