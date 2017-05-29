@@ -111,6 +111,36 @@ defmodule Karma.StartpackControllerTest do
     end
   end
 
+  test "updates startpack with many file uploads", %{conn: conn, user: user} do
+    startpack = Repo.insert! %Startpack{user_id: user.id}
+    image_upload = %Plug.Upload{path: "test/fixtures/foxy.png", filename: "foxy.png"}
+
+    # possible solution for multiple fields
+    images = %{
+     "passport_image"  => image_upload,
+     "vehicle_insurance_image"  => image_upload,
+     "box_rental_image"  => image_upload,
+     "equipment_rental_image"  => image_upload,
+     "p45_image"  => image_upload,
+     "schedule_d_letter_image"  => image_upload,
+     "loan_out_company_cert_image"  => image_upload
+   }
+
+    valid = Map.merge(@valid_attrs, images)
+
+    with_mock ExAws, [request!: fn(_) ->
+      Process.sleep(500)
+      %{status_code: 200}
+    end] do
+      conn = put conn, startpack_path(conn, :update, startpack), startpack: valid
+      assert redirected_to(conn) == startpack_path(conn, :show, startpack)
+      startpack = Repo.get_by(Startpack, user_id: user.id)
+      assert startpack.passport_url
+    end
+
+  end
+
+
   test "updates chosen resource even if file upload errors", %{conn: conn, user: user} do
     startpack = Repo.insert! %Startpack{user_id: user.id}
     image_upload = %Plug.Upload{path: "test/fixtures/foxy.png", filename: "foxy.png"}
