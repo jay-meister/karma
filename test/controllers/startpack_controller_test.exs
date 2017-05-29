@@ -62,50 +62,38 @@ defmodule Karma.StartpackControllerTest do
     bank_iban: "some content",
     bank_swift_code: "some content"
     }
-  @invalid_attrs %{}
+  @invalid_attrs %{user_id: nil}
 
 
   setup do
     user = insert_user()
     project = insert_project(user)
+    offer = insert_offer(project)
     startpack = insert_startpack(%{user_id: user.id})
     conn = login_user(build_conn(), user)
-    {:ok, conn: conn, user: user, project: project, startpack: startpack}
+    {:ok, conn: conn, user: user, project: project, startpack: startpack, offer: offer}
   end
 
   test "edit startpack view on index", %{conn: conn} do
     conn = get conn, startpack_path(conn, :index)
-    assert html_response(conn, 200) =~ "Edit Startpack"
+    assert html_response(conn, 200) =~ "Edit startpack"
   end
 
-  test "creates resource and redirects when data is valid", %{conn: conn, user: user} do
-    conn = post conn, startpack_path(conn, :create), startpack: %{user_id: user.id}
-    assert redirected_to(conn) == startpack_path(conn, :index)
-    assert Repo.get_by(Startpack, user_id: user.id)
-  end
-
-  test "does not create resource and renders errors when data is invalid", %{conn: conn} do
-    conn = post conn, startpack_path(conn, :create), startpack: @invalid_attrs
-    assert html_response(conn, 200) =~ "New startpack"
-  end
-
-  test "renders form for editing chosen resource", %{conn: conn} do
-    startpack = Repo.insert! %Startpack{}
+  test "renders form for editing chosen resource", %{conn: conn, user: user} do
+    startpack = Repo.insert! %Startpack{user_id: user.id}
     conn = get conn, startpack_path(conn, :edit, startpack)
     assert html_response(conn, 200) =~ "Edit startpack"
   end
 
-  test "updates chosen resource and redirects when data is valid", %{conn: conn, user: user} do
-    startpack = Repo.insert! %Startpack{user_id: user.id}
-    conn = put conn, startpack_path(conn, :update, startpack), startpack: @valid_attrs
+  test "updates chosen resource and redirects when data is valid", %{conn: conn, user: user, startpack: startpack} do
+    conn = post conn, startpack_path(conn, :update, startpack), startpack: @valid_attrs
     assert redirected_to(conn) == startpack_path(conn, :index)
     assert Repo.get_by(Startpack, user_id: user.id)
   end
 
-  test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
-    startpack = Repo.insert! %Startpack{}
-    conn = put conn, startpack_path(conn, :update, startpack), startpack: @invalid_attrs
-    assert html_response(conn, 200) =~ "Edit startpack"
+  test "does not update chosen resource and renders errors when data is invalid", %{conn: conn, user: user, startpack: startpack} do
+    conn = post conn, startpack_path(conn, :update, startpack), startpack: @invalid_attrs
+    assert redirected_to(conn, 302) =~ "/startpack"
   end
 
   test "deletes chosen resource", %{conn: conn} do
@@ -113,5 +101,15 @@ defmodule Karma.StartpackControllerTest do
     conn = delete conn, startpack_path(conn, :delete, startpack)
     assert redirected_to(conn) == startpack_path(conn, :index)
     refute Repo.get(Startpack, startpack.id)
+  end
+
+  test "offer id that doesn't exist :index", %{conn: conn} do
+    conn = get conn, "/startpack?offer_id=1000"
+    assert html_response(conn, 200) =~ "Edit startpack"
+  end
+
+  test "offer id that exists :index", %{conn: conn, offer: offer} do
+    conn = get conn, "/startpack?offer_id=#{offer.id}"
+    assert html_response(conn, 200) =~ "Edit startpack"
   end
 end

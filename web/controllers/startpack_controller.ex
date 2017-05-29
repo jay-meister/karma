@@ -21,7 +21,7 @@ defmodule Karma.StartpackController do
         render(conn, "index.html", startpack: startpack, changeset: changeset, offer: %{})
     end
   end
-  
+
   def edit(conn, %{"id" => id}, user) do
     startpack = Repo.get!(Helpers.user_startpack(user), id)
     changeset = Startpack.changeset(startpack)
@@ -35,10 +35,12 @@ defmodule Karma.StartpackController do
     case Repo.update(changeset) do
       {:ok, startpack} ->
         conn
-        |> put_flash(:info, "Startpack updated successfully.")
+        |> put_flash(:info, "Startpack updated successfully!")
         |> redirect(to: startpack_path(conn, :index))
       {:error, changeset} ->
-        render(conn, "index.html", startpack: startpack, changeset: changeset)
+        conn
+        |> put_flash(:error, "Error updating startpack!")
+        |> redirect(to: startpack_path(conn, :index))
     end
   end
 
