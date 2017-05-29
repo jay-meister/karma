@@ -87,7 +87,7 @@ defmodule Karma.TestHelpers do
   end
 
   def default_offer(attrs \\ %{}) do
-    default = %{accepted: nil,
+    default = %{
       active: true,
       additional_notes: "You will be allowed 3 days leave",
       box_rental_required?: true,

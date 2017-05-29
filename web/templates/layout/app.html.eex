@@ -26,8 +26,9 @@
           </ul>
           <ul class="pl0 mb0 nested-list-reset ol fr">
             <%= if @current_user do %>
-            <%= link "My Profile", to: user_path(@conn, :show, @current_user), class: "back-button link pa3" %>
-            <%= link "Log Out", to: session_path(@conn, :delete, @current_user), method: "delete", class: "back-button link pa3 k-lh-3" %>
+            <%= link "My startpack", to: startpack_path(@conn, :index), class: "back-button link pa3" %>
+            <%= link "My profile", to: user_path(@conn, :show, @current_user), class: "back-button link pa3" %>
+            <%= link "Log out", to: session_path(@conn, :delete, @current_user), method: "delete", class: "back-button link pa3 k-lh-3" %>
             <% end %>
           </ul>
         </nav>

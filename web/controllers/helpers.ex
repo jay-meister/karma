@@ -2,6 +2,18 @@ defmodule Karma.Controllers.Helpers do
 
   alias Karma.RedisCli
 
+  def user_startpack(user) do
+    Ecto.assoc(user, :startpacks)
+  end
+
+  def user_offers(user) do
+    Ecto.assoc(user, :offers)
+  end
+
+  def user_projects(user) do
+    Ecto.assoc(user, :projects)
+  end
+
   def get_email_from_hash(hash) do
     case RedisCli.get(hash) do
       {:ok, nil} -> {:error, "User not in Redis"}
