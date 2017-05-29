@@ -114,7 +114,7 @@ defmodule Karma.OfferControllerTest do
     assert Phoenix.Controller.get_flash(conn, :error) =~ "You do not have permission"
   end
 
-  test "offers show: shows an offer to PM", %{conn: conn, offer: offer, user: user, project: project} do
+  test "offers show: shows an offer to PM", %{conn: conn, offer: offer} do
     conn = get conn, project_offer_path(conn, :show, offer.project_id, offer)
     assert html_response(conn, 200) =~ offer.additional_notes
   end

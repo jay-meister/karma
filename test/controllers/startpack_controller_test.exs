@@ -91,7 +91,7 @@ defmodule Karma.StartpackControllerTest do
     assert Repo.get_by(Startpack, user_id: user.id)
   end
 
-  test "does not update chosen resource and renders errors when data is invalid", %{conn: conn, user: user, startpack: startpack} do
+  test "does not update chosen resource and renders errors when data is invalid", %{conn: conn, startpack: startpack} do
     conn = post conn, startpack_path(conn, :update, startpack), startpack: @invalid_attrs
     assert redirected_to(conn, 302) =~ "/startpack"
   end
