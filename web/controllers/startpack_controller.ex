@@ -8,7 +8,6 @@ defmodule Karma.StartpackController do
      {"vehicle_insurance_image", "vehicle_insurance_url"},
      {"box_rental_image", "box_rental_url"},
      {"equipment_rental_image", "equipment_rental_url"},
-     {"vehicle_insurance_image", "vehicle_insurance_url"},
      {"p45_image", "p45_url"},
      {"schedule_d_letter_image", "schedule_d_letter_url"},
      {"loan_out_company_cert_image", "loan_out_company_cert_url"}
