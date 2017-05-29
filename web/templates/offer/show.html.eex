@@ -38,8 +38,6 @@
   <% end %>
 </div>
 
->>>>>>> master
-
 <h2>Offer for <%= @offer.target_email %></h2>
 <ul class="list pl0">
 
