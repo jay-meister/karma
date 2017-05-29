@@ -4,4 +4,5 @@
 
 <%= render "form.html", changeset: @changeset,
                         action: project_path(@conn, :create),
-                        button_text: "Create" %>
+                        button_text: "Create",
+                        class: "mv4" %>
