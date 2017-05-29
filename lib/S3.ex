@@ -30,7 +30,7 @@ defmodule Karma.S3 do
 
   def get_unique_filename(filename) do
     file_uuid = UUID.uuid4(:hex)
-    image_filename = filename
+    image_filename = String.replace(filename, " ", "_")
     "#{file_uuid}-#{image_filename}"
   end
 
