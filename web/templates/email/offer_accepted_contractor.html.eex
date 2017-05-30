@@ -1,0 +1,5 @@
+<h3>You have accepted an offer</h3>
+
+<p>Follow the link below to check the details</p>
+
+<%= @url %>

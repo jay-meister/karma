@@ -144,38 +144,6 @@ defmodule Karma.Startpack do
       :bank_swift_code])
     |> validate_required([:user_id])
   end
-
-  def mother_changeset(struct, startpack, offer) do
-    struct
-    |> box_rental_changeset(startpack, offer)
-    |> equipment_rental_changeset(startpack, offer)
-    |> agent_requirement_changeset(startpack)
-    |> base_requirement_changeset(startpack)
-  end
-
-  def box_rental_changeset(struct, startpack, offer) do
-    case offer.box_rental_required? do
-      true ->
-        struct
-        |> cast(startpack, [:box_rental_value, :box_rental_url])
-        |> validate_required([:box_rental_url, :box_rental_value])
-      false ->
-        struct
-    end
-  end
-
-  def equipment_rental_changeset(struct, startpack, offer) do
-    case offer.equipment_rental_required? do
-      true ->
-        struct
-        |> cast(startpack, [:equipment_rental_value, :equipment_rental_url])
-        |> validate_required([:equipment_rental_url, :equipment_rental_value])
-      false ->
-        struct
-    end
-  end
-
-
   def base_requirements do
     [ # from startpack
       :date_of_birth,
@@ -222,12 +190,51 @@ defmodule Karma.Startpack do
     ]
   end
 
+  def vehicle_allowance_keys do
+    [ :vehicle_make,
+      :vehicle_model,
+      :vehicle_colour,
+      :vehicle_registration,
+      :vehicle_insurance_url
+    ]
+  end
+
+  def mother_changeset(struct, startpack, offer) do
+    struct
+    |> box_rental_changeset(startpack, offer)
+    |> equipment_rental_changeset(startpack, offer)
+    |> agent_requirement_changeset(startpack)
+    |> base_requirement_changeset(startpack)
+    |> vehicle_allowance_changeset(startpack, offer)
+  end
+
   def base_requirement_changeset(changeset, startpack) do
     changeset
     |> cast(startpack, base_requirements())
     |> validate_required(base_requirements())
   end
 
+  def box_rental_changeset(struct, startpack, offer) do
+    case offer.box_rental_required? do
+      true ->
+        struct
+        |> cast(startpack, [:box_rental_value, :box_rental_url])
+        |> validate_required([:box_rental_url, :box_rental_value])
+      false ->
+        struct
+    end
+  end
+
+  def equipment_rental_changeset(struct, startpack, offer) do
+    case offer.equipment_rental_required? do
+      true ->
+        struct
+        |> cast(startpack, [:equipment_rental_value, :equipment_rental_url])
+        |> validate_required([:equipment_rental_url, :equipment_rental_value])
+      false ->
+        struct
+    end
+  end
 
   def agent_requirement_changeset(changeset, startpack) do
     case startpack.agent_deal? do
@@ -235,6 +242,17 @@ defmodule Karma.Startpack do
         changeset
         |> cast(startpack, agent_requirements())
         |> validate_required(agent_requirements())
+      false ->
+        changeset
+    end
+  end
+
+  def vehicle_allowance_changeset(changeset, startpack, offer) do
+    case offer.vehicle_allowance_per_week > 0 do
+      true ->
+        changeset
+        |> cast(startpack, vehicle_allowance_keys())
+        |> validate_required(vehicle_allowance_keys())
       false ->
         changeset
     end

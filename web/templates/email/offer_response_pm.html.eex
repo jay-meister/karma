@@ -1,0 +1,5 @@
+<h3>There has been a response to your offer!</h3>
+
+<p>Follow the link below to check it out</p>
+
+<%= @url %>
