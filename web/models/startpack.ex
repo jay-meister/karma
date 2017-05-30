@@ -276,7 +276,7 @@ defmodule Karma.Startpack do
         |> cast(startpack, paye_keys())
         |> validate_required(paye_keys())
         |> validate_inclusion(:for_paye_only, for_paye_only())
-      %Karma.Offer{contract_type: "SCHED D", daily_or_weekly: "daily"} ->
+      %Karma.Offer{contract_type: "SCH D", daily_or_weekly: "daily"} ->
         changeset
         |> cast(startpack, [ :schedule_d_letter_url ])
         |> validate_required([ :schedule_d_letter_url ])

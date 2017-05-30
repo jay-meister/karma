@@ -328,20 +328,20 @@ defmodule Karma.StartpackTest do
     changeset = Startpack.contract_type_changeset(%Startpack{}, invalid, offer)
     refute changeset.valid?
   end
-  test "validating startpack with contract type SCHED D with errors" do
-    offer = %Karma.Offer{contract_type: "SCHED D", daily_or_weekly: "daily"}
+  test "validating startpack with contract type SCH D with errors" do
+    offer = %Karma.Offer{contract_type: "SCH D", daily_or_weekly: "daily"}
     invalid = %{ schedule_d_letter_url: "" }
     changeset = Startpack.contract_type_changeset(%Startpack{}, invalid, offer)
     refute changeset.valid?
   end
-  test "validating startpack with contract type SCHED D with no errors" do
-    offer = %Karma.Offer{contract_type: "SCHED D", daily_or_weekly: "daily"}
+  test "validating startpack with contract type SCH D with no errors" do
+    offer = %Karma.Offer{contract_type: "SCH D", daily_or_weekly: "daily"}
     valid = %{ schedule_d_letter_url: "url" }
     changeset = Startpack.contract_type_changeset(%Startpack{}, valid, offer)
     assert changeset.valid?
   end
-  test "validating startpack adds no validation with contract type SCHED D but weekly" do
-    offer = %Karma.Offer{contract_type: "SCHED D", daily_or_weekly: "weekly"}
+  test "validating startpack adds no validation with contract type SCH D but weekly" do
+    offer = %Karma.Offer{contract_type: "SCH D", daily_or_weekly: "weekly"}
     valid = %{}
     changeset = Startpack.contract_type_changeset(%Startpack{}, valid, offer)
     assert changeset == %Startpack{}
