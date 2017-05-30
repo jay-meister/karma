@@ -1,0 +1,5 @@
+You have accepted an offer
+
+Follow the link below to check the details
+
+<%= @url %>

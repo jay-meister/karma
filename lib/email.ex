@@ -53,4 +53,25 @@ defmodule Karma.Email do
     subject = "Your offer has been updated on Karma"
     send_html_email(offer.target_email, subject, url, template)
   end
+
+  def send_offer_response_emails(conn, offer, project) do
+    send_offer_response_pm(conn, offer, project)
+    if offer.accepted do
+      send_offer_accepted_contractor(conn, offer)
+    end
+  end
+
+  def send_offer_response_pm(conn, offer, project) do
+    template = "offer_response_pm"
+    url = R_Helpers.project_offer_url(conn, :show, offer.project_id, offer)
+    subject = "There has been a response to your offer!"
+    send_html_email(project.user.email, subject, url, template)
+  end
+
+  def send_offer_accepted_contractor(conn, offer) do
+    template = "offer_accepted_contractor"
+    url = R_Helpers.project_offer_url(conn, :show, offer.project_id, offer)
+    subject = "Congratulations! You have accepted an offer"
+    send_html_email(offer.target_email, subject, url, template)
+  end
 end

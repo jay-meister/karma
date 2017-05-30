@@ -136,7 +136,7 @@ defmodule Karma.OfferController do
       |> Repo.preload(:user)
       |> Repo.preload(:project)
 
-    project = Repo.get(Project, project_id)
+    project = Repo.get(Project, project_id) |> Repo.preload(:user)
     job_titles = Karma.Job.titles()
     job_departments = Karma.Job.departments()
     ops = [
@@ -152,6 +152,8 @@ defmodule Karma.OfferController do
         changeset = Offer.offer_response_changeset(offer, offer_params)
         case Repo.update(changeset) do
           {:ok, offer} ->
+            Karma.Email.send_offer_response_emails(conn, offer, project)
+            |> Karma.Mailer.deliver_later()
             conn
             |> put_flash(:info, "Response made!")
             |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))

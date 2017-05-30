@@ -1,0 +1,5 @@
+There has been a response to your offer!
+
+Follow the link below to check it out
+
+<%= @url %>
