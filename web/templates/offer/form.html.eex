@@ -132,7 +132,7 @@
   form: f,
   atom: :fee_per_day_inc_holiday,
   placeholder: "Enter a number",
-  label: "Fee per DAY including holiday (per diem)"
+  label: "Fee PER DAY including holiday"
   %>
 
   <%= component "dropdown.html",

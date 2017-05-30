@@ -40,7 +40,7 @@
   <%= component "date.html",
   form: f,
   atom: :start_date,
-  label: "Start date (of shoot)"
+  label: "Shoot start date"
   %>
 
   <%= component "number_input.html",
