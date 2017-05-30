@@ -51,7 +51,7 @@ defmodule Karma.OfferController do
   end
 
   def create(conn, %{"offer" => offer_params, "project_id" => project_id}) do
-    project = Repo.get(Project, project_id)
+    project = Repo.get(Project, project_id) |> Repo.preload(:user)
 
     # first check the values provided by the user are valid
     validation_changeset = Offer.form_validation(%Offer{}, offer_params)
@@ -80,7 +80,7 @@ defmodule Karma.OfferController do
       case Repo.insert(changeset) do
         {:ok, offer} ->
           # email function decides whether this is a registered user
-          Karma.Email.send_new_offer_email(conn, offer)
+          Karma.Email.send_new_offer_email(conn, offer, project)
           |> Karma.Mailer.deliver_later()
           conn
           |> put_flash(:info, "Offer sent to #{offer.target_email}")
@@ -183,11 +183,11 @@ defmodule Karma.OfferController do
 
               {:ok, offer} = Repo.update(changeset)
               # email function decides whether this is a registered user
-              Karma.Email.send_updated_offer_email(conn, offer)
+              Karma.Email.send_updated_offer_email(conn, offer, project)
               |> Karma.Mailer.deliver_later()
 
               conn
-              |> put_flash(:info, "Offer updated successfully.")
+              |> put_flash(:info, "Offer updated successfully, and re-emailed to recipient.")
               |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
           end
         end

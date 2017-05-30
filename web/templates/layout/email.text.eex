@@ -1,5 +1,2 @@
-Hello!
 
 <%= render @view_module, @view_template, assigns %>
-
-- The Team.

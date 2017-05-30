@@ -258,4 +258,31 @@ defmodule Karma.Startpack do
     end
   end
 
+  def paye_keys do
+    [ :p45_url,
+      :national_insurance_number,
+      :for_paye_only
+    ]
+  end
+
+  def for_paye_only do
+    ["first since april", "now only job", "have another job"]
+  end
+
+  def contract_type_changeset(changeset, startpack, offer) do
+    case offer do
+      %Karma.Offer{contract_type: "PAYE"} ->
+        changeset
+        |> cast(startpack, paye_keys())
+        |> validate_required(paye_keys())
+        |> validate_inclusion(:for_paye_only, for_paye_only())
+      %Karma.Offer{contract_type: "SCH D", daily_or_weekly: "daily"} ->
+        changeset
+        |> cast(startpack, [ :schedule_d_letter_url ])
+        |> validate_required([ :schedule_d_letter_url ])
+      _ ->
+        changeset
+    end
+  end
+
 end
