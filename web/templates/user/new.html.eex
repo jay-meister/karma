@@ -1,7 +1,7 @@
 <div class="vh-100 w-100 w-30-ns center dt">
   <div class="dtc v-mid">
     <div class="ba b--black-10 br4 pa4 bg-white">
-        <div class="tc pt5">
+        <div class="tc pt4">
           <img src="/images/logo-blue.png" class="k-w4-5"/>
           <div class="tc">
           <h4 class="mt4">Already have an account?</h4>
@@ -32,7 +32,8 @@
             <%= component "input.html",
             form: f,
             atom: :email,
-            placeholder: "example@email.com"
+            placeholder: "example@email.com",
+            class: "mt5"
             %>
 
             <%= component "input.html",
