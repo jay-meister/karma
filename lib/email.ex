@@ -24,7 +24,8 @@ defmodule Karma.Email do
     rand_string = Helpers.gen_rand_string(30)
     RedisCli.query(["SET", rand_string, user.email])
     url = "#{Helpers.get_base_url()}/verification/#{rand_string}"
-    send_html_email(user.email, "Email Verification", url, "verify")
+    subject = "Karma - please verify your new account"
+    send_html_email(user.email, subject, url, "verify", [first_name: user.first_name])
   end
 
 
@@ -33,25 +34,33 @@ defmodule Karma.Email do
     RedisCli.query(["SET", rand_string, user.email])
     RedisCli.expire(rand_string, 60*5)
     url = url <> "?hash=#{rand_string}"
-    send_html_email(user.email, "Reset Password", url, "password_reset")
+    send_html_email(user.email, "Karma - reset your password", url, "password_reset")
   end
 
-  def send_new_offer_email(conn, offer) do
+  def send_new_offer_email(conn, offer, project) do
     {template, url} = case offer.user_id do
       nil ->
         {"new_offer_unregistered", R_Helpers.user_url(conn, :new)} # user is not yet registered
       _ ->
         {"new_offer_registered", R_Helpers.project_offer_url(conn, :show, offer.project_id, offer)}
     end
-    subject = "You have a new offer on Karma"
-    send_html_email(offer.target_email, subject, url, template)
+    subject = "Karma - Invitation to join #{project.codename}"
+    send_html_email(offer.target_email, subject, url, template, [codename: project.codename])
   end
 
-  def send_updated_offer_email(conn, offer) do
+  def send_updated_offer_email(conn, offer, project) do
     template = "updated_offer"
     url = R_Helpers.project_offer_url(conn, :show, offer.project_id, offer)
-    subject = "Your offer has been updated on Karma"
-    send_html_email(offer.target_email, subject, url, template)
+    subject = "Karma - updated offer to join #{project.codename}"
+    send_html_email(offer.target_email,
+    subject,
+    url,
+    template,
+    [
+      first_name: project.user.first_name,
+      last_name: project.user.last_name,
+      codename: project.codename
+    ])
   end
 
   def send_offer_response_emails(conn, offer, project) do

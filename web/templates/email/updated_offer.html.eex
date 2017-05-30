@@ -1,5 +1,15 @@
-<h3>Your offer on Karma has been updated.</h3>
-
-<p>Please log in to view the offer.</p>
-
-<%= @url %>
+<h3>Dear <%= @first_name %> <%= @last_name %>,</h3>
+<br />
+<div>
+  Your offer to join <span class="b"><%= @codename %></span>
+  has been updated.
+</div>
+<br />
+<div>
+  Please <a href="<%= @url %>" class="k-indigo">CLICK HERE</a>
+  to view your latest offer.
+</div>
+<br />
+<div class="k-light-indigo">The more information you add to Karma, the easier connecting to projects becomes.</div>
+<br />
+<div class="k-indigo">Team Karma</div>

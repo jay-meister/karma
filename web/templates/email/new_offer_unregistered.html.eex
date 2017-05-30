@@ -1,5 +1,20 @@
-<h3>You have a new offer waiting for you on Karma.</h3>
-
-<p>Please create a new account using the following link to view the offer.</p>
-
-<%= @url %>
+<h3>Hello!</h3>
+<br />
+<div>
+  You have received an offer to work on the project,
+  <span class="b"><%= @codename %></span>
+</div>
+<br />
+<div>
+  To review your offer please
+  <a href="<%= @url %>" class="k-indigo">CLICK HERE</a>
+</div>
+<br />
+<div>Start the process by creating your free Karma account.</div>
+<br />
+<div>
+  With Karma, save all your start information, to make joining
+  future projects, easy for you.
+</div>
+<br />
+<div class="k-indigo">Team Karma</div>
