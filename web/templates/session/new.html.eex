@@ -1,32 +1,38 @@
-<div class="tc">
-  <img src="/images/logo-blue.png" class="k-w4-5"/>
-</div>
-<div class="mw6 k-m-auto pl4 pr4">
-  <%= form_for @conn, session_path(@conn, :create), [as: :session], fn f -> %>
+<div class="vh-100 w-100 w-30-ns center dt">
+  <div class="dtc v-mid">
+    <div class="ba b--black-10 br4 pa4 bg-white h-75">
+        <div class="tc pt5">
+          <img src="/images/logo-blue.png" class="k-w4-5"/>
+        </div>
+        <div class="mt4">
+          <%= form_for @conn, session_path(@conn, :create), [as: :session], fn f -> %>
 
-    <%= component "input.html",
-    form: f,
-    image_name: "user",
-    atom: :email,
-    autofill: "on",
-    placeholder: "example@email.com"
-    %>
-    <%= component "input.html",
-    form: f,
-    image_name: "locked",
-    atom: :password,
-    type: :password,
-    autofill: "on",
-    placeholder: "Must contain at least 6 characters"
-    %>
+            <%= component "input.html",
+            form: f,
+            image_name: "user",
+            atom: :email,
+            autofill: "on",
+            placeholder: "example@email.com"
+            %>
+            <%= component "input.html",
+            form: f,
+            image_name: "locked",
+            atom: :password,
+            type: :password,
+            autofill: "on",
+            placeholder: "Must contain at least 6 characters"
+            %>
 
-    <%= component "submit_button.html", title: "Log in" %>
-    
-  <% end %>
-</div>
-<div class="pa4 tc">
-  <%= link "Forgot your password?", to: password_path(@conn, :new), class: "k-dark-indigo underline" %>
-  <%= component "divider.html" %>
-  <h4 class="mt5">New to Karma?</h4>
-  <%= link "Create an account", to: user_path(@conn, :new), class: "k-dark-indigo underline" %>
+            <%= component "submit_button.html", title: "Log in" %>
+
+          <% end %>
+        </div>
+        <div class="pa4 tc">
+          <%= link "Forgot your password?", to: password_path(@conn, :new), class: "k-dark-indigo underline" %>
+          <%= component "divider.html" %>
+          <h4 class="mt4 mb2">New to Karma?</h4>
+          <%= link "Create an account", to: user_path(@conn, :new), class: "k-dark-indigo underline" %>
+      </div>
+    </div>
+  </div>
 </div>
