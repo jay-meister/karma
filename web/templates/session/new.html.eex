@@ -1,7 +1,7 @@
 <div class="vh-100 center dt">
   <div class="w-60 dtc v-mid">
-    <div class="ba b--black-10 br4 pa4 bg-white">
-        <div class="tc">
+    <div class="ba b--black-10 br4 pa4 bg-white h-75">
+        <div class="tc pt5">
           <img src="/images/logo-blue.png" class="k-w4-5"/>
         </div>
         <div class="mt4">

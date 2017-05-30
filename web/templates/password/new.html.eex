@@ -1,23 +1,29 @@
-<div class="tc">
-  <img src="/images/logo-blue.png" class="k-w4-5"/>
-</div>
-
-<div class="mw6 k-m-auto pl4 pr4">
-  <%= form_for @changeset, password_path(@conn, :create), fn f -> %>
-    <%= if @changeset.action do %>
-      <div class="alert alert-danger">
-        <p>Oops, something went wrong! Please check the errors below.</p>
+<div class="vh-100 center dt">
+  <div class="w-60 dtc v-mid">
+    <div class="ba b--black-10 br4 pa4 bg-white h-75">
+      <div class="tc pt5">
+        <img src="/images/logo-blue.png" class="k-w4-5"/>
       </div>
-    <% end %>
 
-    <%= component "input.html",
-    form: f,
-    atom: :email,
-    placeholder: "Enter your email address"
-    %>
+      <div class="mt4">
+        <%= form_for @changeset, password_path(@conn, :create), fn f -> %>
+          <%= if @changeset.action do %>
+            <div class="alert alert-danger">
+              <p>Oops, something went wrong! Please check the errors below.</p>
+            </div>
+          <% end %>
 
-    <%= component "submit_button.html", title: "Send reset email" %>
-  <% end %>
+          <%= component "input.html",
+          form: f,
+          atom: :email,
+          placeholder: "Enter your email address"
+          %>
 
-  <%= link "Back to log in", to: session_path(@conn, :new) %>
+          <%= component "submit_button.html", title: "Send reset email" %>
+        <% end %>
+
+        <%= link "Back to log in", to: session_path(@conn, :new) %>
+      </div>
+    </div>
+  </div>
 </div>
