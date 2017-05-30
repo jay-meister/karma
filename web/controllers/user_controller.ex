@@ -32,7 +32,7 @@ defmodule Karma.UserController do
          If you need a new verification link, follow the log in flow.")
         |> redirect(to: session_path(conn, :new))
       {:error, changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "new.html", layout: {LayoutView, "pre_login.html"}, changeset: changeset)
     end
   end
 
