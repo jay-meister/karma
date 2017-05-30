@@ -261,9 +261,11 @@
   image_url: @startpack.p45_url
   %>
 
-  <%= component "input.html",
+  <%= component "radio.html",
   form: f,
-  atom: :for_paye_only
+  atom: :for_paye_only,
+  label: "For PAYE only",
+  radios: Karma.StartpackView.for_paye_only()
   %>
 
   <%= component "checkbox.html",
