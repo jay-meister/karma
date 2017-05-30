@@ -11,4 +11,5 @@
                         job_departments: @job_departments,
                         conn: @conn,
                         offer: %{job_title: ""},
-                        job_title: @job_title %>
+                        job_title: @job_title,
+                        class: "mv4" %>

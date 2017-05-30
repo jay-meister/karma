@@ -34,7 +34,7 @@ defmodule Karma.OfferController do
       |> Repo.all()
 
     ops = [offers: offers, project: project]
-    render conn, "index.html", [layout: {LayoutView, "no_container.html"}] ++ ops
+    render conn, "index.html", ops
   end
 
   def new(conn, %{"project_id" => project_id}) do
