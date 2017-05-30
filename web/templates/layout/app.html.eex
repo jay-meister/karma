@@ -13,18 +13,18 @@
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
-  <body class="bg-white k-indigo">
+  <body class="bg-white k-indigo mv4">
     <div class="mw9 pl6 pr6 center">
-      <header class="header">
+      <header class="h4 bb k-b-grey">
         <nav role="navigation">
-          <ul class="pl0 mb0 nested-list-reset ol fl">
+          <ul class="mv4 pl0 mb0 nested-list-reset ol fl">
             <%= if @current_user do %>
             <a href="/">
               <img src="/images/logo-blue.png" class="w3"  />
             </a>
             <% end %>
           </ul>
-          <ul class="pl0 mb0 nested-list-reset ol fr">
+          <ul class="mv4 pl0 mb0 nested-list-reset ol fr">
             <%= if @current_user do %>
             <%= link "My startpack", to: startpack_path(@conn, :index), class: "back-button link pa3" %>
             <%= link "My profile", to: user_path(@conn, :show, @current_user), class: "back-button link pa3" %>
