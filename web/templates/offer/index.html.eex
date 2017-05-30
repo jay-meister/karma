@@ -1,5 +1,5 @@
 <div class="k-bg-indigo white tc pa4 mt4 mb4 k-shadow-1 pb0 relative">
-  <div class="absolute-l right-2-l top-2-l">
+  <div class="">
     <%= component "button.html", title: "View details", link: "/projects/#{@project.id}" %>
   </div>
   <div class="f1"><%= "#{@project.name}/\"#{@project.codename}\"" %></div>
