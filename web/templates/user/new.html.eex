@@ -3,7 +3,6 @@
     <div class="ba b--black-10 br4 pa4 bg-white">
         <div class="tc pt5">
           <img src="/images/logo-blue.png" class="k-w4-5"/>
-
           <div class="tc">
           <h4 class="mt4">Already have an account?</h4>
           <%= link "Login", to: session_path(@conn, :new), class: "k-dark-indigo underline" %>

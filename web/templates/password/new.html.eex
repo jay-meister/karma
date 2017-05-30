@@ -4,7 +4,6 @@
       <div class="tc pt5">
         <img src="/images/logo-blue.png" class="k-w4-5"/>
       </div>
-
       <div class="mt4">
         <%= form_for @changeset, password_path(@conn, :create), fn f -> %>
           <%= if @changeset.action do %>
