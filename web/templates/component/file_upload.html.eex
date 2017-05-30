@@ -1,11 +1,11 @@
-<div class="form-group">
+<div class="mb3">
 
-  <%= label assigns[:form], assigns[:atom], class: "control-label" %>
+  <%= label assigns[:form], assigns[:atom], class: "dib mw-100 mb2 fw4" %>
   <%= if assigns[:image_url] do %>
     <a href=<%= assigns[:image_url] %>>
       <img src=<%= assigns[:image_url] %> class="h5 ml2 db"/>
     </a>
-    <%= file_input assigns[:form], assigns[:atom], class: "form-control" %>
+    <%= file_input assigns[:form], assigns[:atom], class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3 w-100 k-bg-input bn" %>
    <% end %>
   <%= error_tag assigns[:form], assigns[:url] %>
 </div>

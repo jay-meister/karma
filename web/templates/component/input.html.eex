@@ -1,7 +1,7 @@
-<div class="form-group">
+<div class="mb4">
   <%= case assigns[:label] do
-   nil -> label assigns[:form], assigns[:atom], class: "control-label fw4"
-   _ -> label assigns[:form], assigns[:atom], assigns[:label], class: "control-label fw4"
+   nil -> label assigns[:form], assigns[:atom], class: "dib mw-100 mb2 fw4"
+   _ -> label assigns[:form], assigns[:atom], assigns[:label], class: "dib mw-100 mb2 fw4"
    end %>
   </br>
   <div class="relative">
@@ -18,7 +18,7 @@
     disabled: assigns[:disabled] || false,
     placeholder: assigns[:placeholder],
     type: assigns[:type] || "",
-    class: " k-dark-grey pa3 bn br3 w-100 outline-0 #{padding} #{bg_color}",
+    class: "border-box k-dark-grey pa3 bn br3 w-100 outline-0 #{padding} #{bg_color}",
     autocomplete: assigns[:autocomplete] || "off"
     %>
     <%= if assigns[:image_name] do %>

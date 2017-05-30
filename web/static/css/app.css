@@ -1,3 +1,4 @@
+
 /* This file is for your main application css. */
 
 .help-block {
@@ -11,9 +12,15 @@
   top: -4rem;
 }
 
+html {
+font-size: 10px;
+}
+
 body {
   font-family: 'Lato', sans-serif;
+  font-size: 14px;
 }
+
 .header {
   height: 9rem;
   border-bottom: 1px solid #eeeeee;
@@ -179,4 +186,16 @@ body {
 
 input[type=checkbox] {
   width: 2rem;
+}
+
+.link {
+  color: #337ab7;
+}
+
+select {
+  color: #3f51b5;
+}
+
+.alert:empty {
+  display: none;
 }

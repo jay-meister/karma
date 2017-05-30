@@ -5,95 +5,84 @@
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= label f, :gender, class: "control-label" %>
-    <%= text_input f, :gender, class: "form-control" %>
-    <%= error_tag f, :gender %>
-  </div>
 
-  <div class="form-group">
-    <%= label f, :middle_names, class: "control-label" %>
-    <%= text_input f, :middle_names, class: "form-control" %>
-    <%= error_tag f, :middle_names %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :gender
+  %>
 
-  <div class="form-group">
-    <%= label f, :aka, class: "control-label" %>
-    <%= text_input f, :aka, class: "form-control" %>
-    <%= error_tag f, :aka %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :middle_names
+  %>
 
-  <div class="form-group">
-    <%= label f, :screen_credit_name, class: "control-label" %>
-    <%= text_input f, :screen_credit_name, class: "form-control" %>
-    <%= error_tag f, :screen_credit_name %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :class
+  %>
 
-  <div class="form-group">
-    <%= label f, :mobile_tel, class: "control-label" %>
-    <%= text_input f, :mobile_tel, class: "form-control" %>
-    <%= error_tag f, :mobile_tel %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :screen_credit_name
+  %>
 
-  <div class="form-group">
-    <%= label f, :emergency_contact_name, class: "control-label" %>
-    <%= text_input f, :emergency_contact_name, class: "form-control" %>
-    <%= error_tag f, :emergency_contact_name %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :mobile_tel
+  %>
 
-  <div class="form-group">
-    <%= label f, :emergency_contact_relationship, class: "control-label" %>
-    <%= text_input f, :emergency_contact_relationship, class: "form-control" %>
-    <%= error_tag f, :emergency_contact_relationship %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :emergency_contact_name
+  %>
 
-  <div class="form-group">
-    <%= label f, :emergency_contact_tel, class: "control-label" %>
-    <%= text_input f, :emergency_contact_tel, class: "form-control" %>
-    <%= error_tag f, :emergency_contact_tel %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :emergency_contact_relationship
+  %>
 
-  <div class="form-group">
-    <%= label f, :date_of_birth, class: "control-label" %>
-    <%= date_select f, :date_of_birth, class: "form-control" %>
-    <%= error_tag f, :date_of_birth %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :emergency_contact_tel
+  %>
 
-  <div class="form-group">
-    <%= label f, :place_of_birth, class: "control-label" %>
-    <%= text_input f, :place_of_birth, class: "form-control" %>
-    <%= error_tag f, :place_of_birth %>
-  </div>
+  <%= component "date.html",
+  form: f,
+  atom: :date_of_birth
+  %>
 
-  <div class="form-group">
-    <%= label f, :country_of_legal_nationality, class: "control-label" %>
-    <%= text_input f, :country_of_legal_nationality, class: "form-control" %>
-    <%= error_tag f, :country_of_legal_nationality %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :place_of_birth
+  %>
 
-  <div class="form-group">
-    <%= label f, :country_of_permanent_residence, class: "control-label" %>
-    <%= text_input f, :country_of_permanent_residence, class: "form-control" %>
-    <%= error_tag f, :country_of_permanent_residence %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :country_of_legal_nationality
+  %>
 
-  <div class="form-group">
-    <%= label f, :passport_number, class: "control-label" %>
-    <%= text_input f, :passport_number, class: "form-control" %>
-    <%= error_tag f, :passport_number %>
-  </div>
 
-  <div class="form-group">
-    <%= label f, :passport_expiry_date, class: "control-label" %>
-    <%= date_select f, :passport_expiry_date, class: "form-control" %>
-    <%= error_tag f, :passport_expiry_date %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :country_of_permanent_residence
+  %>
 
-  <div class="form-group">
-    <%= label f, :passport_issuing_country, class: "control-label" %>
-    <%= text_input f, :passport_issuing_country, class: "form-control" %>
-    <%= error_tag f, :passport_issuing_country %>
-  </div>
+
+  <%= component "input.html",
+  form: f,
+  atom: :passport_number
+  %>
+
+
+  <%= component "date.html",
+  form: f,
+  atom: :passport_expiry_date
+  %>
+
+  <%= component "input.html",
+  form: f,
+  atom: :passport_issuing_country
+  %>
 
   <%= component "file_upload.html",
   form: f,
@@ -102,132 +91,111 @@
   image_url: @startpack.passport_url
   %>
 
-  <div class="form-group">
-    <%= label f, :passport_full_name, class: "control-label" %>
-    <%= text_input f, :passport_full_name, class: "form-control" %>
-    <%= error_tag f, :passport_full_name %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :passport_full_name
+  %>
 
+  <%= component "input.html",
+  form: f,
+  atom: :primary_address_1
+  %>
 
-  <div class="form-group">
-    <%= label f, :primary_address_1, class: "control-label" %>
-    <%= text_input f, :primary_address_1, class: "form-control" %>
-    <%= error_tag f, :primary_address_1 %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :primary_address_2
+  %>
 
-  <div class="form-group">
-    <%= label f, :primary_address_2, class: "control-label" %>
-    <%= text_input f, :primary_address_2, class: "form-control" %>
-    <%= error_tag f, :primary_address_2 %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :primary_address_city
+  %>
 
-  <div class="form-group">
-    <%= label f, :primary_address_city, class: "control-label" %>
-    <%= text_input f, :primary_address_city, class: "form-control" %>
-    <%= error_tag f, :primary_address_city %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :primary_address_postcode
+  %>
 
-  <div class="form-group">
-    <%= label f, :primary_address_postcode, class: "control-label" %>
-    <%= text_input f, :primary_address_postcode, class: "form-control" %>
-    <%= error_tag f, :primary_address_postcode %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :primary_address_country
+  %>
 
-  <div class="form-group">
-    <%= label f, :primary_address_country, class: "control-label" %>
-    <%= text_input f, :primary_address_country, class: "form-control" %>
-    <%= error_tag f, :primary_address_country %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :primary_address_tel
+  %>
 
-  <div class="form-group">
-    <%= label f, :primary_address_tel, class: "control-label" %>
-    <%= text_input f, :primary_address_tel, class: "form-control" %>
-    <%= error_tag f, :primary_address_tel %>
-  </div>
+  <%= component "checkbox.html",
+  form: f,
+  atom: :agent_deal?
+  %>
 
-  <div class="form-group">
-    <%= label f, :agent_deal?, class: "control-label" %>
-    <%= checkbox f, :agent_deal?, class: "form-control" %>
-    <%= error_tag f, :agent_deal? %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :agent_name
+  %>
 
-  <div class="form-group">
-    <%= label f, :agent_name, class: "control-label" %>
-    <%= text_input f, :agent_name, class: "form-control" %>
-    <%= error_tag f, :agent_name %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :agent_company
+  %>
 
-  <div class="form-group">
-    <%= label f, :agent_company, class: "control-label" %>
-    <%= text_input f, :agent_company, class: "form-control" %>
-    <%= error_tag f, :agent_company %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :agent_address
+  %>
 
-  <div class="form-group">
-    <%= label f, :agent_address, class: "control-label" %>
-    <%= text_input f, :agent_address, class: "form-control" %>
-    <%= error_tag f, :agent_address %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :agent_tel
+  %>
 
-  <div class="form-group">
-    <%= label f, :agent_tel, class: "control-label" %>
-    <%= text_input f, :agent_tel, class: "form-control" %>
-    <%= error_tag f, :agent_tel %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :agent_email_address
+  %>
 
-  <div class="form-group">
-    <%= label f, :agent_email_address, class: "control-label" %>
-    <%= text_input f, :agent_email_address, class: "form-control" %>
-    <%= error_tag f, :agent_email_address %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :agent_bank_name
+  %>
 
-  <div class="form-group">
-    <%= label f, :agent_bank_name, class: "control-label" %>
-    <%= text_input f, :agent_bank_name, class: "form-control" %>
-    <%= error_tag f, :agent_bank_name %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :agent_bank_address
+  %>
 
-  <div class="form-group">
-    <%= label f, :agent_bank_address, class: "control-label" %>
-    <%= text_input f, :agent_bank_address, class: "form-control" %>
-    <%= error_tag f, :agent_bank_address %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :agent_bank_sort_code
+  %>
 
-  <div class="form-group">
-    <%= label f, :agent_bank_sort_code, class: "control-label" %>
-    <%= text_input f, :agent_bank_sort_code, class: "form-control" %>
-    <%= error_tag f, :agent_bank_sort_code %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :agent_bank_account_number
+  %>
 
-  <div class="form-group">
-    <%= label f, :agent_bank_account_number, class: "control-label" %>
-    <%= text_input f, :agent_bank_account_number, class: "form-control" %>
-    <%= error_tag f, :agent_bank_account_number %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :agent_bank_account_name
+  %>
 
-  <div class="form-group">
-    <%= label f, :agent_bank_account_name, class: "control-label" %>
-    <%= text_input f, :agent_bank_account_name, class: "form-control" %>
-    <%= error_tag f, :agent_bank_account_name %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :agent_bank_account_swift_code
+  %>
 
-  <div class="form-group">
-    <%= label f, :agent_bank_account_swift_code, class: "control-label" %>
-    <%= text_input f, :agent_bank_account_swift_code, class: "form-control" %>
-    <%= error_tag f, :agent_bank_account_swift_code %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :agent_bank_account_iban
+  %>
 
-  <div class="form-group">
-    <%= label f, :agent_bank_account_iban, class: "control-label" %>
-    <%= text_input f, :agent_bank_account_iban, class: "form-control" %>
-    <%= error_tag f, :agent_bank_account_iban %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, :box_rental_value, class: "control-label" %>
-    <%= number_input f, :box_rental_value, class: "form-control" %>
-    <%= error_tag f, :box_rental_value %>
-  </div>
+  <%= component "number_input.html",
+  form: f,
+  atom: :box_rental_value,
+  placeholder: "Enter a number"
+  %>
 
   <%= component "file_upload.html",
   form: f,
@@ -236,11 +204,11 @@
   image_url: @startpack.box_rental_url
   %>
 
-  <div class="form-group">
-    <%= label f, :equipment_rental_value, class: "control-label" %>
-    <%= number_input f, :equipment_rental_value, class: "form-control" %>
-    <%= error_tag f, :equipment_rental_value %>
-  </div>
+  <%= component "number_input.html",
+  form: f,
+  atom: :equipment_rental_value,
+  placeholder: "Enter a number"
+  %>
 
   <%= component "file_upload.html",
   form: f,
@@ -249,29 +217,25 @@
   image_url: @startpack.equipment_rental_url
   %>
 
-  <div class="form-group">
-    <%= label f, :vehicle_make, class: "control-label" %>
-    <%= text_input f, :vehicle_make, class: "form-control" %>
-    <%= error_tag f, :vehicle_make %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :vehicle_make
+  %>
 
-  <div class="form-group">
-    <%= label f, :vehicle_model, class: "control-label" %>
-    <%= text_input f, :vehicle_model, class: "form-control" %>
-    <%= error_tag f, :vehicle_model %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :vehicle_model
+  %>
 
-  <div class="form-group">
-    <%= label f, :vehicle_colour, class: "control-label" %>
-    <%= text_input f, :vehicle_colour, class: "form-control" %>
-    <%= error_tag f, :vehicle_colour %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :vehicle_colour
+  %>
 
-  <div class="form-group">
-    <%= label f, :vehicle_registration, class: "control-label" %>
-    <%= text_input f, :vehicle_registration, class: "form-control" %>
-    <%= error_tag f, :vehicle_registration %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :vehicle_registration
+  %>
 
   <%= component "file_upload.html",
   form: f,
@@ -280,17 +244,15 @@
   image_url: @startpack.vehicle_insurance_url
   %>
 
-  <div class="form-group">
-    <%= label f, :national_insurance_number, class: "control-label" %>
-    <%= text_input f, :national_insurance_number, class: "form-control" %>
-    <%= error_tag f, :national_insurance_number %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :national_insurance_number
+  %>
 
-  <div class="form-group">
-    <%= label f, :vat_number, class: "control-label" %>
-    <%= text_input f, :vat_number, class: "form-control" %>
-    <%= error_tag f, :vat_number %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :vat_number
+  %>
 
   <%= component "file_upload.html",
   form: f,
@@ -299,35 +261,30 @@
   image_url: @startpack.p45_url
   %>
 
-  <div class="form-group">
-    <%= label f, :for_paye_only, class: "control-label" %>
-    <%= text_input f, :for_paye_only, class: "form-control" %>
-    <%= error_tag f, :for_paye_only %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :for_paye_only
+  %>
 
-  <div class="form-group">
-    <%= label f, :student_loan_not_repayed?, class: "control-label" %>
-    <%= checkbox f, :student_loan_not_repayed?, class: "form-control" %>
-    <%= error_tag f, :student_loan_not_repayed? %>
-  </div>
+  <%= component "checkbox.html",
+  form: f,
+  atom: :student_loan_not_repayed?
+  %>
 
-  <div class="form-group">
-    <%= label f, :student_loan_repay_direct?, class: "control-label" %>
-    <%= checkbox f, :student_loan_repay_direct?, class: "form-control" %>
-    <%= error_tag f, :student_loan_repay_direct? %>
-  </div>
+  <%= component "checkbox.html",
+  form: f,
+  atom: :student_loan_repay_direct?
+  %>
 
-  <div class="form-group">
-    <%= label f, :student_loan_plan_1?, class: "control-label" %>
-    <%= checkbox f, :student_loan_plan_1?, class: "form-control" %>
-    <%= error_tag f, :student_loan_plan_1? %>
-  </div>
+  <%= component "checkbox.html",
+  form: f,
+  atom: :student_loan_plan_1?
+  %>
 
-  <div class="form-group">
-    <%= label f, :student_loan_finished_before_6_april?, class: "control-label" %>
-    <%= checkbox f, :student_loan_finished_before_6_april?, class: "form-control" %>
-    <%= error_tag f, :student_loan_finished_before_6_april? %>
-  </div>
+  <%= component "checkbox.html",
+  form: f,
+  atom: :student_loan_finished_before_6_april?
+  %>
 
   <%= component "file_upload.html",
   form: f,
@@ -336,69 +293,58 @@
   image_url: @startpack.schedule_d_letter_url
   %>
 
+  <%= component "input.html",
+  form: f,
+  atom: :loan_out_company_registration_number
+  %>
 
-  <div class="form-group">
-    <%= label f, :loan_out_company_registration_number, class: "control-label" %>
-    <%= text_input f, :loan_out_company_registration_number, class: "form-control" %>
-    <%= error_tag f, :loan_out_company_registration_number %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, :loan_out_company_address, class: "control-label" %>
-    <%= textarea f, :loan_out_company_address, class: "form-control" %>
-    <%= error_tag f, :loan_out_company_address %>
-  </div>
+  <%= component "textarea.html",
+  form: f,
+  atom: :loan_out_company_address
+  %>
 
   <%= component "file_upload.html",
   form: f,
-  atom: :loan_out_company_cert_image,
+  atom: :loan_out_company_ct_image,
   url_atom: :loan_out_company_cert_url,
   image_url: @startpack.loan_out_company_cert_url
   %>
 
-  <div class="form-group">
-    <%= label f, :bank_name, class: "control-label" %>
-    <%= text_input f, :bank_name, class: "form-control" %>
-    <%= error_tag f, :bank_name %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :bank_name
+  %>
 
-  <div class="form-group">
-    <%= label f, :bank_address, class: "control-label" %>
-    <%= text_input f, :bank_address, class: "form-control" %>
-    <%= error_tag f, :bank_address %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :bank_address
+  %>
 
-  <div class="form-group">
-    <%= label f, :bank_account_users_full_name, class: "control-label" %>
-    <%= text_input f, :bank_account_users_full_name, class: "form-control" %>
-    <%= error_tag f, :bank_account_users_full_name %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :bank_account_users_full_name
+  %>
 
-  <div class="form-group">
-    <%= label f, :bank_account_number, class: "control-label" %>
-    <%= text_input f, :bank_account_number, class: "form-control" %>
-    <%= error_tag f, :bank_account_number %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :bank_account_number
+  %>
 
-  <div class="form-group">
-    <%= label f, :bank_sort_code, class: "control-label" %>
-    <%= text_input f, :bank_sort_code, class: "form-control" %>
-    <%= error_tag f, :bank_sort_code %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :bank_sort_code
+  %>
 
-  <div class="form-group">
-    <%= label f, :bank_iban, class: "control-label" %>
-    <%= text_input f, :bank_iban, class: "form-control" %>
-    <%= error_tag f, :bank_iban %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :bank_iban
+  %>
 
-  <div class="form-group">
-    <%= label f, :bank_swift_code, class: "control-label" %>
-    <%= text_input f, :bank_swift_code, class: "form-control" %>
-    <%= error_tag f, :bank_swift_code %>
-  </div>
+  <%= component "input.html",
+  form: f,
+  atom: :bank_swift_code
+  %>
 
-  <div class="form-group">
-    <%= submit "Submit", class: "btn btn-primary" %>
-  </div>
+  <%= component "submit_button.html", title: "Update Startpack" %>
+
 <% end %>
