@@ -1,5 +1,5 @@
-<div class="vh-100 center dt">
-  <div class="w-60 dtc v-mid">
+<div class="vh-100 w-100 w-30-ns center dt">
+  <div class="dtc v-mid">
     <div class="ba b--black-10 br4 pa4 bg-white h-75">
         <div class="tc pt5">
           <img src="/images/logo-blue.png" class="k-w4-5"/>
