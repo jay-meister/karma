@@ -1,18 +1,23 @@
-<h3>Hello!</h3>
+<div>Hello!</div>
+<br />
 <br />
 <div>
   You have received an offer to work on the project,
-  <span class="b"><%= @codename %></span>
+  <span style="font-weight:bold;">"<%= @codename %>"</span>
 </div>
+<br />
 <br />
 <div>
   To review your offer please
-  <a href="<%= @url %>" class="k-indigo">CLICK HERE</a>
+  <a href="<%= @url %>" style="color:#3f51b5;font-weight:bold;text-decoration:none;">CLICK HERE</a>
 </div>
+<br />
 <br />
 <div>
   With Karma, save all your start information, to make joining
   future projects, easy for you.
 </div>
 <br />
-<div class="k-indigo">Team Karma</div>
+<br />
+<br />
+<div style="color:#3f51b5;">Team Karma</div>

@@ -1,6 +1,6 @@
 Hello!
 
-You have received an offer to work on the project, <%= @codename %>
+You have received an offer to work on the project, "<%= @codename %>"
 
 To review your offer please visit this link:
 <%= @url %>

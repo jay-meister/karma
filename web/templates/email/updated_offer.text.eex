@@ -1,6 +1,6 @@
 Dear <%= @first_name %> <%= @last_name %>,
 
-Your offer to join <%= @codename %> has been updated.
+Your offer to join "<%= @codename %>" has been updated.
 
 Please follow the link <%= @url %> to view your latest offer.
 

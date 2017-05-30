@@ -1,14 +1,20 @@
-<h3>Hi <%= @first_name %>,</h3>
+<div>Hi <%= @first_name %>,</div>
+<br />
 <br />
 <div>An additional step to ensure your security:</div>
 <br />
+<br />
 <div>
-  Please <a href="<%= @url %>" class="k-indigo">CLICK HERE</a>
+  Please <a href="<%= @url %>" style="color:#3f51b5;font-weight:bold;text-decoration:none;">CLICK HERE</a>
   to verify your email address.
 </div>
 <br />
+<br />
 <div>Then start adding to your new Karma profile.</div>
 <br />
-<div class="k-light-indigo">Happy to have you join us!</div>
 <br />
-<div>Team Karma</div>
+<div style="color:#757de8;">Happy to have you join us!</div>
+<br />
+<br />
+<br />
+<div style="color:#3f51b5;">Team Karma</div>

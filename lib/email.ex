@@ -44,14 +44,14 @@ defmodule Karma.Email do
       _ ->
         {"new_offer_registered", R_Helpers.project_offer_url(conn, :show, offer.project_id, offer)}
     end
-    subject = "Karma - Invitation to join #{project.codename}"
+    subject = "Karma - Invitation to join \"#{project.codename}\""
     send_html_email(offer.target_email, subject, url, template, [codename: project.codename])
   end
 
   def send_updated_offer_email(conn, offer, project) do
     template = "updated_offer"
     url = R_Helpers.project_offer_url(conn, :show, offer.project_id, offer)
-    subject = "Karma - updated offer to join #{project.codename}"
+    subject = "Karma - updated offer to join \"#{project.codename}\""
     send_html_email(offer.target_email,
     subject,
     url,

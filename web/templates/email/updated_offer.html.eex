@@ -1,15 +1,20 @@
-<h3>Dear <%= @first_name %> <%= @last_name %>,</h3>
+<div>Dear <%= @first_name %> <%= @last_name %>,</div>
+<br />
 <br />
 <div>
-  Your offer to join <span class="b"><%= @codename %></span>
+  Your offer to join <span style="font-weight:bold;">"<%= @codename %>"</span>
   has been updated.
 </div>
 <br />
+<br />
 <div>
-  Please <a href="<%= @url %>" class="k-indigo">CLICK HERE</a>
+  Please <a href="<%= @url %>" style="color:#3f51b5;font-weight:bold;text-decoration:none;">CLICK HERE</a>
   to view your latest offer.
 </div>
 <br />
-<div class="k-light-indigo">The more information you add to Karma, the easier connecting to projects becomes.</div>
 <br />
-<div class="k-indigo">Team Karma</div>
+<div style="color:#757de8;">The more information you add to Karma, the easier connecting to projects becomes.</div>
+<br />
+<br />
+<br />
+<div style="color:#3f51b5;">Team Karma</div>
