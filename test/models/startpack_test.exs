@@ -184,6 +184,11 @@ defmodule Karma.StartpackTest do
     refute changeset.valid?
   end
 
+
+
+
+
+  # ---- validate startpack changeset tests ---- #
   test "box_rental_changeset valid attributes" do
     with_allowances = %{project_id: 1,
       equipment_rental_required?: true,
@@ -237,7 +242,8 @@ defmodule Karma.StartpackTest do
     changeset = Startpack.mother_changeset(%Startpack{}, @valid_box_equipment_agent_attrs, offer)
     assert changeset.valid?
   end
-  # ---- validate startpack changeset tests ---- #
+
+
 
   # base changeset tests (unconditional required fields)
   test "base changeset for validating startpack with missing basic required data" do
@@ -269,6 +275,36 @@ defmodule Karma.StartpackTest do
   end
   test "validating startpack with agent_deal? true and all required data given" do
     changeset = Startpack.agent_requirement_changeset(%Startpack{}, @valid_attrs)
+    assert changeset.valid?
+  end
+
+  # vehicle allowance changeset tests (conditionally required fields depending on vehicle_allowance_per_week)
+  test "validating startpack with no vehicle allowance returns without adding validations" do
+    offer = %{vehicle_allowance_per_week: 0}
+    valid = %{ @valid_attrs | vehicle_make: "" }
+    changeset = Startpack.vehicle_allowance_changeset(%Startpack{}, valid, offer)
+    # changeset function will not touch the startpack struct as vehicle allowance is 0
+    assert %Startpack{} == changeset
+  end
+  test "validating startpack with vehicle allowance can validation" do
+    offer = %{vehicle_allowance_per_week: 10}
+    invalid = %{ @valid_attrs | vehicle_make: "" }
+    changeset = Startpack.vehicle_allowance_changeset(%Startpack{}, invalid, offer)
+    # changeset is not valid
+    refute changeset.valid?
+  end
+  test "validating startpack with vehicle allowance can pass validation" do
+    offer = %{vehicle_allowance_per_week: 10}
+    valid = %{ @valid_attrs |
+      vehicle_make: "something",
+      vehicle_model: "something",
+      vehicle_colour: "something",
+      vehicle_registration: "something",
+      vehicle_insurance_url: "something"
+    }
+
+    changeset = Startpack.vehicle_allowance_changeset(%Startpack{}, valid, offer)
+    # changeset is valid
     assert changeset.valid?
   end
 end
