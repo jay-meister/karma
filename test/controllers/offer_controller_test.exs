@@ -39,8 +39,8 @@ defmodule Karma.OfferControllerTest do
     new_offer = default_offer(%{target_email: "different@test.com"})
 
     with_mock Karma.Mailer, [deliver_later: fn(email) ->
-      assert email.html_body =~ "You have a new offer waiting for you on Karma."
-      assert email.html_body =~ "Please create a new account using the following link to view the offer."
+      assert email.html_body =~ "You have received an offer to work"
+      assert email.html_body =~ "To review your offer please"
       assert email.to == new_offer.target_email
      end] do
 
@@ -65,8 +65,7 @@ defmodule Karma.OfferControllerTest do
     new_offer = default_offer(%{target_email: "contractor@gmail.com"})
 
     with_mock Karma.Mailer, [deliver_later: fn(email) ->
-      assert email.html_body =~ "You have a new offer waiting for you on Karma."
-      refute email.html_body =~ "Please create a new account using the following link to view the offer."
+      assert email.html_body =~ "You have received an offer to work"
       assert email.to == new_offer.target_email
      end] do
 
@@ -169,8 +168,8 @@ defmodule Karma.OfferControllerTest do
     updated = default_offer(%{additional_notes: "Sneaky peaky"})
 
     with_mock Karma.Mailer, [deliver_later: fn(email) ->
-      assert email.html_body =~ "Your offer on Karma has been updated."
-      assert email.html_body =~ "Please log in to view the offer."
+      assert email.html_body =~ "Your offer to join"
+      assert email.html_body =~ "The more information you add to Karma"
       assert email.to == updated.target_email
      end] do
 

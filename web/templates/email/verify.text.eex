@@ -1,2 +1,11 @@
-Click the link below to verify your email
-<%= @url %>
+Hi <%= @first_name %>,
+
+An additional step to ensure your security:
+
+Please  vistit this link: <%= @url %> to verify your email address.
+
+Then start adding to your new Karma profile.
+
+Happy to have you join us!
+
+Team Karma

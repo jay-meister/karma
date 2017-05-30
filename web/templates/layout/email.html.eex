@@ -6,8 +6,6 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
   </head>
   <body>
-    <h1>Hello!</h1>
     <%= render @view_module, @view_template, assigns %>
-    <h2>- The Team.</h2>
   </body>
 </html>

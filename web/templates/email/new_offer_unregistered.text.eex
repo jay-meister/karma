@@ -1,5 +1,13 @@
-You have a new offer waiting for you on Karma.
+Hello!
 
-Please create a new account using the following link to view the offer.
+You have received an offer to work on the project, "<%= @codename %>"
 
+To review your offer please visit this link:
 <%= @url %>
+
+Start the process by creating your free Karma account.
+
+With Karma, save all your start information, to make joining future projects,
+easy for you.
+
+Team Karma
