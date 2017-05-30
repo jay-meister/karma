@@ -14,7 +14,7 @@
 <%= if @offer.accepted do %>
   <div class="k-bg-indigo white tc pa4 br3 ma2 f2 mt3">Congratulations! <br /> You have accepted this offer!</div>
 <% end %>
-<%= if !@offer.accepted do %>
+<%= if @offer.accepted == false do %>
   <div class="k-bg-indigo white tc pa4 br3 ma2 f2 mt3">You have rejected this offer!</div>
 <% end %>
 
