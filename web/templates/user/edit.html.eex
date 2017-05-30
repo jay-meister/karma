@@ -1,8 +1,11 @@
-<%= link "Back", to: user_path(@conn, :show, @user) %>
+<div class="ph3 ph6-ns mt6 center">
 
-<h2>Edit user</h2>
+  <%= link "Back", to: user_path(@conn, :show, @user) %>
 
-<%= render "form.html", changeset: @changeset,
-                        action: user_path(@conn, :update, @user),
-                        button_text: "Update Details"
-                        %>
+  <h1 class="f1 mv4 fw5">Edit user</h1>
+
+  <%= render "form.html", changeset: @changeset,
+                          action: user_path(@conn, :update, @user),
+                          button_text: "Update Details"
+                          %>
+</div>

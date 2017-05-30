@@ -1,8 +1,12 @@
-<h2>Edit startpack</h2>
+<div class="ph3 ph6-ns mt6 center">
 
-<%= render "form.html", changeset: @changeset,
-                        action: startpack_path(@conn, :update, @startpack),
-                        startpack: @startpack
-                        %>
+  <h2>Edit startpack</h2>
 
-<%= link "Back", to: startpack_path(@conn, :index) %>
+  <%= render "form.html", changeset: @changeset,
+                          action: startpack_path(@conn, :update, @startpack),
+                          startpack: @startpack
+                          %>
+
+  <%= link "Back", to: startpack_path(@conn, :index) %>
+
+</div>

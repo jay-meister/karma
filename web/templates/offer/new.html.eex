@@ -1,15 +1,19 @@
-<%= link "Back", to: project_offer_path(@conn, :index, @project_id), class: "link" %>
+<div class="ph3 ph6-ns mt6 center">
 
-<h1 class="f1 mv4 fw5">Make new offer</h1>
+  <%= link "Back", to: project_offer_path(@conn, :index, @project_id), class: "link" %>
+
+  <h1 class="f1 mv4 fw5">Make new offer</h1>
 
 
-<%= render "form.html", changeset: @changeset,
-                        action: project_offer_path(@conn, :create, @project_id),
-                        button_text: "Make",
-                        target_email_disabled: false,
-                        job_titles: @job_titles,
-                        job_departments: @job_departments,
-                        conn: @conn,
-                        offer: %{job_title: ""},
-                        job_title: @job_title,
-                        class: "mv4" %>
+  <%= render "form.html", changeset: @changeset,
+                          action: project_offer_path(@conn, :create, @project_id),
+                          button_text: "Make",
+                          target_email_disabled: false,
+                          job_titles: @job_titles,
+                          job_departments: @job_departments,
+                          conn: @conn,
+                          offer: %{job_title: ""},
+                          job_title: @job_title,
+                          class: "mv4" %>
+
+</div>
