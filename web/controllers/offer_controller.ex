@@ -1,7 +1,7 @@
 defmodule Karma.OfferController do
   use Karma.Web, :controller
 
-  alias Karma.{User, Offer, Project, LayoutView, Startpack}
+  alias Karma.{User, Offer, Project, Startpack}
 
   import Karma.ProjectController, only: [project_owner: 2]
   plug :project_owner when action in [:index, :new, :create, :show, :edit, :update, :delete]

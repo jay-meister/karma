@@ -14,7 +14,7 @@
     </div>
     <div class="absolute right-1 top-2 f2">£<%= offer.fee_per_day_inc_holiday %>/day</div>
     <div>
-      <div class="dib ma1"><%= offer.department %></div>
+      <div class="dib ma1"><%= offer.department %>: </div>
       <div class="dib ma1"><%= offer.job_title %></div>
     </div>
   </div>
