@@ -73,35 +73,35 @@ body {
 
 /*borders*/
 
-.k-b-indigo {
+.k-b--indigo {
   border-color: #3f51b5;
 }
 
-.k-b-dark-indigo {
+.k-b--dark-indigo {
   border-color: #002984;
 }
 
-.k-b-light-indigo {
+.k-b--light-indigo {
   border-color: #757de8;
 }
 
-.k-b-grey {
+.k-b--grey {
   border-color: #eeeeee;
 }
 
-.k-b-black {
+.k-b--black {
   border-color: #333333;
 }
 
-.k-b-accent {
+.k-b--accent {
   border-color: #eec643;
 }
 
-.k-b-success {
+.k-b--success {
   border-color: #9eebcf;
 }
 
-.k-b-error {
+.k-b--error {
   border-color: #ff725c;
 }
 
@@ -147,7 +147,7 @@ body {
   color: #ff725c;
 }
 
-.link {
+.k-link {
   color: #337ab7;
 }
 
@@ -262,10 +262,4 @@ input[type=checkbox] {
 .help-block {
   text-transform: capitalize;
   color: #757de8;
-}
-
-.arrow {
-  right: 50%;
-  margin-right: -16px;
-  top: -4rem;
 }
