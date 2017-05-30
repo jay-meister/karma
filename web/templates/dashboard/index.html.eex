@@ -10,7 +10,7 @@
       <%= component "plus_button.html", link: "/projects/new" %>
     </div>
     <div class="tl f2 mb5">My projects</div>
-    <div class="k-bg-light-grey br3 pa3 mb3">
+    <div class="br3 pa3 mb3">
       <%= for project <- @projects do %>
       <%= component "project_tile.html",
       project_id: project.id,
@@ -28,12 +28,12 @@
 <div class="tl f2 mb3">My offers</div>
 
 <%= if length(@offers) == 0 do %>
-  <div class="k-bg-light-grey br3 pa4 mb3 tc">
+  <div class="br3 pa4 mb3 tc">
     <div class="f2">You don't have any offers yet</div>
   </div>
 <% end %>
 <%= if length(@offers) != 0 do %>
-  <div class="k-bg-light-grey br3 pa3 mb3">
+  <div class="br3 pa3 mb3">
     <%= for offer <- @offers do %>
       <%= component "offer_tile.html", offer: offer, url: project_offer_path(@conn, :show, offer.project_id, offer.id) %>
     <% end %>

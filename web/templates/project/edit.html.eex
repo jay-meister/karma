@@ -1,7 +1,11 @@
-<%= link "Back", to: project_path(@conn, :show, @project) %>
+<div class="ph3 ph6-ns mt6 center">
 
-<h2>Edit project</h2>
+  <%= link "Back", to: project_path(@conn, :show, @project) %>
 
-<%= render "form.html", changeset: @changeset,
-                        action: project_path(@conn, :update, @project),
-                        button_text: "Update" %>
+  <h2>Edit project</h2>
+
+  <%= render "form.html", changeset: @changeset,
+                          action: project_path(@conn, :update, @project),
+                          button_text: "Update" %>
+
+</div>
