@@ -14,7 +14,7 @@
   </head>
 
   <body class="bg-white k-indigo mv4">
-    <div class="mw9 pl6 pr6 center">
+    <div class="mw9 center">
       <header class="h4 bb k-b-grey">
         <nav role="navigation">
           <ul class="mv4 pl0 mb0 nested-list-reset ol fl">
@@ -37,7 +37,7 @@
       <p class="alert pa4 br2 mb4 dark-grey bg-light-green b--dark-green" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert pa4 br2 mb4 white bg-light-red b--red" role="alert"><%= get_flash(@conn, :error) %></p>
 
-      <main role="main">
+      <main role="main" class="mt4">
         <%= render @view_module, @view_template, assigns %>
       </main>
 
