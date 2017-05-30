@@ -1,30 +1,16 @@
-
-/* This file is for your main application css. */
-
-.help-block {
-  text-transform: capitalize;
-  color: #757de8;
-}
-
-.arrow {
-  right: 50%;
-  margin-right: -16px;
-  top: -4rem;
-}
+/*Karmaradio elements*/
 
 html {
 font-size: 10px;
+font-family:sans-serif;
+-webkit-text-size-adjust:100%;
+-ms-text-size-adjust:100%
 }
 
 body {
   font-family: 'Lato', sans-serif;
   font-size: 14px;
-}
-
-.header {
-  height: 9rem;
-  border-bottom: 1px solid #eeeeee;
-  margin-bottom: 3rem;
+  margin:0
 }
 
 .k-button-no-underline:hover {
@@ -37,18 +23,7 @@ body {
   outline: 0;
 }
 
-.k-ftitle {
-  font-size: 7rem;
-}
-
-
-.k-h1px {
-  height: 1px;
-}
-
-.k-h3-5r {
-  height: 3.5rem;
-}
+/*Karmaradio Colours*/
 
 /*backgrounds*/
 .k-bg-indigo {
@@ -79,6 +54,22 @@ body {
   background-color: #cfcfcf;
 }
 
+.k-bg-black {
+  background-color: #333333;
+}
+
+.k-bg-accent {
+  background-color: #eec643;
+}
+
+.k-bg-success {
+  background-color: #9eebcf;
+}
+
+.k-bg-error {
+  background-color: #ff725c;
+}
+
 
 /*borders*/
 
@@ -94,30 +85,27 @@ body {
   border-color: #757de8;
 }
 
-
-
-
-.k-f2-5 {
-  font-size: 2rem;
+.k-b-grey {
+  border-color: #eeeeee;
 }
 
-.b-h3 {
-  height: 4rem;
+.k-b-black {
+  border-color: #333333;
 }
 
-.karma-input {
-
+.k-b-accent {
+  border-color: #eec643;
 }
 
-.karma-input::after {
-  content : "";
-  position: absolute;
-  left    : 0;
-  bottom  : 0;
-  height  : 1px;
-  width   : 50%;  /* or 100px */
-  border-bottom: 3px solid #707070;
+.k-b-success {
+  border-color: #9eebcf;
 }
+
+.k-b-error {
+  border-color: #ff725c;
+}
+
+/*font-colour*/
 
 .k-indigo {
   color: #3f51b5;
@@ -141,6 +129,74 @@ body {
 
 .k-light-grey {
   color: #cfcfcf;
+}
+
+.k-black {
+  color: #333333;
+}
+
+.k-accent {
+  color: #eec643;
+}
+
+.k-success {
+  color: #9eebcf;
+}
+
+.k-error {
+  color: #ff725c;
+}
+
+.link {
+  color: #337ab7;
+}
+
+select {
+  color: #3f51b5;
+}
+
+.help-block {
+  text-transform: capitalize;
+  color: #757de8;
+}
+
+/*karma layout/custom components*/
+
+.karma-input {
+
+}
+
+.karma-input::after {
+  content : "";
+  position: absolute;
+  left    : 0;
+  bottom  : 0;
+  height  : 1px;
+  width   : 50%;  /* or 100px */
+  border-bottom: 3px solid #707070;
+}
+
+
+.k-ftitle {
+  font-size: 7rem;
+}
+
+
+.k-h1px {
+  height: 1px;
+}
+
+.k-h3-5r {
+  height: 3.5rem;
+}
+
+
+.k-f2-5 {
+  font-size: 2rem;
+}
+
+.b-h3 {
+  height: 4rem;
 }
 
 .k-lh-3 {
@@ -188,14 +244,13 @@ input[type=checkbox] {
   width: 2rem;
 }
 
-.link {
-  color: #337ab7;
-}
-
-select {
-  color: #3f51b5;
-}
-
 .alert:empty {
   display: none;
+}
+
+
+.arrow {
+  right: 50%;
+  margin-right: -16px;
+  top: -4rem;
 }
