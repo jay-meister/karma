@@ -4,20 +4,20 @@ defmodule Karma.Email do
   alias Karma.{RedisCli, Controllers.Helpers}
   alias Karma.Router.Helpers, as: R_Helpers
 
-  def send_text_email(recipient, subject, url, template) do
+  def send_text_email(recipient, subject, url, template, assigns \\ []) do
     new_email()
     |> to(recipient) # also needs to be a validated email
     |> from(System.get_env("ADMIN_EMAIL"))
     |> subject(subject)
     |> put_text_layout({Karma.LayoutView, "email.text"})
-    |> render("#{template}.text", url: url)
+    |> render("#{template}.text", [url: url] ++ assigns)
   end
 
-  def send_html_email(recipient, subject, url, template) do
+  def send_html_email(recipient, subject, url, template, assigns \\ []) do
     recipient
-    |> send_text_email(subject, url, template)
+    |> send_text_email(subject, url, template, assigns)
     |> put_html_layout({Karma.LayoutView, "email.html"})
-    |> render("#{template}.html", url: url)
+    |> render("#{template}.html", [url: url] ++ assigns)
   end
 
   def send_verification_email(user) do
