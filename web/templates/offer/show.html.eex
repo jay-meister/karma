@@ -1,5 +1,5 @@
 <%= link "Dashboard", to: dashboard_path(@conn, :index), class: "ma2" %>
-<%= if @conn.assigns.current_user.email == @offer.target_email do %>
+<%= if @offer.user && @conn.assigns.current_user.email == @offer.offer.user.id do %>
   <%= link "Offers", to: project_offer_path(@conn, :index, @offer.project_id), class: "ma2" %>
 <% end %>
 <%= if @project.user.email == @conn.assigns.current_user.email do %>
