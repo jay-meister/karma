@@ -187,7 +187,7 @@ defmodule Karma.OfferController do
               |> Karma.Mailer.deliver_later()
 
               conn
-              |> put_flash(:info, "Offer updated successfully.")
+              |> put_flash(:info, "Offer updated successfully, and re-emailed to recipient.")
               |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
           end
         end
