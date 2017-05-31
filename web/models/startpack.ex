@@ -198,6 +198,16 @@ defmodule Karma.Startpack do
     ]
   end
 
+  def paye_keys do
+    [ :p45_url,
+      :national_insurance_number,
+      :for_paye_only
+    ]
+  end
+
+  def for_paye_only do
+    ["first since april", "now only job", "have another job"]
+  end
 
   def student_loan_keys do
      [ :student_loan_not_repayed?,
@@ -214,6 +224,7 @@ defmodule Karma.Startpack do
     |> agent_requirement_changeset(startpack)
     |> base_requirement_changeset(startpack)
     |> vehicle_allowance_changeset(startpack, offer)
+    |> student_loan_changeset(startpack)
   end
 
   def base_requirement_changeset(changeset, startpack) do
@@ -264,17 +275,6 @@ defmodule Karma.Startpack do
       false ->
         changeset
     end
-  end
-
-  def paye_keys do
-    [ :p45_url,
-      :national_insurance_number,
-      :for_paye_only
-    ]
-  end
-
-  def for_paye_only do
-    ["first since april", "now only job", "have another job"]
   end
 
   def contract_type_changeset(changeset, startpack, offer) do
