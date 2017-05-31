@@ -4,6 +4,7 @@ defmodule Karma.Document do
   schema "documents" do
     field :url, :string
     field :category, :string
+    field :name, :string
     belongs_to :project, Karma.Project
 
     timestamps()
@@ -14,7 +15,7 @@ defmodule Karma.Document do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:url, :category])
-    |> validate_required([:url, :category])
+    |> cast(params, [:url, :category, :name])
+    |> validate_required([:url, :category, :name])
   end
 end

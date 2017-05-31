@@ -3,7 +3,7 @@ defmodule Karma.DocumentTest do
 
   alias Karma.Document
 
-  @valid_attrs %{category: "some content", url: "some content"}
+  @valid_attrs %{category: "some content", url: "some content", name: "some content"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

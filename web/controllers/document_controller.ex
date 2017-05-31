@@ -1,7 +1,7 @@
 defmodule Karma.DocumentController do
   use Karma.Web, :controller
 
-  alias Karma.{Document, Project}
+  alias Karma.{Document, Project, S3}
 
   def index(conn, %{"project_id" => project_id}) do
     documents = Repo.all(Document)
@@ -15,17 +15,34 @@ defmodule Karma.DocumentController do
     render(conn, "new.html", changeset: changeset, project: project)
   end
 
-  def create(conn, %{"document" => document_params, "project_id" => project_id}) do
-    changeset = Document.changeset(%Document{}, document_params)
+  def create(conn, %{"document" => %{"file" => file_params} = document_params, "project_id" => project_id}) do
     project = Repo.get_by(Project, id: project_id)
+
+    case S3.upload({:url, file_params}) do
+      {:ok, :url, url} ->
+        document_params =
+          Map.delete(document_params, "file")
+          |> Map.put_new("url", url)
+      {:error, :url, error} ->
+        conn
+        |> put_flash(:error, "Error uploading document!")
+        |> redirect(to: project_path(conn, :show, project))
+    end
+
+    changeset =
+      project
+      |> build_assoc(:documents)
+      |> Document.changeset(document_params)
 
     case Repo.insert(changeset) do
       {:ok, _document} ->
         conn
-        |> put_flash(:info, "Document created successfully.")
-        |> redirect(to: project_document_path(conn, :index, project))
+        |> put_flash(:info, "Document uploaded successfully.")
+        |> redirect(to: project_path(conn, :show, project))
       {:error, changeset} ->
-        render(conn, "new.html", changeset: changeset, project: project)
+        conn
+        |> put_flash(:error, "Error uploading document!")
+        |> redirect(to: project_path(conn, :show, project))
     end
   end
 
