@@ -244,10 +244,6 @@ select {
   width: 1px;
 }
 
-input[type=checkbox] {
-  width: 2rem;
-}
-
 .alert:empty {
   display: none;
 }

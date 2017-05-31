@@ -1,12 +1,8 @@
-<div class="vh-100 w-100 w-30-ns center dt">
+<div class="vh-100 w-100 mw7-ns  center dt">
   <div class="dtc v-mid">
     <div class="ba b--black-10 br4 pa4 bg-white">
-        <div class="tc pt4">
+        <div class="tc pt3">
           <img src="/images/logo-blue.png" class="k-w4-5"/>
-          <div class="tc">
-          <h4 class="mt4">Already have an account?</h4>
-          <%= link "Login", to: session_path(@conn, :new), class: "k-dark-indigo underline" %>
-          </div>
           <h2>Create account</h2>
         </div>
         <div class="">
@@ -53,6 +49,11 @@
             %>
 
             <%= component "submit_button.html", title: "Create" %>
+
+            <div class="tc">
+            <h4 class="mv2">Already have an account?</h4>
+            <%= link "Login", to: session_path(@conn, :new), class: "k-dark-indigo underline k-link mb2" %>
+            </div>
           <% end %>
         </div>
     </div>
