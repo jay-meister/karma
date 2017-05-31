@@ -51,7 +51,7 @@ defmodule Karma.Startpack do
     field :vat_number, :string
     field :p45_url, :string
     field :for_paye_only, :string
-    field :student_loan_not_repayed?, :boolean, default: false
+    field :student_loan_not_repayed?, :boolean, default: true, nil: false
     field :student_loan_repay_direct?, :boolean, default: nil
     field :student_loan_plan_1?, :boolean, default: nil
     field :student_loan_finished_before_6_april?, :boolean, default: nil
@@ -198,6 +198,25 @@ defmodule Karma.Startpack do
     ]
   end
 
+  def paye_keys do
+    [ :p45_url,
+      :national_insurance_number,
+      :for_paye_only
+    ]
+  end
+
+  def for_paye_only do
+    ["first since april", "now only job", "have another job"]
+  end
+
+  def student_loan_keys do
+     [ :student_loan_not_repayed?,
+       :student_loan_repay_direct?,
+       :student_loan_plan_1?,
+       :student_loan_finished_before_6_april?
+     ]
+  end
+
   def mother_changeset(struct, startpack, offer) do
     struct
     |> box_rental_changeset(startpack, offer)
@@ -205,6 +224,7 @@ defmodule Karma.Startpack do
     |> agent_requirement_changeset(startpack)
     |> base_requirement_changeset(startpack)
     |> vehicle_allowance_changeset(startpack, offer)
+    |> student_loan_changeset(startpack)
   end
 
   def base_requirement_changeset(changeset, startpack) do
@@ -257,17 +277,6 @@ defmodule Karma.Startpack do
     end
   end
 
-  def paye_keys do
-    [ :p45_url,
-      :national_insurance_number,
-      :for_paye_only
-    ]
-  end
-
-  def for_paye_only do
-    ["first since april", "now only job", "have another job"]
-  end
-
   def contract_type_changeset(changeset, startpack, offer) do
     case offer do
       %Karma.Offer{contract_type: "PAYE"} ->
@@ -281,6 +290,31 @@ defmodule Karma.Startpack do
         |> validate_required([ :schedule_d_letter_url ])
       _ ->
         changeset
+    end
+  end
+
+  def student_loan_changeset(changeset, startpack) do
+    st_keys = [
+      :student_loan_not_repayed?,
+      :student_loan_repay_direct?,
+      :student_loan_finished_before_6_april?
+    ]
+    
+    case startpack do
+      # student_loan_not_repayed? cannot be null
+      %{student_loan_not_repayed?: false} ->
+        changeset
+        |> cast(startpack, [:student_loan_not_repayed?])
+      %{student_loan_repay_direct?: true} ->
+        changeset
+        |> cast(startpack, st_keys)
+        |> validate_required(st_keys)
+      %{student_loan_repay_direct?: false} ->
+        st_keys = st_keys ++ [:student_loan_plan_1?]
+
+        changeset
+        |> cast(startpack, st_keys)
+        |> validate_required(st_keys)
     end
   end
 

@@ -91,6 +91,7 @@
   form: f,
   atom: :passport_image,
   url_atom: :passport_url,
+  helper_text: "Upload an image of your passport",
   image_url: @startpack.passport_url
   %>
 
@@ -129,70 +130,73 @@
   atom: :primary_address_tel
   %>
 
-  <%= component "checkbox.html",
-  form: f,
-  atom: :agent_deal?
-  %>
+  <div conditional class="mb4">
+    <%= label f, :agent_deal?, class: "dib mw-100 mb2 fw4" %>
+    <%= checkbox f, :agent_deal?, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
+    <%= error_tag f, :agent_deal? %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :agent_name
-  %>
+    <div conditional_child class="mt4">
+      <%= component "input.html",
+      form: f,
+      atom: :agent_name
+      %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :agent_company
-  %>
+      <%= component "input.html",
+      form: f,
+      atom: :agent_company
+      %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :agent_address
-  %>
+      <%= component "input.html",
+      form: f,
+      atom: :agent_address
+      %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :agent_tel
-  %>
+      <%= component "input.html",
+      form: f,
+      atom: :agent_tel
+      %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :agent_email_address
-  %>
+      <%= component "input.html",
+      form: f,
+      atom: :agent_email_address
+      %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :agent_bank_name
-  %>
+      <%= component "input.html",
+      form: f,
+      atom: :agent_bank_name
+      %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :agent_bank_address
-  %>
+      <%= component "input.html",
+      form: f,
+      atom: :agent_bank_address
+      %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :agent_bank_sort_code
-  %>
+      <%= component "input.html",
+      form: f,
+      atom: :agent_bank_sort_code
+      %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :agent_bank_account_number
-  %>
+      <%= component "input.html",
+      form: f,
+      atom: :agent_bank_account_number
+      %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :agent_bank_account_name
-  %>
+      <%= component "input.html",
+      form: f,
+      atom: :agent_bank_account_name
+      %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :agent_bank_account_swift_code
-  %>
+      <%= component "input.html",
+      form: f,
+      atom: :agent_bank_account_swift_code
+      %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :agent_bank_account_iban
-  %>
+      <%= component "input.html",
+      form: f,
+      atom: :agent_bank_account_iban
+      %>
+    </div>
+  </div>
 
   <%= component "number_input.html",
   form: f,
@@ -205,6 +209,7 @@
   form: f,
   atom: :box_rental_image,
   url_atom: :box_rental_url,
+  helper_text: "Upload your box rental inventory list with insurance values",
   image_url: @startpack.box_rental_url
   %>
 
@@ -219,6 +224,7 @@
   form: f,
   atom: :equipment_rental_image,
   url_atom: :equipment_rental_url,
+  helper_text: "Upload your equipment rental inventory list with insurance values",
   image_url: @startpack.equipment_rental_url
   %>
 
@@ -246,6 +252,7 @@
   form: f,
   atom: :vehicle_insurance_image,
   url_atom: :vehicle_insurance_url,
+  helper_text: "Upload an image of your vehicle insurance",
   image_url: @startpack.vehicle_insurance_url
   %>
 
@@ -263,6 +270,7 @@
   form: f,
   atom: :p45_image,
   url_atom: :p45_url,
+  helper_text: "Upload an image of your P45",
   image_url: @startpack.p45_url
   %>
 
@@ -275,28 +283,46 @@
 
   <%= component "checkbox.html",
   form: f,
-  atom: :student_loan_not_repayed?
+  atom: :student_loan_not_repayed?,
+  label: ""
   %>
 
-  <%= component "checkbox.html",
-  form: f,
-  atom: :student_loan_repay_direct?
-  %>
+  <div conditional class="mb4">
+    <%= label f, :student_loan_not_repayed?, "I have a student loan which is not fully repayed", class: "dib mw-100 mb2 fw4" %>
+    <%= checkbox f, :student_loan_not_repayed?, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
+    <%= error_tag f, :student_loan_not_repayed? %>
 
-  <%= component "checkbox.html",
-  form: f,
-  atom: :student_loan_plan_1?
-  %>
+    <div conditional_child class="mt4">
 
-  <%= component "checkbox.html",
-  form: f,
-  atom: :student_loan_finished_before_6_april?
-  %>
+      <%= component "radio.html",
+      form: f,
+      atom: :student_loan_repay_direct?,
+      radios: ["Yes": true, "No": false],
+      label: "I am repaying my Loan direct to the Student Loan Co."
+      %>
+
+      <%= component "radio.html",
+      form: f,
+      atom: :student_loan_plan_1?,
+      radios: ["Student loan Plan 1": true, "Student loan Plan 2": false],
+      label: "Student loan Plan"
+      %>
+
+      <%= component "radio.html",
+      form: f,
+      atom: :student_loan_finished_before_6_april?,
+      radios: ["Yes": true, "No": false],
+      label: "I finished my studies before last April 6th."
+      %>
+
+    </div>
+  </div>
 
   <%= component "file_upload.html",
   form: f,
   atom: :schedule_d_letter_image,
   url_atom: :schedule_d_letter_url,
+  helper_text: "Upload an image of your Schedule D letter",
   image_url: @startpack.schedule_d_letter_url
   %>
 
@@ -312,8 +338,9 @@
 
   <%= component "file_upload.html",
   form: f,
-  atom: :loan_out_company_ct_image,
+  atom: :loan_out_company_cert_image,
   url_atom: :loan_out_company_cert_url,
+  helper_text: "Upload an image of your loan out companies certificate",
   image_url: @startpack.loan_out_company_cert_url
   %>
 
@@ -346,12 +373,15 @@
   form: f,
   atom: :bank_iban
   %>
-
+  
   <%= component "input.html",
   form: f,
   atom: :bank_swift_code
   %>
 
   <%= component "submit_button.html", title: "Update Startpack" %>
-
 <% end %>
+
+
+<script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+<script>require("web/static/js/app").App.studentLoanRadios()</script>
