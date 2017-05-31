@@ -18,28 +18,29 @@ defmodule Karma.DocumentController do
   def create(conn, %{"document" => %{"file" => file_params} = document_params, "project_id" => project_id}) do
     project = Repo.get_by(Project, id: project_id)
 
-    case S3.upload({:url, file_params}) do
-      {:ok, :url, url} ->
-        document_params =
-          Map.delete(document_params, "file")
-          |> Map.put_new("url", url)
-      {:error, :url, error} ->
-        conn
-        |> put_flash(:error, "Error uploading document!")
-        |> redirect(to: project_path(conn, :show, project))
-    end
+    updated_params =
+      case S3.upload({:url, file_params}) do
+        {:ok, :url, url} ->
+            Map.delete(document_params, "file")
+            |> Map.put_new("url", url)
+        {:error, :url, _error} ->
+          conn
+          |> put_flash(:error, "Error uploading document!")
+          |> redirect(to: project_path(conn, :show, project))
+          document_params
+      end
 
     changeset =
       project
       |> build_assoc(:documents)
-      |> Document.changeset(document_params)
+      |> Document.changeset(updated_params)
 
     case Repo.insert(changeset) do
       {:ok, _document} ->
         conn
         |> put_flash(:info, "Document uploaded successfully.")
         |> redirect(to: project_path(conn, :show, project))
-      {:error, changeset} ->
+      {:error, _changeset} ->
         conn
         |> put_flash(:error, "Error uploading document!")
         |> redirect(to: project_path(conn, :show, project))
