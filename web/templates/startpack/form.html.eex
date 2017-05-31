@@ -91,6 +91,7 @@
   form: f,
   atom: :passport_image,
   url_atom: :passport_url,
+  helper_text: "Upload an image of your passport",
   image_url: @startpack.passport_url
   %>
 
@@ -205,6 +206,7 @@
   form: f,
   atom: :box_rental_image,
   url_atom: :box_rental_url,
+  helper_text: "Upload your box rental inventory list with insurance values",
   image_url: @startpack.box_rental_url
   %>
 
@@ -219,6 +221,7 @@
   form: f,
   atom: :equipment_rental_image,
   url_atom: :equipment_rental_url,
+  helper_text: "Upload your equipment rental inventory list with insurance values",
   image_url: @startpack.equipment_rental_url
   %>
 
@@ -246,6 +249,7 @@
   form: f,
   atom: :vehicle_insurance_image,
   url_atom: :vehicle_insurance_url,
+  helper_text: "Upload an image of your vehicle insurance",
   image_url: @startpack.vehicle_insurance_url
   %>
 
@@ -263,6 +267,7 @@
   form: f,
   atom: :p45_image,
   url_atom: :p45_url,
+  helper_text: "Upload an image of your P45",
   image_url: @startpack.p45_url
   %>
 
@@ -297,6 +302,7 @@
   form: f,
   atom: :schedule_d_letter_image,
   url_atom: :schedule_d_letter_url,
+  helper_text: "Upload an image of your Schedule D letter",
   image_url: @startpack.schedule_d_letter_url
   %>
 
@@ -312,8 +318,9 @@
 
   <%= component "file_upload.html",
   form: f,
-  atom: :loan_out_company_ct_image,
+  atom: :loan_out_company_cert_image,
   url_atom: :loan_out_company_cert_url,
+  helper_text: "Upload an image of your loan out companies certificate",
   image_url: @startpack.loan_out_company_cert_url
   %>
 
@@ -346,12 +353,15 @@
   form: f,
   atom: :bank_iban
   %>
-
+  
   <%= component "input.html",
   form: f,
   atom: :bank_swift_code
   %>
 
   <%= component "submit_button.html", title: "Update Startpack" %>
-
 <% end %>
+
+
+<script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+<script>require("web/static/js/app").App.studentLoanRadios()</script>

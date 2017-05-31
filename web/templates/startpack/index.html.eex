@@ -9,5 +9,6 @@
   <%= render "form.html", changeset: @changeset,
                           action: startpack_path(@conn, :update, @startpack),
                           offer: @offer,
-                          startpack: @startpack %>
+                          startpack: @startpack,
+                          conn: @conn %>
 </div>

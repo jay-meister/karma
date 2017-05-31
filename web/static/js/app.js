@@ -55,6 +55,30 @@ function setupListeners(job_title) {
   });
 }
 
+function studentLoanRadios() {
+  // containing div
+  var optionalQuestionContainer = document.querySelector('[selector="container-student_loan_plan_1?"]')
+  // array of 2 radios
+  var direct = document.querySelectorAll('[selector="student_loan_repay_direct?"]')
+  direct.forEach(function (radio) {
+    // show or hide optional question depending on initial state
+    if (radio.value === "true" && radio.checked) {
+      optionalQuestionContainer.style.display = 'none'
+    } else if (radio.value === "false" && radio.checked) {
+      optionalQuestionContainer.style.display = 'block'
+    }
+    // add event listeners to the radio
+    radio.addEventListener("change", function(v) {
+      if (v.target.value === "true") {
+        optionalQuestionContainer.style.display = 'none'
+      } else {
+        optionalQuestionContainer.style.display = 'block'
+      }
+    })
+  })
+}
+
 export var App = {
-  setupListeners: setupListeners
+  setupListeners: setupListeners,
+  studentLoanRadios: studentLoanRadios
 }
