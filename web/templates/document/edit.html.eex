@@ -1,0 +1,6 @@
+<h2>Edit document</h2>
+
+<%= render "form.html", changeset: @changeset,
+                        action: project_document_path(@conn, :update, @project, @document) %>
+
+<%= link "Back", to: project_document_path(@conn, :index, @project) %>

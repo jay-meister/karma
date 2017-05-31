@@ -1,0 +1,23 @@
+<h2>Show document</h2>
+
+<ul>
+
+  <li>
+    <strong>Project:</strong>
+    <%= @document.project_id %>
+  </li>
+
+  <li>
+    <strong>Url:</strong>
+    <%= @document.url %>
+  </li>
+
+  <li>
+    <strong>Category:</strong>
+    <%= @document.category %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: project_document_path(@conn, :edit, @project, @document) %>
+<%= link "Back", to: project_document_path(@conn, :index, @project) %>
