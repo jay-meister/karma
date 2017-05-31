@@ -346,4 +346,60 @@ defmodule Karma.StartpackTest do
     changeset = Startpack.contract_type_changeset(%Startpack{}, valid, offer)
     assert changeset == %Startpack{}
   end
+
+  # Student loan logic:
+  test "startpack valid student loan already repaid" do
+    valid = %{student_loan_not_repayed?: false}
+    changeset = Startpack.student_loan_changeset(%Startpack{}, valid)
+    assert changeset.valid?
+    assert Map.has_key?(changeset.changes, :student_loan_not_repayed?)
+  end
+  test "startpack valid - student loan being repaid direct" do
+    base = %{
+      student_loan_not_repayed?: true,
+      student_loan_repay_direct?: true,
+      student_loan_finished_before_6_april?: nil
+    }
+
+    changeset = Startpack.student_loan_changeset(%Startpack{}, base)
+    refute changeset.valid?
+
+    valid = %{ base | student_loan_finished_before_6_april?: true }
+    changeset = Startpack.student_loan_changeset(%Startpack{}, valid)
+    assert changeset.valid?
+    assert Map.has_key?(changeset.changes, :student_loan_finished_before_6_april?)
+
+    valid = %{ base | student_loan_finished_before_6_april?: false }
+    changeset = Startpack.student_loan_changeset(%Startpack{}, valid)
+    assert changeset.valid?
+    assert Map.has_key?(changeset.changes, :student_loan_finished_before_6_april?)
+  end
+  test "startpack valid - student loan not being repaid direct" do
+    base = %{
+      student_loan_not_repayed?: true,
+      student_loan_repay_direct?: false,
+      student_loan_plan_1?: nil,
+      student_loan_finished_before_6_april?: nil
+    }
+
+    changeset = Startpack.student_loan_changeset(%Startpack{}, base)
+    refute changeset.valid?
+
+    invalid1 = %{ base | student_loan_plan_1?: true }
+    changeset = Startpack.student_loan_changeset(%Startpack{}, invalid1)
+    refute changeset.valid?
+
+    invalid2 = %{ base | student_loan_plan_1?: false }
+    changeset = Startpack.student_loan_changeset(%Startpack{}, invalid2)
+    refute changeset.valid?
+
+    valid1 = %{ invalid1 | student_loan_finished_before_6_april?: true }
+    changeset = Startpack.student_loan_changeset(%Startpack{}, valid1)
+    assert changeset.valid?
+
+    valid2 = %{ invalid2 | student_loan_finished_before_6_april?: false }
+    changeset = Startpack.student_loan_changeset(%Startpack{}, valid2)
+    assert changeset.valid?
+
+  end
 end
