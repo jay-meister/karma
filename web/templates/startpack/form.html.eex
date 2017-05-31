@@ -211,6 +211,7 @@
   <%= component "number_input.html",
   form: f,
   atom: :equipment_rental_value,
+  label: "Equipment rental inventory value",
   placeholder: "Enter a number"
   %>
 

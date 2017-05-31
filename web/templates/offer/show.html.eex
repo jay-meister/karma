@@ -59,7 +59,7 @@
     {:department, nil, nil},
     {:job_title, nil, nil},
     {:contract_type, nil, nil},
-    {:start_date, nil, format_date(@offer.start_date)},
+    {:start_date, "Shoot start date", format_date(@offer.start_date)},
     {:daily_or_weekly, nil, nil},
     {:working_week, nil, nil},
     {:additional_notes, nil, nil}
@@ -74,17 +74,17 @@
   <%= for {atom, label, formatted} <- [
     {:currency, nil, nil},
     {:fee_per_day_inc_holiday, nil, nil},
+    {:sixth_day_fee_multiplier, nil, nil},
+    {:seventh_day_fee_multiplier, nil, nil},
     {:fee_per_day_exc_holiday, nil, nil},
     {:fee_per_week_inc_holiday, nil, nil},
     {:fee_per_week_exc_holiday, nil, nil},
     {:holiday_pay_per_day, nil, nil},
     {:holiday_pay_per_week, nil, nil},
-    {:sixth_day_fee_multiplier, nil, nil},
     {:sixth_day_fee_inc_holiday, nil, nil},
     {:sixth_day_fee_exc_holiday, nil, nil},
     {:seventh_day_fee_inc_holiday, nil, nil},
-    {:seventh_day_fee_exc_holiday, nil, nil},
-    {:seventh_day_fee_multiplier, nil, nil}
+    {:seventh_day_fee_exc_holiday, nil, nil}
   ] do %>
     <%= component "data.html",
     data: formatted || Map.get(@offer, atom),
