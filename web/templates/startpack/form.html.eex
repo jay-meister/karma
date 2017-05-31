@@ -130,70 +130,73 @@
   atom: :primary_address_tel
   %>
 
-  <%= component "checkbox.html",
-  form: f,
-  atom: :agent_deal?
-  %>
+  <div conditional class="mb4">
+    <%= label f, :agent_deal?, class: "dib mw-100 mb2 fw4" %>
+    <%= checkbox f, :agent_deal?, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
+    <%= error_tag f, :agent_deal? %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :agent_name
-  %>
+    <div conditional_child class="mt4">
+      <%= component "input.html",
+      form: f,
+      atom: :agent_name
+      %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :agent_company
-  %>
+      <%= component "input.html",
+      form: f,
+      atom: :agent_company
+      %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :agent_address
-  %>
+      <%= component "input.html",
+      form: f,
+      atom: :agent_address
+      %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :agent_tel
-  %>
+      <%= component "input.html",
+      form: f,
+      atom: :agent_tel
+      %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :agent_email_address
-  %>
+      <%= component "input.html",
+      form: f,
+      atom: :agent_email_address
+      %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :agent_bank_name
-  %>
+      <%= component "input.html",
+      form: f,
+      atom: :agent_bank_name
+      %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :agent_bank_address
-  %>
+      <%= component "input.html",
+      form: f,
+      atom: :agent_bank_address
+      %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :agent_bank_sort_code
-  %>
+      <%= component "input.html",
+      form: f,
+      atom: :agent_bank_sort_code
+      %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :agent_bank_account_number
-  %>
+      <%= component "input.html",
+      form: f,
+      atom: :agent_bank_account_number
+      %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :agent_bank_account_name
-  %>
+      <%= component "input.html",
+      form: f,
+      atom: :agent_bank_account_name
+      %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :agent_bank_account_swift_code
-  %>
+      <%= component "input.html",
+      form: f,
+      atom: :agent_bank_account_swift_code
+      %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :agent_bank_account_iban
-  %>
+      <%= component "input.html",
+      form: f,
+      atom: :agent_bank_account_iban
+      %>
+    </div>
+  </div>
 
   <%= component "number_input.html",
   form: f,
@@ -280,23 +283,40 @@
 
   <%= component "checkbox.html",
   form: f,
-  atom: :student_loan_not_repayed?
+  atom: :student_loan_not_repayed?,
+  label: ""
   %>
 
-  <%= component "checkbox.html",
-  form: f,
-  atom: :student_loan_repay_direct?
-  %>
+  <div conditional class="mb4">
+    <%= label f, :student_loan_not_repayed?, "I have a student loan which is not fully repayed", class: "dib mw-100 mb2 fw4" %>
+    <%= checkbox f, :student_loan_not_repayed?, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
+    <%= error_tag f, :student_loan_not_repayed? %>
 
-  <%= component "checkbox.html",
-  form: f,
-  atom: :student_loan_plan_1?
-  %>
+    <div conditional_child class="mt4">
 
-  <%= component "checkbox.html",
-  form: f,
-  atom: :student_loan_finished_before_6_april?
-  %>
+      <%= component "radio.html",
+      form: f,
+      atom: :student_loan_repay_direct?,
+      radios: ["Yes": true, "No": false],
+      label: "I am repaying my Loan direct to the Student Loan Co."
+      %>
+
+      <%= component "radio.html",
+      form: f,
+      atom: :student_loan_plan_1?,
+      radios: ["Student loan Plan 1": true, "Student loan Plan 2": false],
+      label: "Student loan Plan"
+      %>
+
+      <%= component "radio.html",
+      form: f,
+      atom: :student_loan_finished_before_6_april?,
+      radios: ["Yes": true, "No": false],
+      label: "I finished my studies before last April 6th."
+      %>
+
+    </div>
+  </div>
 
   <%= component "file_upload.html",
   form: f,

@@ -264,3 +264,11 @@ select {
   text-transform: capitalize;
   color: #757de8;
 }
+
+/* conditional checkbox in form */
+[conditional]  input[type=checkbox]:checked  + [conditional_child] {
+  display: block;
+}
+[conditional]  input[type=checkbox] + [conditional_child] {
+  display: none;
+}
