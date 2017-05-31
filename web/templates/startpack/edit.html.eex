@@ -4,7 +4,8 @@
 
   <%= render "form.html", changeset: @changeset,
                           action: startpack_path(@conn, :update, @startpack),
-                          startpack: @startpack
+                          startpack: @startpack,
+                          conn: @conn
                           %>
 
   <%= link "Back", to: startpack_path(@conn, :index) %>

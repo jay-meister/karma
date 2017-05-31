@@ -353,12 +353,15 @@
   form: f,
   atom: :bank_iban
   %>
-
+  
   <%= component "input.html",
   form: f,
   atom: :bank_swift_code
   %>
 
   <%= component "submit_button.html", title: "Update Startpack" %>
-
 <% end %>
+
+
+<script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+<script>require("web/static/js/app").App.studentLoanRadios()</script>
