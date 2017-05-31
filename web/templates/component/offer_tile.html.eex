@@ -12,10 +12,9 @@
     <div class="dib ma1">
       <%= offer.target_email %>
     </div>
-    <div class="absolute right-1 top-2 f2">£<%= offer.fee_per_day_inc_holiday %>/day</div>
+    <div class="absolute right-1 top-1 top-2-l top-2-m f2">£<%= offer.fee_per_day_inc_holiday %>/day</div>
     <div>
-      <div class="dib ma1"><%= offer.department %>: </div>
-      <div class="dib ma1"><%= offer.job_title %></div>
+      <div class="dib ma1"><%= offer.department %>: <%= offer.job_title %></div>
     </div>
   </div>
 </a>

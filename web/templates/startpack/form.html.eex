@@ -6,9 +6,11 @@
   <% end %>
 
 
-  <%= component "input.html",
+  <%= component "dropdown.html",
   form: f,
-  atom: :gender
+  atom: :gender,
+  options: ["Male": "male", "Female": "female", "Other": "other", "Prefer not to say": "n/a"],
+  prompt: "Select one"
   %>
 
   <%= component "input.html",
@@ -18,7 +20,8 @@
 
   <%= component "input.html",
   form: f,
-  atom: :class
+  atom: :aka,
+  label: "Also known as"
   %>
 
   <%= component "input.html",
@@ -194,6 +197,7 @@
   <%= component "number_input.html",
   form: f,
   atom: :box_rental_value,
+  label: "Box rental inventory value",
   placeholder: "Enter a number"
   %>
 
@@ -207,6 +211,7 @@
   <%= component "number_input.html",
   form: f,
   atom: :equipment_rental_value,
+  label: "Equipment rental inventory value",
   placeholder: "Enter a number"
   %>
 
@@ -264,7 +269,7 @@
   <%= component "radio.html",
   form: f,
   atom: :for_paye_only,
-  label: "For PAYE only",
+  label: "For PAYE contracts only (select one)",
   radios: Karma.StartpackView.for_paye_only()
   %>
 

@@ -154,7 +154,6 @@ defmodule Karma.Startpack do
       :country_of_permanent_residence,
       :mobile_tel,
       :primary_address_1,
-      :primary_address_2,
       :primary_address_city,
       :primary_address_postcode,
       :primary_address_country,

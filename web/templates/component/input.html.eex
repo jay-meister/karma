@@ -1,4 +1,5 @@
-<div class="mb4">
+<% class = assigns[:class] || "" %>
+<div class="mb4 <%= class %>">
   <%= case assigns[:label] do
    nil -> label assigns[:form], assigns[:atom], class: "dib mw-100 mb2 fw4"
    _ -> label assigns[:form], assigns[:atom], assigns[:label], class: "dib mw-100 mb2 fw4"
