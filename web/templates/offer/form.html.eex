@@ -5,6 +5,7 @@
     </div>
   <% end %>
 
+  <%= component "form_divider.html", title: "Offer details" %>
   <%= component "input.html",
   form: f,
   atom: :target_email,
@@ -61,6 +62,27 @@
   atom: :other_deal_provisions,
   placeholder: "Any other deal provisions?"
   %>
+
+  <%= component "number_input.html",
+  form: f,
+  atom: :fee_per_day_inc_holiday,
+  placeholder: "Enter a number",
+  label: "Fee PER DAY including holiday"
+  %>
+
+  <%= component "dropdown.html",
+  form: f,
+  atom: :sixth_day_fee_multiplier,
+  options: ["x1": 1.0, "x1.5": 1.5, "x2": 2.0]
+  %>
+
+  <%= component "dropdown.html",
+  form: f,
+  atom: :seventh_day_fee_multiplier,
+  options: ["x1": 1.0, "x1.5": 1.5, "x2": 2.0]
+  %>
+
+  <%= component "form_divider.html", title: "Allowances" %>
 
   <%= component "checkbox.html",
   form: f,
@@ -127,31 +149,15 @@
   atom: :vehicle_allowance_per_week,
   placeholder: "Enter a number"
   %>
-
-  <%= component "number_input.html",
-  form: f,
-  atom: :fee_per_day_inc_holiday,
-  placeholder: "Enter a number",
-  label: "Fee PER DAY including holiday"
-  %>
-
-  <%= component "dropdown.html",
-  form: f,
-  atom: :sixth_day_fee_multiplier,
-  options: ["x1": 1.0, "x1.5": 1.5, "x2": 2.0]
-  %>
-
-  <%= component "dropdown.html",
-  form: f,
-  atom: :seventh_day_fee_multiplier,
-  options: ["x1": 1.0, "x1.5": 1.5, "x2": 2.0]
-  %>
-
+  
+  <br>
+  <br>
   <%= component "textarea.html",
   form: f,
   atom: :additional_notes,
   placeholder: "Any additional notes?"
   %>
+
 
   <%= component "submit_button.html", title: "#{@button_text} Offer" %>
 <% end %>
