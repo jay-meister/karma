@@ -1,4 +1,4 @@
-<a href="/projects/<%= assigns[:project_id] %>/offers">
+<a href="/projects/<%= assigns[:project_id] %>/offers" class="no-underline">
   <div class="tl k-bg-indigo white br3 pa3 tc shadow-3 mb2 mt2 pb0">
     <div class="dib k-mb0-5r"><%= assigns[:project_name] %> / "<%= assigns[:project_codename] %>"</div>
     <div><%= assigns[:project_start_date] %></div>
