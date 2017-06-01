@@ -1,6 +1,6 @@
 <div class="ph3 ph6-ns mt6 center">
 
-  <%= link "Back", to: project_offer_path(@conn, :index, @project_id), class: "link" %>
+  <%= link "Back", to: project_offer_path(@conn, :index, @project_id), class: "link ma2 k-indigo no-underline" %>
 
   <h1 class="f1 mv4 fw5">Make new offer</h1>
 

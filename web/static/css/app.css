@@ -43,6 +43,10 @@ input:focus, textarea:focus, select:focus {
   background-color: #757de8;
 }
 
+.k-bg-lighter-grey {
+  background-color: #F0F0F0;
+}
+
 .k-bg-grey {
   background-color: #9e9e9e;
 }
@@ -227,6 +231,10 @@ select {
 /* 4-5 =~ 4.5 because it's between 4 and 5 in tachyons*/
 .k-pl4-5 {
   padding-left: 3rem;
+}
+
+.k-pb3 {
+  padding-bottom: 0.75rem;
 }
 
 .k-top-2-5 {

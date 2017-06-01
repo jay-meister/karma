@@ -57,12 +57,6 @@
   prompt: "Select an option..."
   %>
 
-  <%= component "textarea.html",
-  form: f,
-  atom: :other_deal_provisions,
-  placeholder: "Any other deal provisions?"
-  %>
-
   <%= component "number_input.html",
   form: f,
   atom: :fee_per_day_inc_holiday,
@@ -80,6 +74,12 @@
   form: f,
   atom: :seventh_day_fee_multiplier,
   options: ["x1": 1.0, "x1.5": 1.5, "x2": 2.0]
+  %>
+
+  <%= component "textarea.html",
+  form: f,
+  atom: :other_deal_provisions,
+  placeholder: "Any other deal provisions?"
   %>
 
   <%= component "form_divider.html", title: "Allowances" %>
@@ -149,7 +149,7 @@
   atom: :vehicle_allowance_per_week,
   placeholder: "Enter a number"
   %>
-  
+
   <br>
   <br>
   <%= component "textarea.html",

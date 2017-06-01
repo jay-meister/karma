@@ -1,5 +1,5 @@
-<%= link "Back", to: project_offer_path(@conn, :index, @project), class: "ma2" %>
-<%= link "Edit", to: project_path(@conn, :edit, @project), class: "ma2"%>
+<%= link "Back", to: project_offer_path(@conn, :index, @project), class: "ma2 k-indigo no-underline" %>
+<%= link "Edit", to: project_path(@conn, :edit, @project), class: "ma2 k-indigo no-underline"%>
 
 <h2><%= @project.name %></h2>
 <ul class="list pl0">

@@ -3,4 +3,4 @@
 <%= render "form.html", changeset: @changeset,
                         action: project_document_path(@conn, :create, @project) %>
 
-<%= link "Back", to: project_document_path(@conn, :index, @project) %>
+<%= link "Back", to: project_document_path(@conn, :index, @project), class: "ma2 k-indigo no-underline" %>
