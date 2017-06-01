@@ -1,4 +1,4 @@
-<%= link "Dashboard", to: dashboard_path(@conn, :index), class: "ma2" %>
+<%= link "Dashboard", to: dashboard_path(@conn, :index), class: "ma2 no-underline k-indigo" %>
 <%= if @offer.user && @conn.assigns.current_user.email == @offer.user.id do %>
   <%= link "Offers", to: project_offer_path(@conn, :index, @offer.project_id), class: "ma2" %>
 <% end %>

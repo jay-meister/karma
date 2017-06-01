@@ -59,7 +59,7 @@
   <% end %>
   <%= for form <- @forms do %>
     <div class="dib">
-      <img class="w5 dib ma1" src="<%= form.url %>" />
+      <img class="w5 dib ma1" src="/images/pdf.svg" />
       <div class="tc f5"><%= form.name %></div>
     </div>
   <% end %>
@@ -69,7 +69,7 @@
   <% end %>
   <%= for deal <- @deals do %>
     <div class="dib">
-      <img class="w5 dib ma1" src="<%= deal.url %>" />
+      <img class="w5 dib ma1" src="/images/pdf.svg" />
       <div class="tc f5"><%= deal.name %></div>
     </div>
   <% end %>
@@ -79,7 +79,7 @@
   <% end %>
   <%= for info <- @info do %>
     <div class="dib">
-      <img class="w5 dib ma1" src="<%= info.url %>" />
+      <img class="w5 dib ma1" src="/images/pdf.svg" />
       <div class="tc f5"><%= info.name %></div>
     </div>
   <% end %>
