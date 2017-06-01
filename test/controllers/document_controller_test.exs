@@ -4,7 +4,7 @@ defmodule Karma.DocumentControllerTest do
   import Mock
 
   alias Karma.Document
-  @valid_attrs %{category: "some content", url: "some content", name: "some content"}
+  @valid_attrs %{url: "some content", name: "NDA"}
   @invalid_attrs %{}
 
   setup do
@@ -88,7 +88,7 @@ defmodule Karma.DocumentControllerTest do
 
   test "updates chosen resource and redirects when data is valid", %{conn: conn, project: project} do
     document = Repo.insert! %Document{}
-    conn = put conn, project_document_path(conn, :update, project, document), document: @valid_attrs
+    conn = put conn, project_document_path(conn, :update, project, document), document: Map.merge(@valid_attrs, %{category: "category"})
     assert redirected_to(conn) == project_document_path(conn, :show, project, document)
     assert Repo.get_by(Document, @valid_attrs)
   end

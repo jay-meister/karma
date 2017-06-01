@@ -15,9 +15,10 @@ defmodule Karma.DocumentController do
     render(conn, "new.html", changeset: changeset, project: project)
   end
 
-  def create(conn, %{"document" => %{"file" => file_params} = document_params, "project_id" => project_id}) do
+  def create(conn, %{"document" => %{"file" => file_params, "name" => file_type} = document_params, "project_id" => project_id}) do
     project = Repo.get_by(Project, id: project_id)
-
+    category = get_category(file_type)
+    document_params = Map.put(document_params, "category", category)
     updated_params =
       case S3.upload({:url, file_params}) do
         {:ok, :url, url} ->

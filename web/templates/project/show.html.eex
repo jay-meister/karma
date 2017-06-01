@@ -60,7 +60,7 @@
   <%= for form <- @forms do %>
     <div class="dib">
       <img class="w5 dib ma1" src="<%= form.url %>" />
-      <div><%= form.name %></div>
+      <div class="tc f5"><%= form.name %></div>
     </div>
   <% end %>
   <%= component "form_divider.html", title: "Deals" %>
@@ -70,7 +70,7 @@
   <%= for deal <- @deals do %>
     <div class="dib">
       <img class="w5 dib ma1" src="<%= deal.url %>" />
-      <div class="tc"><%= deal.name %></div>
+      <div class="tc f5"><%= deal.name %></div>
     </div>
   <% end %>
   <%= component "form_divider.html", title: "Info" %>
@@ -80,7 +80,7 @@
   <%= for info <- @info do %>
     <div class="dib">
       <img class="w5 dib ma1" src="<%= info.url %>" />
-      <div class="tc"><%= info.name %></div>
+      <div class="tc f5"><%= info.name %></div>
     </div>
   <% end %>
 </div>
@@ -88,24 +88,36 @@
 <div class="w-50-l pa3 bw2 b--dashed k-b--indigo k-m-auto">
   <div class="tc mb3 f2">Upload a project document</div>
   <%= form_for @document_changeset, project_document_path(@conn, :create, @project), [multipart: true], fn f -> %>
+  <div class="mt4">
     <%= component "dropdown.html",
     form: f,
-    atom: :category,
-    options: ["Deal", "Form", "Info"],
-    prompt: "Choose a file category"
+    atom: :name,
+    options: [
+      "DIRECT HIRE",
+      "PAYE",
+      "SCHEDULE-D",
+      "LOAN OUT",
+      # "CONSTRUCTION DIRECT HIRE",
+      # "CONSTRUCTION PAYE",
+      # "CONSTRUCTION SCHEDULE-D",
+      # "CONSTRUCTION LOAN OUT",
+      "BOX RENTAL FORM",
+      "EQUIPMENT RENTAL FORM",
+      "VEHICLE ALLOWANCE FORM",
+      "NDA",
+      "INFO RECEIPT DECLARATION",
+      "COMPLIANCE TRAINING",
+      "STUDIO POLICIES",
+      "PROJECT MEMO"
+      ],
+    prompt: "Pick a document type",
+    label: "Type"
     %>
+  </div>
     <%= component "file_upload.html",
     form: f,
     atom: :file
     %>
-    <div class="mt4">
-      <%= component "input.html",
-      form: f,
-      atom: :name,
-      placeholder: "e.g. PAYE Contract",
-      label: "Document name"
-      %>
-    </div>
     <%= component "submit_button.html", title: "Upload" %>
   <% end %>
 </div>

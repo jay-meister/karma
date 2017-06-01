@@ -1,5 +1,6 @@
 <div class="mb4">
-  <%= label assigns[:form], assigns[:atom], class: "dib mw-100 mb2 fw4" %>
+  <% label = assigns[:label] || assigns[:atom] %>
+  <%= label assigns[:form], label, class: "dib mw-100 mb2 fw4" %>
   <%= select assigns[:form], assigns[:atom], assigns[:options], prompt: assigns[:prompt], class: "w-100 bn k-bg-input pa3 b-h3 outline-0", id: assigns[:id] || "" %>
   <%= error_tag assigns[:form], assigns[:atom] %>
 </div>
@@ -9,5 +10,6 @@ assigns:
 form,
 atom,
 options,
-prompt
+prompt,
+label (optional)
 -->
