@@ -10,7 +10,7 @@
       <%= component "plus_button.html", link: "/projects/new" %>
     </div>
     <div class="tl f2 mb5">My projects</div>
-    <div class="br3 pa3 mb3">
+    <div class="br3 pv3 mb3">
       <%= for project <- @projects do %>
       <%= component "project_tile.html",
       project_id: project.id,

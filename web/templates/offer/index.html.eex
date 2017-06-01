@@ -1,4 +1,4 @@
-<div class="k-bg-indigo white tc pa4 mt4 mb4 k-shadow-1 pb0 relative">
+<div class="k-bg-indigo white tc pa4 mt4 mb4 k-shadow-1 pb0 br3 relative">
   <%= component "button.html", title: "View details", link: project_path(@conn, :show, @project.id) %>
   <div class="f1"><%= "#{@project.name}/\"#{@project.codename}\"" %></div>
   <div class="f2">Start date: <%= format_date(@project.start_date) %></div>
