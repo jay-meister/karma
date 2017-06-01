@@ -309,7 +309,7 @@ defmodule Karma.Startpack do
         changeset
         |> cast(startpack, st_keys)
         |> validate_required(st_keys)
-      %{student_loan_repay_direct?: false} ->
+      _ ->
         st_keys = st_keys ++ [:student_loan_plan_1?]
 
         changeset
