@@ -3,9 +3,18 @@ defmodule Karma.OfferController do
 
   alias Karma.{User, Offer, Project, Startpack}
 
-  import Karma.ProjectController, only: [project_owner: 2]
+  import Karma.ProjectController, only: [project_owner: 2, block_if_not_project_owner: 2]
+
+  # add project to current user if user is PM
   plug :project_owner when action in [:index, :new, :create, :show, :edit, :update, :delete]
-  plug :block_if_offer_or_project_not_users when action in [:index, :new, :create, :show, :edit, :update, :delete]
+
+  # block access if current user is not PM of this project
+  plug :block_if_not_project_owner when action in [:index, :new, :create, :edit, :delete]
+
+  # block access if current user does not own the current offer
+  plug :block_if_not_users_offer when action in [:show, :update]
+
+  # block update and delete functionality when offer is not pending
   plug :offer_pending when action in [:edit, :update, :delete]
 
   # Function plug that checks if offer is pending or not
@@ -23,7 +32,7 @@ defmodule Karma.OfferController do
     end
   end
 
-  def block_if_offer_or_project_not_users(conn, _) do
+  def block_if_not_users_offer(conn, _) do
     %{"id" => offer_id, "project_id" => _project_id} = conn.params
     offer = Repo.get_by(Offer, id: offer_id, user_id: conn.assigns.current_user.id)
     conn = assign(conn, :offer, offer)
@@ -33,12 +42,13 @@ defmodule Karma.OfferController do
         |> put_flash(:error, "You do not have permission to view that offer")
         |> redirect(to: dashboard_path(conn, :index))
         |> halt()
-      %{project: nil, offer: _offer} -> # user is not PM but this offer belongs to them
-        conn
       %{project: _project, offer: nil} -> # user is PM, looking at an offer they have made
-        conn
+        assign(conn, :is_contractor?, false)
+      %{offer: _} -> # user is not PM but this offer belongs to them
+        assign(conn, :is_contractor?, true)
       %{project: _project, offer: _offer} -> # user is PM, looking at offer to themselves
-        conn
+        assign(conn, :is_contractor?, true)
+        |> assign(:is_pm?, true)
     end
   end
 

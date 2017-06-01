@@ -34,6 +34,7 @@ defmodule Karma.Router do
       resources "/documents", DocumentController
       resources "/offers", OfferController
     end
+    get "/offers/:id", OfferController, :contractor_show
   end
 
   # Other scopes may use custom stacks.
