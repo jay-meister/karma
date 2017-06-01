@@ -136,3 +136,10 @@
 - bank_iban - **string**
 - bank_swift_code - **string**
 - user_id - **integer**
+
+
+# documents
+- url - **string**
+- category - **string**
+- name - **string**
+- project_id - **integer**
