@@ -21,6 +21,7 @@ body {
   background-color: #E9EAEB;
   border: none;
   outline: 0;
+  font-family: 'Lato', sans-serif; 
 }
 
 input:focus, textarea:focus, select:focus {
