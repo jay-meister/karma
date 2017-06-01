@@ -1,6 +1,6 @@
 <div class="mb4">
   <%= label assigns[:form], assigns[:atom], class: "dib mw-100 mb2 fw4" %>
-  <%= textarea assigns[:form], assigns[:atom], placeholder: assigns[:placeholder], class: "k-bg-input k-dark-grey pa3 bn br3 w-100 outline-0" %>
+  <%= textarea assigns[:form], assigns[:atom], placeholder: assigns[:placeholder], class: "k-bg-input k-dark-grey no-placeholder pa3 bn br3 w-100 outline-0" %>
   <%= error_tag assigns[:form], assigns[:atom] %>
 </div>
 
