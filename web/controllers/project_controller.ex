@@ -5,12 +5,13 @@ defmodule Karma.ProjectController do
 
 
   plug :project_owner when action in [:show, :edit, :update, :delete]
+  plug :block_if_not_project_owner when action in [:show, :edit, :update, :delete]
 
   # project owner plug
   def project_owner(conn, _) do
     # if project doesn't exist, it should render a 404
     # if current user is owner of the project, add project to assigns
-    # if current user is not owner, put permission flash, redirect and halt
+    # if current user is not owner, assign project to nil
     project_id = case conn.params do
       %{"project_id" => project_id} -> project_id # if we are in an offers route
       %{"id" => project_id} -> project_id # if we are in a projects route
@@ -25,10 +26,19 @@ defmodule Karma.ProjectController do
       %Project{user_id: ^user_id} = project ->
         assign(conn, :project, project)
       %Project{} ->
+        assign(conn, :project, nil)
+    end
+  end
+
+  def block_if_not_project_owner(conn, _) do
+    case conn.assigns.project do
+      nil ->
         conn
         |> put_flash(:error, "You do not have permission to view that project")
         |> redirect(to: dashboard_path(conn, :index))
         |> halt()
+      _ ->
+        conn
     end
   end
 
