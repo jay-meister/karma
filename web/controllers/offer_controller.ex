@@ -5,7 +5,7 @@ defmodule Karma.OfferController do
 
   import Karma.ProjectController, only: [project_owner: 2]
   plug :project_owner when action in [:index, :new, :create, :show, :edit, :update, :delete]
-
+  plug :block_if_offer_or_project_not_users when action in [:index, :new, :create, :show, :edit, :update, :delete]
   plug :offer_pending when action in [:edit, :update, :delete]
 
   # Function plug that checks if offer is pending or not
@@ -23,6 +23,24 @@ defmodule Karma.OfferController do
     end
   end
 
+  def block_if_offer_or_project_not_users(conn, _) do
+    %{"id" => offer_id, "project_id" => _project_id} = conn.params
+    offer = Repo.get_by(Offer, id: offer_id, user_id: conn.assigns.current_user.id)
+    conn = assign(conn, :offer, offer)
+    case conn.assigns do
+      %{project: nil, offer: nil} -> # user is not PM and this offer is not theirs
+        conn
+        |> put_flash(:error, "You do not have permission to view that offer")
+        |> redirect(to: dashboard_path(conn, :index))
+        |> halt()
+      %{project: nil, offer: _offer} -> # user is not PM but this offer belongs to them
+        conn
+      %{project: _project, offer: nil} -> # user is PM, looking at an offer they have made
+        conn
+      %{project: _project, offer: _offer} -> # user is PM, looking at offer to themselves
+        conn
+    end
+  end
 
   def index(conn, %{"project_id" => project_id}) do
     project =
