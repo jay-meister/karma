@@ -2,7 +2,7 @@
   offer = assigns[:offer]
   status =
   case offer.accepted do
-    nil -> "bg-gold"
+    nil -> "k-bg-accent"
     true -> "bg-green"
     false -> "bg-red"
   end
