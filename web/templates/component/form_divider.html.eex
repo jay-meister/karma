@@ -1,4 +1,4 @@
-<div class="mb3 mt5 f3 k-light-indigo bb k-b-light-indigo">
+<div class="mb4 mt5 k-f2-5 k-light-indigo bb k-b-light-indigo">
   <%= assigns[:title] %>
 </div>
 

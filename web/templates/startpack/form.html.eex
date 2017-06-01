@@ -5,7 +5,7 @@
     </div>
   <% end %>
 
-
+  <%= component "form_divider.html", title: "Basic info" %>
   <%= component "dropdown.html",
   form: f,
   atom: :gender,
@@ -48,6 +48,8 @@
   form: f,
   atom: :emergency_contact_tel
   %>
+
+  <%= component "form_divider.html", title: "Personal info" %>
 
   <%= component "date.html",
   form: f,
@@ -100,6 +102,8 @@
   atom: :passport_full_name
   %>
 
+  <%= component "form_divider.html", title: "Contact info" %>
+
   <%= component "input.html",
   form: f,
   atom: :primary_address_1
@@ -129,6 +133,8 @@
   form: f,
   atom: :primary_address_tel
   %>
+
+  <%= component "form_divider.html", title: "Deal info" %>
 
   <div conditional class="mb4">
     <%= label f, :agent_deal?, class: "dib mw-100 mb2 fw4" %>
@@ -198,6 +204,8 @@
     </div>
   </div>
 
+  <%= component "form_divider.html", title: "Allowances" %>
+
   <%= component "number_input.html",
   form: f,
   atom: :box_rental_value,
@@ -255,6 +263,8 @@
   helper_text: "Upload an image of your vehicle insurance",
   image_url: @startpack.vehicle_insurance_url
   %>
+
+  <%= component "form_divider.html", title: "Payment info" %>
 
   <%= component "input.html",
   form: f,
@@ -373,7 +383,7 @@
   form: f,
   atom: :bank_iban
   %>
-  
+
   <%= component "input.html",
   form: f,
   atom: :bank_swift_code

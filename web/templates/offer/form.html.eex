@@ -149,7 +149,7 @@
   atom: :vehicle_allowance_per_week,
   placeholder: "Enter a number"
   %>
-  
+
   <br>
   <br>
   <%= component "textarea.html",
