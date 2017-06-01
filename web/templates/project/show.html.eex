@@ -3,7 +3,6 @@
 
 <h2><%= @project.name %></h2>
 <ul class="list pl0">
-
   <%= component "form_divider.html", title: "Project details" %>
   <%= for {atom, label, formatted} <- [
     {:type, nil, format_type(@project.type)},
@@ -51,5 +50,74 @@
     label: label || format_label(atom)
     %>
   <% end %>
-
 </ul>
+
+<div class="mb4">
+  <%= component "form_divider.html", title: "Forms" %>
+  <%= if length(@forms) == 0 do %>
+    <div class="tc k-bg-indigo white pa4 f2 br3">You have not uploaded any forms yet</div>
+  <% end %>
+  <%= for form <- @forms do %>
+    <div class="dib">
+      <img class="w5 dib ma1" src="<%= form.url %>" />
+      <div class="tc f5"><%= form.name %></div>
+    </div>
+  <% end %>
+  <%= component "form_divider.html", title: "Deals" %>
+  <%= if length(@deals) == 0 do %>
+    <div class="tc k-bg-indigo white pa4 f2 br3">You have not uploaded any deals yet</div>
+  <% end %>
+  <%= for deal <- @deals do %>
+    <div class="dib">
+      <img class="w5 dib ma1" src="<%= deal.url %>" />
+      <div class="tc f5"><%= deal.name %></div>
+    </div>
+  <% end %>
+  <%= component "form_divider.html", title: "Info" %>
+  <%= if length(@info) == 0 do %>
+    <div class="tc k-bg-indigo white pa4 f2 br3">You have not uploaded any info yet</div>
+  <% end %>
+  <%= for info <- @info do %>
+    <div class="dib">
+      <img class="w5 dib ma1" src="<%= info.url %>" />
+      <div class="tc f5"><%= info.name %></div>
+    </div>
+  <% end %>
+</div>
+
+<div class="w-50-l pa3 bw2 b--dashed k-b--indigo k-m-auto">
+  <div class="tc mb3 f2">Upload a project document</div>
+  <%= form_for @document_changeset, project_document_path(@conn, :create, @project), [multipart: true], fn f -> %>
+  <div class="mt4">
+    <%= component "dropdown.html",
+    form: f,
+    atom: :name,
+    options: [
+      "DIRECT HIRE",
+      "PAYE",
+      "SCHEDULE-D",
+      "LOAN OUT",
+      # "CONSTRUCTION DIRECT HIRE",
+      # "CONSTRUCTION PAYE",
+      # "CONSTRUCTION SCHEDULE-D",
+      # "CONSTRUCTION LOAN OUT",
+      "BOX RENTAL FORM",
+      "EQUIPMENT RENTAL FORM",
+      "VEHICLE ALLOWANCE FORM",
+      "NDA",
+      "INFO RECEIPT DECLARATION",
+      "COMPLIANCE TRAINING",
+      "STUDIO POLICIES",
+      "PROJECT MEMO"
+      ],
+    prompt: "Pick a document type",
+    label: "Type"
+    %>
+  </div>
+    <%= component "file_upload.html",
+    form: f,
+    atom: :file
+    %>
+    <%= component "submit_button.html", title: "Upload" %>
+  <% end %>
+</div>

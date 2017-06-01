@@ -1,0 +1,30 @@
+<h2>Listing documents</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Project</th>
+      <th>Url</th>
+      <th>Category</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for document <- @documents do %>
+    <tr>
+      <td><%= document.project_id %></td>
+      <td><%= document.url %></td>
+      <td><%= document.category %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: project_document_path(@conn, :show, @project, document), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: project_document_path(@conn, :edit, @project, document), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: project_document_path(@conn, :delete, @project, document), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New document", to: project_document_path(@conn, :new, @project) %>
