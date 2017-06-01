@@ -27,6 +27,7 @@ defmodule Karma.Project do
     field :active, :boolean, default: true
     belongs_to :user, Karma.User
     has_many :offers, Karma.Offer
+    has_many :documents, Karma.Document
 
     timestamps()
   end

@@ -1,7 +1,7 @@
 defmodule Karma.ProjectController do
   use Karma.Web, :controller
 
-  alias Karma.{Project}
+  alias Karma.{Project, Document}
 
 
   plug :project_owner when action in [:show, :edit, :update, :delete]
@@ -64,8 +64,20 @@ defmodule Karma.ProjectController do
   end
 
 
-  def show(conn, %{"id" => _id}) do
-    render(conn, "show.html", project: conn.assigns.project)
+  def show(conn, %{"id" => id}) do
+    project = Repo.get(Project, id) |> Repo.preload(:documents)
+    documents = project.documents
+    forms = Enum.filter(documents, fn document -> document.category == "Form" end)
+    deals = Enum.filter(documents, fn document -> document.category == "Deal" end)
+    info = Enum.filter(documents, fn document -> document.category == "Info" end)
+    document_changeset = Document.changeset(%Document{})
+    render(conn,
+    "show.html",
+    project: conn.assigns.project,
+    document_changeset: document_changeset,
+    forms: forms,
+    deals: deals,
+    info: info)
   end
 
   def edit(conn, %{"id" => id}) do

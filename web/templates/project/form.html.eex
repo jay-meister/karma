@@ -5,6 +5,7 @@
     </div>
   <% end %>
 
+  <%= component "form_divider.html", title: "Project details" %>
   <%= component "dropdown.html",
   form: f,
   atom: :type,
@@ -59,6 +60,27 @@
 
   <%= component "input.html",
   form: f,
+  atom: :locations,
+  placeholder: "London, Somerset etc..."
+  %>
+
+  <%= component "dropdown.html",
+  form: f,
+  atom: :holiday_rate,
+  options: ["10.77%": 0.1077, "12.07%": 0.1207],
+  prompt: "Select rate..."
+  %>
+
+  <%= component "textarea.html",
+  form: f,
+  atom: :additional_notes,
+  placeholder: "Add any other notes"
+  %>
+
+  <%= component "form_divider.html", title: "Company details" %>
+
+  <%= component "input.html",
+  form: f,
   atom: :company_name,
   placeholder: "Company limited"
   %>
@@ -93,6 +115,8 @@
   placeholder: "Country"
   %>
 
+  <%= component "form_divider.html", title: "Operating base details" %>
+
   <%= component "input.html",
   form: f,
   atom: :operating_base_address_1,
@@ -123,24 +147,6 @@
   placeholder: "Country"
   %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :locations,
-  placeholder: "London, Somerset etc..."
-  %>
-
-  <%= component "dropdown.html",
-  form: f,
-  atom: :holiday_rate,
-  options: ["10.77%": 0.1077, "12.07%": 0.1207],
-  prompt: "Select rate..."
-  %>
-
-  <%= component "textarea.html",
-  form: f,
-  atom: :additional_notes,
-  placeholder: "Add any other notes"
-  %>
-
   <%= component "submit_button.html", title: "#{@button_text} Project" %>
+
 <% end %>

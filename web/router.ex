@@ -31,6 +31,7 @@ defmodule Karma.Router do
     post "/startpack/:id", StartpackController, :update
     resources "/startpack", StartpackController, except: [:new, :create]
     resources "/projects", ProjectController do
+      resources "/documents", DocumentController
       resources "/offers", OfferController
     end
   end

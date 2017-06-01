@@ -7,11 +7,12 @@
       <img src=<%= assigns[:image_url] %> class="h5 ml2 db"/>
     </a>
     <% end %>
-    <%= file_input assigns[:form], assigns[:atom], class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3 w-100 k-bg-input bn" %>
+  <%= file_input assigns[:form], assigns[:atom], class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3 w-100 k-bg-input bn" %>
   <%= error_tag assigns[:form], assigns[:url] %>
 </div>
 
 <!--
+form
 atom
 url
 -->
