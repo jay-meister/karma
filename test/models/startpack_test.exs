@@ -382,6 +382,10 @@ defmodule Karma.StartpackTest do
       student_loan_finished_before_6_april?: nil
     }
 
+    invalid = %{ base | student_loan_repay_direct?: nil }
+    changeset = Startpack.student_loan_changeset(%Startpack{}, invalid)
+    refute changeset.valid?
+
     changeset = Startpack.student_loan_changeset(%Startpack{}, base)
     refute changeset.valid?
 
