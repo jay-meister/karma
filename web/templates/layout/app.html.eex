@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/tachyons@4.7.0/css/tachyons.min.css"/>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   </head>
 
   <body class="k-bg-lighter-grey k-indigo mb4">
@@ -19,11 +20,12 @@
         <ul class="mv4 pl0 mb0 nested-list-reset ol fl">
           <%= if @current_user do %>
           <a href="/">
-            <img src="/images/logo-blue.png" class="w3"  />
+            <img src="/images/logo-white-big.png" class="w3"  />
           </a>
+          <a><img src="https://cdn4.iconfinder.com/data/icons/wirecons-free-vector-icons/32/menu-alt-256.png" id="hamburger" /></a>
           <% end %>
         </ul>
-        <ul class="mv4 pl0 mb0 nested-list-reset ol fr white">
+        <ul class="mv4 pl0 mb0 nested-list-reset ol fr white"  id="list">
           <%= if @current_user do %>
           <%= link "Startpack", to: startpack_path(@conn, :index), class: "back-button link hover-purple pa3 white " %>
           <%= link "My profile", to: user_path(@conn, :show, @current_user), class: "back-button hover-purple link pa3 white" %>

@@ -78,7 +78,20 @@ function studentLoanRadios() {
   })
 }
 
+function hamburgerAnimate() {
+  $(document).ready(function() {
+    //toggle nav
+    $('#hamburger').on('click', function() {
+      console.log("yo");
+    $('#list').toggleClass('height-auto');
+    $('nav').toggleClass('height-fixed');
+    })
+  })
+}
+
+
 export var App = {
   setupListeners: setupListeners,
-  studentLoanRadios: studentLoanRadios
+  studentLoanRadios: studentLoanRadios,
+  hamburgerAnimate: hamburgerAnimate,
 }

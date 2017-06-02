@@ -40,6 +40,61 @@ opacity: 0;
   max-width: 110rem;
 }
 
+#hamburger {
+  height: 40px;
+  width: 40px;
+  background-size: cover;
+  background-position: center;
+  margin-bottom: 0;
+  margin-right: 15px;
+}
+
+.height-auto {
+  height: auto;
+  transition: 1s;
+}
+
+.height-fixed {
+  height: 150px;
+}
+
+#list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+@media (min-width: 750px) {
+  #hamburger {
+    display: none;
+  }
+
+  #list {
+   flex-direction: row;
+   align-items: center;
+   justify-content: flex-end;
+ }
+ 
+  .height-auto {
+    height: auto;
+    transition: 1s;
+  }
+
+  .height-fixed {
+    height: 150px;
+  }
+  #list a {
+    margin-bottom: 0;
+    font-weight: 600;
+  }
+  nav {
+    background: none;
+    display: flex;
+    padding-left: 10px;
+  }
+}
+
+
 /*Karmaradio Colours*/
 
 /*backgrounds*/
