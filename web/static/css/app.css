@@ -171,10 +171,6 @@ select {
 
 /*karma layout/custom components*/
 
-.karma-input {
-
-}
-
 .karma-input::after {
   content : "";
   position: absolute;
@@ -192,6 +188,18 @@ select {
 
 .k-ftitle {
   font-size: 7rem;
+}
+
+.k-hide-file-upload {
+  opacity: 0;
+  position: absolute;
+  z-index: 1000;
+  cursor: pointer;
+  right: 0;
+  top: 0;
+  height: 100%;
+  font-size: 24px;
+  width: 100%;
 }
 
 
