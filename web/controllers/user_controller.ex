@@ -23,8 +23,13 @@ defmodule Karma.UserController do
         Karma.Email.send_verification_email(user)
         |> Karma.Mailer.deliver_later()
 
+        # add startpack to user
         startpack_changeset = Startpack.changeset(%Startpack{}, %{user_id: user.id})
         Repo.insert(startpack_changeset)
+
+        # update offers user_id to all offers for this user
+        from(o in Karma.Offer, where: o.target_email == ^user.email)
+        |> Repo.update_all(set: [user_id: user.id])
 
         conn
         |> put_flash(:info, "A verification email has been sent to #{user.email}.
