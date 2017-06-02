@@ -7,7 +7,7 @@
       <img src=<%= assigns[:image_url] %> class="h5 ml2 db"/>
     </a>
     <% end %>
-  <div class="relative white k-bg-indigo dib pa3 br2 pointer:hover">
+  <div class="relative white k-bg-indigo dib pa3 br2 mt2 pointer:hover">
     <span class="pointer:hover">Choose file</span>
     <%= file_input assigns[:form], assigns[:atom], class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3 w-100 k-bg-input bn pt3 pb3 k-hide-file-upload pointer:hover" %>
   </div>
