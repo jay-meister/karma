@@ -35,6 +35,21 @@ opacity: 0;
 .no-placeholder:focus:-moz-placeholder {
   opacity: 0;
 }
+
+.app-container {
+  max-width: 110rem;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  transition: color .15s ease-in;
+}
+
+.nav-link:hover {
+  transition: #757de8 .15s ease-in;
+}
+
 /*Karmaradio Colours*/
 
 /*backgrounds*/
@@ -48,6 +63,10 @@ opacity: 0;
 
 .k-bg-light-indigo {
   background-color: #757de8;
+}
+
+.k-bg-lighter-grey {
+  background-color: #F0F0F0;
 }
 
 .k-bg-grey {
@@ -174,6 +193,10 @@ select {
 
 /*karma layout/custom components*/
 
+.hover-purple:hover {
+    color: #757de8;
+}
+
 .karma-input {
 
 }
@@ -234,6 +257,10 @@ select {
 /* 4-5 =~ 4.5 because it's between 4 and 5 in tachyons*/
 .k-pl4-5 {
   padding-left: 3rem;
+}
+
+.k-pb3 {
+  padding-bottom: 0.75rem;
 }
 
 .k-top-2-5 {
