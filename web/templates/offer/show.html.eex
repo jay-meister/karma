@@ -1,42 +1,42 @@
-<%= link "Dashboard", to: dashboard_path(@conn, :index), class: "ma2 no-underline k-indigo" %>
-<%= if @offer.user && @conn.assigns.current_user.email == @offer.user.id do %>
+<%= link "Dashboard", to: dashboard_path(@conn, :index), class: "ma2" %>
+
+<%= if @is_pm? do %>
   <%= link "Offers", to: project_offer_path(@conn, :index, @offer.project_id), class: "ma2" %>
-<% end %>
-<%= if @project.user.email == @conn.assigns.current_user.email do %>
-  <%= link "Edit", to: project_offer_path(@conn, :edit, @offer.project_id, @offer), class: "ma2 k-indigo no-underline" %>
+  <%= link "Edit Offer", to: project_offer_path(@conn, :edit, @offer.project_id, @offer), class: "ma2" %>
 <% end %>
 
-<%= if length(@changeset.errors) > 0 && @offer.accepted == nil do %>
-  <div class="k-bg-indigo white tc pa4 br3 ma2 f2 mt3">You need to fill out more information within your startpack before you can respond to this offer</div>
-<% end %>
-
-<%= if length(@changeset.errors) > 0 && @offer.accepted == nil do %>
-  <%= component "button.html", title: "Edit Startpack", link: "/startpack?offer_id=#{@offer.id}" %>
-<% end %>
-
-<%= if @offer.accepted do %>
-  <div class="k-bg-indigo white tc pa4 br3 ma2 f2 mt3">Congratulations! <br /> You have accepted this offer!</div>
-<% end %>
-<%= if @offer.accepted == false do %>
-  <div class="k-bg-indigo white tc pa4 br3 ma2 f2 mt3">You have rejected this offer!</div>
-<% end %>
-
-<div class="tc mt2">
-  <%= if length(@changeset.errors) == 0 && @offer.accepted == nil do %>
-    <div class="dib ma1">
-      <%= form_for @edit_changeset, project_offer_path(@conn, :update, @offer.project_id, @offer), fn f -> %>
-          <%= hidden_input f, :accepted, value: "true" %>
-          <%= component "submit_button.html", title: "ACCEPT" %>
-      <% end %>
+<%= if @is_contractor? do %>
+  <%= if length(@changeset.errors) > 0 && @offer.accepted == nil do %>
+    <div class="k-bg-indigo white tc pa4 br3 ma2 f2 mt3">
+      You need to fill out more information within your startpack before you can respond to this offer
     </div>
-    <div class="dib ma1">
-      <%= form_for @edit_changeset, project_offer_path(@conn, :update, @offer.project_id, @offer), fn f -> %>
-        <%= hidden_input f, :accepted, value: "false" %>
-        <%= component "submit_button.html", title: "REJECT" %>
-      <% end %>
-    </div>
+    <%= component "button.html", title: "Edit Startpack", link: "/startpack?offer_id=#{@offer.id}" %>
   <% end %>
-</div>
+
+  <%= if @offer.accepted do %>
+    <div class="k-bg-indigo white tc pa4 br3 ma2 f2 mt3">Congratulations! <br /> You have accepted this offer!</div>
+  <% end %>
+  <%= if @offer.accepted == false do %>
+    <div class="k-bg-indigo white tc pa4 br3 ma2 f2 mt3">You have rejected this offer!</div>
+  <% end %>
+
+  <div class="tc mt2">
+    <%= if length(@changeset.errors) == 0 && @offer.accepted == nil do %>
+      <div class="dib ma1">
+        <%= form_for @edit_changeset, project_offer_path(@conn, :update, @offer.project_id, @offer), fn f -> %>
+            <%= hidden_input f, :accepted, value: "true" %>
+            <%= component "submit_button.html", title: "ACCEPT" %>
+        <% end %>
+      </div>
+      <div class="dib ma1">
+        <%= form_for @edit_changeset, project_offer_path(@conn, :update, @offer.project_id, @offer), fn f -> %>
+          <%= hidden_input f, :accepted, value: "false" %>
+          <%= component "submit_button.html", title: "REJECT" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
 
 <h2>Offer for <%= @offer.target_email %></h2>
 <ul class="list pl0">
