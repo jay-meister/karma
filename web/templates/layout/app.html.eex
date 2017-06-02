@@ -9,8 +9,10 @@
 
     <title>Hello Karma!</title>
     <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
     <link rel="stylesheet" href="https://unpkg.com/tachyons@4.7.0/css/tachyons.min.css"/>
   </head>
+
   <body class="k-bg-lighter-grey k-indigo mb4">
     <header class="h4 bb k-bg-indigo white pl2 pr2">
       <nav role="navigation">
@@ -33,13 +35,12 @@
     <div class="mw9 center bg-white">
       <p class="alert pa4 br2 mt0 dark-grey bg-light-green b--dark-green" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert pa4 br2 mt0 mb4 white bg-light-red b--red" role="alert"><%= get_flash(@conn, :error) %></p>
+
       <main role="main" class="pa4 bg-white">
         <%= render @view_module, @view_template, assigns %>
       </main>
 
     </div> <!-- /container -->
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
-    <script>require("web/static/js/app").App.hamburgerAnimate()</script>
-
   </body>
 </html>
