@@ -16,7 +16,7 @@ defmodule Karma.ProjectController do
       %{"id" => project_id} -> project_id # if we are in a projects route
     end
     conn = assign(conn, :project, Repo.get(Project, project_id))
-
+    
     case conn.assigns.project do
       nil ->
         conn

@@ -155,9 +155,8 @@ defmodule Karma.OfferControllerTest do
   end
 
   test "renders page not found when id is nonexistent", %{conn: conn, project: project} do
-    assert_error_sent 404, fn ->
-      get conn, project_offer_path(conn, :show, project, -1)
-    end
+    conn = get conn, project_offer_path(conn, :show, project, -1)
+    assert html_response(conn, 200) =~ "Offer could not be found"
   end
 
   test "edit/update/delete offer forbidden if offer is not pending", %{conn: conn, project: proj} do

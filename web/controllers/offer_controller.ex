@@ -39,7 +39,6 @@ defmodule Karma.OfferController do
     %{"id" => offer_id} = conn.params
     # offer
     offer = Repo.get_by(Offer, id: offer_id)
-
     conn = assign(conn, :offer, offer)
     case conn.assigns.offer do
       nil ->
