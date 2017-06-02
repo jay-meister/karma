@@ -65,6 +65,7 @@ defmodule Karma.Offer do
     struct
     |> form_validation(params)
     |> cast(params, [
+      :contract_type,
       :fee_per_day_exc_holiday,
       :fee_per_week_inc_holiday,
       :fee_per_week_exc_holiday,
@@ -83,6 +84,7 @@ defmodule Karma.Offer do
       :project_id,
       :user_id])
     |> validate_required([
+      :contract_type,
       :sixth_day_fee_inc_holiday,
       :sixth_day_fee_exc_holiday,
       :seventh_day_fee_inc_holiday,
