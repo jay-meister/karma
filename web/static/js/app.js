@@ -79,15 +79,16 @@ function studentLoanRadios() {
 }
 
 function hamburgerAnimate() {
-  $(document).ready(function() {
-    //toggle nav
-    $('#hamburger').on('click', function() {
-      console.log("yo");
-    $('#list').toggleClass('height-auto');
-    $('nav').toggleClass('height-fixed');
-    })
-  })
+  var hamburger = document.querySelector ('#hamburger');
+  var list = document.querySelector ('#list');
+  var nav = document.querySelector ('nav');
+
+  hamburger.onclick = function () {
+    list.classList.toggle('height-auto');
+    nav.classList.toggle('height-fixed');
+    }
 }
+
 
 
 export var App = {
