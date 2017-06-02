@@ -3,9 +3,21 @@ defmodule Karma.OfferController do
 
   alias Karma.{User, Offer, Project, Startpack}
 
-  import Karma.ProjectController, only: [project_owner: 2]
-  plug :project_owner when action in [:index, :new, :create, :show, :edit, :update, :delete]
+  import Karma.ProjectController, only: [add_project_to_conn: 2, block_if_not_project_manager: 2]
 
+  # add project to conn
+  plug :add_project_to_conn when action in [:index, :new, :create, :show, :edit, :update, :delete]
+
+  # block access if current user is not PM of this project
+  plug :block_if_not_project_manager when action in [:index, :new, :create, :edit, :delete]
+
+  # add offer to conn
+  plug :add_offer_to_conn when action in [:show, :edit, :update, :delete]
+
+  # block access if current user does not own the current offer
+  plug :block_if_not_contractor_or_pm when action in [:show, :update]
+
+  # block update and delete functionality when offer is not pending
   plug :offer_pending when action in [:edit, :update, :delete]
 
   # Function plug that checks if offer is pending or not
@@ -23,6 +35,36 @@ defmodule Karma.OfferController do
     end
   end
 
+  def add_offer_to_conn(conn, _) do
+    %{"id" => offer_id} = conn.params
+    # offer
+    offer = Repo.get_by(Offer, id: offer_id)
+    conn = assign(conn, :offer, offer)
+    case conn.assigns.offer do
+      nil ->
+        conn
+        |> put_flash(:error, "Offer could not be found")
+        |> render(Karma.ErrorView, "404.html")
+        |> halt()
+      _ ->
+        # assign is_contractor?
+        is_contractor? = conn.assigns.current_user.id == conn.assigns.offer.user_id
+        assign(conn, :is_contractor?, is_contractor?)
+      end
+  end
+
+  def block_if_not_contractor_or_pm(conn, _) do
+    # block if user is not contractor
+    case conn.assigns do
+      %{is_pm?: false, is_contractor?: false} ->
+        conn
+        |> put_flash(:error, "You do not have permission to view that offer")
+        |> redirect(to: dashboard_path(conn, :index))
+        |> halt()
+      _ ->
+        conn
+    end
+  end
 
   def index(conn, %{"project_id" => project_id}) do
     project =
@@ -52,7 +94,9 @@ defmodule Karma.OfferController do
 
   def create(conn, %{"offer" => offer_params, "project_id" => project_id}) do
     project = Repo.get(Project, project_id) |> Repo.preload(:user)
-
+    %{"department" => department, "job_title" => job_title} = offer_params
+    contract_type = determine_contract_type(department, job_title)
+    offer_params = Map.put(offer_params, "contract_type", contract_type)
     # first check the values provided by the user are valid
     validation_changeset = Offer.form_validation(%Offer{}, offer_params)
 
@@ -95,26 +139,24 @@ defmodule Karma.OfferController do
     end
   end
 
-  def show(conn, %{"project_id" => project_id, "id" => id}) do
-    offer = Repo.get!(Offer, id) |> Repo.preload(:project) |> Repo.preload(:user)
-    project = offer.project |> Repo.preload(:user)
-    case Repo.get_by(User, email: offer.target_email) do
+  def show(conn, %{"project_id" => project_id, "id" => _id}) do
+    offer = conn.assigns.offer
+    user = conn.assigns.current_user
+    case offer.user_id do
       nil ->
         changeset = Startpack.changeset(%Startpack{})
-        render(conn, "show.html", offer: offer, project_id: project_id, valid?: false, project: project, changeset: changeset)
-      user ->
+        render(conn, "show.html", project_id: project_id, changeset: changeset)
+      _ ->
         edit_changeset = Offer.changeset(offer)
-        user = Repo.preload(user, :startpacks)
-        startpack = Map.from_struct(user.startpacks)
+        startpack = Repo.get_by(Startpack, user_id: user.id)
+        startpack =  Map.from_struct(startpack)
         changeset = Startpack.mother_changeset(%Startpack{}, startpack, offer)
-      render(conn,
-      "show.html",
-      offer: offer,
-      project_id: project_id,
-      valid?: false,
-      changeset: changeset,
-      edit_changeset: edit_changeset,
-      project: project)
+        render(conn,
+        "show.html",
+        project_id: project_id,
+        changeset: changeset,
+        edit_changeset: edit_changeset
+        )
     end
   end
 
@@ -179,6 +221,9 @@ defmodule Karma.OfferController do
               # run calculations and add them to the offer_params
               calculations = parse_offer_strings(offer_params) |> run_calculations(project)
               offer_params = Map.merge(offer_params, calculations)
+              %{"department" => department, "job_title" => job_title} = offer_params
+              contract_type = determine_contract_type(department, job_title)
+              offer_params = Map.put(offer_params, "contract_type", contract_type)
               changeset = Offer.changeset(offer, offer_params)
 
               {:ok, offer} = Repo.update(changeset)

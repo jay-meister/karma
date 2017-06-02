@@ -19,5 +19,5 @@
 
 </ul>
 
-<%= link "Edit", to: project_document_path(@conn, :edit, @project, @document) %>
-<%= link "Back", to: project_document_path(@conn, :index, @project) %>
+<%= link "Edit", to: project_document_path(@conn, :edit, @project, @document), class: "ma2 k-indigo no-underline" %>
+<%= link "Back", to: project_document_path(@conn, :index, @project), class: "ma2 k-indigo no-underline" %>

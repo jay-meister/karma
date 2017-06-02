@@ -1,6 +1,6 @@
 <a href="<%= assigns[:link] %>">
   <div class="tr relative">
-    <div class="dib k-bg-indigo br-100 pa3 k-shadow-1 ma1">
+    <div class="dib k-bg-indigo br-100 pa3 k-shadow-1 ma1" style="padding-bottom:0.75rem;">
       <img class="w2" src="/images/plus.svg" />
     </div>
   </div>

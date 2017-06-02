@@ -4,7 +4,6 @@
    nil -> label assigns[:form], assigns[:atom], class: "mr2 lh-copy"
    _ -> label assigns[:form], assigns[:atom], assigns[:label], class: "mr2 lh-copy"
    end %>
-
   <%= if assigns[:link] do %>
     <%= link assigns[:link_name], to: assigns[:link] %>
   <% end %>
