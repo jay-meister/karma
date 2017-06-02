@@ -58,6 +58,19 @@ defmodule Karma.OfferControllerTest do
     end
   end
 
+
+  test "offer to unregistered user gets attached to user when they create an account", %{conn: conn} do
+    # offer has been made, create an account with said user
+    with_mock Karma.Mailer, [deliver_later: fn(_) -> nil end] do
+      conn = post conn, user_path(conn, :create), user: default_user(%{email: "a_new_email@gmail.com"})
+      assert redirected_to(conn) == session_path(conn, :new)
+      user = Repo.get_by(Karma.User, email: "a_new_email@gmail.com")
+
+      offer = Repo.get_by(Offer, user_id: user.id)
+      assert offer
+    end
+  end
+
   # if contractor is already registered
   test "creates creates offer to a registered user", %{conn: conn, project: project} do
 
@@ -118,17 +131,32 @@ defmodule Karma.OfferControllerTest do
     assert html_response(conn, 200) =~ offer.additional_notes
   end
 
-  test "offers show: shows an offer to existing user", %{conn: conn, offer: offer} do
-    user = insert_user(%{email: "a_new_email@gmail.com"})
+  test "offers show (PM): shows an offer to existing user", %{conn: conn, project: project} do
+    user = insert_user(%{email: "contractor@gmail.com"})
     insert_startpack(%{user_id: user.id})
+    offer = insert_offer(project, %{target_email: "contractor@gmail.com"})
     conn = get conn, project_offer_path(conn, :show, offer.project_id, offer)
     assert html_response(conn, 200) =~ offer.additional_notes
   end
 
+
+  test "offers show: contractor can view their offer", %{project: project} do
+    user = insert_user(%{email: "contractor@gmail.com"})
+    insert_startpack(%{user_id: user.id})
+
+    conn = login_user(build_conn(), user)
+
+    offer = insert_offer(project, %{target_email: "contractor@gmail.com", user_id: user.id})
+    conn = get conn, project_offer_path(conn, :show, offer.project_id, offer)
+
+    msg = "You need to fill out more information within your startpack"
+    assert html_response(conn, 200) =~ offer.job_title
+    assert html_response(conn, 200) =~ msg
+  end
+
   test "renders page not found when id is nonexistent", %{conn: conn, project: project} do
-    assert_error_sent 404, fn ->
-      get conn, project_offer_path(conn, :show, project, -1)
-    end
+    conn = get conn, project_offer_path(conn, :show, project, -1)
+    assert html_response(conn, 200) =~ "Offer could not be found"
   end
 
   test "edit/update/delete offer forbidden if offer is not pending", %{conn: conn, project: proj} do

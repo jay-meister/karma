@@ -291,12 +291,6 @@
   radios: Karma.StartpackView.for_paye_only()
   %>
 
-  <%= component "checkbox.html",
-  form: f,
-  atom: :student_loan_not_repayed?,
-  label: ""
-  %>
-
   <div conditional class="mb4">
     <%= label f, :student_loan_not_repayed?, "I have a student loan which is not fully repayed", class: "dib mw-100 mb2 fw4" %>
     <%= checkbox f, :student_loan_not_repayed?, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
