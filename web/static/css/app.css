@@ -40,16 +40,6 @@ opacity: 0;
   max-width: 110rem;
 }
 
-.nav-link {
-  color: white;
-  text-decoration: none;
-  transition: color .15s ease-in;
-}
-
-.nav-link:hover {
-  transition: #757de8 .15s ease-in;
-}
-
 /*Karmaradio Colours*/
 
 /*backgrounds*/
