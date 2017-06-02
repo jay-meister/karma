@@ -16,7 +16,7 @@
   <%= component "input.html",
   form: f,
   atom: :middle_names,
-  label: "Middle aname(s)"
+  label: "Middle name(s)"
   %>
 
   <%= component "input.html",
