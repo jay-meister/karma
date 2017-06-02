@@ -221,7 +221,9 @@ defmodule Karma.OfferController do
               # run calculations and add them to the offer_params
               calculations = parse_offer_strings(offer_params) |> run_calculations(project)
               offer_params = Map.merge(offer_params, calculations)
-              # add contract type to offer_params
+              %{"department" => department, "job_title" => job_title} = offer_params
+              contract_type = determine_contract_type(department, job_title)
+              offer_params = Map.put(offer_params, "contract_type", contract_type)
               changeset = Offer.changeset(offer, offer_params)
 
               {:ok, offer} = Repo.update(changeset)
