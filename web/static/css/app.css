@@ -28,6 +28,10 @@ input:focus, textarea:focus, select:focus {
     border: 1px solid #3f51b5;
 }
 
+a {
+  outline: none !important;
+}
+
 .no-placeholder:focus::-webkit-input-placeholder {
 opacity: 0;
 }
@@ -61,7 +65,7 @@ nav {
   #hamburger {
     display: none;
   }
-  
+
   .height-auto {
     height: auto;
     transition: 1s;
