@@ -19,7 +19,7 @@
     disabled: assigns[:disabled] || false,
     placeholder: assigns[:placeholder],
     type: assigns[:type] || "",
-    class: "border-box k-dark-grey pa3 bn br3 w-100 outline-0 lato #{padding} #{bg_color}",
+    class: "border-box no-placeholder k-dark-grey pa3 bn br3 w-100 outline-0 lato #{padding} #{bg_color}",
     autocomplete: assigns[:autocomplete] || "off"
     %>
     <%= if assigns[:image_name] do %>
@@ -28,7 +28,6 @@
     <%= error_tag assigns[:form], assigns[:atom] %>
   </div>
 </div>
-
 
 <!--
 assigns:

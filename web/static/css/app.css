@@ -21,7 +21,7 @@ body {
   background-color: #E9EAEB;
   border: none;
   outline: 0;
-  font-family: 'Lato', sans-serif; 
+  font-family: 'Lato', sans-serif;
 }
 
 input:focus, textarea:focus, select:focus {
@@ -33,6 +33,13 @@ input:focus, textarea:focus, select:focus {
   font-family: 'Lato', sans-serif;
 }
 
+.no-placeholder:focus::-webkit-input-placeholder {
+opacity: 0;
+}
+
+.no-placeholder:focus:-moz-placeholder {
+  opacity: 0;
+}
 /*Karmaradio Colours*/
 
 /*backgrounds*/
@@ -46,6 +53,10 @@ input:focus, textarea:focus, select:focus {
 
 .k-bg-light-indigo {
   background-color: #757de8;
+}
+
+.k-bg-lighter-grey {
+  background-color: #F0F0F0;
 }
 
 .k-bg-grey {
@@ -172,10 +183,6 @@ select {
 
 /*karma layout/custom components*/
 
-.karma-input {
-
-}
-
 .karma-input::after {
   content : "";
   position: absolute;
@@ -193,6 +200,18 @@ select {
 
 .k-ftitle {
   font-size: 7rem;
+}
+
+.k-hide-file-upload {
+  opacity: 0;
+  position: absolute;
+  z-index: 1000;
+  cursor: pointer;
+  right: 0;
+  top: 0;
+  height: 100%;
+  font-size: 24px;
+  width: 100%;
 }
 
 
