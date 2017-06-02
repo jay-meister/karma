@@ -138,26 +138,24 @@ defmodule Karma.OfferController do
     end
   end
 
-  def show(conn, %{"project_id" => project_id, "id" => id}) do
-    offer = Repo.get!(Offer, id) |> Repo.preload(:project) |> Repo.preload(:user)
-    project = offer.project |> Repo.preload(:user)
-    case Repo.get_by(User, email: offer.target_email) do
+  def show(conn, %{"project_id" => project_id, "id" => _id}) do
+    offer = conn.assigns.offer
+    user = conn.assigns.current_user
+    case offer.user_id do
       nil ->
         changeset = Startpack.changeset(%Startpack{})
-        render(conn, "show.html", offer: offer, project_id: project_id, valid?: false, project: project, changeset: changeset)
-      user ->
+        render(conn, "show.html", project_id: project_id, changeset: changeset)
+      _ ->
         edit_changeset = Offer.changeset(offer)
-        user = Repo.preload(user, :startpacks)
-        startpack = Map.from_struct(user.startpacks)
+        startpack = Repo.get_by(Startpack, user_id: user.id)
+        startpack =  Map.from_struct(startpack)
         changeset = Startpack.mother_changeset(%Startpack{}, startpack, offer)
-      render(conn,
-      "show.html",
-      offer: offer,
-      project_id: project_id,
-      valid?: false,
-      changeset: changeset,
-      edit_changeset: edit_changeset,
-      project: project)
+        render(conn,
+        "show.html",
+        project_id: project_id,
+        changeset: changeset,
+        edit_changeset: edit_changeset
+        )
     end
   end
 
