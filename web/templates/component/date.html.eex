@@ -3,11 +3,14 @@
    nil -> label assigns[:form], assigns[:atom], class: "dib mw-100 mb2 fw4"
    _ -> label assigns[:form], assigns[:atom], assigns[:label], class: "dib mw-100 mb2 fw4"
    end %>
+   <% year_from = assigns[:year_from] || Date.utc_today().year
+      year_to = assigns[:year_to] || Date.utc_today().year + 10 %>
   <div class="k-bg-input b-h3 pt3 k-date-select pl3 br3">
     <%= date_select assigns[:form],
     assigns[:atom],
     class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3 w-100 k-bg-input bn",
     default: Date.utc_today(),
+    year: [options: year_from..year_to],
     builder: fn b -> %>
       <%= b.(:day, []) %> / <%= b.(:month, []) %> / <%= b.(:year, []) %>
     <% end %>
