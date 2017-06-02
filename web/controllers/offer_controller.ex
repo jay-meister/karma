@@ -3,16 +3,19 @@ defmodule Karma.OfferController do
 
   alias Karma.{User, Offer, Project, Startpack}
 
-  import Karma.ProjectController, only: [project_owner: 2, block_if_not_project_owner: 2]
+  import Karma.ProjectController, only: [add_project_to_conn: 2, block_if_not_project_manager: 2]
 
-  # add project to current user if user is PM
-  plug :project_owner when action in [:index, :new, :create, :show, :edit, :update, :delete]
+  # add project to conn
+  plug :add_project_to_conn when action in [:index, :new, :create, :show, :edit, :update, :delete]
 
   # block access if current user is not PM of this project
-  plug :block_if_not_project_owner when action in [:index, :new, :create, :edit, :delete]
+  plug :block_if_not_project_manager when action in [:index, :new, :create, :edit, :delete]
+
+  # add offer to conn
+  plug :add_offer_to_conn when action in [:show, :edit, :update, :delete]
 
   # block access if current user does not own the current offer
-  plug :block_if_not_users_offer when action in [:show, :update]
+  plug :block_if_not_contractor_or_pm when action in [:show, :update]
 
   # block update and delete functionality when offer is not pending
   plug :offer_pending when action in [:edit, :update, :delete]
@@ -32,23 +35,35 @@ defmodule Karma.OfferController do
     end
   end
 
-  def block_if_not_users_offer(conn, _) do
-    %{"id" => offer_id, "project_id" => _project_id} = conn.params
-    offer = Repo.get_by(Offer, id: offer_id, user_id: conn.assigns.current_user.id)
+  def add_offer_to_conn(conn, _) do
+    %{"id" => offer_id} = conn.params
+    # offer
+    offer = Repo.get_by(Offer, id: offer_id)
+
     conn = assign(conn, :offer, offer)
+    case conn.assigns.offer do
+      nil ->
+        conn
+        |> put_flash(:error, "Offer could not be found")
+        |> render(Karma.ErrorView, "404.html")
+        |> halt()
+      _ ->
+        # assign is_contractor?
+        is_contractor? = conn.assigns.current_user.id == conn.assigns.offer.user_id
+        assign(conn, :is_contractor?, is_contractor?)
+      end
+  end
+
+  def block_if_not_contractor_or_pm(conn, _) do
+    # block if user is not contractor
     case conn.assigns do
-      %{project: nil, offer: nil} -> # user is not PM and this offer is not theirs
+      %{is_pm?: false, is_contractor?: false} ->
         conn
         |> put_flash(:error, "You do not have permission to view that offer")
         |> redirect(to: dashboard_path(conn, :index))
         |> halt()
-      %{project: _project, offer: nil} -> # user is PM, looking at an offer they have made
-        assign(conn, :is_contractor?, false)
-      %{offer: _} -> # user is not PM but this offer belongs to them
-        assign(conn, :is_contractor?, true)
-      %{project: _project, offer: _offer} -> # user is PM, looking at offer to themselves
-        assign(conn, :is_contractor?, true)
-        |> assign(:is_pm?, true)
+      _ ->
+        conn
     end
   end
 
