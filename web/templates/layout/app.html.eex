@@ -24,7 +24,7 @@
               <a href="/" class="h4 ml3 ml0-ns ml4-m">
                 <img src="/images/logo-white-big.png" class="w3" />
               </a>
-              <img src="https://cdn4.iconfinder.com/data/icons/wirecons-free-vector-icons/32/menu-alt-256.png" class="h3 w3 cover bg-center mb0 mr4 fr" id="hamburger" />
+              <img src="/images/ic_menu.svg" class="h3 w3 cover bg-center mb0 mr4 fr" id="hamburger" />
             <!-- </ul> -->
             <div class="white flex flex-column flex-row-ns items-center-ns justify-end-ns fr-ns mv3-ns mr4-m" id="list">
               <%= link "Startpack", to: startpack_path(@conn, :index), class: "back-button link hover-purple white ml3 mv4 mb0-ns" %>
