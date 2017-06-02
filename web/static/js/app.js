@@ -78,7 +78,21 @@ function studentLoanRadios() {
   })
 }
 
+function hamburgerAnimate() {
+  var hamburger = document.querySelector ('#hamburger');
+  var list = document.querySelector ('#list');
+  var nav = document.querySelector ('nav');
+
+  hamburger.onclick = function () {
+    list.classList.toggle('height-auto');
+    nav.classList.toggle('height-fixed');
+    }
+}
+
+
+
 export var App = {
   setupListeners: setupListeners,
-  studentLoanRadios: studentLoanRadios
+  studentLoanRadios: studentLoanRadios,
+  hamburgerAnimate: hamburgerAnimate,
 }
