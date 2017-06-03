@@ -29,6 +29,10 @@ input:focus, textarea:focus, select:focus {
     border: 1px solid #3f51b5;
 }
 
+a {
+  outline: none !important;
+}
+
 .lato {
   font-family: 'Lato', sans-serif;
 }
@@ -40,6 +44,43 @@ opacity: 0;
 .no-placeholder:focus:-moz-placeholder {
   opacity: 0;
 }
+
+.app-container {
+  max-width: 110rem;
+}
+
+/*Nav hamburger animation*/
+
+/*mobile*/
+nav {
+  overflow: hidden;
+  transition: .5s;
+}
+
+.height-auto {
+  height: auto;
+  transition: 1s;
+}
+
+.height-fixed {
+  height: 24rem;
+}
+
+@media screen and (min-width: 30em)  {
+  #hamburger {
+    display: none;
+  }
+
+  .height-auto {
+    height: auto;
+    transition: 1s;
+  }
+
+  .height-fixed {
+    height: 8rem;
+  }
+}
+
 /*Karmaradio Colours*/
 
 /*backgrounds*/
@@ -183,6 +224,10 @@ select {
 
 /*karma layout/custom components*/
 
+.hover-purple:hover {
+    color: #757de8;
+ }
+
 .karma-input::after {
   content : "";
   position: absolute;
@@ -191,6 +236,10 @@ select {
   height  : 1px;
   width   : 50%;  /* or 100px */
   border-bottom: 3px solid #707070;
+}
+
+.k-pb3 {
+   padding-bottom: 0.75rem;
 }
 
 .k-f2-5 {
