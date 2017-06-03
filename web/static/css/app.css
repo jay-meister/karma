@@ -21,6 +21,7 @@ body {
   background-color: #E9EAEB;
   border: none;
   outline: 0;
+  font-family: 'Lato', sans-serif;
 }
 
 input:focus, textarea:focus, select:focus {
@@ -30,6 +31,10 @@ input:focus, textarea:focus, select:focus {
 
 a {
   outline: none !important;
+}
+
+.lato {
+  font-family: 'Lato', sans-serif;
 }
 
 .no-placeholder:focus::-webkit-input-placeholder {
@@ -75,7 +80,6 @@ nav {
     height: 8rem;
   }
 }
-
 
 /*Karmaradio Colours*/
 
@@ -222,11 +226,7 @@ select {
 
 .hover-purple:hover {
     color: #757de8;
-}
-
-.karma-input {
-
-}
+ }
 
 .karma-input::after {
   content : "";
@@ -238,6 +238,10 @@ select {
   border-bottom: 3px solid #707070;
 }
 
+.k-pb3 {
+   padding-bottom: 0.75rem;
+}
+
 .k-f2-5 {
   font-size: 2rem;
 }
@@ -245,6 +249,18 @@ select {
 
 .k-ftitle {
   font-size: 7rem;
+}
+
+.k-hide-file-upload {
+  opacity: 0;
+  position: absolute;
+  z-index: 1000;
+  cursor: pointer;
+  right: 0;
+  top: 0;
+  height: 100%;
+  font-size: 24px;
+  width: 100%;
 }
 
 
@@ -284,10 +300,6 @@ select {
 /* 4-5 =~ 4.5 because it's between 4 and 5 in tachyons*/
 .k-pl4-5 {
   padding-left: 3rem;
-}
-
-.k-pb3 {
-  padding-bottom: 0.75rem;
 }
 
 .k-top-2-5 {

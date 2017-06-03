@@ -76,10 +76,6 @@ defmodule Karma.Project do
       :company_address_city,
       :company_address_postcode,
       :company_address_country,
-      :operating_base_address_1,
-      :operating_base_address_city,
-      :operating_base_address_postcode,
-      :operating_base_address_country,
       :holiday_rate,
       :active,
       :user_id])

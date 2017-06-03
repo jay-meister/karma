@@ -11,9 +11,10 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/tachyons@4.7.0/css/tachyons.min.css"/>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
-
   </head>
+
   <body class="k-bg-lighter-grey k-indigo mb4">
+
     <header>
       <nav role="navigation" class="flex h4 bb k-bg-dark-indigo">
         <%= if @current_user do %>
@@ -31,9 +32,27 @@
             </div>
           </div>
         <% end %>
+<!-- =======
+    <header class="h4 bb k-bg-indigo white pl2 pr2">
+      <nav role="navigation">
+        <ul class="mv4 pl0 mb0 nested-list-reset ol fl">
+          <%= if @current_user do %>
+          <a href="/">
+            <img src="/images/logo-blue.png" class="w3"  />
+          </a>
+          <% end %>
+        </ul>
+        <ul class="mv4 pl0 mb0 nested-list-reset ol fr white">
+          <%= if @current_user do %>
+          <%= link "My startpack", to: startpack_path(@conn, :index), class: "back-button link pa3 white" %>
+          <%= link "My profile", to: user_path(@conn, :show, @current_user), class: "back-button link pa3 white" %>
+          <%= link "Log out", to: session_path(@conn, :delete, @current_user), method: "delete", class: "back-button link pa3 k-lh-3 white" %>
+          <% end %>
+        </ul>
+>>>>>>> master -->
       </nav>
     </header>
-    <div class="app-container center bg-white">
+    <div class="mw9 center bg-white">
       <p class="alert pa4 br2 mt0 dark-grey bg-light-green b--dark-green" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert pa4 br2 mt0 mb4 white bg-light-red b--red" role="alert"><%= get_flash(@conn, :error) %></p>
 
@@ -44,6 +63,5 @@
     </div> <!-- /container -->
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
     <script>require("web/static/js/app").App.hamburgerAnimate()</script>
-
   </body>
 </html>

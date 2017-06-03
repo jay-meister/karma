@@ -89,10 +89,8 @@ function hamburgerAnimate() {
     }
 }
 
-
-
 export var App = {
   setupListeners: setupListeners,
-  studentLoanRadios: studentLoanRadios,
-  hamburgerAnimate: hamburgerAnimate,
+studentLoanRadios: studentLoanRadios,
+hamburgerAnimate: hamburgerAnimate,
 }

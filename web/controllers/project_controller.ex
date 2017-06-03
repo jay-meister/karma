@@ -4,31 +4,42 @@ defmodule Karma.ProjectController do
   alias Karma.{Project, Document}
 
 
-  plug :project_owner when action in [:show, :edit, :update, :delete]
+  plug :add_project_to_conn when action in [:show, :edit, :update, :delete]
+  plug :block_if_not_project_manager when action in [:show, :edit, :update, :delete]
 
   # project owner plug
-  def project_owner(conn, _) do
+  def add_project_to_conn(conn, _) do
     # if project doesn't exist, it should render a 404
-    # if current user is owner of the project, add project to assigns
-    # if current user is not owner, put permission flash, redirect and halt
+    # else add project to assigns
     project_id = case conn.params do
       %{"project_id" => project_id} -> project_id # if we are in an offers route
       %{"id" => project_id} -> project_id # if we are in a projects route
     end
-    user_id = conn.assigns.current_user.id
-    case Repo.get(Project, project_id) do
+    conn = assign(conn, :project, Repo.get(Project, project_id))
+    
+    case conn.assigns.project do
       nil ->
         conn
         |> put_flash(:error, "Project could not be found")
         |> render(Karma.ErrorView, "404.html")
         |> halt()
-      %Project{user_id: ^user_id} = project ->
-        assign(conn, :project, project)
-      %Project{} ->
+      _ ->
+        is_pm? = conn.assigns.project.user_id == conn.assigns.current_user.id
+        conn = assign(conn, :is_pm?, is_pm?)
+        conn
+    end
+  end
+
+  def block_if_not_project_manager(conn, _) do
+    # block if current user is not PM
+    case conn.assigns.is_pm? do
+      false ->
         conn
         |> put_flash(:error, "You do not have permission to view that project")
         |> redirect(to: dashboard_path(conn, :index))
         |> halt()
+      true ->
+        conn
     end
   end
 

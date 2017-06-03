@@ -426,7 +426,8 @@ var departments_with_jobs = {
     "Photographer"
     ],
   "Post Production": [
-
+    "Coordinator",
+    "Post Production Supervisor"
     ],
   "Production": [
     "Accommodation Co-Ordinator",
