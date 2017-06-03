@@ -23,14 +23,14 @@
               <img src="/images/ic_menu.svg" class="h3 w3 cover bg-center mb0 mr4 fr" id="hamburger" />
             <div class="white flex flex-column flex-row-ns items-center-ns justify-end-ns fr-ns mv3-ns mr4-m" id="list">
               <%= link "Startpack", to: startpack_path(@conn, :index), class: "back-button link hover-purple white ml3 mv4 mb0-ns outline-0" %>
-              <%= link "My profile", to: user_path(@conn, :show, @current_user), class: "back-button hover-purple link white ml3 mt4 mb5 mb0-ns outline-0" %>
-              <%= link "Log out", to: session_path(@conn, :delete, @current_user), method: "delete", class: "back-button hover-purple link white ml3 mv4 mb0-ns outline-0" %>
+              <%= link "My profile", to: user_path(@conn, :show, @current_user), class: "back-button hover-purple link white ml4-ns ml3 mt4 mb5 mb0-ns outline-0" %>
+              <%= link "Log out", to: session_path(@conn, :delete, @current_user), method: "delete", class: "back-button hover-purple link white ml4-ns ml3 mv4 mb0-ns outline-0" %>
             </div>
           </div>
         <% end %>
       </nav>
     </header>
-    <div class="mw9 center bg-white">
+    <div class="app-container center bg-white">
       <p class="alert pa4 br2 mt0 dark-grey bg-light-green b--dark-green" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert pa4 br2 mt0 mb4 white bg-light-red b--red" role="alert"><%= get_flash(@conn, :error) %></p>
 
