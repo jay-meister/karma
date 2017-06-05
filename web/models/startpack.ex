@@ -66,8 +66,16 @@ defmodule Karma.Startpack do
     field :bank_sort_code, :string
     field :bank_iban, :string
     field :bank_swift_code, :string
-    belongs_to :user, Karma.User
+    # file uploads
+    field :passport_image, :any, virtual: true
+    field :box_rental_image, :any, virtual: true
+    field :equipment_rental_image, :any, virtual: true
+    field :vehicle_insurance_image, :any, virtual: true
+    field :p45_image, :any, virtual: true
+    field :schedule_d_letter_image, :any, virtual: true
+    field :loan_out_company_cert_image, :any, virtual: true
 
+    belongs_to :user, Karma.User
     timestamps()
   end
 
@@ -331,5 +339,20 @@ defmodule Karma.Startpack do
 
     struct
     |> cast(params, image_keys)
+    |> validate_upload_type(["image/png", "image/jpeg", "application/pdf"])
+  end
+
+  defp validate_upload_type(changeset, permitted) do
+    Enum.reduce(Map.keys(changeset.changes), changeset, fn(atom, changeset) ->
+      upload = Map.get(changeset.changes, atom)
+      case Enum.member?(permitted, upload.content_type) do
+        true ->
+          changeset
+        false ->
+          changeset
+          |> add_error(atom, ".png .jpg .pdf only")
+          |> Map.put(:action, :insert)
+      end
+     end)
   end
 end
