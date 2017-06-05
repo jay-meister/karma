@@ -318,4 +318,18 @@ defmodule Karma.Startpack do
     end
   end
 
+  def upload_type_validation(struct, params) do
+    image_keys = [
+      :passport_image,
+      :box_rental_image,
+      :equipment_rental_image,
+      :vehicle_insurance_image,
+      :p45_image,
+      :schedule_d_letter_image,
+      :loan_out_company_cert_image
+    ]
+
+    struct
+    |> cast(params, image_keys)
+  end
 end

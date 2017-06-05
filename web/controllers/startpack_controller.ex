@@ -39,26 +39,34 @@ defmodule Karma.StartpackController do
   end
 
   def update(conn, %{"id" => id, "startpack" => startpack_params}, _user) do
-    # should validate before uploading?
     startpack = Repo.get!(Startpack, id)
 
-    urls = Karma.S3.upload_many(startpack_params, @file_upload_keys)
-
-    params = Map.merge(startpack_params, urls)
-
-    changeset = Startpack.changeset(startpack, params)
-
-    case Repo.update(changeset) do
-      {:ok, _startpack} ->
-        conn
-        |> put_flash(:info, "Startpack updated successfully!")
-        |> redirect(to: startpack_path(conn, :index))
-      {:error, _changeset} ->
+    image_changeset = Startpack.upload_type_validation(%Startpack{}, startpack_params)
+    case image_changeset.valid? do
+      false ->
         conn
         |> put_flash(:error, "Error updating startpack!")
-        |> redirect(to: startpack_path(conn, :index))
+        |> render("index.html", changeset: image_changeset, startpack: startpack, offer: %{})
+      true ->
+        urls = Karma.S3.upload_many(startpack_params, @file_upload_keys)
+
+        params = Map.merge(startpack_params, urls)
+
+        changeset = Startpack.changeset(startpack, params)
+
+        case Repo.update(changeset) do
+          {:ok, _startpack} ->
+            conn
+            |> put_flash(:info, "Startpack updated successfully!")
+            |> redirect(to: startpack_path(conn, :index))
+          {:error, _changeset} ->
+            conn
+            |> put_flash(:error, "Error updating startpack!")
+            |> redirect(to: startpack_path(conn, :index))
+        end
     end
   end
+
 
   def delete(conn, %{"id" => id}, _user) do
     startpack = Repo.get!(Startpack, id)
