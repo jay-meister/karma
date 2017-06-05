@@ -30,7 +30,7 @@
         <% end %>
       </nav>
     </header>
-    <article class="center h-100 bg-white relative-ns pb3-ns min-vh-100 relative">
+    <article class="center h-100 bg-white relative-ns pb3-ns pb6 min-vh-100-ns relative">
       <p class="alert pa4 br2 mt0 dark-grey bg-light-green b--dark-green" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert pa4 br2 mt0 mb4 white bg-light-red b--red" role="alert"><%= get_flash(@conn, :error) %></p>
 
@@ -44,7 +44,7 @@
       <div class="w-100 h6-ns h-100 bottom-0 bg-white">
         <div class="white app-container center mt0 mb4 b--black-20 bt">
 
-          <div class="tc pv4 w-100">
+          <div class="tc pv4-ns pt4 pb0 w-100">
             <img src="/images/footer-icon.svg" class="w3" />
           </div>
           <article class="cf mt2">
@@ -57,7 +57,7 @@
             <div class="fl w-100 w-50-ns tr-ns tc">
               <a class="k-indigo fw6 f4-l f4 link dim" href="mailto:hello@impossible.com">hello@karmaradio.com</a>
               <!-- social icons -->
-              <div class="mt4">
+              <!-- <div class="mt4">
                 <a href="https://www.facebook.com/" class="link dim dib k-indigo" title="Impossible Labs on Facebook">
                   <svg class="w2 h2" data-icon="facebook" viewBox="0 0 32 32" fill="currentColor">
                     <title >facebook icon</title>
@@ -90,7 +90,7 @@
                     </g>
                   </svg>
                 </a>
-              </div>
+              </div> -->
             </div>
           </article>
 
