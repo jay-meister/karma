@@ -25,8 +25,15 @@ defmodule Karma.DocumentControllerTest do
     assert html_response(conn, 200) =~ "New document"
   end
 
+  test "Can upload pdf only for project documents", %{conn: conn, project: project} do
+    file_upload = %Plug.Upload{content_type: "image/png", path: "test/fixtures/foxy.png", filename: "foxy.pdf"}
+    valid = Map.put(@valid_attrs, "file", file_upload)
+    conn = post conn, project_document_path(conn, :create, project), document: valid
+    assert Phoenix.Controller.get_flash(conn, :error) =~ "PDFs only"
+  end
+
   test "creates resource and redirects when data is valid", %{conn: conn, project: project} do
-    file_upload = %Plug.Upload{path: "test/fixtures/foxy.png", filename: "foxy.png"}
+    file_upload = %Plug.Upload{content_type: "application/pdf", path: "test/fixtures/foxy.png", filename: "foxy.png"}
     valid = Map.put(@valid_attrs, "file",  file_upload)
 
     with_mock ExAws, [request!: fn(_) -> %{status_code: 200} end] do
@@ -37,7 +44,7 @@ defmodule Karma.DocumentControllerTest do
   end
 
   test "does not create resource and renders errors when data is invalid", %{conn: conn, project: project} do
-    file_upload = %Plug.Upload{path: "test/fixtures/foxy.png", filename: "foxy.png"}
+    file_upload = %Plug.Upload{content_type: "application/pdf", path: "test/fixtures/foxy.png", filename: "foxy.png"}
     valid = Map.put(@valid_attrs, "file",  file_upload)
 
     with_mock ExAws, [request!: fn(_) -> %{status_code: 200} end] do
@@ -47,7 +54,7 @@ defmodule Karma.DocumentControllerTest do
   end
 
   test "error uploading file", %{conn: conn, project: project} do
-    file_upload = %Plug.Upload{path: "", filename: ""}
+    file_upload = %Plug.Upload{content_type: "application/pdf", path: "", filename: ""}
     valid = Map.put(@valid_attrs, "file",  file_upload)
 
     with_mock ExAws, [request!: fn(_) -> %{status_code: 200} end] do
@@ -57,7 +64,7 @@ defmodule Karma.DocumentControllerTest do
   end
 
   test "bad changeset when uploading a file", %{conn: conn, project: project} do
-    file_upload = %Plug.Upload{path: "test/fixtures/foxy.png", filename: "foxy.png"}
+    file_upload = %Plug.Upload{content_type: "application/pdf", path: "test/fixtures/foxy.png", filename: "foxy.png"}
     invalid =
       Map.put(@valid_attrs, "file",  file_upload)
       |> Map.put("name", "")

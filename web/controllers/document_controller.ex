@@ -17,35 +17,43 @@ defmodule Karma.DocumentController do
 
   def create(conn, %{"document" => %{"file" => file_params, "name" => file_type} = document_params, "project_id" => project_id}) do
     project = Repo.get_by(Project, id: project_id)
-    category = get_category(file_type)
-    document_params = Map.put(document_params, "category", category)
-    updated_params =
-      case S3.upload({:url, file_params}) do
-        {:ok, :url, url} ->
-            Map.delete(document_params, "file")
-            |> Map.put_new("url", url)
-        {:error, :url, _error} ->
-          conn
-          |> put_flash(:error, "Error uploading document!")
-          |> redirect(to: project_path(conn, :show, project))
-          document_params
+
+    case Document.is_pdf?(file_params) do
+      false ->
+        conn
+        |> put_flash(:error, "Upload error, PDFs only")
+        |> redirect(to: project_path(conn, :show, project))
+      true ->
+        category = get_category(file_type)
+        document_params = Map.put(document_params, "category", category)
+        updated_params =
+          case S3.upload({:url, file_params}) do
+            {:ok, :url, url} ->
+              Map.delete(document_params, "file")
+              |> Map.put_new("url", url)
+              {:error, :url, _error} ->
+                conn
+                |> put_flash(:error, "Error uploading document!")
+                |> redirect(to: project_path(conn, :show, project))
+                document_params
+          end
+
+          changeset =
+            project
+            |> build_assoc(:documents)
+            |> Document.changeset(updated_params)
+
+          case Repo.insert(changeset) do
+            {:ok, _document} ->
+              conn
+              |> put_flash(:info, "Document uploaded successfully.")
+              |> redirect(to: project_path(conn, :show, project))
+              {:error, _changeset} ->
+                conn
+                |> put_flash(:error, "Error uploading document!")
+                |> redirect(to: project_path(conn, :show, project))
+          end
       end
-
-    changeset =
-      project
-      |> build_assoc(:documents)
-      |> Document.changeset(updated_params)
-
-    case Repo.insert(changeset) do
-      {:ok, _document} ->
-        conn
-        |> put_flash(:info, "Document uploaded successfully.")
-        |> redirect(to: project_path(conn, :show, project))
-      {:error, _changeset} ->
-        conn
-        |> put_flash(:error, "Error uploading document!")
-        |> redirect(to: project_path(conn, :show, project))
-    end
   end
 
   def show(conn, %{"id" => id, "project_id" => project_id}) do
