@@ -1,4 +1,4 @@
-defmodule Karma.Email do
+ defmodule Karma.Email do
   use Bamboo.Phoenix, view: Karma.EmailView
 
   alias Karma.{RedisCli, Controllers.Helpers}
@@ -61,13 +61,6 @@ defmodule Karma.Email do
       last_name: project.user.last_name,
       codename: project.codename
     ])
-  end
-
-  def send_offer_response_emails(conn, offer, project) do
-    send_offer_response_pm(conn, offer, project)
-    if offer.accepted do
-      send_offer_accepted_contractor(conn, offer)
-    end
   end
 
   def send_offer_response_pm(conn, offer, project) do
