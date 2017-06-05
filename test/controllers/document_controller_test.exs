@@ -102,7 +102,7 @@ defmodule Karma.DocumentControllerTest do
   test "deletes chosen resource", %{conn: conn, project: project} do
     document = Repo.insert! %Document{}
     conn = delete conn, project_document_path(conn, :delete, project, document)
-    assert redirected_to(conn) == project_document_path(conn, :index, project)
+    assert redirected_to(conn) == project_path(conn, :show, project)
     refute Repo.get(Document, document.id)
   end
 end

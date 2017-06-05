@@ -310,6 +310,14 @@ select {
   box-shadow: 2px 2px 5px #888888;
 }
 
+.k-top0-5 {
+  top: 0.5rem;
+}
+
+.k-w2-5 {
+  width: 3rem;
+}
+
 .k-w4-5 {
   width: 10rem;
 }

@@ -59,7 +59,14 @@
   <% end %>
   <%= for form <- @forms do %>
     <div class="dib">
-      <img class="w5 dib ma1" src="/images/pdf.svg" />
+      <div class="relative">
+        <img class="w5 dib ma1" src="/images/pdf.svg" />
+        <%= link to: project_document_path(@conn, :delete, @project, form),
+          method: :delete,
+          data: [confirm: "Are you sure?"] do %>
+          <img class="absolute k-w2-5 top-0 left-1" src="/images/delete.svg" />
+        <% end %>
+      </div>
       <div class="tc f5"><%= form.name %></div>
     </div>
   <% end %>
@@ -69,7 +76,14 @@
   <% end %>
   <%= for deal <- @deals do %>
     <div class="dib">
-      <img class="w5 dib ma1" src="/images/pdf.svg" />
+      <div class="relative">
+        <img class="w5 dib ma1" src="/images/pdf.svg" />
+        <%= link to: project_document_path(@conn, :delete, @project, deal),
+          method: :delete,
+          data: [confirm: "Are you sure?"] do %>
+          <img class="absolute k-w2-5 top-0 left-1" src="/images/delete.svg" />
+        <% end %>
+      </div>
       <div class="tc f5"><%= deal.name %></div>
     </div>
   <% end %>
@@ -79,7 +93,14 @@
   <% end %>
   <%= for info <- @info do %>
     <div class="dib">
-      <img class="w5 dib ma1" src="/images/pdf.svg" />
+      <div class="relative">
+        <img class="w5 dib ma1" src="/images/pdf.svg" />
+        <%= link to: project_document_path(@conn, :delete, @project, info),
+          method: :delete,
+          data: [confirm: "Are you sure?"] do %>
+          <img class="absolute k-w2-5 top-0 left-1" src="/images/delete.svg" />
+        <% end %>
+      </div>
       <div class="tc f5"><%= info.name %></div>
     </div>
   <% end %>
