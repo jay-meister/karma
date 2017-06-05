@@ -65,7 +65,7 @@
 
   <%= component "form_divider.html", title: "Offer details" %>
   <%= for {atom, label, formatted} <- [
-    {:target_email, nil, nil},
+    {:target_email, "Recipient email", nil},
     {:department, nil, nil},
     {:job_title, nil, nil},
     {:contract_type, nil, nil},
