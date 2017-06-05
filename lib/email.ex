@@ -1,4 +1,4 @@
- defmodule Karma.Email do
+defmodule Karma.Email do
   use Bamboo.Phoenix, view: Karma.EmailView
 
   alias Karma.{RedisCli, Controllers.Helpers}
