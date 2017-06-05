@@ -41,35 +41,41 @@ defmodule Karma.StartpackController do
   def update(conn, %{"id" => id, "startpack" => startpack_params}, _user) do
     startpack = Repo.get!(Startpack, id)
 
-    urls = Karma.S3.upload_many(startpack_params, @file_upload_keys)
-
-    params = Map.merge(startpack_params, urls)
-
-    changeset = Startpack.changeset(startpack, params)
-
-    offer_id = Map.get(conn.query_params, "offer_id", "")
-    
-    case Repo.update(changeset) do
-      {:ok, _startpack} ->
-        case offer_id == "" do
-          true ->
-            conn
-            |> put_flash(:info, "Startpack updated successfully!")
-            |> redirect(to: startpack_path(conn, :index))
-          false ->
-            conn
-            |> put_flash(:info, "Startpack updated successfully!")
-            |> redirect(to: startpack_path(conn, :index, offer_id: offer_id))
-        end
-      {:error, _changeset} ->
+    image_changeset = Startpack.upload_type_validation(%Startpack{}, startpack_params)
+    case image_changeset.valid? do
+      false ->
         conn
         |> put_flash(:error, "Error updating startpack!")
-        |> redirect(to: startpack_path(conn, :index))
+        |> render("index.html", changeset: image_changeset, startpack: startpack, offer: %{})
+      true ->
+        urls = Karma.S3.upload_many(startpack_params, @file_upload_keys)
+
+        params = Map.merge(startpack_params, urls)
+
+        changeset = Startpack.changeset(startpack, params)
+
+        offer_id = Map.get(conn.query_params, "offer_id", "")
+
+      case Repo.update(changeset) do
+        {:ok, _startpack} ->
+          case offer_id == "" do
+            true ->
+              conn
+              |> put_flash(:info, "Startpack updated successfully!")
+              |> redirect(to: startpack_path(conn, :index))
+            false ->
+              conn
+              |> put_flash(:info, "Startpack updated successfully!")
+              |> redirect(to: startpack_path(conn, :index, offer_id: offer_id))
+          end
+        {:error, _changeset} ->
+          conn
+          |> put_flash(:error, "Error updating startpack!")
+          |> redirect(to: startpack_path(conn, :index))
+      end
     end
-
-
-
   end
+
 
   def delete(conn, %{"id" => id}, _user) do
     startpack = Repo.get!(Startpack, id)
