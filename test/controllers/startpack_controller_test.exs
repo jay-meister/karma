@@ -115,7 +115,7 @@ defmodule Karma.StartpackControllerTest do
   end
 
   test "updates startpack and file is uploaded", %{conn: conn, user: user, startpack: startpack} do
-    image_upload = %Plug.Upload{path: "test/fixtures/foxy.png", filename: "foxy.png"}
+    image_upload = %Plug.Upload{content_type: "image/png", path: "test/fixtures/foxy.png", filename: "foxy.png"}
     valid = Map.put(@valid_attrs, "passport_image",  image_upload)
 
     with_mock ExAws, [request!: fn(_) -> %{status_code: 200} end] do
@@ -138,7 +138,7 @@ defmodule Karma.StartpackControllerTest do
   end
 
   test "updates startpack with many file uploads", %{conn: conn, user: user, startpack: startpack} do
-    image_upload = %Plug.Upload{path: "test/fixtures/foxy.png", filename: "foxy.png"}
+    image_upload = %Plug.Upload{content_type: "image/png", path: "test/fixtures/foxy.png", filename: "foxy.png"}
 
     # possible solution for multiple fields
     images = %{
@@ -166,7 +166,7 @@ defmodule Karma.StartpackControllerTest do
 
 
   test "updates chosen resource even if file upload errors", %{conn: conn, user: user, startpack: startpack} do
-    image_upload = %Plug.Upload{path: "test/fixtures/foxy.png", filename: "foxy.png"}
+    image_upload = %Plug.Upload{content_type: "image/png", path: "test/fixtures/foxy.png", filename: "foxy.png"}
     valid = Map.put(@valid_attrs, "passport_image",  image_upload)
 
     with_mock ExAws, [request!: fn(_) -> %{status_code: 500} end] do
