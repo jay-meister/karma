@@ -47,14 +47,8 @@ defmodule Karma.StartpackController do
 
     changeset = Startpack.changeset(startpack, params)
 
-    offer_id =
-      case Map.has_key?(conn.query_params, "offer_id") do
-        true ->
-          %{"offer_id" => offer_id} = conn.query_params
-          offer_id
-        false -> ""
-      end
-
+    offer_id = Map.get(conn.query_params, "offer_id", "")
+    
     case Repo.update(changeset) do
       {:ok, _startpack} ->
         case offer_id == "" do
