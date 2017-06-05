@@ -1,6 +1,8 @@
-<div class="mb3">
-
-  <%= label assigns[:form], assigns[:atom], class: "dib mw-100 fw4" %>
+<div class="mb5">
+<% label = assigns[:label] || assigns[:atom] %>
+  <%= if !assigns[:hide_label] do %>
+    <%= label assigns[:form], label, class: "dib mw-100 fw4" %>
+  <% end %>
   <p><%= assigns[:helper_text] %></p>
   <%= if assigns[:image_url] do %>
     <a href=<%= assigns[:image_url] %>>

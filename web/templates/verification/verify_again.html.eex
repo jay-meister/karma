@@ -1,3 +1,3 @@
-<h1>Your email address is still not verified, click the button below to re-send your verification email</h1>
+<h1>Click the button to be sent another verification email</h1>
 
-<%= link "Re-send Verification Email", to: verification_path(@conn, :resend, @hash), class: "back-button link" %> 
+<%= link "Re-send Email", to: verification_path(@conn, :resend, @hash), class: "back-button link" %>
