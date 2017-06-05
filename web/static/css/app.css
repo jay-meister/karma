@@ -297,6 +297,10 @@ select {
   margin-bottom: 0.5rem;
 }
 
+.k-minw-20 {
+  min-width: 20rem;
+}
+
 /* 4-5 =~ 4.5 because it's between 4 and 5 in tachyons*/
 .k-pl4-5 {
   padding-left: 3rem;

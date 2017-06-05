@@ -1,6 +1,12 @@
 <li class="pt2 f4">
-  <strong><%= assigns[:label] %>:</strong>
-  <%= assigns[:data] %>
+  <table>
+    <td class="k-minw-20">
+      <strong><%= assigns[:label] %>:</strong>
+    </td>
+    <td>
+      <%= assigns[:data] %>
+    </td>
+  </table>
 </li>
 
 <!--
