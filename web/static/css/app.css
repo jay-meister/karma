@@ -13,6 +13,25 @@ body {
   margin:0
 }
 
+@media screen and (min-width: 60em) {
+  article {
+    /*position: relative;*/
+    margin-top: 8%;
+    /*padding-bottom: 10rem;
+    min-height: 100vh;*/
+  }
+}
+/*
+article {
+  min-height: 100vh;
+}*/
+
+@media screen and (min-width: 30em) {
+.top--2-ns {
+  top: -7rem;
+  }
+}
+
 .k-button-no-underline:hover {
   text-decoration: none;
 }

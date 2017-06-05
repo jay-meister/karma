@@ -1,33 +1,35 @@
 <div class="relative">
-  <div class="absolute right-1 top--1">
-    <%= component "plus_button.html", link: "/projects/new" %>
-  </div>
-  <div class="tl f2 mb3">My projects</div>
-  <%= if length(@projects) == 0 do %>
-    <div class="br3 pa4 mb3 tc">
-      <div class="f2">You haven't created any projects yet</div>
+
+    <div class="absolute right-1 top--2-ns">
+      <%= component "plus_button.html", link: "/projects/new" %>
     </div>
-    <div class="w-50 k-h1px k-bg-indigo k-m-auto mb4 mt4"></div>
+    <div class="tl f2 mv4 top--2-ns absolute ml4 ml0-ns">My projects</div>
+    <%= if length(@projects) == 0 do %>
+      <div class="br3 pa4 mb3 tc">
+        <div class="f2">You haven't created any projects yet</div>
+      </div>
+      <div class="w-50 k-h1px k-bg-indigo k-m-auto mb4 mt4"></div>
+    <% end %>
+  <%= if length(@projects) != 0 do %>
+      <div class="br3 pv3-ns pv6 mb3">
+        <%= for project <- @projects do %>
+        <%= component "project_tile.html",
+        project_id: project.id,
+        project_name: project.name,
+        project_codename: project.codename,
+        project_start_date: format_date(project.start_date),
+        project_pending: get_offers(project, nil),
+        project_accepted: get_offers(project, true),
+        project_rejected: get_offers(project, false)
+        %>
+        <% end %>
+      </div>
+    </div>
   <% end %>
-<%= if length(@projects) != 0 do %>
-    <div class="br3 pv3 mb3">
-      <%= for project <- @projects do %>
-      <%= component "project_tile.html",
-      project_id: project.id,
-      project_name: project.name,
-      project_codename: project.codename,
-      project_start_date: format_date(project.start_date),
-      project_pending: get_offers(project, nil),
-      project_accepted: get_offers(project, true),
-      project_rejected: get_offers(project, false)
-      %>
-      <% end %>
-    </div>
-  </div>
-<% end %>
+
 <div class="tl f2 mb3">My offers</div>
 <%= if length(@offers) == 0 do %>
-  <div class="br3 pa4 mb3 tc">
+  <div class="br3 pt5 pb3 mb3 tc">
     <div class="f2">You don't have any offers yet</div>
   </div>
 <% end %>

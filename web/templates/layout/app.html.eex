@@ -18,7 +18,7 @@
         <%= if @current_user do %>
           <div class="app-container w-100 h4 mv4 center">
               <a href="/" class="h4 ml3 ml0-ns ml4-m">
-                <img src="/images/logo-white-big.png" class="w3" />
+                <img src="/images/logo-flat.png" class="w3" />
               </a>
               <img src="/images/ic_menu.svg" class="h3 w3 cover bg-center mb0 mr4 fr" id="hamburger" />
             <div class="white flex flex-column flex-row-ns items-center-ns justify-end-ns fr-ns mv3-ns mr4-m" id="list">
@@ -30,15 +30,15 @@
         <% end %>
       </nav>
     </header>
-    <div class="app-container center bg-white">
+    <article class="center h-100 bg-white relative-ns pb3-ns min-vh-100">
       <p class="alert pa4 br2 mt0 dark-grey bg-light-green b--dark-green" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert pa4 br2 mt0 mb4 white bg-light-red b--red" role="alert"><%= get_flash(@conn, :error) %></p>
 
-      <main role="main" class="pa4 bg-white">
+      <main role="main" class="h-100 bg-white app-container center">
         <%= render @view_module, @view_template, assigns %>
       </main>
 
-    </div> <!-- /container -->
+    </article> <!-- /container -->
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
     <script>require("web/static/js/app").App.hamburgerAnimate()</script>
   </body>
