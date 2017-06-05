@@ -63,13 +63,6 @@ defmodule Karma.Email do
     ])
   end
 
-  def send_offer_response_emails(conn, offer, project) do
-    send_offer_response_pm(conn, offer, project)
-    if offer.accepted do
-      send_offer_accepted_contractor(conn, offer)
-    end
-  end
-
   def send_offer_response_pm(conn, offer, project) do
     template = "offer_response_pm"
     url = R_Helpers.project_offer_url(conn, :show, offer.project_id, offer)
