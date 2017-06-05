@@ -52,4 +52,12 @@ defmodule Karma.ViewHelpers do
     |> String.replace("_", " ")
     |> String.capitalize()
   end
+
+  def get_thumbnail(url) do
+    case String.ends_with?(url, ".pdf") do
+      true -> "/images/pdf.svg"
+      false -> url
+    end
+  end
+
 end
