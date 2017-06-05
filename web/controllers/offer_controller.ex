@@ -194,8 +194,12 @@ defmodule Karma.OfferController do
         changeset = Offer.offer_response_changeset(offer, offer_params)
         case Repo.update(changeset) do
           {:ok, offer} ->
-            Karma.Email.send_offer_response_emails(conn, offer, project)
+            Karma.Email.send_offer_response_pm(conn, offer, project)
             |> Karma.Mailer.deliver_later()
+            if offer.accepted == true do
+              Karma.Email.send_offer_accepted_contractor(conn, offer)
+              |> Karma.Mailer.deliver_later()
+            end
             conn
             |> put_flash(:info, "Response made!")
             |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
