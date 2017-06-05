@@ -6,8 +6,15 @@
 
 <h1 class="f1 mv4 fw5">Edit startpack</h1>
 
+  <% offer_id = case Map.has_key?(@conn.query_params, "offer_id") do
+      true ->
+        %{"offer_id" => offer_id} = @conn.query_params
+        offer_id
+      false -> nil
+    end %>
+
   <%= render "form.html", changeset: @changeset,
-                          action: startpack_path(@conn, :update, @startpack),
+                          action: startpack_path(@conn, :update, @startpack, offer_id: offer_id),
                           offer: @offer,
                           startpack: @startpack,
                           conn: @conn %>

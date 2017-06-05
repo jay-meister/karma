@@ -39,7 +39,6 @@ defmodule Karma.StartpackController do
   end
 
   def update(conn, %{"id" => id, "startpack" => startpack_params}, _user) do
-    # should validate before uploading?
     startpack = Repo.get!(Startpack, id)
 
     urls = Karma.S3.upload_many(startpack_params, @file_upload_keys)
@@ -48,16 +47,34 @@ defmodule Karma.StartpackController do
 
     changeset = Startpack.changeset(startpack, params)
 
+    offer_id =
+      case Map.has_key?(conn.query_params, "offer_id") do
+        true ->
+          %{"offer_id" => offer_id} = conn.query_params
+          offer_id
+        false -> ""
+      end
+
     case Repo.update(changeset) do
       {:ok, _startpack} ->
-        conn
-        |> put_flash(:info, "Startpack updated successfully!")
-        |> redirect(to: startpack_path(conn, :index))
+        case offer_id == "" do
+          true ->
+            conn
+            |> put_flash(:info, "Startpack updated successfully!")
+            |> redirect(to: startpack_path(conn, :index))
+          false ->
+            conn
+            |> put_flash(:info, "Startpack updated successfully!")
+            |> redirect(to: startpack_path(conn, :index, offer_id: offer_id))
+        end
       {:error, _changeset} ->
         conn
         |> put_flash(:error, "Error updating startpack!")
         |> redirect(to: startpack_path(conn, :index))
     end
+
+
+
   end
 
   def delete(conn, %{"id" => id}, _user) do

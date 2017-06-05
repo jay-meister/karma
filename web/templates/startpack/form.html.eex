@@ -400,7 +400,7 @@
   atom: :bank_swift_code,
   label: "Bank SWIFT code"
   %>
-
+  
   <%= component "submit_button.html", title: "Update Startpack" %>
 <% end %>
 
