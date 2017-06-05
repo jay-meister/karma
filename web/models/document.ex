@@ -18,4 +18,9 @@ defmodule Karma.Document do
     |> cast(params, [:url, :category, :name])
     |> validate_required([:url, :category, :name])
   end
+
+
+  def is_pdf?(file_params) do
+    file_params.content_type == "application/pdf"
+  end
 end
