@@ -1,7 +1,7 @@
 <a href="<%= assigns[:link] %>">
   <div class="tr relative">
-    <div class="dib k-bg-indigo br-100 pa3 mv4 mr3 mr0-ns" style="padding-bottom:0.75rem;">
-      <img class="w2" src="/images/plus.svg" />
+    <div class="dib mt4">
+      <img class="w-100" src="/images/plus-btn.svg" />
     </div>
   </div>
 </a>
