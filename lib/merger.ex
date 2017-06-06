@@ -1,10 +1,7 @@
 defmodule Karma.Merger do
   alias Karma.Repo
 
-  def merge(offer, document) do
-    json = get_data_for_merge(offer) |> format()
 
-  end
 
 
 
