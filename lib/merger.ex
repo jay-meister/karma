@@ -5,6 +5,7 @@ defmodule Karma.Merger do
 
 
 
+  # formats nested map of all data, prefixes and flattens
   def format(data) do
     Enum.reduce(Map.keys(data), %{}, fn(key, acc) ->
       # prefix is "offer", or "startpack"
@@ -16,6 +17,7 @@ defmodule Karma.Merger do
     end)
   end
 
+  # helper used by format function
   defp prefix_keys(map, prefix) do
     Enum.reduce(Map.keys(map), %{}, fn(key, acc) ->
       prefixed_key = prefix <> "_" <> Atom.to_string(key)
