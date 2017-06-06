@@ -1,20 +1,28 @@
 <%
   offer = assigns[:offer]
   status =
-  case offer.accepted do
-    nil -> "k-bg-accent"
-    true -> "bg-green"
-    false -> "bg-red"
-  end
+    case offer.accepted do
+      nil -> "bg-light-silver"
+      true -> "bg-green"
+      false -> "bg-red"
+    end
+  letter =
+    case offer.accepted do
+      nil -> "P"
+      true -> "A"
+      false -> "R"
+    end
 %>
-<a href="<%= assigns[:url] %>" >
-  <div class="<%= status %> pa3 br3 white k-shadow-1 relative mb3">
-    <div class="dib ma1">
-      <%= offer.target_email %>
-    </div>
-    <div class="absolute right-1 top-1 top-2-l top-2-m f2">£<%= offer.fee_per_day_inc_holiday %>/day</div>
-    <div>
-      <div class="dib ma1"><%= offer.department %>: <%= offer.job_title %></div>
+
+<a href="<%= assigns[:url] %>" class="no-underline" >
+  <div class="bw1 k-b--indigo bg-white k-indigo ba pa4 br3 k-indigo relative mb3 flex">
+    <div class="<%= status %> dib br-100 w3 h3 flex justify-around"><div class="f2 pa2 center white"><%= letter %></div></div>
+    <div class="pl4">
+      <div class="dib ma1 dark-gray fw6"><%= offer.target_email %></div>
+      <div class="absolute right-1 top-1 top-2-l top-2-m f2">£<%= offer.fee_per_day_inc_holiday %>/day</div>
+      <div>
+        <div class="dib ma1 silver"><%= offer.department %>: <%= offer.job_title %></div>
+      </div>
     </div>
   </div>
 </a>
