@@ -395,4 +395,17 @@ defmodule Karma.Controllers.HelpersTest do
     assert sch_d_contract == "SCH D"
   end
 
+  test "get all data for merge" do
+    contractor = insert_user(%{email: "contractor@gmail.com"})
+    startpack = insert_startpack(%{user_id: contractor.id})
+    project = insert_project(contractor)
+    offer = insert_offer(project, %{user_id: contractor.id, target_email: contractor.email})
+    data = Helpers.get_data_for_merge(offer)
+
+    # assert the data map holds the correct user, project, startpack, offer
+    assert data.user.email == contractor.email
+    assert data.project.name == project.name
+    assert data.offer.contract_type == offer.contract_type
+    assert data.startpack.gender == startpack.gender
+  end
 end
