@@ -5,7 +5,7 @@
       <%= component "plus_button.html", link: "/projects/new" %>
     </div>
 
-        <div class="tl f2 ">Projects</div>
+        <div class="mb3 pt5 k-light-indigo bb f2 tl k-b-light-indigo">Projects</div>
     <%= if length(@projects) == 0 do %>
       <div class="br3 pa4 mb3 tc">
         <div class="f2">You haven't created any projects yet</div>
@@ -29,7 +29,7 @@
     </div>
   <% end %>
 
-<div class="tl f2 mb3">Offers</div>
+<div class="mb3 k-light-indigo bb f2 tl k-b-light-indigo">Offers</div>
 <%= if length(@offers) == 0 do %>
   <div class="br3 pt5 pb3 mb3 tc">
     <div class="f2">You don't have any offers yet</div>
