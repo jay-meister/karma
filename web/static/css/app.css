@@ -65,7 +65,14 @@ opacity: 0;
 }
 
 .app-container {
-  max-width: 110rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media screen and (min-width: 30em) {
+  .app-container {
+    max-width: 110rem;
+  }
 }
 
 /*Nav hamburger animation*/
