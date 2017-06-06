@@ -33,8 +33,7 @@ defmodule Karma.UserController do
 
         conn
         |> put_flash(:info, "A verification email has been sent to #{user.email}.
-        You must click the link in the email before you can gain full access.
-         If you need a new verification link, follow the log in flow.")
+        Click the link in the email to gain full access to Karma.")
         |> redirect(to: session_path(conn, :new))
       {:error, changeset} ->
         render(conn, "new.html", layout: {LayoutView, "pre_login.html"}, changeset: changeset)

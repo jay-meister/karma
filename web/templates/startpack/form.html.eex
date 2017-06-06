@@ -56,7 +56,8 @@
   form: f,
   atom: :date_of_birth,
   year_from: 1930,
-  year_to: Date.utc_today().year
+  year_to: Date.utc_today().year - 16,
+  dob: true
   %>
 
   <%= component "input.html",
@@ -97,12 +98,14 @@
   atom: :passport_image,
   url_atom: :passport_url,
   helper_text: "Upload an image of your passport",
-  image_url: @startpack.passport_url
+  image_url: @startpack.passport_url,
+  hide_label: true
   %>
 
   <%= component "input.html",
   form: f,
-  atom: :passport_full_name
+  atom: :passport_full_name,
+  placeholder: "Your full name as it appears on your passport (inc. middle name(s))"
   %>
 
   <%= component "form_divider.html", title: "Contact info" %>
@@ -140,7 +143,7 @@
   <%= component "form_divider.html", title: "Deal info" %>
 
   <div conditional class="mb4">
-    <%= label f, "Check the box if you deal with an agent", class: "dib mw-100 mb2 fw4" %>
+    <%= label f, "Check the box if your deal will be done through your agent", class: "dib mw-100 mb2 fw4" %>
     <%= checkbox f, :agent_deal?, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
     <%= error_tag f, :agent_deal? %>
 
@@ -197,7 +200,8 @@
 
       <%= component "input.html",
       form: f,
-      atom: :agent_bank_account_swift_code
+      atom: :agent_bank_account_swift_code,
+      label: "Agent bank account SWIFT code"
       %>
 
       <%= component "input.html",
@@ -222,7 +226,8 @@
   atom: :box_rental_image,
   url_atom: :box_rental_url,
   helper_text: "Upload your box rental inventory list with insurance values",
-  image_url: @startpack.box_rental_url
+  image_url: @startpack.box_rental_url,
+  hide_label: true
   %>
 
   <%= component "number_input.html",
@@ -237,10 +242,11 @@
   atom: :equipment_rental_image,
   url_atom: :equipment_rental_url,
   helper_text: "Upload your equipment rental inventory list with insurance values",
-  image_url: @startpack.equipment_rental_url
+  image_url: @startpack.equipment_rental_url,
+  hide_label: true
   %>
 
-  <div class="mb3 f3">Fill the following fields if you bring a vehicle to the shoot:</div>
+  <div class="mb3 f3">Your vehicle details for site access and parking:</div>
 
   <%= component "input.html",
   form: f,
@@ -266,7 +272,7 @@
   form: f,
   atom: :vehicle_insurance_image,
   url_atom: :vehicle_insurance_url,
-  helper_text: "Upload an image of your vehicle insurance",
+  helper_text: "Upload a file of your vehicle insurance",
   image_url: @startpack.vehicle_insurance_url
   %>
 
@@ -279,14 +285,15 @@
 
   <%= component "input.html",
   form: f,
-  atom: :vat_number
+  atom: :vat_number,
+  label: "VAT number"
   %>
 
   <%= component "file_upload.html",
   form: f,
   atom: :p45_image,
   url_atom: :p45_url,
-  helper_text: "Upload an image of your P45",
+  helper_text: "Upload a file of your P45",
   image_url: @startpack.p45_url
   %>
 
@@ -298,7 +305,7 @@
   %>
 
   <div conditional class="mb4">
-    <%= label f, :student_loan_not_repayed?, "Check the box if you have a student loan which is not fully repayed", class: "dib mw-100 mb2 fw4" %>
+    <%= label f, :student_loan_not_repayed?, "Check the box if you have a student loan which is not fully repaid", class: "dib mw-100 mb2 fw4" %>
     <%= checkbox f, :student_loan_not_repayed?, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
     <%= error_tag f, :student_loan_not_repayed? %>
 
@@ -331,9 +338,11 @@
   <%= component "file_upload.html",
   form: f,
   atom: :schedule_d_letter_image,
+  label: "Schedule D letter file",
   url_atom: :schedule_d_letter_url,
-  helper_text: "Upload an image of your Schedule D letter",
-  image_url: @startpack.schedule_d_letter_url
+  helper_text: "Upload a file of your Schedule D letter",
+  image_url: @startpack.schedule_d_letter_url,
+  hide_label: true
   %>
 
   <%= component "input.html",
@@ -350,7 +359,7 @@
   form: f,
   atom: :loan_out_company_cert_image,
   url_atom: :loan_out_company_cert_url,
-  helper_text: "Upload an image of your loan out companies certificate",
+  helper_text: "Upload a file of your loan out company certificate",
   image_url: @startpack.loan_out_company_cert_url
   %>
 
@@ -366,7 +375,8 @@
 
   <%= component "input.html",
   form: f,
-  atom: :bank_account_users_full_name
+  atom: :bank_account_users_full_name,
+  label: "Full name on bank account"
   %>
 
   <%= component "input.html",
@@ -381,14 +391,16 @@
 
   <%= component "input.html",
   form: f,
-  atom: :bank_iban
+  atom: :bank_iban,
+  label: "Bank IBAN"
   %>
 
   <%= component "input.html",
   form: f,
-  atom: :bank_swift_code
+  atom: :bank_swift_code,
+  label: "Bank SWIFT code"
   %>
-
+  
   <%= component "submit_button.html", title: "Update Startpack" %>
 <% end %>
 

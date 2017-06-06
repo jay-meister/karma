@@ -86,9 +86,9 @@ defmodule Karma.StartpackControllerTest do
     assert html_response(conn, 200) =~ "Edit startpack"
   end
 
-  test "updates chosen resource and redirects when data is valid", %{conn: conn, user: user, startpack: startpack} do
-    conn = post conn, startpack_path(conn, :update, startpack), startpack: @valid_attrs
-    assert redirected_to(conn) == startpack_path(conn, :index)
+  test "updates chosen resource and redirects when data is valid", %{conn: conn, user: user, startpack: startpack, offer: offer} do
+    conn = post conn, startpack_path(conn, :update, startpack, offer_id: offer.id), startpack: @valid_attrs
+    assert redirected_to(conn) == startpack_path(conn, :index, offer_id: offer.id)
     assert Repo.get_by(Startpack, user_id: user.id)
   end
 

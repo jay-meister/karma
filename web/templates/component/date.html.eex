@@ -1,4 +1,10 @@
 <div class="mb4">
+  <% default_date = case assigns[:dob] do
+    true ->
+      {:ok, date} = Date.new(Date.utc_today().year - 16, Date.utc_today().month, Date.utc_today().day)
+      date
+    _false -> Date.utc_today()
+  end%>
   <%= case assigns[:label] do
    nil -> label assigns[:form], assigns[:atom], class: "dib mw-100 mb2 fw4"
    _ -> label assigns[:form], assigns[:atom], assigns[:label], class: "dib mw-100 mb2 fw4"
@@ -9,7 +15,7 @@
     <%= date_select assigns[:form],
     assigns[:atom],
     class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3 w-100 k-bg-input bn",
-    default: Date.utc_today(),
+    value: default_date,
     year: [options: year_from..year_to],
     builder: fn b -> %>
       <%= b.(:day, []) %> / <%= b.(:month, []) %> / <%= b.(:year, []) %>
@@ -18,10 +24,12 @@
   <%= error_tag assigns[:form], assigns[:atom] %>
 </div>
 
-
 <!--
 assigns:
 atom,
 form,
+year_from (optional),
+year_to (optional),
+dob (optional),
 label (optional)
  -->

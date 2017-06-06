@@ -94,6 +94,6 @@ defmodule Karma.DocumentController do
 
     conn
     |> put_flash(:info, "Document deleted successfully.")
-    |> redirect(to: project_document_path(conn, :index, project))
+    |> redirect(to: project_path(conn, :show, project))
   end
 end
