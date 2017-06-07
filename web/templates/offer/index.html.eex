@@ -6,12 +6,12 @@
     <div class="f2">Start date: <%= format_date(@project.start_date) %></div>
     <div class="tc dib">
       <div class="tc dib w-32 ma1 pa3-ns pa">
-        <div class="f4 k-accent">PENDING</div>
+        <div class="f4 silver">PENDING</div>
         <div class="f1"><%= get_offers(@project, nil) %></div>
       </div>
       <div class="k-w1px k-bg-indigo k-h3-5r dib"></div>
       <div class="tc dib w-32 ma1 pa3-ns pa">
-        <div class="f4 k-success">ACCEPTED</div>
+        <div class="f4 green">ACCEPTED</div>
         <div class="f1"><%= get_offers(@project, true) %></div>
       </div>
       <div class="k-w1px k-bg-indigo k-h3-5r dib"></div>
@@ -22,9 +22,6 @@
     </div>
   </div>
   <div class="k-m-auto w-100 mt5">
-    <!-- <%= component "button.html", title: "Make new offer", link: "/projects/#{@project.id}/offers/new" %> -->
-    <!-- <div class="f1">Offers</div>
-    <div class="mt3 mb2 f3 k-light-indigo bb k-b-light-indigo"></div> -->
     <div class="mb3 pt5 k-light-indigo bb f2 tl k-b-light-indigo">Offers</div>
     <div class="right-0 pb4">
       <%= component "plus_button.html", link: "/projects/#{@project.id}/offers/new" %>
