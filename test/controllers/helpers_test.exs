@@ -394,5 +394,4 @@ defmodule Karma.Controllers.HelpersTest do
 
     assert sch_d_contract == "SCH D"
   end
-
 end
