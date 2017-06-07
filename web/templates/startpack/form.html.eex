@@ -5,6 +5,7 @@
     </div>
   <% end %>
 
+  <div class="pt5-ns pt4">
   <%= component "form_divider.html", title: "Basic info" %>
   <%= component "dropdown.html",
   form: f,
@@ -400,7 +401,8 @@
   atom: :bank_swift_code,
   label: "Bank SWIFT code"
   %>
-  
+  </div>
+
   <%= component "submit_button.html", title: "Update Startpack" %>
 <% end %>
 

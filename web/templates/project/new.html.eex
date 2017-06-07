@@ -2,7 +2,7 @@
 
   <%= link "Back to dashboard", to: dashboard_path(@conn, :index), class: "link" %>
 
-  <h1 class="f1 mv4 fw5">Create project</h1>
+  <h1 class="k-indigo top--header absolute fw4 mb0">Create project</h1>
 
   <%= render "form.html", changeset: @changeset,
                           action: project_path(@conn, :create),
