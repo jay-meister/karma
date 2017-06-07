@@ -49,6 +49,17 @@ defmodule Karma.S3 do
     end
   end
 
+  def download(url, file_destination) do
+    case get_object(url) do
+      {:ok, body} ->
+        case save_file_to_filepath(file_destination, body) do
+          {:ok, filepath} -> {:ok, filepath}
+          {:error, error} -> {:error, error}
+        end
+      {:error, error} -> {:error, error}
+    end
+  end
+
   def get_object(url) do
     bucket = System.get_env("BUCKET_NAME")
     [_host, path] = String.split(url, "https://#{bucket}.s3.amazonaws.com/#{bucket}")
