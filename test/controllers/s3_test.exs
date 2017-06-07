@@ -57,4 +57,36 @@ defmodule Karma.S3Test do
       end
     end
   end
+
+  test "get_object success" do
+    bucket = System.get_env("BUCKET_NAME")
+    url = "https://#{bucket}.s3.amazonaws.com/#{bucket}/test.png"
+    with_mock ExAws, [request!: fn(_) -> %{status_code: 200, body: <<37, 80>>, headers: []} end] do
+      res = S3.get_object(url)
+      assert res == <<37, 80>>
+    end
+  end
+
+  test "get_object fail" do
+    bucket = System.get_env("BUCKET_NAME")
+    url = "https://#{bucket}.s3.amazonaws.com/#{bucket}/test_fail.png"
+    with_mock ExAws, [request!: fn(_) -> %{status_code: 500} end] do
+      res = S3.get_object(url)
+      assert res == {:error, "error downloading from S3"}
+    end
+  end
+
+  test "save_file_to_filepath success" do
+    with_mock File, [write!: fn(_, _) -> :ok end] do
+      destination_file_path = S3.save_file_to_filepath("test.pdf", "some file")
+      assert destination_file_path == "/test.pdf"
+    end
+  end
+
+  test "save_file_to_filepath error" do
+    with_mock File, [write!: fn(_, _) -> :error end] do
+      destination_file_path = S3.save_file_to_filepath("error.pdf", "error")
+      assert destination_file_path == {:error, "error saving file"}
+    end
+  end
 end
