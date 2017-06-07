@@ -1,10 +1,9 @@
 <section class="pt5">
   <h1 class="k-indigo top--header absolute fw4 mb0">Project details</h1>
-  <%= link to: project_path(@conn, :show, @project.id) do %>
+  <%= link to: project_path(@conn, :show, @project.id), class: "no-underline" do %>
     <div class="tl ba bw2 k-b--indigo bg-white k-indigo br3 pa4 tc mb2 mt2 pb3 relative">
-      <!-- <%= component "button.html", title: "View details", link: project_path(@conn, :show, @project.id) %> -->
       <div class="f2"><%= "#{@project.name}/\"#{@project.codename}\"" %></div>
-      <div class="f2">Start date: <%= format_date(@project.start_date) %></div>
+      <div class="f3 pt2">Start date: <%= format_date(@project.start_date) %></div>
       <div class="tc dib">
         <div class="tc dib w-32 ma1 pa3-ns pa">
           <div class="f4 silver">PENDING</div>
