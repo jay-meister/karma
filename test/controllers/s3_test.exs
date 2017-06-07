@@ -63,7 +63,7 @@ defmodule Karma.S3Test do
     url = "https://#{bucket}.s3.amazonaws.com/#{bucket}/test.png"
     with_mock ExAws, [request!: fn(_) -> %{status_code: 200, body: <<37, 80>>, headers: []} end] do
       res = S3.get_object(url)
-      assert res == <<37, 80>>
+      assert res == {:ok, <<37, 80>>}
     end
   end
 
@@ -79,7 +79,7 @@ defmodule Karma.S3Test do
   test "save_file_to_filepath success" do
     with_mock File, [write!: fn(_, _) -> :ok end] do
       destination_file_path = S3.save_file_to_filepath("test.pdf", "some file")
-      assert destination_file_path == "/test.pdf"
+      assert destination_file_path == {:ok, "/test.pdf"}
     end
   end
 

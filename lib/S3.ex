@@ -58,7 +58,7 @@ defmodule Karma.S3 do
 
     case res do
       %{body: body, headers: _headers, status_code: 200} ->
-        body
+        {:ok, body}
       _error ->
         {:error, "error downloading from S3"}
     end
@@ -69,7 +69,7 @@ defmodule Karma.S3 do
 
     case res do
       :ok ->
-        "/#{destination}"
+        {:ok, "/#{destination}"}
       _error ->
         {:error, "error saving file"}
     end
