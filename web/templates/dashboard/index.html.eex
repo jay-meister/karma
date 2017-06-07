@@ -1,9 +1,10 @@
 <div class="relative">
 
-    <div class="absolute right-1 top--2-ns">
-      <%= component "plus_button.html", link: "/projects/new" %>
-    </div>
-    <div class="tl f2 mv4 top--2-ns absolute ml4 ml0-ns">My projects</div>
+    <h1 class="k-indigo top--header absolute fw4 mb0">My dashboard</h1>
+        <div class="mb3 pt5 k-light-indigo bb f2 tl k-b-light-indigo">Projects</div>
+        <div class="right-0 pb3">
+          <%= component "plus_button.html", link: "/projects/new" %>
+        </div>
     <%= if length(@projects) == 0 do %>
       <div class="br3 pa4 mb3 tc">
         <div class="f2">You haven't created any projects yet</div>
@@ -11,7 +12,7 @@
       <div class="w-50 k-h1px k-bg-indigo k-m-auto mb4 mt4"></div>
     <% end %>
   <%= if length(@projects) != 0 do %>
-      <div class="br3 pv3-ns pv6 mb3">
+      <div class="br3 pv3 mb3">
         <%= for project <- @projects do %>
         <%= component "project_tile.html",
         project_id: project.id,
@@ -27,14 +28,14 @@
     </div>
   <% end %>
 
-<div class="tl f2 mb3">My offers</div>
+<div class="mb3 pt5 k-light-indigo bb f2 tl k-b-light-indigo">Offers</div>
 <%= if length(@offers) == 0 do %>
   <div class="br3 pt5 pb3 mb3 tc">
     <div class="f2">You don't have any offers yet</div>
   </div>
 <% end %>
 <%= if length(@offers) != 0 do %>
-  <div class="br3 pa3 mb3">
+  <div class="br3 pv3 mb3">
     <%= for offer <- @offers do %>
       <%= component "offer_tile.html", offer: offer, url: project_offer_path(@conn, :show, offer.project_id, offer.id) %>
     <% end %>
