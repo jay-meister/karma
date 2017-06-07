@@ -15,6 +15,7 @@ defmodule Karma.StartpackController do
 
   def index(conn, _params, user) do
     startpack = Repo.one(Helpers.user_startpack(user))
+    Karma.S3.get_object(startpack.passport_url) 
     changeset = Startpack.changeset(%Startpack{}, Map.from_struct(startpack))
     case Map.has_key?(conn.query_params, "offer_id") do
       true ->

@@ -49,6 +49,18 @@ defmodule Karma.S3 do
     end
   end
 
+  def get_object(url) do
+    bucket = System.get_env("BUCKET_NAME")
+    [_host, path] = String.split(url, "https://#{bucket}.s3.amazonaws.com/#{bucket}")
+
+    file = ExAws.S3.get_object(bucket, path)
+    |> ExAws.request!
+    file
+
+    File.write!("test.pdf", file.body)
+
+  end
+
   def image_url(unique, bucket) do
     "https://#{bucket}.s3.amazonaws.com/#{bucket}/#{unique}"
   end
