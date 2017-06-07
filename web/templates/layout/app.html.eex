@@ -42,13 +42,13 @@
     <!-- FOOTER -->
     <footer class="relative bg-white">
       <div class="w-100 h6-ns h-100 bottom-0 app-container center">
-        <div class=" mt0 mb4 b--black-20 bt">
-          <div class="tl pv4-ns pt4 pb3 w-100">
-            <img src="/images/footer-icon.svg" class="w3" />
-          </div>
-          <article class="cf mt2">
-            <div class="fl w-100 tl mb3 mb0-ns">
-              <p class="f4 ttu lh-solid dark-gray dib-ns db tl mt0">© 2017 Karmaradio Inc.</p>
+        <div class="mt0 mb4 b--black-20 bt">
+          <article class="cf mt0">
+            <div class="fl w-100 tl pt4-ns pt2 mb3 mb0-ns">
+              <div class="h3 dt pb3">
+                <img src="/images/footer-icon.svg" class="k-w2-5 pv2 dib dtc" />
+                <p class="dib f4 pl3 dark-gray ma0 dtc  v-mid">© 2017 Karmaradio Inc.</p>
+              </div>
               <div>
                 <a href="/terms/"    title="Terms" class="f4 dib mid-gray dim link k-indigo">Terms</a>
                 <a href="/privacy/"  title="Privacy" class="f4 dib pl3 mid-gray dim link k-indigo">Privacy</a>
