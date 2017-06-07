@@ -49,6 +49,32 @@ defmodule Karma.S3 do
     end
   end
 
+  def get_object(url) do
+    bucket = System.get_env("BUCKET_NAME")
+    [_host, path] = String.split(url, "https://#{bucket}.s3.amazonaws.com/#{bucket}")
+
+    res = ExAws.S3.get_object(bucket, path)
+    |> ExAws.request!
+
+    case res do
+      %{body: body, headers: _headers, status_code: 200} ->
+        {:ok, body}
+      _error ->
+        {:error, "error downloading from S3"}
+    end
+  end
+
+  def save_file_to_filepath(destination, file) do
+    res = File.write!("#{destination}", file)
+
+    case res do
+      :ok ->
+        {:ok, "/#{destination}"}
+      _error ->
+        {:error, "error saving file"}
+    end
+  end
+
   def image_url(unique, bucket) do
     "https://#{bucket}.s3.amazonaws.com/#{bucket}/#{unique}"
   end
