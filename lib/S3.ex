@@ -55,10 +55,14 @@ defmodule Karma.S3 do
 
     file = ExAws.S3.get_object(bucket, path)
     |> ExAws.request!
-    file
 
-    File.write!("test.pdf", file.body)
+    file.body
+  end
 
+  def save_file_to_filepath(destination, file) do
+    File.write!("#{destination}", file)
+
+    "/#{destination}"
   end
 
   def image_url(unique, bucket) do
