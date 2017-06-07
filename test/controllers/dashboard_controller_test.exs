@@ -13,6 +13,6 @@ defmodule Karma.DashboardControllerTest do
       conn
       |> login_user(user)
       |> get("/")
-    assert html_response(conn, 200) =~ "My projects"
+    assert html_response(conn, 200) =~ "Projects"
   end
 end

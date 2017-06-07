@@ -1,20 +1,20 @@
 <a href="/projects/<%= assigns[:project_id] %>/offers" class="no-underline">
-  <div class="tl k-bg-indigo white br3 pa3 tc shadow-3 mb2 mt2 pb0">
-    <div class="dib k-mb0-5r"><%= assigns[:project_name] %> / "<%= assigns[:project_codename] %>"</div>
+  <div class="tl ba bw2 k-b--indigo bg-white k-indigo br3 pa4 tc mb2 mt2 pb3">
+    <div class="dib k-mb0-5r f2"><%= assigns[:project_name] %> / "<%= assigns[:project_codename] %>"</div>
     <div><%= assigns[:project_start_date] %></div>
     <div class="tc dib">
-      <div class="tc dib w-32 ma1 pa3">
-        <div class="f5 k-light-indigo">PENDING</div>
+      <div class="tc dib w-32 ma1 pa3-ns pa1">
+        <div class="f4 k-accent">PENDING</div>
         <div class="f1"><%= assigns[:project_pending] %></div>
       </div>
-      <div class="k-w1px bg-white k-h3-5r dib"></div>
+      <div class="k-w1px k-bg-indigo k-h3-5r dib"></div>
       <div class="tc dib w-32 ma1 pa3">
-        <div class="f5 k-light-indigo">ACCEPTED</div>
+        <div class="f4 k-success">ACCEPTED</div>
         <div class="f1"><%= assigns[:project_accepted] %></div>
       </div>
-      <div class="k-w1px bg-white k-h3-5r dib"></div>
+      <div class="k-w1px k-bg-indigo k-h3-5r dib"></div>
       <div class="tc dib w-32 ma1 pa3">
-        <div class="f5 k-light-indigo">REJECTED</div>
+        <div class="f4 k-error">REJECTED</div>
         <div class="f1"><%= assigns[:project_rejected] %></div>
       </div>
     </div>
