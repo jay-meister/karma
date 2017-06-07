@@ -1,9 +1,21 @@
 defmodule Karma.Merger do
   alias Karma.Repo
 
-
-
-
+  # def merge(offer, document) do
+  #   # download document
+  #   doc_path = "/var/tmp/wtf"
+  #
+  #   # get formatted data
+  #   json = get_data_for_merge(offer) |> format() |> Poison.encode!()
+  #
+  #   # do merge
+  #   res = System.cmd("node", ["script.js", json, doc_path])
+  #   res
+  #
+  #   # save to S3
+  #
+  #   # add merged url to document's table
+  # end
 
   # formats nested map of all data, prefixes and flattens
   def format(data) do
