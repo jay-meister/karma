@@ -1,6 +1,6 @@
 <a href="<%= assigns[:link] %>">
   <div class="tr relative">
-    <div class="dib mt4">
+    <div class="dib">
       <img class="w-100" src="/images/plus-btn.svg" />
     </div>
   </div>

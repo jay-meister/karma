@@ -25,7 +25,7 @@
     <!-- <%= component "button.html", title: "Make new offer", link: "/projects/#{@project.id}/offers/new" %> -->
     <!-- <div class="f1">Offers</div>
     <div class="mt3 mb2 f3 k-light-indigo bb k-b-light-indigo"></div> -->
-    <div class="mb2 pt5 k-light-indigo bb f2 tl k-b-light-indigo">Offers</div>
+    <div class="mb3 pt5 k-light-indigo bb f2 tl k-b-light-indigo">Offers</div>
     <div class="right-0 pb4">
       <%= component "plus_button.html", link: "/projects/#{@project.id}/offers/new" %>
     </div>
