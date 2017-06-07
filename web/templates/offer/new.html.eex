@@ -1,8 +1,8 @@
 <div class="ph3 ph6-ns mt6 center">
 
-  <%= link "Back", to: project_offer_path(@conn, :index, @project_id), class: "link ma2 k-indigo no-underline" %>
+  <%= link "Back", to: project_offer_path(@conn, :index, @project_id), class: "link k-indigo no-underline" %>
 
-  <h1 class="f1 mv4 fw5">Make new offer</h1>
+  <h1 class="k-indigo top--header absolute fw4 mb0">Make new offer</h1>
 
 
   <%= render "form.html", changeset: @changeset,
