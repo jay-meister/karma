@@ -4,12 +4,12 @@
     <div><%= assigns[:project_start_date] %></div>
     <div class="tc dib">
       <div class="tc dib w-32 ma1 pa3-ns pa1">
-        <div class="f4 k-accent">PENDING</div>
+        <div class="f4 silver">PENDING</div>
         <div class="f1"><%= assigns[:project_pending] %></div>
       </div>
       <div class="k-w1px k-bg-indigo k-h3-5r dib"></div>
       <div class="tc dib w-32 ma1 pa3">
-        <div class="f4 k-success">ACCEPTED</div>
+        <div class="f4 green">ACCEPTED</div>
         <div class="f1"><%= assigns[:project_accepted] %></div>
       </div>
       <div class="k-w1px k-bg-indigo k-h3-5r dib"></div>

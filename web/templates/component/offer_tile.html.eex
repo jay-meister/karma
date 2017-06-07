@@ -8,9 +8,9 @@
     end
   letter =
     case offer.accepted do
-      nil -> "P"
-      true -> "A"
-      false -> "R"
+      nil -> "..."
+      true -> "✔"
+      false -> "X"
     end
 %>
 
