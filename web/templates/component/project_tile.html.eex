@@ -3,7 +3,7 @@
     <div class="dib k-mb0-5r f2"><%= assigns[:project_name] %> / "<%= assigns[:project_codename] %>"</div>
     <div><%= assigns[:project_start_date] %></div>
     <div class="tc dib">
-      <div class="tc dib w-32 ma1 pa3">
+      <div class="tc dib w-32 ma1 pa3-ns pa1">
         <div class="f4 k-accent">PENDING</div>
         <div class="f1"><%= assigns[:project_pending] %></div>
       </div>
