@@ -1,34 +1,41 @@
-<div class="k-bg-indigo white tc pa4 mt4 mb4 k-shadow-1 pb0 br3 relative">
-  <%= component "button.html", title: "View details", link: project_path(@conn, :show, @project.id) %>
-  <div class="f1"><%= "#{@project.name}/\"#{@project.codename}\"" %></div>
-  <div class="f2">Start date: <%= format_date(@project.start_date) %></div>
-  <div class="tc dib">
-    <div class="tc dib w-32 ma1 pa3">
-      <div class="f4 k-light-indigo">PENDING</div>
-      <div class="k-ftitle"><%= get_offers(@project, nil) %></div>
-    </div>
-    <div class="k-w1px bg-white k-h3-5r dib"></div>
-    <div class="tc dib w-32 ma1 pa3">
-      <div class="f4 k-light-indigo">ACCEPTED</div>
-      <div class="k-ftitle"><%= get_offers(@project, true) %></div>
-    </div>
-    <div class="k-w1px bg-white k-h3-5r dib"></div>
-    <div class="tc dib w-32 ma1 pa3">
-      <div class="f4 k-light-indigo">REJECTED</div>
-      <div class="k-ftitle"><%= get_offers(@project, false) %></div>
+<section class="pt5">
+  <h1 class="k-indigo top--header absolute fw4 mb0">Project details</h1>
+  <div class="tl ba bw2 k-b--indigo bg-white k-indigo br3 pa4 tc mb2 mt2 pb3 relative">
+    <%= component "button.html", title: "View details", link: project_path(@conn, :show, @project.id) %>
+    <div class="f2"><%= "#{@project.name}/\"#{@project.codename}\"" %></div>
+    <div class="f2">Start date: <%= format_date(@project.start_date) %></div>
+    <div class="tc dib">
+      <div class="tc dib w-32 ma1 pa3-ns pa">
+        <div class="f4 k-accent">PENDING</div>
+        <div class="f1"><%= get_offers(@project, nil) %></div>
+      </div>
+      <div class="k-w1px k-bg-indigo k-h3-5r dib"></div>
+      <div class="tc dib w-32 ma1 pa3-ns pa">
+        <div class="f4 k-success">ACCEPTED</div>
+        <div class="f1"><%= get_offers(@project, true) %></div>
+      </div>
+      <div class="k-w1px k-bg-indigo k-h3-5r dib"></div>
+      <div class="tc dib w-32 ma1 pa3">
+        <div class="f4 k-error">REJECTED</div>
+        <div class="f1"><%= get_offers(@project, false) %></div>
+      </div>
     </div>
   </div>
-</div>
-<div class="k-m-auto w-90 mt4">
-  <%= component "button.html", title: "Make new offer", link: "/projects/#{@project.id}/offers/new" %>
-  <div class="f1">Offers</div>
-  <div class="mt3 mb2 f3 k-light-indigo bb k-b-light-indigo"></div>
-  <%= if @offers == [] do %>
-    <div class="k-bg-light-grey pa3 pa4-l br3 tc mt4 f2">You haven't made any offers yet for this project</div>
-  <% end %>
-  <%= if @offers != [] do %>
-    <%= for offer <- @offers do %>
-      <%= component "offer_tile.html", offer: offer, url: project_offer_path(@conn, :show, @project, offer) %>
+  <div class="k-m-auto w-100 mt5">
+    <!-- <%= component "button.html", title: "Make new offer", link: "/projects/#{@project.id}/offers/new" %> -->
+    <!-- <div class="f1">Offers</div>
+    <div class="mt3 mb2 f3 k-light-indigo bb k-b-light-indigo"></div> -->
+    <div class="mb3 pt5 k-light-indigo bb f2 tl k-b-light-indigo">Offers</div>
+    <div class="right-0 pb4">
+      <%= component "plus_button.html", link: "/projects/#{@project.id}/offers/new" %>
+    </div>
+    <%= if @offers == [] do %>
+      <div class="k-bg-light-grey pa3 pa4-l br3 tc mt4 f2">You haven't made any offers yet for this project</div>
     <% end %>
-  <% end %>
-</div>
+    <%= if @offers != [] do %>
+      <%= for offer <- @offers do %>
+        <%= component "offer_tile.html", offer: offer, url: project_offer_path(@conn, :show, @project, offer) %>
+      <% end %>
+    <% end %>
+  </div>
+</section>
