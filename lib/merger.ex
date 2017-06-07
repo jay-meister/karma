@@ -3,19 +3,39 @@ defmodule Karma.Merger do
 
   # def merge(offer, document) do
   #   # download document
-  #   doc_path = "/var/tmp/wtf"
+  #   doc_path = System.cwd()
   #
   #   # get formatted data
   #   json = get_data_for_merge(offer) |> format() |> Poison.encode!()
   #
   #   # do merge
-  #   res = System.cmd("node", ["script.js", json, doc_path])
+  #   merged_path = get_merged_path(doc_path, offer, document)
+  #   res = run_merge_script(json, doc_path, merged_path)
   #   res
-  #
   #   # save to S3
   #
   #   # add merged url to document's table
   # end
+
+  def get_merged_path(unmerged_path, offer, document) do
+    identifier =
+      "-" <> Integer.to_string(offer.id) <>
+      "-" <> Integer.to_string(offer.user_id) <>
+      "-" <> Integer.to_string(document.id) <>
+      ".pdf"
+
+    String.replace_suffix(unmerged_path, ".pdf", identifier)
+    # redurns unmerged_path1-4-5.pdf
+  end
+
+  def run_merge_script(json, doc_path, merged_path) do
+    res = System.cmd("node", ["merge.js", json, doc_path, merged_path])
+
+    case res do
+      {path, 0} -> {:ok, path}
+      {error, 1} -> {:error, error}
+    end
+  end
 
   # formats nested map of all data, prefixes and flattens
   def format(data) do
