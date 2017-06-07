@@ -72,9 +72,8 @@ opacity: 0;
   }
 }
 
-.pending {
-
-
+.k-minw-320 {
+  min-width: 320px;
 }
 
 /*Nav hamburger animation*/
