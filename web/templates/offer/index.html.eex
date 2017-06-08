@@ -25,7 +25,7 @@
   <div class="k-m-auto w-100 mt5">
     <div class="relative">
       <div class="mb3 pt5 k-light-indigo bb f2 tl k-b-light-indigo">Offers</div>
-      <div class="absolute k-top-2-5 right-0 pb3">
+      <div class="absolute top-2 right-0 pb3">
         <%= component "plus_button.html", link: "/projects/#{@project.id}/offers/new" %>
       </div>
     </div>
