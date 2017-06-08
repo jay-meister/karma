@@ -232,7 +232,6 @@ defmodule Karma.OfferController do
     project = Repo.get(Project, project_id) |> Repo.preload(:user)
     changeset = Offer.offer_response_changeset(offer, offer_params)
 
-
     case Repo.update(changeset) do
       {:ok, offer} ->
         Karma.Email.send_offer_response_pm(conn, offer, project)
@@ -248,6 +247,7 @@ defmodule Karma.OfferController do
           and d.name == "PAYE"
           ) # offer.contract_type -> they must match in the db!
           Karma.Merger.merge(offer, document)
+
         end
         conn
         |> put_flash(:info, "Response made!")

@@ -6,9 +6,9 @@ defmodule Karma.MergerTest do
 
   @data %{
     project_name: "Mission Impossible 12: The Fourth Reich Hits Back (3rd Edition)",
-    user_full_name: "jackjackjack jackjackjackjackjack",
-    user_address_1: "21 dependencies avenue,\nAilsbury Estate,\n3rd ward",
-    user_address_2: "London\nN2 5RT\nUnited Kingdom",
+    user_passport_full_name: "jackjackjack jackjackjackjackjack",
+    startpack_primary_address_1: "21 dependencies avenue,\nAilsbury Estate,\n3rd ward",
+    startpack_primary_address_2: "London\nN2 5RT\nUnited Kingdom",
     user_email: "jmonies_is_not@somelonghotmail.com.uk"
   }
 
@@ -18,7 +18,7 @@ defmodule Karma.MergerTest do
     project = insert_project(contractor)
     offer = insert_offer(project, %{user_id: contractor.id, target_email: contractor.email})
     data = Merger.get_data_for_merge(offer)
-
+    
     # assert the data map holds the correct user, project, startpack, offer
     assert data.user.email == contractor.email
     assert data.project.name == project.name
@@ -27,8 +27,8 @@ defmodule Karma.MergerTest do
   end
 
   test "format data with prefixed keys" do
-    map = %{offer: %{contract_type: "paye"}, startpack: %{gender: "male"}}
-    expected = %{"offer_contract_type" => "paye", "startpack_gender" => "male"}
+    map = %{offer: %{contract_type: "PAYE"}, startpack: %{gender: "male"}}
+    expected = %{"offer_contract_type" => "PAYE", "startpack_gender" => "male"}
     formatted = Merger.format(map)
     assert formatted == expected
   end
