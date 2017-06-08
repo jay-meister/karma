@@ -188,58 +188,63 @@ defmodule Karma.OfferController do
       job_departments: job_departments,
       job_title: offer.job_title
     ]
+    # first check the values provided by the user are valid
+    validation_changeset = Offer.form_validation(offer, offer_params)
+    # if not valid, return to user with errors
+    if !validation_changeset.valid? do
+      changeset = %{validation_changeset | action: :insert} # manually set the action so errors are shown
+      render(conn, "edit.html", ops ++ [changeset: changeset])
+    else
+      case validation_changeset.changes == %{} do
+        true ->
+          conn
+          |> put_flash(:error, "Nothing to update")
+          |> render("edit.html", ops ++ [changeset: validation_changeset])
+        false ->
+          # run calculations and add them to the offer_params
+          calculations = parse_offer_strings(offer_params) |> run_calculations(project)
+          offer_params = Map.merge(offer_params, calculations)
+          %{"department" => department, "job_title" => job_title} = offer_params
+          contract_type = determine_contract_type(department, job_title)
+          offer_params = Map.put(offer_params, "contract_type", contract_type)
+          changeset = Offer.changeset(offer, offer_params)
 
-    case Map.has_key?(offer_params, "accepted") do
-      true ->
-        changeset = Offer.offer_response_changeset(offer, offer_params)
-        case Repo.update(changeset) do
-          {:ok, offer} ->
-            Karma.Email.send_offer_response_pm(conn, offer, project)
-            |> Karma.Mailer.deliver_later()
-            if offer.accepted == true do
-              Karma.Email.send_offer_accepted_contractor(conn, offer)
-              |> Karma.Mailer.deliver_later()
-            end
-            conn
-            |> put_flash(:info, "Response made!")
-            |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
-          {:error, _changeset} ->
-            conn
-            |> put_flash(:error, "Error making response!")
-            |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
+          {:ok, offer} = Repo.update(changeset)
+          # email function decides whether this is a registered user
+          Karma.Email.send_updated_offer_email(conn, offer, project)
+          |> Karma.Mailer.deliver_later()
+
+          conn
+          |> put_flash(:info, "Offer updated successfully, and re-emailed to recipient.")
+          |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
+      end
+    end
+  end
+
+  def response(conn, %{"project_id" => project_id, "id" => id, "offer" => offer_params}) do
+    offer =
+      Repo.get!(Offer, id)
+      |> Repo.preload(:user)
+      |> Repo.preload(:project)
+
+    project = Repo.get(Project, project_id) |> Repo.preload(:user)
+    changeset = Offer.offer_response_changeset(offer, offer_params)
+
+    case Repo.update(changeset) do
+      {:ok, offer} ->
+        Karma.Email.send_offer_response_pm(conn, offer, project)
+        |> Karma.Mailer.deliver_later()
+        if offer.accepted == true do
+          Karma.Email.send_offer_accepted_contractor(conn, offer)
+          |> Karma.Mailer.deliver_later()
         end
-      false ->
-        # first check the values provided by the user are valid
-        validation_changeset = Offer.form_validation(offer, offer_params)
-        # if not valid, return to user with errors
-        if !validation_changeset.valid? do
-          changeset = %{validation_changeset | action: :insert} # manually set the action so errors are shown
-          render(conn, "edit.html", ops ++ [changeset: changeset])
-        else
-          case validation_changeset.changes == %{} do
-            true ->
-              conn
-              |> put_flash(:error, "Nothing to update")
-              |> render("edit.html", ops ++ [changeset: validation_changeset])
-            false ->
-              # run calculations and add them to the offer_params
-              calculations = parse_offer_strings(offer_params) |> run_calculations(project)
-              offer_params = Map.merge(offer_params, calculations)
-              %{"department" => department, "job_title" => job_title} = offer_params
-              contract_type = determine_contract_type(department, job_title)
-              offer_params = Map.put(offer_params, "contract_type", contract_type)
-              changeset = Offer.changeset(offer, offer_params)
-
-              {:ok, offer} = Repo.update(changeset)
-              # email function decides whether this is a registered user
-              Karma.Email.send_updated_offer_email(conn, offer, project)
-              |> Karma.Mailer.deliver_later()
-
-              conn
-              |> put_flash(:info, "Offer updated successfully, and re-emailed to recipient.")
-              |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
-          end
-        end
+        conn
+        |> put_flash(:info, "Response made!")
+        |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
+      {:error, _changeset} ->
+        conn
+        |> put_flash(:error, "Error making response!")
+        |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
     end
   end
 
