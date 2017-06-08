@@ -1,8 +1,6 @@
 language: elixir
 elixir:
   - 1.4.1
-node_js:
-  - "7"
 addons:
   postgresql: '9.4'
   apt:
@@ -13,10 +11,11 @@ services:
 env:
   - MIX_ENV=test
   - NODE_VERSION="7.7.2"
-install:
-  - mix deps.get
-  - yarn install
+before_install:
   - nvm install $NODE_VERSION
+install:
+  - npm install
+  - mix deps.get
 before_script:
   - mix do ecto.create, ecto.migrate
 script:
