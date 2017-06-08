@@ -72,7 +72,7 @@ defmodule Karma.OfferControllerTest do
   end
 
   # if contractor is already registered
-  test "creates creates offer to a registered user", %{conn: conn, project: project} do
+  test "creates offer to a registered user", %{conn: conn, project: project} do
 
     contractor = insert_user(%{first_name: "Dave", last_name: "Seaman", email: "contractor@gmail.com"})
     new_offer = default_offer(%{target_email: "contractor@gmail.com"})
@@ -232,5 +232,17 @@ defmodule Karma.OfferControllerTest do
   test "error responding to offer", %{conn: conn, project: project, offer: offer} do
     conn = put conn, project_offer_path(conn, :update, project, offer), offer: %{accepted: :invalid}
     assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
+  end
+
+  test "unauthorised user block accept", %{conn: conn, project: project, offer: offer} do
+
+    with_mock Karma.Mailer, [deliver_later: fn(string) -> string end] do
+      conn = put conn, project_offer_path(conn, :update, project, offer), offer: %{accepted: true}
+      conn =
+        conn
+        |> Plug.Conn.assign(:is_pm?, false)
+        |> Plug.Conn.assign(:is_contractor?, false)
+      assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
+    end
   end
 end
