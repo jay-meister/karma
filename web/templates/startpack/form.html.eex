@@ -1,3 +1,24 @@
+<div class="pt4">
+  <%= component "form_divider.html", title: "Profile info" %>
+  <br />
+  <br />
+  <%= component "information.html",
+  data: @user.email,
+  label: "Email address"
+  %>
+
+  <%= component "information.html",
+  data: @user.first_name,
+  label: "First name"
+  %>
+
+  <%= component "information.html",
+  data: @user.last_name,
+  label: "Last name"
+  %>
+  <%= component "button.html", link: user_path(@conn, :edit, @user), title: "Edit profile info" %>
+</div>
+
 <%= form_for @changeset, @action, [multipart: true], fn f -> %>
   <%= if length(@changeset.errors) != 0 do %>
     <div class="alert alert-danger">
