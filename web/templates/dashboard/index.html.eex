@@ -1,10 +1,12 @@
 <div class="relative">
 
     <h1 class="k-indigo top--header absolute fw4 mb0">My dashboard</h1>
+      <div class="relative">
         <div class="mb3 pt5 k-light-indigo bb f2 tl k-b-light-indigo">Projects</div>
-        <div class="right-0 pb3">
+        <div class="absolute k-top-2-5 right-0 pb3">
           <%= component "plus_button.html", link: "/projects/new" %>
         </div>
+      </div>
     <%= if length(@projects) == 0 do %>
       <div class="br3 pa4 mb3 tc">
         <div class="f2">You haven't created any projects yet</div>
