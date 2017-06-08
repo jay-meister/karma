@@ -6,16 +6,16 @@ defmodule Karma.OfferController do
   import Karma.ProjectController, only: [add_project_to_conn: 2, block_if_not_project_manager: 2]
 
   # add project to conn
-  plug :add_project_to_conn when action in [:index, :new, :create, :show, :edit, :update, :delete]
+  plug :add_project_to_conn when action in [:index, :new, :create, :show, :edit, :update, :delete, :response]
 
   # block access if current user is not PM of this project
   plug :block_if_not_project_manager when action in [:index, :new, :create, :edit, :delete]
 
   # add offer to conn
-  plug :add_offer_to_conn when action in [:show, :edit, :update, :delete]
+  plug :add_offer_to_conn when action in [:show, :edit, :update, :delete, :response]
 
   # block access if current user does not own the current offer
-  plug :block_if_not_contractor_or_pm when action in [:show, :update]
+  plug :block_if_not_contractor_or_pm when action in [:show, :update, :response]
 
   # block update and delete functionality when offer is not pending
   plug :offer_pending when action in [:edit, :update, :delete]
