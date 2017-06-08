@@ -23,9 +23,11 @@
     </div>
   <% end %>
   <div class="k-m-auto w-100 mt5">
-    <div class="mb3 pt5 k-light-indigo bb f2 tl k-b-light-indigo">Offers</div>
-    <div class="right-0 pb4">
-      <%= component "plus_button.html", link: "/projects/#{@project.id}/offers/new" %>
+    <div class="relative">
+      <div class="mb3 pt5 k-light-indigo bb f2 tl k-b-light-indigo">Offers</div>
+      <div class="absolute top-2 right-0 pb3">
+        <%= component "plus_button.html", link: "/projects/#{@project.id}/offers/new" %>
+      </div>
     </div>
     <%= if @offers == [] do %>
       <div class="k-bg-light-grey pa3 pa4-l br3 tc mt4 f2">You haven't made any offers yet for this project</div>

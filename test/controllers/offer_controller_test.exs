@@ -224,13 +224,13 @@ defmodule Karma.OfferControllerTest do
 
   test "offer accepted", %{conn: conn, project: project, offer: offer} do
     with_mock Karma.Mailer, [deliver_later: fn(string) -> string end] do
-      conn = put conn, project_offer_path(conn, :update, project, offer), offer: %{accepted: true}
+      conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: true}
       assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
     end
   end
 
   test "error responding to offer", %{conn: conn, project: project, offer: offer} do
-    conn = put conn, project_offer_path(conn, :update, project, offer), offer: %{accepted: :invalid}
+    conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: :invalid}
     assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
   end
 end
