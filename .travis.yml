@@ -1,8 +1,6 @@
 language: elixir
 elixir:
   - 1.4.1
-node_js:
-  - "7"
 addons:
   postgresql: '9.4'
   apt:
@@ -12,8 +10,6 @@ services:
   - redis-server
 env:
   - MIX_ENV=test
-install:
-  - npm install
 before_script:
   - mix do ecto.create, ecto.migrate
 script:
