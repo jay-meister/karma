@@ -1,21 +1,24 @@
 defmodule Karma.Merger do
   alias Karma.Repo
 
-  # def merge(offer, document) do
-  #   # download document
-  #   doc_path = System.cwd()
-  #
-  #   # get formatted data
-  #   json = get_data_for_merge(offer) |> format() |> Poison.encode!()
-  #
-  #   # do merge
-  #   merged_path = get_merged_path(doc_path, offer, document)
-  #   res = run_merge_script(json, doc_path, merged_path)
-  #   res
-  #   # save to S3
-  #
-  #   # add merged url to document's table
-  # end
+  def merge(offer, document) do
+    # download document
+    {:ok, doc_path} = S3.download(document.url, System.cwd())
+
+    # get formatted data
+    json = get_data_for_merge(offer) |> format() |> Poison.encode!()
+
+    # do merge
+    merged_path = get_merged_path(doc_path, offer, document)
+    {:ok, merged_path} = run_merge_script(json, doc_path, merged_path)
+
+
+    # save to S3
+    # get file name from merged path
+    {:ok, url_key, url} = S3.upload({:url, %{path: merged_path, filename: "test-1-2-3.pdf"}})
+
+    # add merged url to document's table
+  end
 
   def get_merged_path(unmerged_path, offer, document) do
     identifier =
