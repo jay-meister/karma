@@ -1,7 +1,7 @@
 <a href="<%= assigns[:link] %>">
   <div class="tr relative">
     <div class="dib">
-      <img class="w-100" src="/images/plus-btn.svg" />
+      <img class="w-100" src="/images/plus.svg" />
     </div>
   </div>
 </a>
