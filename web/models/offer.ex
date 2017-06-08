@@ -40,6 +40,7 @@ defmodule Karma.Offer do
     field :contractor_details_accepted, :boolean, default: nil
     belongs_to :user, Karma.User
     belongs_to :project, Karma.Project
+    has_many :documents, Karma.Document
 
     timestamps()
   end

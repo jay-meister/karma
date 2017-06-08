@@ -2,6 +2,7 @@ defmodule Karma.OfferController do
   use Karma.Web, :controller
 
   alias Karma.{User, Offer, Project, Startpack}
+  # alias Karma.{Document, Merger}
 
   import Karma.ProjectController, only: [add_project_to_conn: 2, block_if_not_project_manager: 2]
 
@@ -237,9 +238,23 @@ defmodule Karma.OfferController do
         if offer.accepted == true do
           Karma.Email.send_offer_accepted_contractor(conn, offer)
           |> Karma.Mailer.deliver_later()
+          # url = Merger.merge(offer, document)
+          # changeset = Document.merged_url_changeset(%Document{}, %{url: url})
+          # case Repo.update(changeset) do
+          #  {:ok, document} ->
+          #    conn
+          #    |> put_flash(:info, "Document merged")
+          #    |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
+          #    |> halt()
+          #  {:error, changeset} ->
+          #    conn
+          #    |> put_flash(:error, "error inserting merged url")
+          #    |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
+          #    |> halt()
+          # end
         end
         conn
-        |> put_flash(:info, "Response made!")
+        |> put_flash(:info, "Offer rejected!")
         |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
       {:error, _changeset} ->
         conn

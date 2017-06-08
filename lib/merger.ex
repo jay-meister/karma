@@ -18,10 +18,6 @@ defmodule Karma.Merger do
   #   image_params = %{path: merged_path, filename: "test-1-2-3.pdf"}
   #   {:ok, :url, url} = S3.upload({:url, image_params})
   #
-  #   # add merged url to document's table
-  #   # add foreign key offer_id to the document table
-  #   # add this url to the document table
-  # 
   #    url
   # end
 
