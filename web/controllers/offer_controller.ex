@@ -3,6 +3,8 @@ defmodule Karma.OfferController do
 
   alias Karma.{User, Offer, Project, Startpack}
 
+  import Ecto.Query
+
   import Karma.ProjectController, only: [add_project_to_conn: 2, block_if_not_project_manager: 2]
 
   # add project to conn
@@ -230,6 +232,7 @@ defmodule Karma.OfferController do
     project = Repo.get(Project, project_id) |> Repo.preload(:user)
     changeset = Offer.offer_response_changeset(offer, offer_params)
 
+
     case Repo.update(changeset) do
       {:ok, offer} ->
         Karma.Email.send_offer_response_pm(conn, offer, project)
@@ -237,6 +240,14 @@ defmodule Karma.OfferController do
         if offer.accepted == true do
           Karma.Email.send_offer_accepted_contractor(conn, offer)
           |> Karma.Mailer.deliver_later()
+
+          # Move to document model?
+          [document] = Karma.Repo.all(
+          from d in Karma.Document,
+          where: d.project_id == ^project.id
+          and d.name == "PAYE"
+          ) # offer.contract_type -> they must match in the db!
+          Karma.Merger.merge(offer, document)
         end
         conn
         |> put_flash(:info, "Response made!")

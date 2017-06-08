@@ -1,29 +1,29 @@
 defmodule Karma.Merger do
   alias Karma.Repo
 
-  # def merge(offer, document) do
-  #   # download document
-  #   {:ok, doc_path} = S3.download(document.url, System.cwd())
-  #
-  #   # get formatted data
-  #   json = get_data_for_merge(offer) |> format() |> Poison.encode!()
-  #
-  #   # do merge
-  #   merged_path = get_merged_path(doc_path, offer, document)
-  #   {:ok, merged_path} = wrap_merge_script(json, doc_path, merged_path)
-  #
-  #
-  #   # save to S3
-  #   # get file name from merged path
-  #   image_params = %{path: merged_path, filename: "test-1-2-3.pdf"}
-  #   {:ok, :url, url} = S3.upload({:url, image_params})
-  #
-  #   # add merged url to document's table
-  #   # add foreign key offer_id to the document table
-  #   # add this url to the document table
-  # 
-  #    url
-  # end
+  def merge(offer, document) do
+    # download document
+
+    {:ok, doc_path} = Karma.S3.download(document.url, System.cwd()<>"/test.pdf")
+    # get formatted data
+    # need to remove nulls or replace with empty string
+    json = get_data_for_merge(offer) |>  format() |> Poison.encode!()
+
+    # do merge
+    merged_path = get_merged_path(doc_path, offer, document)
+    {:ok, merged_path} = wrap_merge_script(json, doc_path, merged_path)
+
+    # save to S3
+    # get file name from merged path
+    image_params = %{path: merged_path, filename: "test-1-2-3.pdf"}
+    {:ok, :url, url} = Karma.S3.upload({:url, image_params})
+    IO.inspect url
+    # add merged url to document's table
+    # add foreign key offer_id to the document table
+    # add this url to the document table
+
+     url
+  end
 
   def get_merged_path(unmerged_path, offer, document) do
     identifier =
@@ -47,11 +47,13 @@ defmodule Karma.Merger do
 
   # formats nested map of all data, prefixes and flattens
   def format(data) do
+
     Enum.reduce(Map.keys(data), %{}, fn(key, acc) ->
       # prefix is "offer", or "startpack"
       prefix = Atom.to_string(key)
-
+      desired_keys = [:name, :passport_full_name, :primary_address_1, :primary_address_2, :email]
       Map.get(data, key) # offer, startpack, user or project
+      |> Map.take(desired_keys)
       |> prefix_keys(prefix) # user_first_name
       |> Map.merge(acc)
     end)
