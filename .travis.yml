@@ -1,6 +1,8 @@
 language: elixir
 elixir:
   - 1.4.1
+# node_js:
+#   - "7"
 addons:
   postgresql: '9.4'
   apt:
@@ -10,16 +12,12 @@ services:
   - redis-server
 env:
   - MIX_ENV=test
-  - NODE_VERSION="7.7.2"
-before_install:
-  - nvm install $NODE_VERSION
-install:
-  - npm install
-  - mix deps.get
+# install:
+#   - npm install
 before_script:
   - mix do ecto.create, ecto.migrate
 script:
-  - compile --warnings-as-errors, coveralls.json
+  - mix do deps.get, compile --warnings-as-errors, coveralls.json
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 notifications:
