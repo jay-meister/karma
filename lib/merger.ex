@@ -10,7 +10,7 @@ defmodule Karma.Merger do
   #
   #   # do merge
   #   merged_path = get_merged_path(doc_path, offer, document)
-  #   res = run_merge_script(json, doc_path, merged_path)
+  #   res = wrap_merge_script(json, doc_path, merged_path)
   #   res
   #   # save to S3
   #
@@ -28,8 +28,8 @@ defmodule Karma.Merger do
     # redurns unmerged_path1-4-5.pdf
   end
 
-  def run_merge_script(json, doc_path, merged_path) do
-    res = System.cmd("node", ["merge.js", json, doc_path, merged_path])
+  def wrap_merge_script(json, doc_path, merged_path) do
+    res = Karma.ScriptRunner.run_merge_script(["merge.js", json, doc_path, merged_path])
 
     case res do
       {path, 0} -> {:ok, path}

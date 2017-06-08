@@ -2,6 +2,8 @@ defmodule Karma.MergerTest do
   use Karma.ConnCase
   alias Karma.Merger
 
+  import Mock
+
   @data %{
     project_name: "Mission Impossible 12: The Fourth Reich Hits Back (3rd Edition)",
     user_full_name: "jackjackjack jackjackjackjackjack",
@@ -40,15 +42,19 @@ defmodule Karma.MergerTest do
   end
 
   test "merge document script success" do
-    doc_path = System.cwd() <> "/test/fixtures/fillable.pdf"
+    with_mock Karma.ScriptRunner, [run_merge_script: fn(_) -> {"destination.pdf", 0} end] do
+      doc_path = System.cwd() <> "/test/fixtures/fillable.pdf"
 
-    res = Merger.run_merge_script(Poison.encode!(@data), doc_path, "destination.pdf")
-    assert {:ok, "destination.pdf"} = res
+      res = Merger.wrap_merge_script(Poison.encode!(@data), doc_path, "destination.pdf")
+      assert {:ok, "destination.pdf"} = res
+    end
   end
 
   test "merge document script - no file" do
-    doc_path = System.cwd() <> "/x/no-file.pdf"
-    error_res = Merger.run_merge_script(Poison.encode!(@data), doc_path, "destination.pdf")
-    assert {:error, _} = error_res
+    with_mock Karma.ScriptRunner, [run_merge_script: fn(_) -> {"some error", 1} end] do
+      doc_path = System.cwd() <> "/x/no-file.pdf"
+      error_res = Merger.wrap_merge_script(Poison.encode!(@data), doc_path, "destination.pdf")
+      assert {:error, _} = error_res
+    end
   end
 end
