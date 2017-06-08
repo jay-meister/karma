@@ -21,6 +21,8 @@ defmodule Karma.Merger do
   #   # add merged url to document's table
   #   # add foreign key offer_id to the document table
   #   # add this url to the document table
+  # 
+  #    url
   # end
 
   def get_merged_path(unmerged_path, offer, document) do
