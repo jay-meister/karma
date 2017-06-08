@@ -12,12 +12,15 @@ services:
   - redis-server
 env:
   - MIX_ENV=test
+  - NODE_VERSION="7.7.2"
 install:
-  - npm install
+  - mix deps.get
+  - yarn install
+  - nvm install $NODE_VERSION
 before_script:
   - mix do ecto.create, ecto.migrate
 script:
-  - mix do deps.get, compile --warnings-as-errors, coveralls.json
+  - compile --warnings-as-errors, coveralls.json
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 notifications:
