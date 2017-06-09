@@ -4,25 +4,33 @@ defmodule Karma.Merger do
   def merge(offer, document) do
     # download document
 
-    {:ok, doc_path} = Karma.S3.download(document.url, System.cwd()<>"/test.pdf")
-    # get formatted data
-    # need to remove nulls or replace with empty string
-    json = get_data_for_merge(offer) |>  format() |> Poison.encode!()
+    case Karma.S3.download(document.url, System.cwd()<>"/test.pdf") do
+      {:error, _error} ->
+        {:error, "There was an error retrieving the document"}
+      {:ok, doc_path} ->
+        # get formatted data
+        json = get_data_for_merge(offer) |>  format() |> Poison.encode!()
 
-    # do merge
-    merged_path = get_merged_path(doc_path, offer, document)
-    {:ok, merged_path} = wrap_merge_script(json, doc_path, merged_path)
-
-    # save to S3
-    # get file name from merged path
-    image_params = %{path: merged_path, filename: "test-1-2-3.pdf"}
-    {:ok, :url, url} = Karma.S3.upload({:url, image_params})
-    IO.inspect url
-    # add merged url to document's table
-    # add foreign key offer_id to the document table
-    # add this url to the document table
-
-     url
+        # do merge
+        merged_path = get_merged_path(doc_path, offer, document)
+        case wrap_merge_script(json, doc_path, merged_path) do
+          {:error, _error} ->
+            {:error, "There was an error creating the document"}
+          {:ok, merged_path} ->
+            # save to S3
+            # get file name from merged path
+            image_params = %{path: merged_path, filename: "test-1-2-3.pdf"}
+            case Karma.S3.upload({:url, image_params}) do
+              {:error, _url, _error} ->
+                {:error, "There was an error saving the document"}
+              {:ok, :url, url} ->
+                IO.inspect url
+                # add merged url to document's table
+                # add foreign key offer_id to the document table
+                # add this url to the document table
+                url
+            end
+        end
   end
 
   def get_merged_path(unmerged_path, offer, document) do
