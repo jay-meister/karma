@@ -32,7 +32,7 @@
 - target_email - **string**
 - department - **string**
 - job_title - **string**
-- contract_type - **string**
+- contract_type - ["SCHEDULE-D", "PAYE"] **string**
 - start_date - **date**
 - daily_or_weekly - **string**
 - working_week - **float**
