@@ -273,7 +273,7 @@ defmodule Karma.OfferController do
                   {:ok, url} ->
                     changeset =
                       build_assoc(offer, :documents)
-                      |> Document.merged_url_changeset( changeset, %{url: url})
+                      |> Document.merged_url_changeset(%{url: url})
 
                     case Repo.insert(changeset) do
                       {:ok, _document} ->
