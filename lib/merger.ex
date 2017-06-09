@@ -25,10 +25,7 @@ defmodule Karma.Merger do
                 {:error, "There was an error saving the document"}
               {:ok, :url, url} ->
                 IO.inspect url
-                # add merged url to document's table
-                # add foreign key offer_id to the document table
-                # add this url to the document table
-                url
+                {:ok, url}
             end
         end
       end
