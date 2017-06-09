@@ -5,7 +5,6 @@ defmodule Karma.Document do
     field :url, :string
     field :category, :string
     field :name, :string
-    field :merged_url, :string
     belongs_to :project, Karma.Project
     belongs_to :offer, Karma.Offer
 
@@ -23,8 +22,8 @@ defmodule Karma.Document do
 
   # def merged_url_changeset(struct, params \\ %{}) do
   #   struct
-  #   |> cast(params, [:merged_url])
-  #   |> validate_required([:merged_url])
+  #   |> cast(params, [:offer_id], :url)
+  #   |> validate_required([:offer_id, :url])
   # end
 
 
