@@ -1,8 +1,7 @@
 defmodule Karma.OfferController do
   use Karma.Web, :controller
 
-  alias Karma.{User, Offer, Project, Startpack}
-  # alias Karma.{Document, Merger}
+  alias Karma.{User, Offer, Project, Startpack, Document, Merger}
 
   import Ecto.Query
 
@@ -233,44 +232,60 @@ defmodule Karma.OfferController do
     project = Repo.get(Project, project_id) |> Repo.preload(:user)
     changeset = Offer.offer_response_changeset(offer, offer_params)
 
-    case Repo.update(changeset) do
-      {:ok, offer} ->
-        Karma.Email.send_offer_response_pm(conn, offer, project)
-        |> Karma.Mailer.deliver_later()
-        if offer.accepted == true do
-          Karma.Email.send_offer_accepted_contractor(conn, offer)
-          |> Karma.Mailer.deliver_later()
-          # url = Merger.merge(offer, document)
-          # changeset = Document.merged_url_changeset(%Document{}, %{url: url})
-          # case Repo.update(changeset) do
-          #  {:ok, document} ->
-          #    conn
-          #    |> put_flash(:info, "Document merged")
-          #    |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
-          #    |> halt()
-          #  {:error, changeset} ->
-          #    conn
-          #    |> put_flash(:error, "error inserting merged url")
-          #    |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
-          #    |> halt()
-          # end
+    # Move to document model?
+    document = Karma.Repo.all(
+    from d in Karma.Document,
+    where: d.project_id == ^project.id
+    and d.name == "PAYE"
+    ) # ^offer.contract_type -> they must match in the db!
 
-          # Move to document model?
-          [document] = Karma.Repo.all(
-          from d in Karma.Document,
-          where: d.project_id == ^project.id
-          and d.name == "PAYE"
-          ) # offer.contract_type -> they must match in the db!
-          Karma.Merger.merge(offer, document)
+    # check if there is a document to be merged
+    case document do
+      [] -> # prevent accepting offer if no document
+        conn
+        |> put_flash(:error, "There was no document to merge your data with")
+        |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
+      [document] ->
+        case Repo.update(changeset) do
+          {:error, _changeset} ->
+            conn
+            |> put_flash(:error, "Error making response!")
+            |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
+          {:ok, offer} ->
+            Karma.Email.send_offer_response_pm(conn, offer, project)
+            |> Karma.Mailer.deliver_later()
 
+            case offer.accepted do
+              false ->
+                conn
+                |> put_flash(:info, "Offer rejected!")
+                |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
+              true ->
+                Karma.Email.send_offer_accepted_contractor(conn, offer)
+                |> Karma.Mailer.deliver_later()
+
+                # now merge data
+                case Merger.merge(offer, document) do
+                  {:error, msg} ->
+                    conn
+                    |> put_flash(:error, msg)
+                    |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
+                  {:ok, url} ->
+                    changeset = Document.merged_url_changeset(%Document{}, %{url: url})
+                    case Repo.update(changeset) do
+                      {:ok, _document} ->
+                        conn
+                        |> put_flash(:info, "Document merged")
+                        |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
+                        |> halt()
+                      {:error, _changeset} ->
+                        conn
+                        |> put_flash(:error, "error inserting merged url")
+                        |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
+                    end
+                end
+            end
         end
-        conn
-        |> put_flash(:info, "Offer rejected!")
-        |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
-      {:error, _changeset} ->
-        conn
-        |> put_flash(:error, "Error making response!")
-        |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
     end
   end
 
