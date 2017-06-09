@@ -5,7 +5,7 @@ defmodule Karma.Merger do
     # download document
 
     file_name = get_file_name(document.url)
-    case Karma.S3.download(document.url, System.cwd() <> file_name) do
+    case Karma.S3.download(document.url, System.cwd() <> "/tmp/" <> file_name) do
       {:error, _error} ->
         {:error, "There was an error retrieving the document"}
       {:ok, doc_path} ->
@@ -42,7 +42,7 @@ defmodule Karma.Merger do
       ".pdf"
 
     String.replace_suffix(unmerged_path, ".pdf", identifier)
-    # redurns unmerged_path1-4-5.pdf
+    # returns unmerged_path1-4-5.pdf
   end
 
   def wrap_merge_script(json, doc_path, merged_path) do
