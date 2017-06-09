@@ -1,0 +1,15 @@
+<table>
+  <td class="k-minw-20">
+    <strong><%= assigns[:label] %>:</strong>
+  </td>
+  <td>
+    <%= assigns[:data] %>
+  </td>
+</table>
+
+<!--
+assigns:
+label, (optional label override atom to string)
+data, (eg project)
+atom, (value column name)
+-->
