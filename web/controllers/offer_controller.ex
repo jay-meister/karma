@@ -148,7 +148,7 @@ defmodule Karma.OfferController do
     case offer.user_id do
       nil ->
         changeset = Startpack.changeset(%Startpack{})
-        render(conn, "show.html", project_id: project_id, changeset: changeset)
+        render(conn, "show.html", project_id: project_id, changeset: changeset, contract: nil)
       _ ->
         edit_changeset = Offer.changeset(offer)
         startpack = Repo.get_by(Startpack, user_id: user.id)
