@@ -1,6 +1,6 @@
 <div class="ph3 ph6-ns mt6 center">
 
-  <%= link "Back", to: user_path(@conn, :show, @user) %>
+  <%= link "Back", to: startpack_path(@conn, :index) %>
 
   <h1 class="f1 mv4 fw5">Edit user</h1>
 
