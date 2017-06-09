@@ -114,22 +114,22 @@
     form: f,
     atom: :name,
     options: [
-      "DIRECT HIRE",
+      # "DIRECT HIRE",
       "PAYE",
-      "SCHEDULE-D",
-      "LOAN OUT",
+      "SCHEDULE-D"
+      # "LOAN OUT",
       # "CONSTRUCTION DIRECT HIRE",
       # "CONSTRUCTION PAYE",
       # "CONSTRUCTION SCHEDULE-D",
       # "CONSTRUCTION LOAN OUT",
-      "BOX RENTAL FORM",
-      "EQUIPMENT RENTAL FORM",
-      "VEHICLE ALLOWANCE FORM",
-      "NDA",
-      "INFO RECEIPT DECLARATION",
-      "COMPLIANCE TRAINING",
-      "STUDIO POLICIES",
-      "PROJECT MEMO"
+      # "BOX RENTAL FORM",
+      # "EQUIPMENT RENTAL FORM",
+      # "VEHICLE ALLOWANCE FORM",
+      # "NDA",
+      # "INFO RECEIPT DECLARATION",
+      # "COMPLIANCE TRAINING",
+      # "STUDIO POLICIES",
+      # "PROJECT MEMO"
       ],
     prompt: "Pick a document type",
     label: "Type"
