@@ -236,8 +236,8 @@ defmodule Karma.OfferController do
     document = Karma.Repo.all(
     from d in Karma.Document,
     where: d.project_id == ^project.id
-    and d.name == "PAYE"
-    ) # ^offer.contract_type -> they must match in the db!
+    and d.name == ^offer.contract_type
+    ) 
 
     # check if there is a document to be merged
     case document do
