@@ -4,7 +4,8 @@ defmodule Karma.Merger do
   def merge(offer, document) do
     # download document
 
-    case Karma.S3.download(document.url, System.cwd()<>"/test.pdf") do
+    file_name = get_file_name(document.url)
+    case Karma.S3.download(document.url, System.cwd() <> file_name) do
       {:error, _error} ->
         {:error, "There was an error retrieving the document"}
       {:ok, doc_path} ->
@@ -19,7 +20,7 @@ defmodule Karma.Merger do
           {:ok, merged_path} ->
             # save to S3
             # get file name from merged path
-            image_params = %{path: merged_path, filename: "test-1-2-3.pdf"}
+            image_params = %{path: merged_path, filename: get_file_name(merged_path)}
             case Karma.S3.upload({:url, image_params}) do
               {:error, _url, _error} ->
                 {:error, "There was an error saving the document"}
@@ -30,7 +31,9 @@ defmodule Karma.Merger do
         end
       end
   end
-
+  def get_file_name(path) do
+    path |> String.split("/") |> Enum.reverse() |> hd()
+  end
   def get_merged_path(unmerged_path, offer, document) do
     identifier =
       "-" <> Integer.to_string(offer.id) <>
