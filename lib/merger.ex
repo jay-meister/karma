@@ -31,6 +31,7 @@ defmodule Karma.Merger do
                 url
             end
         end
+      end
   end
 
   def get_merged_path(unmerged_path, offer, document) do
@@ -71,6 +72,7 @@ defmodule Karma.Merger do
     Enum.reduce(Map.keys(map), %{}, fn(key, acc) ->
       prefixed_key = prefix <> "_" <> Atom.to_string(key)
       val = Map.get(map, key)
+      # replace nulls with empty string as nulls seem to break merge
       val = if val == nil, do: "", else: val
       Map.put(acc, prefixed_key, val)
     end)
