@@ -237,7 +237,7 @@ defmodule Karma.OfferController do
     from d in Karma.Document,
     where: d.project_id == ^project.id
     and d.name == ^offer.contract_type
-    ) 
+    )
 
     # check if there is a document to be merged
     case document do
@@ -271,16 +271,18 @@ defmodule Karma.OfferController do
                     |> put_flash(:error, msg)
                     |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
                   {:ok, url} ->
-                    changeset = Document.merged_url_changeset(%Document{}, %{url: url})
-                    case Repo.update(changeset) do
+                    changeset =
+                      build_assoc(offer, :documents)
+                      |> Document.merged_url_changeset(%{url: url})
+
+                    case Repo.insert(changeset) do
                       {:ok, _document} ->
                         conn
                         |> put_flash(:info, "Document merged")
                         |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
-                        |> halt()
                       {:error, _changeset} ->
                         conn
-                        |> put_flash(:error, "error inserting merged url")
+                        |> put_flash(:error, "Error inserting merged url")
                         |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
                     end
                 end
