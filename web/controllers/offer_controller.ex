@@ -141,9 +141,10 @@ defmodule Karma.OfferController do
     end
   end
 
-  def show(conn, %{"project_id" => project_id, "id" => _id}) do
+  def show(conn, %{"project_id" => project_id, "id" => id}) do
     offer = conn.assigns.offer
     user = conn.assigns.current_user
+    offer_related_document = Karma.Repo.get_by(Karma.Document, offer_id: id)
     case offer.user_id do
       nil ->
         changeset = Startpack.changeset(%Startpack{})
@@ -157,7 +158,8 @@ defmodule Karma.OfferController do
         "show.html",
         project_id: project_id,
         changeset: changeset,
-        edit_changeset: edit_changeset
+        edit_changeset: edit_changeset,
+        contract: offer_related_document
         )
     end
   end

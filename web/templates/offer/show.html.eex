@@ -1,5 +1,7 @@
 <%= link "Dashboard", to: dashboard_path(@conn, :index), class: "ma2 no-underline k-indigo" %>
-
+<%= if @contract do %>
+  <p>merged url: <%= @contract.url %></p>
+  <%= end %>
 <%= if @is_pm? do %>
   <%= link "Offers", to: project_offer_path(@conn, :index, @offer.project_id), class: "ma2 no-underline k-indigo" %>
   <%= link "Edit Offer", to: project_offer_path(@conn, :edit, @offer.project_id, @offer), class: "ma2 no-underline k-indigo" %>
