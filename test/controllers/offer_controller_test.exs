@@ -226,23 +226,26 @@ defmodule Karma.OfferControllerTest do
     with_mock Karma.Mailer, [deliver_later: fn(string) -> string end] do
       conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: true}
       assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
+      assert Repo.get(Offer, offer.id).accepted
     end
   end
 
   test "error responding to offer", %{conn: conn, project: project, offer: offer} do
     conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: :invalid}
     assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
+    assert Repo.get(Offer, offer.id).accepted == nil
   end
 
-  test "unauthorised user block accept", %{conn: conn, project: project, offer: offer} do
+  test "unauthorised user block accept", %{project: project, offer: offer} do
+    different_user = insert_user(%{email: "evil_contractor@gmail.com"})
 
+    conn = login_user(build_conn(), different_user)
     with_mock Karma.Mailer, [deliver_later: fn(string) -> string end] do
-      conn = put conn, project_offer_path(conn, :update, project, offer), offer: %{accepted: true}
-      conn =
-        conn
-        |> Plug.Conn.assign(:is_pm?, false)
-        |> Plug.Conn.assign(:is_contractor?, false)
-      assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
+      conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: true}
+
+      assert redirected_to(conn, 302) == "/"
+      assert Phoenix.Controller.get_flash(conn, :error) == "You do not have permission to view that offer"
+      assert Repo.get(Offer, offer.id).accepted == nil
     end
   end
 end
