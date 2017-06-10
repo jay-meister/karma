@@ -17,5 +17,6 @@
                           action: startpack_path(@conn, :update, @startpack, offer_id: offer_id),
                           offer: @offer,
                           startpack: @startpack,
-                          conn: @conn %>
+                          conn: @conn,
+                          user: @user %>
 </div>
