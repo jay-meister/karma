@@ -42,8 +42,16 @@
 <ul class="list pl0">
   <%= component "form_divider.html", title: "Project info" %>
   <%= for {atom, label, formatted} <- [
+    {:type, nil, String.capitalize(@project.type)},
+    {:budget, nil, String.capitalize(@project.budget)},
     {:codename, nil, @project.codename},
-    {:description, nil, @project.description}
+    {:description, nil, @project.description},
+    {:start_date, "Shoot start date", format_date(@project.start_date)},
+    {:duration, nil, "#{@project.duration} weeks"},
+    {:studio_name, nil, @project.studio_name},
+    {:holiday_rate, nil, format_holiday_rate(@project.holiday_rate)},
+    {:locations, nil, @project.locations},
+    {:additional_notes, nil, @project.additional_notes}
   ] do %>
     <%= component "data.html",
     data: formatted || Map.get(@offer, atom),
@@ -53,7 +61,7 @@
   <%= component "form_divider.html", title: "Offer status" %>
   <%= for {atom, label, formatted} <- [
     {:accepted, nil, nil},
-    {:updated_at, nil, @offer.updated_at},
+    {:updated_at, nil, format_date(@offer.updated_at)},
     {:active, nil, nil},
     {:contractor_details_accepted, nil, nil}
   ] do %>
