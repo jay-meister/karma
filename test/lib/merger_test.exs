@@ -57,4 +57,28 @@ defmodule Karma.MergerTest do
       assert {:error, _} = error_res
     end
   end
+
+
+  test "merge function error: S3 download" do
+    with_mock Karma.S3, [download: fn(_, _) -> {:error, "some error"} end] do
+      assert {:error, "There was an error retrieving the document"} =
+        Merger.merge(%{}, %{url: "www.a_url.com"})
+    end
+  end
+
+  test "merge function error: merge error" do
+    pm = insert_user()
+    project = insert_project(pm)
+    contractor = insert_user(%{email: "contractor@gmail.com"})
+    insert_startpack(%{user_id: contractor.id})
+    offer = insert_offer(project, %{user_id: contractor.id})
+    document = insert_document(project, %{name: offer.contract_type, url: "www.image_url.pdf"})
+
+    with_mock Karma.S3, [download: fn(_, _) -> {:ok, "www.aws.someurl.pdf"} end] do
+      with_mock Karma.ScriptRunner, [run_merge_script: fn(_) -> {"some error", 1} end] do
+        assert {:error, "There was an error creating the document"} =
+          Merger.merge(offer, document)
+      end
+    end
+  end
 end
