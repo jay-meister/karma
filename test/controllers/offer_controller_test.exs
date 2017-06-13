@@ -53,7 +53,7 @@ defmodule Karma.OfferControllerTest do
       assert html_response(get_conn, 200) =~ new_offer.target_email
       assert Repo.get_by(Offer, target_email: new_offer.target_email)
 
-      # ensure email was sent
+      # ensure email was sentt
       assert called Karma.Mailer.deliver_later(:_)
     end
   end
@@ -65,7 +65,7 @@ defmodule Karma.OfferControllerTest do
       conn = post conn, user_path(conn, :create), user: default_user(%{email: "a_new_email@gmail.com"})
       assert redirected_to(conn) == session_path(conn, :new)
       user = Repo.get_by(Karma.User, email: "a_new_email@gmail.com")
-
+      # ensure offer is attached to user
       offer = Repo.get_by(Offer, user_id: user.id)
       assert offer
     end
@@ -91,7 +91,7 @@ defmodule Karma.OfferControllerTest do
       assert html_response(get_conn, 200) =~ contractor.email
       offer = Repo.get_by(Offer, target_email: new_offer.target_email)
 
-      # test the user has been linked to the offer
+      # test the user has been linked with the offer
       assert offer.user_id == contractor.id
 
       # ensure email was sent
