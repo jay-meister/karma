@@ -22,6 +22,7 @@ defmodule Karma.OfferController do
   # block update and delete functionality when offer is not pending
   plug :offer_pending when action in [:edit, :update, :delete]
 
+
   # Function plug that checks if offer is pending or not
   # halts any other action if offer is not pending
   def offer_pending(conn, _) do

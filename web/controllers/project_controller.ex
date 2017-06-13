@@ -7,6 +7,7 @@ defmodule Karma.ProjectController do
   plug :add_project_to_conn when action in [:show, :edit, :update, :delete]
   plug :block_if_not_project_manager when action in [:show, :edit, :update, :delete]
 
+
   # project owner plug
   def add_project_to_conn(conn, _) do
     # if project doesn't exist, it should render a 404
@@ -16,7 +17,7 @@ defmodule Karma.ProjectController do
       %{"id" => project_id} -> project_id # if we are in a projects route
     end
     conn = assign(conn, :project, Repo.get(Project, project_id))
-    
+
     case conn.assigns.project do
       nil ->
         conn

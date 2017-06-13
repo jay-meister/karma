@@ -1,7 +1,31 @@
 defmodule Karma.DocumentController do
   use Karma.Web, :controller
 
-  alias Karma.{Document, Project, S3}
+  alias Karma.{Document, Project, S3, Controllers.Helpers}
+
+  # stop upload functionality if documents are submitted with existing type
+  plug :file_type_exists? when action in [:create]
+
+
+  # function plug that will check if the project manager has already uploaded
+  # a file with a given type before allowing the upload
+
+  def file_type_exists?(conn, _) do
+    %{"project_id" => project_id, "document" => %{"name" => contract_type}} = conn.params
+
+    project = Repo.get(Project, project_id)
+
+    project_documents = Repo.all(Helpers.project_documents(project))
+    document_of_type = Enum.filter(project_documents, fn(document) -> document.name == contract_type end)
+    case document_of_type  do
+      [] -> conn
+      _doc ->
+        conn
+        |> put_flash(:error, "You have already uploaded a #{contract_type} document")
+        |> redirect(to: project_path(conn, :show, project_id))
+        |> halt()
+    end
+  end
 
   def index(conn, %{"project_id" => project_id}) do
     documents = Repo.all(Document)
