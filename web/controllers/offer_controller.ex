@@ -226,6 +226,7 @@ defmodule Karma.OfferController do
   end
 
   def response(conn, %{"project_id" => project_id, "id" => id, "offer" => offer_params}) do
+    IO.inspect "in response"
     offer =
       Repo.get!(Offer, id)
       |> Repo.preload(:user)
