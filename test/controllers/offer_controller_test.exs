@@ -222,44 +222,77 @@ defmodule Karma.OfferControllerTest do
     refute Repo.get(Offer, offer.id)
   end
 
-  test "offer accepted, merged document success", %{conn: conn, project: project, offer: offer} do
-    document = insert_document(project, %{name: offer.contract_type, url: "www.image_url"})
+  test "offer can only be responded to by contractor", %{conn: conn, project: project, offer: offer} do
+    conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: true}
+    assert Phoenix.Controller.get_flash(conn, :error) == "You do not have permission to respond to that offer"
+    assert redirected_to(conn, 302) == "/"
+  end
+
+  test "offer rejected", %{project: project} do
+    contractor = insert_user(%{email: "contractor@gmail.com"})
+    offer = insert_offer(project, %{user_id: contractor.id})
+    insert_document(project, %{name: offer.contract_type, url: "www.image_url"})
+    conn = login_user(build_conn(), contractor)
+    with_mock Karma.Mailer, [deliver_later: fn(string) -> string end] do
+      conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: false}
+      assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
+      assert Phoenix.Controller.get_flash(conn, :info) == "Offer rejected!"
+      # ensure the offer is now rejected in DB
+      assert Repo.get(Karma.Offer, offer.id).accepted == false
+    end
+  end
+
+
+  test "offer accepted, merged document success", %{project: project} do
+    contractor = insert_user(%{email: "contractor@gmail.com"})
+    offer = insert_offer(project, %{user_id: contractor.id})
+    insert_document(project, %{name: offer.contract_type, url: "www.image_url"})
+    conn = login_user(build_conn(), contractor)
     with_mock Karma.Mailer, [deliver_later: fn(string) -> string end] do
       with_mock Karma.Merger, [merge: fn(_, _) -> {:ok, "www.image_url.com"} end] do
-
-        # This test should fail as it is a PM trying to accept an offer
-        IO.inspect Phoenix.Controller.get_flash(conn, :error)
         conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: true}
         assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
-        doc =  Repo.get_by(Karma.Document, offer_id: offer.id)
-        IO.inspect doc
+        # ensure the url to the new merged document has been added
+        assert Repo.get_by(Karma.Document, offer_id: offer.id).url == "www.image_url.com"
       end
     end
   end
 
-  test "offer accepted, but document doesn't exist", %{conn: conn, project: project, offer: offer} do
-
-    # with_mock Karma.Mailer, [deliver_later: fn(string) -> string end] do
-    #   with_mock Karma.Merger, [merge: fn(_, _) -> {:ok, "www.image_url.com"} end] do
-    #     conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: true}
-    #     assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
-    #
-    #   end
-    # end
+  test "offer accepted, merged document failure", %{project: project} do
+    contractor = insert_user(%{email: "contractor@gmail.com"})
+    offer = insert_offer(project, %{user_id: contractor.id})
+    insert_document(project, %{name: offer.contract_type, url: "www.image_url"})
+    conn = login_user(build_conn(), contractor)
+    with_mock Karma.Mailer, [deliver_later: fn(string) -> string end] do
+      with_mock Karma.Merger, [merge: fn(_, _) -> {:error, "some flash message"} end] do
+        conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: true}
+        assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
+        # ensure no merge happened
+        refute Repo.get_by(Karma.Document, offer_id: offer.id)
+        # ensure offer is still not accepted
+        assert Repo.get(Offer, offer.id).accepted == nil
+      end
+    end
   end
 
-  test "offer accepted, merged document failure", %{conn: conn, project: project, offer: offer} do
-    # with_mock Karma.Mailer, [deliver_later: fn(string) -> string end] do
-    #   with_mock Karma.Merger, [merge: fn(_, _) -> {:ok, "www.image_url.com"} end] do
-    #     conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: true}
-    #     assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
-    #
-    #   end
-    # end
+  test "offer accepted, but document doesn't exist", %{project: project} do
+    contractor = insert_user(%{email: "contractor@gmail.com"})
+    offer = insert_offer(project, %{user_id: contractor.id})
+    conn = login_user(build_conn(), contractor)
+    conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: true}
+    assert Phoenix.Controller.get_flash(conn, :error) == "There was no document to merge your data with"
+    assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
+    # Ensure offer wasn't accepted on the DB
+    assert Repo.get(Offer, offer.id).accepted == nil
   end
 
-  test "error responding to offer", %{conn: conn, project: project, offer: offer} do
+  test "error responding to offer", %{project: project} do
+    contractor = insert_user(%{email: "contractor@gmail.com"})
+    offer = insert_offer(project, %{user_id: contractor.id})
+    insert_document(project, %{name: offer.contract_type, url: "www.image_url"})
+    conn = login_user(build_conn(), contractor)
     conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: :invalid}
     assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
+    assert Phoenix.Controller.get_flash(conn, :error) == "Error making response!"
   end
 end
