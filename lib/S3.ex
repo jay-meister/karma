@@ -12,6 +12,12 @@ defmodule Karma.S3 do
     |> Enum.reduce(%{}, fn({url_key, url}, acc) -> Map.put(acc, url_key, url) end)
   end
 
+
+  # image_params = %Plug.Upload{
+  #  content_type: "image/png",
+  #  filename: "Screen Shot 2017-06-05 at 16.36.15.png",
+  #  path: "/var/folders/_p/46vn16c94z7cqz18w_3qxjb00000gn/T//plug-1496/multipart-909146-647759-1"
+  # }
   def upload({url_key, image_params}) do
     # first check if user has uploaded an image
     unique_filename = get_unique_filename(image_params.filename)

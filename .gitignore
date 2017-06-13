@@ -29,5 +29,9 @@ cover
 # Environment variables
 .env
 
+#tmp folder
+/tmp/*
+!/tmp/placeholder
+
 # Redis
 dump.rdb
