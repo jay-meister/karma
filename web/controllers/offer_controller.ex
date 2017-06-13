@@ -11,13 +11,16 @@ defmodule Karma.OfferController do
   plug :add_project_to_conn when action in [:index, :new, :create, :show, :edit, :update, :delete, :response]
 
   # block access if current user is not PM of this project
-  plug :block_if_not_project_manager when action in [:index, :new, :create, :edit, :delete]
+  plug :block_if_not_project_manager when action in [:index, :new, :create, :edit, :update, :delete]
 
   # add offer to conn
   plug :add_offer_to_conn when action in [:show, :edit, :update, :delete, :response]
 
+  # block access if not contractor
+  plug :block_if_not_contractor when action in [:response]
+
   # block access if current user does not own the current offer
-  plug :block_if_not_contractor_or_pm when action in [:show, :update, :response]
+  plug :block_if_not_contractor_or_pm when action in [:show, :response]
 
   # block update and delete functionality when offer is not pending
   plug :offer_pending when action in [:edit, :update, :delete]
@@ -61,6 +64,18 @@ defmodule Karma.OfferController do
       %{is_pm?: false, is_contractor?: false} ->
         conn
         |> put_flash(:error, "You do not have permission to view that offer")
+        |> redirect(to: dashboard_path(conn, :index))
+        |> halt()
+      _ ->
+        conn
+    end
+  end
+
+  def block_if_not_contractor(conn, _) do
+    case conn.assigns do
+      %{is_contractor?: false} ->
+        conn
+        |> put_flash(:error, "You do not have permission to respond to that offer")
         |> redirect(to: dashboard_path(conn, :index))
         |> halt()
       _ ->
