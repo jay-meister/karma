@@ -1,12 +1,6 @@
 defmodule Karma.TestHelpers do
   alias Karma.{Repo, User, Project, Offer, Startpack, Document}
 
-  @user_id 1
-
-  def id() do
-    %{user: @user_id}
-  end
-
   def insert_user(attrs \\ %{}) do
     changes = Map.merge(default_user(), attrs)
 

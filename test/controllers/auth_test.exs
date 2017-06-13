@@ -32,16 +32,16 @@ defmodule Karma.AuthTest do
     test "login puts the user in the session", %{conn: conn} do
       login_conn =
         conn
-        |> Auth.login(%User{id: id().user})
+        |> Auth.login(%User{id: 1})
         |> send_resp(:ok, "")
       next_conn = get(login_conn, "/")
-      assert get_session(next_conn, :user_id) == id().user
+      assert get_session(next_conn, :user_id) == 1
     end
 
     test "logout drops the session", %{conn: conn} do
       logout_conn =
         conn
-        |> put_session(:user_id, id().user)
+        |> put_session(:user_id, 1)
         |> Auth.logout()
         |> send_resp(:ok, "")
 

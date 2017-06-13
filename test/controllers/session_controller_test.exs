@@ -12,9 +12,9 @@ defmodule Karma.SessionControllerTest do
 
   describe "session routes that need authentication" do
     setup do
-      insert_user(%{verified: true})
+      user = insert_user(%{verified: true})
 
-      conn = assign(build_conn(), :current_user, Repo.get(User, id().user))
+      conn = assign(build_conn(), :current_user, Repo.get(User, user.id))
       {:ok, conn: conn}
     end
 
