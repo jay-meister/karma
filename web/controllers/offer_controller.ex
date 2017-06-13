@@ -1,9 +1,7 @@
 defmodule Karma.OfferController do
   use Karma.Web, :controller
 
-  alias Karma.{User, Offer, Project, Startpack, Document, Merger}
-
-  import Ecto.Query
+  alias Karma.{User, Offer, Project, Startpack}
 
   import Karma.ProjectController, only: [add_project_to_conn: 2, block_if_not_project_manager: 2]
 
@@ -11,16 +9,13 @@ defmodule Karma.OfferController do
   plug :add_project_to_conn when action in [:index, :new, :create, :show, :edit, :update, :delete, :response]
 
   # block access if current user is not PM of this project
-  plug :block_if_not_project_manager when action in [:index, :new, :create, :edit, :update, :delete]
+  plug :block_if_not_project_manager when action in [:index, :new, :create, :edit, :delete]
 
   # add offer to conn
   plug :add_offer_to_conn when action in [:show, :edit, :update, :delete, :response]
 
-  # block access if not contractor
-  plug :block_if_not_contractor when action in [:response]
-
   # block access if current user does not own the current offer
-  plug :block_if_not_contractor_or_pm when action in [:show, :response]
+  plug :block_if_not_contractor_or_pm when action in [:show, :update, :response]
 
   # block update and delete functionality when offer is not pending
   plug :offer_pending when action in [:edit, :update, :delete]
@@ -64,18 +59,6 @@ defmodule Karma.OfferController do
       %{is_pm?: false, is_contractor?: false} ->
         conn
         |> put_flash(:error, "You do not have permission to view that offer")
-        |> redirect(to: dashboard_path(conn, :index))
-        |> halt()
-      _ ->
-        conn
-    end
-  end
-
-  def block_if_not_contractor(conn, _) do
-    case conn.assigns do
-      %{is_contractor?: false} ->
-        conn
-        |> put_flash(:error, "You do not have permission to respond to that offer")
         |> redirect(to: dashboard_path(conn, :index))
         |> halt()
       _ ->
@@ -156,14 +139,13 @@ defmodule Karma.OfferController do
     end
   end
 
-  def show(conn, %{"project_id" => project_id, "id" => id}) do
+  def show(conn, %{"project_id" => project_id, "id" => _id}) do
     offer = conn.assigns.offer
     user = conn.assigns.current_user
-    offer_related_document = Karma.Repo.get_by(Karma.Document, offer_id: id)
     case offer.user_id do
       nil ->
         changeset = Startpack.changeset(%Startpack{})
-        render(conn, "show.html", project_id: project_id, changeset: changeset, contract: nil)
+        render(conn, "show.html", project_id: project_id, changeset: changeset)
       _ ->
         edit_changeset = Offer.changeset(offer)
         startpack = Repo.get_by(Startpack, user_id: user.id)
@@ -173,8 +155,7 @@ defmodule Karma.OfferController do
         "show.html",
         project_id: project_id,
         changeset: changeset,
-        edit_changeset: edit_changeset,
-        contract: offer_related_document
+        edit_changeset: edit_changeset
         )
     end
   end
@@ -249,61 +230,21 @@ defmodule Karma.OfferController do
     project = Repo.get(Project, project_id) |> Repo.preload(:user)
     changeset = Offer.offer_response_changeset(offer, offer_params)
 
-    # Move to document model?
-    document = Karma.Repo.all(
-    from d in Karma.Document,
-    where: d.project_id == ^project.id
-    and d.name == ^offer.contract_type
-    )
-
-    # check if there is a document to be merged
-    case document do
-      [] -> # prevent accepting offer if no document
-        conn
-        |> put_flash(:error, "There was no document to merge your data with")
-        |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
-      [document] ->
-        case Repo.update(changeset) do
-          {:error, _changeset} ->
-            conn
-            |> put_flash(:error, "Error making response!")
-            |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
-          {:ok, offer} ->
-            Karma.Email.send_offer_response_pm(conn, offer, project)
-            |> Karma.Mailer.deliver_later()
-
-            case offer.accepted do
-              false ->
-                conn
-                |> put_flash(:info, "Offer rejected!")
-                |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
-              true ->
-                Karma.Email.send_offer_accepted_contractor(conn, offer)
-                |> Karma.Mailer.deliver_later()
-
-                # now merge data
-                case Merger.merge(offer, document) do
-                  {:error, msg} ->
-                    # Un-accept the offer so they can accept again when changes have been made
-                    Repo.update(Ecto.Changeset.change(offer, %{accepted: nil}))
-
-                    conn
-                    |> put_flash(:error, msg)
-                    |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
-                  {:ok, url} ->
-                    # update documents table
-                    build_assoc(offer, :documents)
-                    |> Document.merged_url_changeset(%{url: url})
-                    |> Repo.insert()
-
-                    # reply to user
-                    conn
-                    |> put_flash(:info, "Document merged")
-                    |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
-
-                end
-            end
+    case Repo.update(changeset) do
+      {:ok, offer} ->
+        Karma.Email.send_offer_response_pm(conn, offer, project)
+        |> Karma.Mailer.deliver_later()
+        if offer.accepted == true do
+          Karma.Email.send_offer_accepted_contractor(conn, offer)
+          |> Karma.Mailer.deliver_later()
         end
+        conn
+        |> put_flash(:info, "Response made!")
+        |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
+      {:error, _changeset} ->
+        conn
+        |> put_flash(:error, "Error making response!")
+        |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
     end
   end
 

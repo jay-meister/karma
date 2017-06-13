@@ -15,8 +15,6 @@ Installations:
 To start the app you will need:
 - Postgres running
 - Redis server running (port 6379)
-- pdftk: follow this link for mac: https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/pdftk_server-2.02-mac_osx-10.11-setup.pkg
-  - if you're having issues take a look at this https://stackoverflow.com/questions/32505951/pdftk-server-on-os-x-10-11
 
 Then run:
 - Npm install

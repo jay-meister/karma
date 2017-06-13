@@ -292,7 +292,7 @@ defmodule Karma.Startpack do
         |> cast(startpack, paye_keys())
         |> validate_required(paye_keys())
         |> validate_inclusion(:for_paye_only, for_paye_only())
-      %Karma.Offer{contract_type: "SCHEDULE-D", daily_or_weekly: "daily"} ->
+      %Karma.Offer{contract_type: "SCH D", daily_or_weekly: "daily"} ->
         changeset
         |> cast(startpack, [ :schedule_d_letter_url ])
         |> validate_required([ :schedule_d_letter_url ])
@@ -307,7 +307,7 @@ defmodule Karma.Startpack do
       :student_loan_repay_direct?,
       :student_loan_finished_before_6_april?
     ]
-
+    
     case startpack do
       # student_loan_not_repayed? cannot be null
       %{student_loan_not_repayed?: false} ->

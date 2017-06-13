@@ -92,7 +92,7 @@ defmodule Karma.Controllers.Helpers do
   end
 
   defp sch_d() do
-    "SCHEDULE-D"
+    "SCH D"
   end
 
   defp paye() do
