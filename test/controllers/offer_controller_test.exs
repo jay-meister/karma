@@ -53,7 +53,7 @@ defmodule Karma.OfferControllerTest do
       assert html_response(get_conn, 200) =~ new_offer.target_email
       assert Repo.get_by(Offer, target_email: new_offer.target_email)
 
-      # ensure email was sent
+      # ensure email was sentt
       assert called Karma.Mailer.deliver_later(:_)
     end
   end
@@ -65,14 +65,14 @@ defmodule Karma.OfferControllerTest do
       conn = post conn, user_path(conn, :create), user: default_user(%{email: "a_new_email@gmail.com"})
       assert redirected_to(conn) == session_path(conn, :new)
       user = Repo.get_by(Karma.User, email: "a_new_email@gmail.com")
-
+      # ensure offer is attached to user
       offer = Repo.get_by(Offer, user_id: user.id)
       assert offer
     end
   end
 
   # if contractor is already registered
-  test "creates offer to a registered user", %{conn: conn, project: project} do
+  test "creates creates offer to a registered user", %{conn: conn, project: project} do
 
     contractor = insert_user(%{first_name: "Dave", last_name: "Seaman", email: "contractor@gmail.com"})
     new_offer = default_offer(%{target_email: "contractor@gmail.com"})
@@ -91,7 +91,7 @@ defmodule Karma.OfferControllerTest do
       assert html_response(get_conn, 200) =~ contractor.email
       offer = Repo.get_by(Offer, target_email: new_offer.target_email)
 
-      # test the user has been linked to the offer
+      # test the user has been linked with the offer
       assert offer.user_id == contractor.id
 
       # ensure email was sent
@@ -222,30 +222,77 @@ defmodule Karma.OfferControllerTest do
     refute Repo.get(Offer, offer.id)
   end
 
-  test "offer accepted", %{conn: conn, project: project, offer: offer} do
+  test "offer can only be responded to by contractor", %{conn: conn, project: project, offer: offer} do
+    conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: true}
+    assert Phoenix.Controller.get_flash(conn, :error) == "You do not have permission to respond to that offer"
+    assert redirected_to(conn, 302) == "/"
+  end
+
+  test "offer rejected", %{project: project} do
+    contractor = insert_user(%{email: "contractor@gmail.com"})
+    offer = insert_offer(project, %{user_id: contractor.id})
+    insert_document(project, %{name: offer.contract_type, url: "www.image_url"})
+    conn = login_user(build_conn(), contractor)
     with_mock Karma.Mailer, [deliver_later: fn(string) -> string end] do
-      conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: true}
+      conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: false}
       assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
-      assert Repo.get(Offer, offer.id).accepted
+      assert Phoenix.Controller.get_flash(conn, :info) == "Offer rejected!"
+      # ensure the offer is now rejected in DB
+      assert Repo.get(Karma.Offer, offer.id).accepted == false
     end
   end
 
-  test "error responding to offer", %{conn: conn, project: project, offer: offer} do
-    conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: :invalid}
+
+  test "offer accepted, merged document success", %{project: project} do
+    contractor = insert_user(%{email: "contractor@gmail.com"})
+    offer = insert_offer(project, %{user_id: contractor.id})
+    insert_document(project, %{name: offer.contract_type, url: "www.image_url"})
+    conn = login_user(build_conn(), contractor)
+    with_mock Karma.Mailer, [deliver_later: fn(string) -> string end] do
+      with_mock Karma.Merger, [merge: fn(_, _) -> {:ok, "www.image_url.com"} end] do
+        conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: true}
+        assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
+        # ensure the url to the new merged document has been added
+        assert Repo.get_by(Karma.Document, offer_id: offer.id).url == "www.image_url.com"
+      end
+    end
+  end
+
+  test "offer accepted, merged document failure", %{project: project} do
+    contractor = insert_user(%{email: "contractor@gmail.com"})
+    offer = insert_offer(project, %{user_id: contractor.id})
+    insert_document(project, %{name: offer.contract_type, url: "www.image_url"})
+    conn = login_user(build_conn(), contractor)
+    with_mock Karma.Mailer, [deliver_later: fn(string) -> string end] do
+      with_mock Karma.Merger, [merge: fn(_, _) -> {:error, "some flash message"} end] do
+        conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: true}
+        assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
+        # ensure no merge happened
+        refute Repo.get_by(Karma.Document, offer_id: offer.id)
+        # ensure offer is still not accepted
+        assert Repo.get(Offer, offer.id).accepted == nil
+      end
+    end
+  end
+
+  test "offer accepted, but document doesn't exist", %{project: project} do
+    contractor = insert_user(%{email: "contractor@gmail.com"})
+    offer = insert_offer(project, %{user_id: contractor.id})
+    conn = login_user(build_conn(), contractor)
+    conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: true}
+    assert Phoenix.Controller.get_flash(conn, :error) == "There was no document to merge your data with"
     assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
+    # Ensure offer wasn't accepted on the DB
     assert Repo.get(Offer, offer.id).accepted == nil
   end
 
-  test "unauthorised user block accept", %{project: project, offer: offer} do
-    different_user = insert_user(%{email: "evil_contractor@gmail.com"})
-
-    conn = login_user(build_conn(), different_user)
-    with_mock Karma.Mailer, [deliver_later: fn(string) -> string end] do
-      conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: true}
-
-      assert redirected_to(conn, 302) == "/"
-      assert Phoenix.Controller.get_flash(conn, :error) == "You do not have permission to view that offer"
-      assert Repo.get(Offer, offer.id).accepted == nil
-    end
+  test "error responding to offer", %{project: project} do
+    contractor = insert_user(%{email: "contractor@gmail.com"})
+    offer = insert_offer(project, %{user_id: contractor.id})
+    insert_document(project, %{name: offer.contract_type, url: "www.image_url"})
+    conn = login_user(build_conn(), contractor)
+    conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: :invalid}
+    assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
+    assert Phoenix.Controller.get_flash(conn, :error) == "Error making response!"
   end
 end

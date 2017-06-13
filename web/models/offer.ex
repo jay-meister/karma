@@ -40,6 +40,7 @@ defmodule Karma.Offer do
     field :contractor_details_accepted, :boolean, default: nil
     belongs_to :user, Karma.User
     belongs_to :project, Karma.Project
+    has_many :documents, Karma.Document
 
     timestamps()
   end
@@ -133,10 +134,9 @@ defmodule Karma.Offer do
     |> validate_required_dropdowns()
   end
 
-
   def validate_required_dropdowns(changeset) do
     changeset
-    |> validate_inclusion(:contract_type, ["PAYE", "SCH D"])
+    |> validate_inclusion(:contract_type, ["PAYE", "SCHEDULE-D"])
     |> validate_inclusion(:daily_or_weekly, ["daily", "weekly"])
     |> validate_inclusion(:working_week, [5.0, 5.5, 6.0])
     |> validate_inclusion(:currency, ["gbp", "eur", "usd"])
