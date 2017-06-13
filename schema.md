@@ -143,3 +143,4 @@
 - category - **string**
 - name - **string**
 - project_id - **integer**
+- offer_id - **integer**

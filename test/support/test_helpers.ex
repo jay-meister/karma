@@ -1,5 +1,5 @@
 defmodule Karma.TestHelpers do
-  alias Karma.{Repo, User, Project, Offer, Startpack}
+  alias Karma.{Repo, User, Project, Offer, Startpack, Document}
 
   @user_id 1
 
@@ -43,6 +43,16 @@ defmodule Karma.TestHelpers do
     project
     |> Ecto.build_assoc(:offers, %{})
     |> Offer.changeset(changes)
+    |> Repo.insert!
+  end
+
+  def insert_document(project, attrs \\ %{}) do
+    default_doc = %{ url: "ww.image.co", name: "PAYE", category: "Deal" }
+    changes = Map.merge(default_doc, attrs)
+
+    project
+    |> Ecto.build_assoc(:documents, %{})
+    |> Document.changeset(changes)
     |> Repo.insert!
   end
 
