@@ -226,7 +226,6 @@ defmodule Karma.OfferController do
   end
 
   def response(conn, %{"project_id" => project_id, "id" => id, "offer" => offer_params}) do
-    IO.inspect "in response"
     offer =
       Repo.get!(Offer, id)
       |> Repo.preload(:user)
@@ -270,6 +269,9 @@ defmodule Karma.OfferController do
                 # now merge data
                 case Merger.merge(offer, document) do
                   {:error, msg} ->
+                    # Un-accept the offer so they can accept again when changes have been made
+                    Repo.update(Ecto.Changeset.change(offer, %{accepted: nil}))
+
                     conn
                     |> put_flash(:error, msg)
                     |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
