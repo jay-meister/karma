@@ -11,13 +11,16 @@ defmodule Karma.OfferController do
   plug :add_project_to_conn when action in [:index, :new, :create, :show, :edit, :update, :delete, :response]
 
   # block access if current user is not PM of this project
-  plug :block_if_not_project_manager when action in [:index, :new, :create, :edit, :delete]
+  plug :block_if_not_project_manager when action in [:index, :new, :create, :edit, :update, :delete]
 
   # add offer to conn
   plug :add_offer_to_conn when action in [:show, :edit, :update, :delete, :response]
 
+  # block access if not contractor
+  plug :block_if_not_contractor when action in [:response]
+
   # block access if current user does not own the current offer
-  plug :block_if_not_contractor_or_pm when action in [:show, :update, :response]
+  plug :block_if_not_contractor_or_pm when action in [:show, :response]
 
   # block update and delete functionality when offer is not pending
   plug :offer_pending when action in [:edit, :update, :delete]
@@ -61,6 +64,18 @@ defmodule Karma.OfferController do
       %{is_pm?: false, is_contractor?: false} ->
         conn
         |> put_flash(:error, "You do not have permission to view that offer")
+        |> redirect(to: dashboard_path(conn, :index))
+        |> halt()
+      _ ->
+        conn
+    end
+  end
+
+  def block_if_not_contractor(conn, _) do
+    case conn.assigns do
+      %{is_contractor?: false} ->
+        conn
+        |> put_flash(:error, "You do not have permission to respond to that offer")
         |> redirect(to: dashboard_path(conn, :index))
         |> halt()
       _ ->
@@ -226,7 +241,6 @@ defmodule Karma.OfferController do
   end
 
   def response(conn, %{"project_id" => project_id, "id" => id, "offer" => offer_params}) do
-    IO.inspect "in response"
     offer =
       Repo.get!(Offer, id)
       |> Repo.preload(:user)
@@ -270,24 +284,23 @@ defmodule Karma.OfferController do
                 # now merge data
                 case Merger.merge(offer, document) do
                   {:error, msg} ->
+                    # Un-accept the offer so they can accept again when changes have been made
+                    Repo.update(Ecto.Changeset.change(offer, %{accepted: nil}))
+
                     conn
                     |> put_flash(:error, msg)
                     |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
                   {:ok, url} ->
-                    changeset =
-                      build_assoc(offer, :documents)
-                      |> Document.merged_url_changeset(%{url: url})
+                    # update documents table
+                    build_assoc(offer, :documents)
+                    |> Document.merged_url_changeset(%{url: url})
+                    |> Repo.insert()
 
-                    case Repo.insert(changeset) do
-                      {:ok, _document} ->
-                        conn
-                        |> put_flash(:info, "Document merged")
-                        |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
-                      {:error, _changeset} ->
-                        conn
-                        |> put_flash(:error, "Error inserting merged url")
-                        |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
-                    end
+                    # reply to user
+                    conn
+                    |> put_flash(:info, "Document merged")
+                    |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
+
                 end
             end
         end
