@@ -20,6 +20,16 @@ import "phoenix_html"
 
 // import socket from "./socket"
 
+function addFileUploadNames(id) {
+  var fileUploadContainer = document.getElementById("file-upload-container-" + id);
+  var filenameContainer = document.getElementById("filename-container-" + id);
+
+  fileUploadContainer.addEventListener("change", function(e) {
+    var filename = e.target.value.split("\\").pop();
+    filenameContainer.innerHTML = filename;
+  });
+}
+
 function setupListeners(job_title) {
   var departments_with_jobs = require("./departments_with_jobs.js")
 
@@ -90,7 +100,8 @@ function hamburgerAnimate() {
 }
 
 export var App = {
+  addFileUploadNames: addFileUploadNames,
   setupListeners: setupListeners,
-studentLoanRadios: studentLoanRadios,
-hamburgerAnimate: hamburgerAnimate,
+  studentLoanRadios: studentLoanRadios,
+  hamburgerAnimate: hamburgerAnimate,
 }

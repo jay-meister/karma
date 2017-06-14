@@ -4,19 +4,28 @@
     <%= label assigns[:form], label, class: "dib mw-100 fw4" %>
   <% end %>
   <p><%= assigns[:helper_text] %></p>
+  <p>Accepted file types: <%= assigns[:file_types] %></p>
   <%= if assigns[:image_url] do %>
     <a href=<%= assigns[:image_url] %>>
-      <img src=<%= get_thumbnail(assigns[:image_url]) %> class="h5 ml2 mb3 db"/>
+      <div class="relative k-min-h-10">
+        <img src=<%= get_thumbnail(assigns[:image_url]) %> class="<%= get_thumbnail_style(assigns[:image_url]) %>" />
+      </div>
     </a>
     <% end %>
-  <div class="relative white k-bg-indigo dib pa3 br2 pointer:hover">
-    <span class="pointer:hover">Choose file</span>
-    <%= file_input assigns[:form], assigns[:atom], class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3 w-100 k-bg-input bn pt3 pb3 k-hide-file-upload pointer:hover" %>
-  </div>
+    <div id="file-upload-container-<%= assigns[:atom] %>">
+      <div class="relative white k-bg-indigo dib pa3 br2 pointer:hover">
+        <span class="pointer:hover">Choose file</span>
+        <%= file_input assigns[:form], assigns[:atom], class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3 w-100 k-bg-input bn pt3 pb3 k-hide-file-upload pointer:hover", id: "file-upload-#{assigns[:atom]}" %>
+      </div>
+    </div>
+    <div class="h1 pt2" id="filename-container-<%= assigns[:atom] %>"></div>
   <div><%= error_tag assigns[:form], assigns[:url_atom] %></div>
   <div><%= error_tag assigns[:form], assigns[:atom] %></div>
 
 </div>
+
+<script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+<script>require("web/static/js/app").App.addFileUploadNames("<%= assigns[:atom] %>")</script>
 
 <!--
 form

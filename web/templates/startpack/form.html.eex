@@ -120,8 +120,10 @@
   atom: :passport_image,
   url_atom: :passport_url,
   helper_text: "Upload an image of your passport",
+  file_types: "pdf, jpeg, png",
   image_url: @startpack.passport_url,
-  hide_label: true
+  hide_label: true,
+  conn: @conn
   %>
 
   <%= component "input.html",
@@ -248,8 +250,10 @@
   atom: :box_rental_image,
   url_atom: :box_rental_url,
   helper_text: "Upload your box rental inventory list with insurance values",
+  file_types: "pdf, jpeg, png",
   image_url: @startpack.box_rental_url,
-  hide_label: true
+  hide_label: true,
+  conn: @conn
   %>
 
   <%= component "number_input.html",
@@ -264,8 +268,10 @@
   atom: :equipment_rental_image,
   url_atom: :equipment_rental_url,
   helper_text: "Upload your equipment rental inventory list with insurance values",
+  file_types: "pdf, jpeg, png",
   image_url: @startpack.equipment_rental_url,
-  hide_label: true
+  hide_label: true,
+  conn: @conn
   %>
 
   <div class="mb3 f3">Your vehicle details for site access and parking:</div>
@@ -295,7 +301,9 @@
   atom: :vehicle_insurance_image,
   url_atom: :vehicle_insurance_url,
   helper_text: "Upload a file of your vehicle insurance",
-  image_url: @startpack.vehicle_insurance_url
+  file_types: "pdf, jpeg, png",
+  image_url: @startpack.vehicle_insurance_url,
+  conn: @conn
   %>
 
   <%= component "form_divider.html", title: "Payment info" %>
@@ -316,7 +324,9 @@
   atom: :p45_image,
   url_atom: :p45_url,
   helper_text: "Upload a file of your P45",
-  image_url: @startpack.p45_url
+  file_types: "pdf, jpeg, png",
+  image_url: @startpack.p45_url,
+  conn: @conn
   %>
 
   <%= component "radio.html",
@@ -363,8 +373,10 @@
   label: "Schedule D letter file",
   url_atom: :schedule_d_letter_url,
   helper_text: "Upload a file of your Schedule D letter",
+  file_types: "pdf, jpeg, png",
   image_url: @startpack.schedule_d_letter_url,
-  hide_label: true
+  hide_label: true,
+  conn: @conn
   %>
 
   <%= component "input.html",
@@ -382,7 +394,9 @@
   atom: :loan_out_company_cert_image,
   url_atom: :loan_out_company_cert_url,
   helper_text: "Upload a file of your loan out company certificate",
-  image_url: @startpack.loan_out_company_cert_url
+  file_types: "pdf, jpeg, png",
+  image_url: @startpack.loan_out_company_cert_url,
+  conn: @conn
   %>
 
   <%= component "input.html",
