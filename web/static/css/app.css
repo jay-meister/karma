@@ -72,8 +72,20 @@ opacity: 0;
   }
 }
 
+.k-left--05 {
+  left: -0.5rem;
+}
+
+.k-min-h-10 {
+  min-height: 10rem;
+}
+
 .k-minw-320 {
   min-width: 320px;
+}
+
+.k-top--4 {
+  top: -4rem;
 }
 
 /*Nav hamburger animation*/

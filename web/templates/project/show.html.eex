@@ -137,7 +137,8 @@
   </div>
     <%= component "file_upload.html",
     form: f,
-    atom: :file
+    atom: :file,
+    conn: @conn
     %>
     <%= component "submit_button.html", title: "Upload" %>
   <% end %>

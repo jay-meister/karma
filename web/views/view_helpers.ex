@@ -60,4 +60,11 @@ defmodule Karma.ViewHelpers do
     end
   end
 
+  def get_thumbnail_style(url) do
+    case String.ends_with?(url, ".pdf") do
+      true -> "absolute k-left--05 h5 mb3 db w4 k-top--4"
+      false -> "h5 mb3 db"
+    end
+  end
+
 end
