@@ -15,7 +15,7 @@ defmodule Karma.Merger do
         # do merge
         merged_path = get_merged_path(doc_path, offer, document)
         case wrap_merge_script(json, doc_path, merged_path) do
-          {:error, error} ->
+          {:error, _error} ->
             {:error, "There was an error creating the document"}
           {:ok, merged_path} ->
             # save to S3
