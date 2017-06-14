@@ -138,6 +138,7 @@
     <%= component "file_upload.html",
     form: f,
     atom: :file,
+    file_types: "pdf",
     conn: @conn
     %>
     <%= component "submit_button.html", title: "Upload" %>

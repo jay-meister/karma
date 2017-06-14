@@ -4,10 +4,11 @@
     <%= label assigns[:form], label, class: "dib mw-100 fw4" %>
   <% end %>
   <p><%= assigns[:helper_text] %></p>
+  <p>Accepted file types: <%= assigns[:file_types] %></p>
   <%= if assigns[:image_url] do %>
     <a href=<%= assigns[:image_url] %>>
       <div class="relative k-min-h-10">
-        <img src=<%= get_thumbnail(assigns[:image_url]) %> class="<%= get_thumbnail_style(assigns[:image_url]) %>"/>
+        <img src=<%= get_thumbnail(assigns[:image_url]) %> class="<%= get_thumbnail_style(assigns[:image_url]) %>" />
       </div>
     </a>
     <% end %>
