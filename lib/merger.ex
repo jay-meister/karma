@@ -26,7 +26,6 @@ defmodule Karma.Merger do
               {:error, _url, _error} ->
                 {:error, "There was an error saving the document"}
               {:ok, :url, url} ->
-                IO.inspect url
                 {:ok, url}
             end
         end

@@ -81,4 +81,42 @@ defmodule Karma.MergerTest do
       end
     end
   end
+
+  test "merge function error: S3 upload error" do
+    pm = insert_user()
+    project = insert_project(pm)
+    contractor = insert_user(%{email: "contractor@gmail.com"})
+    insert_startpack(%{user_id: contractor.id})
+    offer = insert_offer(project, %{user_id: contractor.id})
+    document = insert_document(project, %{name: offer.contract_type, url: "www.image_url.pdf"})
+
+    with_mocks([
+      {Karma.S3, [],
+       [download: fn(_, _) -> {:ok, "www.aws.someurl.pdf"} end,
+        upload: fn(_) -> {:error, :_, :_} end]},
+      {Karma.ScriptRunner, [],
+       [run_merge_script: fn(_) -> {"destination.pdf", 0} end]}
+    ]) do
+      assert {:error, "There was an error saving the document"} = Merger.merge(offer, document)
+    end
+  end
+
+  test "merge funciton: success" do
+    pm = insert_user()
+    project = insert_project(pm)
+    contractor = insert_user(%{email: "contractor@gmail.com"})
+    insert_startpack(%{user_id: contractor.id})
+    offer = insert_offer(project, %{user_id: contractor.id})
+    document = insert_document(project, %{name: offer.contract_type, url: "www.image_url.pdf"})
+
+    with_mocks([
+      {Karma.S3, [],
+       [download: fn(_, _) -> {:ok, "www.aws.someurl.pdf"} end,
+        upload: fn(_) -> {:ok, :url, "www.aws.another.pdf"} end]},
+      {Karma.ScriptRunner, [],
+       [run_merge_script: fn(_) -> {"destination.pdf", 0} end]}
+    ]) do
+      assert {:ok, "www.aws.another.pdf"} = Merger.merge(offer, document)
+    end
+  end
 end
