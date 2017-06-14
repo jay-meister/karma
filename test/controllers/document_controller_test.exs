@@ -117,5 +117,6 @@ defmodule Karma.DocumentControllerTest do
     insert_document(project)
     conn = post conn, project_document_path(conn, :create, project), document: %{name: "PAYE"}
     assert redirected_to(conn) == project_path(conn, :show, project)
+    assert Phoenix.Controller.get_flash(conn, :error) =~ "You have already uploaded a PAYE document"
   end
 end

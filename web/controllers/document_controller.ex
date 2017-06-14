@@ -15,10 +15,9 @@ defmodule Karma.DocumentController do
 
     project = Repo.get(Project, project_id)
 
-    project_documents = Repo.all(Helpers.project_documents(project))
-    document_of_type = Enum.filter(project_documents, fn(document) -> document.name == contract_type end)
-    case document_of_type  do
-      [] -> conn
+    project_document = Repo.get_by(Document, name: contract_type, project_id: project_id)
+    case project_document do
+      nil -> conn
       _doc ->
         conn
         |> put_flash(:error, "You have already uploaded a #{contract_type} document")
