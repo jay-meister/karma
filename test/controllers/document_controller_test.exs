@@ -112,4 +112,11 @@ defmodule Karma.DocumentControllerTest do
     assert redirected_to(conn) == project_path(conn, :show, project)
     refute Repo.get(Document, document.id)
   end
+
+  test "can only upload documents of unique type", %{conn: conn, project: project} do
+    insert_document(project)
+    conn = post conn, project_document_path(conn, :create, project), document: %{name: "PAYE"}
+    assert redirected_to(conn) == project_path(conn, :show, project)
+    assert Phoenix.Controller.get_flash(conn, :error) =~ "You have already uploaded a PAYE document"
+  end
 end
