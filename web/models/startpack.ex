@@ -233,6 +233,7 @@ defmodule Karma.Startpack do
     |> base_requirement_changeset(startpack)
     |> vehicle_allowance_changeset(startpack, offer)
     |> student_loan_changeset(startpack)
+    |> contract_type_changeset(startpack, offer)
   end
 
   def base_requirement_changeset(changeset, startpack) do
