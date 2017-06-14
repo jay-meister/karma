@@ -1,7 +1,7 @@
 defmodule Karma.DocumentController do
   use Karma.Web, :controller
 
-  alias Karma.{Document, Project, S3, Controllers.Helpers}
+  alias Karma.{Document, Project, S3}
 
   # stop upload functionality if documents are submitted with existing type
   plug :file_type_exists? when action in [:create]
@@ -13,9 +13,8 @@ defmodule Karma.DocumentController do
   def file_type_exists?(conn, _) do
     %{"project_id" => project_id, "document" => %{"name" => contract_type}} = conn.params
 
-    project = Repo.get(Project, project_id)
-
     project_document = Repo.get_by(Document, name: contract_type, project_id: project_id)
+    
     case project_document do
       nil -> conn
       _doc ->
