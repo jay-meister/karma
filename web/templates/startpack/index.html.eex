@@ -1,7 +1,9 @@
 <div class="ph3 ph6-ns mt6 center">
 
   <%= if Map.has_key?(@offer, :project_id) && Map.has_key?(@offer, :id) do %>
-    <%= component "button.html", title: "Back to offer", link: project_offer_path(@conn, :show, @offer.project_id, @offer.id) %>
+    <div class="pt4">
+      <%= component "button.html", title: "Back to offer", link: project_offer_path(@conn, :show, @offer.project_id, @offer.id) %>
+    </div>
   <% end %>
 
 <h1 class="k-indigo top--header absolute fw4 mb0">Edit startpack</h1>

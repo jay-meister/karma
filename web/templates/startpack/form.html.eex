@@ -1,4 +1,9 @@
 <div class="pt4">
+  <%= if length(@changeset.errors) != 0 do %>
+    <div class="alert alert-danger">
+      <p>Fill out the fields below to complete your startpack!</p>
+    </div>
+  <% end %>
   <%= component "form_divider.html", title: "Profile info" %>
   <br />
   <br />
@@ -20,11 +25,6 @@
 </div>
 
 <%= form_for @changeset, @action, [multipart: true], fn f -> %>
-  <%= if length(@changeset.errors) != 0 do %>
-    <div class="alert alert-danger">
-      <p>Fill out the fields below to complete your startpack!</p>
-    </div>
-  <% end %>
 
   <div class="pt5-ns pt4">
   <%= component "form_divider.html", title: "Basic info" %>
