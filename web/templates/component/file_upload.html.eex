@@ -17,7 +17,7 @@
         <%= file_input assigns[:form], assigns[:atom], class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3 w-100 k-bg-input bn pt3 pb3 k-hide-file-upload pointer:hover", id: "file-upload-#{assigns[:atom]}" %>
       </div>
     </div>
-    <div class="h1" id="filename-container-<%= assigns[:atom] %>"></div>
+    <div class="h1 pt2" id="filename-container-<%= assigns[:atom] %>"></div>
   <div><%= error_tag assigns[:form], assigns[:url_atom] %></div>
   <div><%= error_tag assigns[:form], assigns[:atom] %></div>
 
