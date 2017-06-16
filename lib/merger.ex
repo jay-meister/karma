@@ -10,7 +10,11 @@ defmodule Karma.Merger do
         {:error, "There was an error retrieving the document"}
       {:ok, doc_path} ->
         # get formatted data
-        json = get_data_for_merge(offer) |>  format() |> Poison.encode!()
+        json =
+          get_data_for_merge(offer)
+          |> format_data_for_merge()
+          |> format()
+          |> Poison.encode!()
 
         # do merge
         merged_path = get_merged_path(doc_path, offer, document)
