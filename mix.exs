@@ -24,7 +24,7 @@ defmodule Karma.Mixfile do
   def application do
     [mod: {Karma, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :comeonin, :bamboo, :redix, :ex_aws, :hackney, :poison, :httpoison]]
+                    :phoenix_ecto, :postgrex, :comeonin, :bamboo, :redix, :ex_aws, :hackney, :poison, :httpoison, :quinn]]
   end
 
   # Specifies which paths to compile per environment.
@@ -53,7 +53,8 @@ defmodule Karma.Mixfile do
      {:poison, "~> 2.0"},
      {:hackney, "~> 1.6"},
      {:uuid, "~> 1.1" },
-     {:httpoison, "~> 0.11.1"}
+     {:httpoison, "~> 0.11.1"},
+     {:quinn, "~> 1.0.2"}
    ]
   end
 
