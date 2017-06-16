@@ -1,6 +1,6 @@
 defmodule Karma.MergerTest do
   use Karma.ConnCase
-  alias Karma.{Merger, Formatter}
+  alias Karma.Merger
 
   import Mock
 
@@ -29,7 +29,7 @@ defmodule Karma.MergerTest do
   test "format data with prefixed keys" do
     map = %{offer: %{contract_type: "PAYE"}, startpack: %{gender: "male"}}
     expected = %{"offer_contract_type" => "PAYE", "startpack_gender" => "male"}
-    formatted = Formatter.format(map)
+    formatted = Merger.format(map)
     assert formatted == expected
   end
 

@@ -1,30 +1,6 @@
 defmodule Karma.Formatter do
   alias Karma.ViewHelpers
 
-  # formats nested map of all data, prefixes and flattens
-  def format(data) do
-
-    Enum.reduce(Map.keys(data), %{}, fn(key, acc) ->
-      # prefix is "offer", or "startpack"
-      prefix = Atom.to_string(key)
-
-      Map.get(data, key) # offer, startpack, user or project
-      |> prefix_keys(prefix) # user_first_name
-      |> Map.merge(acc)
-    end)
-  end
-
-  # helper used by format function
-  defp prefix_keys(map, prefix) do
-    Enum.reduce(Map.keys(map), %{}, fn(key, acc) ->
-      prefixed_key = prefix <> "_" <> Atom.to_string(key)
-      val = Map.get(map, key)
-      # replace nulls with empty string as nulls seem to break merge
-      val = if val == nil, do: "", else: val
-      Map.put(acc, prefixed_key, val)
-    end)
-  end
-
   def format_data(data) do
     offer_data = data.offer
     project_data = data.project

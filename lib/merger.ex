@@ -13,7 +13,7 @@ defmodule Karma.Merger do
         json =
           get_data_for_merge(offer)
           |> Formatter.format_data()
-          |> Formatter.format()
+          |> format()
           |> Poison.encode!()
 
         # do merge
@@ -63,6 +63,30 @@ defmodule Karma.Merger do
       offer: Map.take(Map.from_struct(Repo.get(Karma.Offer, offer.id)), offer()),
       startpack: Map.take(Map.from_struct(Repo.get_by(Karma.Startpack, user_id: offer.user_id)), startpack())
     }
+  end
+
+  # formats nested map of all data, prefixes and flattens
+  def format(data) do
+
+    Enum.reduce(Map.keys(data), %{}, fn(key, acc) ->
+      # prefix is "offer", or "startpack"
+      prefix = Atom.to_string(key)
+
+      Map.get(data, key) # offer, startpack, user or project
+      |> prefix_keys(prefix) # user_first_name
+      |> Map.merge(acc)
+    end)
+  end
+
+  # helper used by format function
+  defp prefix_keys(map, prefix) do
+    Enum.reduce(Map.keys(map), %{}, fn(key, acc) ->
+      prefixed_key = prefix <> "_" <> Atom.to_string(key)
+      val = Map.get(map, key)
+      # replace nulls with empty string as nulls seem to break merge
+      val = if val == nil, do: "", else: val
+      Map.put(acc, prefixed_key, val)
+    end)
   end
 
   def project do
