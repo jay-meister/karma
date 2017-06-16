@@ -1,7 +1,7 @@
 defmodule Karma.OfferController do
   use Karma.Web, :controller
 
-  alias Karma.{User, Offer, Project, Startpack, Document, Merger}
+  alias Karma.{User, Offer, Project, Startpack, Document, Merger, ViewHelpers}
 
   import Ecto.Query
 
@@ -159,6 +159,10 @@ defmodule Karma.OfferController do
 
   def show(conn, %{"project_id" => project_id, "id" => id}) do
     offer = conn.assigns.offer
+    IO.inspect Karma.Merger.get_data_for_merge(offer)
+    IO.inspect format_data_for_merge(Karma.Merger.get_data_for_merge(offer))
+    IO.inspect format_number(100)
+
     user = conn.assigns.current_user
     offer_related_document = Karma.Repo.get_by(Karma.Document, offer_id: id)
     case offer.user_id do
