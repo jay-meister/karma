@@ -1,5 +1,5 @@
 defmodule Karma.Merger do
-  alias Karma.Repo
+  alias Karma.{Repo, Formatter}
 
   def merge(offer, document) do
     # download document
@@ -10,7 +10,11 @@ defmodule Karma.Merger do
         {:error, "There was an error retrieving the document"}
       {:ok, doc_path} ->
         # get formatted data
-        json = get_data_for_merge(offer) |>  format() |> Poison.encode!()
+        json =
+          get_data_for_merge(offer)
+          |> Formatter.format_data()
+          |> format()
+          |> Poison.encode!()
 
         # do merge
         merged_path = get_merged_path(doc_path, offer, document)
@@ -53,6 +57,14 @@ defmodule Karma.Merger do
     end
   end
 
+  def get_data_for_merge(offer) do
+    %{user: Map.take(Map.from_struct(Repo.get(Karma.User, offer.user_id)), user()),
+      project: Map.take(Map.from_struct(Repo.get(Karma.Project, offer.project_id)), project()),
+      offer: Map.take(Map.from_struct(Repo.get(Karma.Offer, offer.id)), offer()),
+      startpack: Map.take(Map.from_struct(Repo.get_by(Karma.Startpack, user_id: offer.user_id)), startpack())
+    }
+  end
+
   # formats nested map of all data, prefixes and flattens
   def format(data) do
 
@@ -77,13 +89,6 @@ defmodule Karma.Merger do
     end)
   end
 
-  def get_data_for_merge(offer) do
-    %{user: Map.take(Map.from_struct(Repo.get(Karma.User, offer.user_id)), user()),
-      project: Map.take(Map.from_struct(Repo.get(Karma.Project, offer.project_id)), project()),
-      offer: Map.take(Map.from_struct(Repo.get(Karma.Offer, offer.id)), offer()),
-      startpack: Map.take(Map.from_struct(Repo.get_by(Karma.Startpack, user_id: offer.user_id)), startpack())
-    }
-  end
   def project do
     [:type,
     :budget,
