@@ -1,7 +1,7 @@
 defmodule Karma.ProjectController do
   use Karma.Web, :controller
 
-  alias Karma.{Project, Document}
+  alias Karma.{Project, Document, Signee}
 
 
   plug :add_project_to_conn when action in [:show, :edit, :update, :delete]
@@ -72,13 +72,17 @@ defmodule Karma.ProjectController do
     forms = Enum.filter(documents, fn document -> document.category == "Form" end)
     deals = Enum.filter(documents, fn document -> document.category == "Deal" end)
     info = Enum.filter(documents, fn document -> document.category == "Info" end)
+    signees = Repo.all(project_signees(project))
     document_changeset = Document.changeset(%Document{})
+    signee_changeset = Signee.changeset(%Signee{})
     render(conn,
     "show.html",
     project: conn.assigns.project,
     document_changeset: document_changeset,
+    signee_changeset: signee_changeset,
     forms: forms,
     deals: deals,
+    signees: signees,
     info: info)
   end
 

@@ -28,6 +28,7 @@ defmodule Karma.Project do
     belongs_to :user, Karma.User
     has_many :offers, Karma.Offer
     has_many :documents, Karma.Document
+    has_many :signees, Karma.Signee
 
     timestamps()
   end

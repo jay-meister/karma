@@ -33,6 +33,7 @@ defmodule Karma.Router do
     resources "/projects", ProjectController do
       resources "/documents", DocumentController
       resources "/offers", OfferController
+      resources "/signees", SigneeController
       put "/offers/:id/response", OfferController, :response
     end
   end

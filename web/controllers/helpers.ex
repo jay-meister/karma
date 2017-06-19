@@ -14,6 +14,10 @@ defmodule Karma.Controllers.Helpers do
     Ecto.assoc(user, :projects)
   end
 
+  def project_signees(project) do
+    Ecto.assoc(project, :signees)
+  end
+
   def get_email_from_hash(hash) do
     case RedisCli.get(hash) do
       {:ok, nil} -> {:error, "User not in Redis"}

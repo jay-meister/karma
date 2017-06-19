@@ -144,3 +144,47 @@
     <%= component "submit_button.html", title: "Upload" %>
   <% end %>
 </div>
+<%= component "form_divider.html", title: "Signees" %>
+<%= if length(@signees) == 0 do %>
+  <div class="tc k-bg-indigo white pa4 f2 br3">
+    You haven't added any signees to the project yet
+  </div>
+<% end %>
+<%= if length(@signees) != 0 do %>
+  <div class="mb4">
+    <%= for signee <- @signees do %>
+      <div class="ba k-b--indigo br3 pa3 pr5 mb2 k-bg-input relative">
+        <div class="dib ml3"><%= signee.name %></div>
+        <div class="dib ml3"><%= signee.role %></div>
+        <div class="dib ml3"><%= signee.email %></div>
+        <%= link to: project_signee_path(@conn, :delete, @project, signee),
+          method: :delete do %>
+          <img class="absolute k-w2-5 k-top-center right-1" src="/images/delete.svg" />
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+<div class="pa3 ba k-b-indigo br3 w-50-l k-m-auto">
+  <%= form_for @signee_changeset, project_signee_path(@conn, :create, @project), fn f -> %>
+    <%= component "input.html",
+    form: f,
+    atom: :name,
+    placeholder: "John Smith"
+    %>
+    <%= component "input.html",
+    form: f,
+    atom: :email,
+    placeholder: "johnsmith@gmail.com"
+    %>
+    <%= component "input.html",
+    form: f,
+    atom: :role,
+    placeholder: "Producer"
+    %>
+    <%= component "submit_button.html",
+    form: f,
+    title: "Add signee"
+    %>
+  <% end %>
+</div>
