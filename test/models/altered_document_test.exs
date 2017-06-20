@@ -15,4 +15,11 @@ defmodule Karma.AlteredDocumentTest do
     changeset = AlteredDocument.changeset(%AlteredDocument{}, @invalid_attrs)
     refute changeset.valid?
   end
+
+  test "altered_document schema" do
+   actual = AlteredDocument.__schema__(:fields)
+   expected = [:id, :offer_id, :document_id, :status, :merged_url, :signed_url, :envelope_id, :inserted_at, :updated_at]
+
+  assert actual == expected
+ end
 end
