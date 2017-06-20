@@ -15,7 +15,7 @@ defmodule Karma.SigneeController do
         conn
         |> put_flash(:info, "#{signee.name} added as a signee to #{project.name}")
         |> redirect(to: project_path(conn, :show, project_id))
-      {:error, changeset} ->
+      {:error, _changeset} ->
         conn
         |> put_flash(:error, "Failed to add signee! Make sure you have filled out all fields and email is in the correct format")
         |> redirect(to: project_path(conn, :show, project_id))
