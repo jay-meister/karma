@@ -1,7 +1,7 @@
 defmodule Karma.OfferController do
   use Karma.Web, :controller
 
-  alias Karma.{User, Offer, Project, Startpack, Document, Merger}
+  alias Karma.{User, Offer, Project, Startpack, AlteredDocument, Merger}
 
   import Ecto.Query
 
@@ -160,7 +160,8 @@ defmodule Karma.OfferController do
   def show(conn, %{"project_id" => project_id, "id" => id}) do
     offer = conn.assigns.offer
     user = conn.assigns.current_user
-    offer_related_document = Karma.Repo.get_by(Karma.Document, offer_id: id)
+    offer_related_document = Karma.Repo.get_by(AlteredDocument, offer_id: id)
+    # todo fix this one
     case offer.user_id do
       nil ->
         changeset = Startpack.changeset(%Startpack{})
@@ -250,20 +251,16 @@ defmodule Karma.OfferController do
     project = Repo.get(Project, project_id) |> Repo.preload(:user)
     changeset = Offer.offer_response_changeset(offer, offer_params)
 
-    # Move to document model?
-    document = Karma.Repo.all(
-    from d in Karma.Document,
-    where: d.project_id == ^project.id
-    and d.name == ^offer.contract_type
-    )
+    # get the original document
+    document = Repo.get_by(Karma.Document, project_id: project.id, name: offer.contract_type)
 
     # check if there is a document to be merged
     case document do
-      [] -> # prevent accepting offer if no document
+      nil -> # prevent accepting offer if no document
         conn
         |> put_flash(:error, "There was no document to merge your data with")
         |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
-      [document] ->
+      document ->
         case Repo.update(changeset) do
           {:error, _changeset} ->
             conn
@@ -292,11 +289,11 @@ defmodule Karma.OfferController do
                     |> put_flash(:error, msg)
                     |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
                   {:ok, url} ->
-                    # update documents table
-                    build_assoc(offer, :documents)
-                    |> Document.merged_url_changeset(%{url: url})
+                    # insert newly merged document to altered_documents table
+                    build_assoc(offer, :altered_documents, document_id: document.id)
+                    |> Karma.AlteredDocument.merged_changeset(%{merged_url: url})
                     |> Repo.insert()
-
+                    
                     # reply to user
                     conn
                     |> put_flash(:info, "Document merged")

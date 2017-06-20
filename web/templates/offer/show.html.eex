@@ -23,7 +23,7 @@
     <div class="tc mt3">
       <img src="/images/pdf.svg" class="w5" />
       <div class="mt2 mb2">Merged Contract</div>
-      <%= component "button.html", title: "Download", link: @contract.url %>
+      <%= component "button.html", title: "Download", link: @contract.merged_url %>
     </div>
   <%= end %>
 
