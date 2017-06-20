@@ -253,7 +253,7 @@ defmodule Karma.OfferControllerTest do
         conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: true}
         assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
         # ensure the url to the new merged document has been added
-        assert Repo.get_by(Karma.Document, offer_id: offer.id).url == "www.image_url.com"
+        assert Repo.get_by(Karma.AlteredDocument, offer_id: offer.id).merged_url == "www.image_url.com"
       end
     end
   end
@@ -268,7 +268,7 @@ defmodule Karma.OfferControllerTest do
         conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: true}
         assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
         # ensure no merge happened
-        refute Repo.get_by(Karma.Document, offer_id: offer.id)
+        refute Repo.get_by(Karma.AlteredDocument, offer_id: offer.id)
         # ensure offer is still not accepted
         assert Repo.get(Offer, offer.id).accepted == nil
       end
