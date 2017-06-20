@@ -36,7 +36,7 @@
             form: f,
             atom: :password,
             label: "Password (for KARMA)",
-            placeholder: "1 cap, 1 symbol, min 6 characters",
+            placeholder: "Must contain min 6 characters",
             type: "password"
             %>
 

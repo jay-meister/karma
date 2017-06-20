@@ -1,6 +1,8 @@
 defmodule Karma.SigneeControllerTest do
   use Karma.ConnCase
 
+  alias Karma.Signee
+
   @valid_attrs %{name: "First Last", email: "test@email.com", role: "Tester"}
   @invalid_attrs %{name: "", email: "", role: ""}
 
@@ -16,6 +18,7 @@ defmodule Karma.SigneeControllerTest do
     conn = post conn, project_signee_path(conn, :create, project), signee: @valid_attrs
     assert Phoenix.Controller.get_flash(conn, :info) == "First Last added as a signee to #{project.name}"
     assert redirected_to(conn, 302) == "/projects/#{project.id}"
+    refute Repo.get_by(Signee, email: "test@email.com") == nil
   end
 
   test "create new signee fail", %{conn: conn, project: project} do
@@ -29,5 +32,6 @@ defmodule Karma.SigneeControllerTest do
     conn = delete conn, project_signee_path(conn, :delete, project, signee)
     assert Phoenix.Controller.get_flash(conn, :info) == "Signee deleted successfully."
     assert redirected_to(conn, 302) == "/projects/#{project.id}"
+    assert Repo.get_by(Signee, email: signee.email) == nil
   end
 end
