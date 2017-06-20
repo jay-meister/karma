@@ -6,6 +6,7 @@ defmodule Karma.Signee do
     field :role, :string
     field :email, :string
     belongs_to :project, Karma.Project
+    many_to_many :documents, Karma.Document, join_through: "documents_signees"
 
     timestamps()
   end
@@ -16,5 +17,5 @@ defmodule Karma.Signee do
     |> validate_required([:name, :role, :email, :project_id])
     |> validate_format(:email, ~r/@/)
   end
-  
+
 end

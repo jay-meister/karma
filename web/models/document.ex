@@ -6,6 +6,7 @@ defmodule Karma.Document do
     field :category, :string
     field :name, :string
     belongs_to :project, Karma.Project
+    many_to_many :signees, Karma.Signee, join_through: "documents_signees"
 
     timestamps()
   end

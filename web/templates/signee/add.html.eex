@@ -1,0 +1,45 @@
+<h1 class="k-indigo top--header absolute fw4 mb0">Add signees</h1>
+<%= link "Back", to: project_path(@conn, :show, @project), class: "no-underline k-indigo" %>
+<div class="pt3">
+  <div class="f2"><%= @project.name %></div>
+  <%= component "form_divider.html", title: "#{@document.name} Signees" %>
+  <div class="mb3">
+    <%= if length(@document_signees) == 0 do %>
+      <div class="tc k-bg-indigo white pa4 f2 br3">
+        You haven't added any signees to this document's approval chain yet
+      </div>
+    <% end %>
+    <%= if length(@document_signees) != 0 do %>
+      <ol class="pl4 pr3">
+        <%= for signee <- @document_signees do %>
+        <li>
+          <div class="ba k-b--indigo br3 pa3 pr5 mb2 k-bg-input relative ml2">
+            <div class="dib ml3"><%= signee.name %></div>
+            <div class="dib ml3"><%= signee.role %></div>
+            <div class="dib ml3"><%= signee.email %></div>
+          </div>
+        </li>
+        <% end %>
+      </ol>
+      <div class="tc mt4 mb5">
+        <%= link "CLEAR SIGNEES", to: project_document_signee_path(@conn, :clear_signees, @project, @document), method: :delete, class: "pa3 white k-bg-light-indigo br2 no-underline k-f2-5" %>
+      </div>
+    <% end %>
+  </div>
+  <div class="pa3 ba k-b--indigo br3 w-50-l k-m-auto">
+    <%= form_for @changeset, project_document_signee_path(@conn, :add_signee, @project, @document), fn f -> %>
+      <%= component "dropdown.html",
+      options: @signees,
+      form: f,
+      atom: :signee_id,
+      prompt: "Select signee"
+      %>
+
+      <%= hidden_input f, :order, value: length(@document_signees) + 2 %>
+
+      <%= component "submit_button.html",
+      title: "Add to chain"
+      %>
+    <% end %>
+  </div>
+</div>
