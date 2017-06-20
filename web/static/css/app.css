@@ -353,6 +353,15 @@ select {
   top: 2.5rem;
 }
 
+.k-right--0-5 {
+  right: -0.5rem;
+}
+
+.k-top-center {
+  top: 50%;
+  margin-top: -15px;
+}
+
 .k-shadow-1 {
   box-shadow: 2px 2px 5px #888888;
 }
