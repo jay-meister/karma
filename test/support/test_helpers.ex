@@ -1,5 +1,5 @@
 defmodule Karma.TestHelpers do
-  alias Karma.{Repo, User, Project, Offer, Startpack, Document}
+  alias Karma.{Repo, User, Project, Offer, Startpack, Document, Signee}
 
   def insert_user(attrs \\ %{}) do
     changes = Map.merge(default_user(), attrs)
@@ -47,6 +47,16 @@ defmodule Karma.TestHelpers do
     project
     |> Ecto.build_assoc(:documents, %{})
     |> Document.changeset(changes)
+    |> Repo.insert!
+  end
+
+  def insert_signee(project, attrs \\ %{}) do
+    default_signee = %{name: "John Smith", email: "johnsmith@gmail.com", role: "Producer"}
+    changes = Map.merge(default_signee, attrs)
+
+    project
+    |> Ecto.build_assoc(:signees, %{})
+    |> Signee.changeset(changes)
     |> Repo.insert!
   end
 
@@ -105,11 +115,16 @@ defmodule Karma.TestHelpers do
       daily_or_weekly: "daily",
       department: "Accounts",
       equipment_rental_required?: true,
-      equipment_rental_cap: "0",
+      equipment_rental_cap: 0,
       equipment_rental_description: "n/a",
-      equipment_rental_fee_per_week: "0",
+      equipment_rental_fee_per_week: 0,
       equipment_rental_period: "n/a",
       fee_per_day_inc_holiday: "4200",
+      fee_per_day_exc_holiday: "4200",
+      fee_per_week_inc_holiday: "10000",
+      fee_per_week_exc_holiday: "10000",
+      holiday_pay_per_day: 100,
+      holiday_pay_per_week: 500,
       job_title: "Cashier",
       other_deal_provisions: "n/a",
       seventh_day_fee_inc_holiday: "100",
@@ -128,6 +143,7 @@ defmodule Karma.TestHelpers do
 
   def default_startpack(attrs \\ %{}) do
     default = %{
+    date_of_birth: %{day: 17, month: 4, year: 2019},
     passport_expiry_date: %{day: 17, month: 4, year: 2010},
     country_of_legal_nationality: "some content",
     mobile_tel: "some content",

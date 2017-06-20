@@ -102,7 +102,7 @@ nav {
 }
 
 .height-fixed {
-  height: 24rem;
+  height: 16rem;
 }
 
 @media screen and (min-width: 30em)  {
@@ -204,6 +204,10 @@ nav {
 
 .k-b--error {
   border-color: #ff725c;
+}
+
+.k-b--input {
+  border-color: #E9EAEB;
 }
 
 /*font-colour*/
@@ -347,6 +351,15 @@ select {
 
 .k-top-2-5 {
   top: 2.5rem;
+}
+
+.k-right--0-5 {
+  right: -0.5rem;
+}
+
+.k-top-center {
+  top: 50%;
+  margin-top: -15px;
 }
 
 .k-shadow-1 {

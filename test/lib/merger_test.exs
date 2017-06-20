@@ -18,7 +18,7 @@ defmodule Karma.MergerTest do
     project = insert_project(contractor)
     offer = insert_offer(project, %{user_id: contractor.id, target_email: contractor.email})
     data = Merger.get_data_for_merge(offer)
-    
+
     # assert the data map holds the correct user, project, startpack, offer
     assert data.user.email == contractor.email
     assert data.project.name == project.name
@@ -107,6 +107,25 @@ defmodule Karma.MergerTest do
     contractor = insert_user(%{email: "contractor@gmail.com"})
     insert_startpack(%{user_id: contractor.id})
     offer = insert_offer(project, %{user_id: contractor.id})
+    document = insert_document(project, %{name: offer.contract_type, url: "www.image_url.pdf"})
+
+    with_mocks([
+      {Karma.S3, [],
+       [download: fn(_, _) -> {:ok, "www.aws.someurl.pdf"} end,
+        upload: fn(_) -> {:ok, :url, "www.aws.another.pdf"} end]},
+      {Karma.ScriptRunner, [],
+       [run_merge_script: fn(_) -> {"destination.pdf", 0} end]}
+    ]) do
+      assert {:ok, "www.aws.another.pdf"} = Merger.merge(offer, document)
+    end
+  end
+
+  test "merge funciton: success no box or equipment" do
+    pm = insert_user()
+    project = insert_project(pm)
+    contractor = insert_user(%{email: "contractor@gmail.com"})
+    insert_startpack(%{user_id: contractor.id})
+    offer = insert_offer(project, %{user_id: contractor.id, box_rental_required?: false, equipment_rental_required?: false})
     document = insert_document(project, %{name: offer.contract_type, url: "www.image_url.pdf"})
 
     with_mocks([

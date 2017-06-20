@@ -1,7 +1,4 @@
 <%= link "Dashboard", to: dashboard_path(@conn, :index), class: "ma2 no-underline k-indigo" %>
-<%= if @contract do %>
-  <p>merged url: <%= @contract.url %></p>
-  <%= end %>
 <%= if @is_pm? do %>
   <%= link "Offers", to: project_offer_path(@conn, :index, @offer.project_id), class: "ma2 no-underline k-indigo" %>
   <%= link "Edit Offer", to: project_offer_path(@conn, :edit, @offer.project_id, @offer), class: "ma2 no-underline k-indigo" %>
@@ -21,6 +18,14 @@
   <%= if @offer.accepted == false do %>
     <div class="k-bg-indigo white tc pa4 br3 ma2 f2 mt3">You have rejected this offer!</div>
   <% end %>
+
+  <%= if @contract && @is_contractor? do %>
+    <div class="tc mt3">
+      <img src="/images/pdf.svg" class="w5" />
+      <div class="mt2 mb2">Merged Contract</div>
+      <%= component "button.html", title: "Download", link: @contract.merged_url %>
+    </div>
+  <%= end %>
 
   <div class="tc mt2">
     <%= if length(@changeset.errors) == 0 && @offer.accepted == nil do %>
