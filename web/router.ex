@@ -1,6 +1,10 @@
 defmodule Karma.Router do
   use Karma.Web, :router
 
+  pipeline :unprotected_browser do
+    plug :accepts, ["html"]
+  end
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -13,6 +17,9 @@ defmodule Karma.Router do
   # pipeline :api do
   #   plug :accepts, ["json"]
   # end
+  scope "/", Karma do
+    post "/DocusignEventListener/EnvelopeEvent", DashboardController, :docusign_event
+  end
 
   scope "/", Karma do
     pipe_through :browser # Use the default browser stack
