@@ -6,7 +6,6 @@ defmodule Karma.Document do
     field :category, :string
     field :name, :string
     belongs_to :project, Karma.Project
-    belongs_to :offer, Karma.Offer
 
     timestamps()
   end
@@ -18,12 +17,6 @@ defmodule Karma.Document do
     struct
     |> cast(params, [:url, :category, :name])
     |> validate_required([:url, :category, :name])
-  end
-
-  def merged_url_changeset(struct, params \\ %{}) do
-    struct
-    |> cast(params, [:offer_id, :url])
-    |> validate_required([:offer_id, :url])
   end
 
 
