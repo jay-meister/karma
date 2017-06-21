@@ -19,6 +19,26 @@ defmodule Karma.Sign do
   #   end
   # end
 
+  def get_and_prepare_document(merged) do
+    # download file,
+    file_name = Karma.Merger.get_file_name(merged.merged_url)
+    case Karma.S3.download(merged.url, System.cwd() <> "/tmp/" <> file_name) do
+      {:error, _error} ->
+        {:error, "There was an error retrieving the document"}
+      {:ok, doc_path} ->
+        file = File.read!(doc_path)
+
+        # encode file,
+        encoded = Base.encode64(file)
+
+        # add name and document_id
+        [%{"documentId": merged.id,
+           "name": "#{merged.category}-#{merged.offer_id}.pdf",
+           "documentBase64": encoded
+        }]
+    end
+  end
+
 
   def get_and_prepare_approval_chain(merged, contractor) do
     merged
