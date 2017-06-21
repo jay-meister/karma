@@ -1,5 +1,6 @@
 defmodule Karma.TestHelpers do
-  alias Karma.{Repo, User, Project, Offer, Startpack, Document, Signee, DocumentSignee}
+  alias Karma.{Repo, User, Project, Offer, Startpack,
+    Document, Signee, DocumentSignee, AlteredDocument}
 
   def insert_user(attrs \\ %{}) do
     changes = Map.merge(default_user(), attrs)
@@ -66,6 +67,19 @@ defmodule Karma.TestHelpers do
 
     DocumentSignee.changeset(%DocumentSignee{}, changes)
     |> Repo.insert!
+  end
+
+  def insert_merged_document(document, offer, attrs \\ %{}) do
+    default = %{
+      merged_url: "www.aws.com",
+      status: "merged"
+    }
+    changes = Map.merge(default, attrs)
+
+    # add link to original document and offer
+    Ecto.build_assoc(offer, :altered_documents, document_id: document.id)
+    |> AlteredDocument.merged_changeset(changes)
+    |> Repo.insert!()
   end
 
   def default_user(attrs \\ %{}) do
