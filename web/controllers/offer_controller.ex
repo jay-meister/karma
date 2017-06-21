@@ -3,8 +3,6 @@ defmodule Karma.OfferController do
 
   alias Karma.{User, Offer, Project, Startpack, AlteredDocument, Merger}
 
-  # import Ecto.Query
-
   import Karma.ProjectController, only: [add_project_to_conn: 2, block_if_not_project_manager: 2]
 
   # add project to conn
