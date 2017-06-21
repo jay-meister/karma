@@ -1,7 +1,7 @@
 defmodule Karma.OfferController do
   use Karma.Web, :controller
 
-  alias Karma.{User, Offer, Project, Startpack, AlteredDocument, Merger}
+  alias Karma.{User, Offer, Project, Startpack, AlteredDocument, Merger, Document}
 
   import Karma.ProjectController, only: [add_project_to_conn: 2, block_if_not_project_manager: 2]
 
@@ -158,7 +158,8 @@ defmodule Karma.OfferController do
   def show(conn, %{"project_id" => project_id, "id" => id}) do
     offer = conn.assigns.offer
     user = conn.assigns.current_user
-    offer_related_document = Karma.Repo.get_by(AlteredDocument, offer_id: id)
+    query = from a in AlteredDocument, where: a.offer_id == ^id
+    offer_related_documents = Repo.all(query) |> Repo.preload(:document)
     # todo fix this one
     case offer.user_id do
       nil ->
@@ -174,7 +175,7 @@ defmodule Karma.OfferController do
         project_id: project_id,
         changeset: changeset,
         edit_changeset: edit_changeset,
-        contract: offer_related_document
+        documents: offer_related_documents
         )
     end
   end
@@ -249,16 +250,17 @@ defmodule Karma.OfferController do
     project = Repo.get(Project, project_id) |> Repo.preload(:user)
     changeset = Offer.offer_response_changeset(offer, offer_params)
 
-    # get the original document
-    document = Repo.get_by(Karma.Document, project_id: project.id, name: offer.contract_type)
+    # get the original documents
+    query = from d in Document, where: d.project_id == ^project_id
+    documents = Repo.all(query)
 
     # check if there is a document to be merged
-    case document do
-      nil -> # prevent accepting offer if no document
+    case length(documents) > 0 do
+      false -> # prevent accepting offer if no document
         conn
-        |> put_flash(:error, "There was no document to merge your data with")
+        |> put_flash(:error, "There were no documents to merge your data with")
         |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
-      document ->
+      true ->
         case Repo.update(changeset) do
           {:error, _changeset} ->
             conn
@@ -278,7 +280,7 @@ defmodule Karma.OfferController do
                 |> Karma.Mailer.deliver_later()
 
                 # now merge data
-                case Merger.merge(offer, document) do
+                case Merger.merge_multiple(offer, documents) do
                   {:error, msg} ->
                     # Un-accept the offer so they can accept again when changes have been made
                     Repo.update(Ecto.Changeset.change(offer, %{accepted: nil}))
@@ -286,17 +288,11 @@ defmodule Karma.OfferController do
                     conn
                     |> put_flash(:error, msg)
                     |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
-                  {:ok, url} ->
-                    # insert newly merged document to altered_documents table
-                    build_assoc(offer, :altered_documents, document_id: document.id)
-                    |> Karma.AlteredDocument.merged_changeset(%{merged_url: url})
-                    |> Repo.insert()
-
+                  {:ok, msg} ->
                     # reply to user
                     conn
-                    |> put_flash(:info, "Document merged")
+                    |> put_flash(:info, "#{msg}")
                     |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
-
                 end
             end
         end
