@@ -14,8 +14,16 @@ defmodule Karma.Controllers.Helpers do
     Ecto.assoc(user, :projects)
   end
 
+  def project_documents(project) do
+    Ecto.assoc(project, :documents)
+  end
+
   def project_signees(project) do
     Ecto.assoc(project, :signees)
+  end
+
+  def document_signees(document) do
+    Ecto.assoc(document, :signees)
   end
 
   def get_email_from_hash(hash) do

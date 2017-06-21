@@ -3,8 +3,6 @@ defmodule Karma.OfferController do
 
   alias Karma.{User, Offer, Project, Startpack, AlteredDocument, Merger}
 
-  import Ecto.Query
-
   import Karma.ProjectController, only: [add_project_to_conn: 2, block_if_not_project_manager: 2]
 
   # add project to conn
@@ -293,7 +291,7 @@ defmodule Karma.OfferController do
                     build_assoc(offer, :altered_documents, document_id: document.id)
                     |> Karma.AlteredDocument.merged_changeset(%{merged_url: url})
                     |> Repo.insert()
-                    
+
                     # reply to user
                     conn
                     |> put_flash(:info, "Document merged")

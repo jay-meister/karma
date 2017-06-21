@@ -144,3 +144,13 @@
 - name - **string**
 - project_id - **integer**
 - offer_id - **integer**
+
+# signees
+- name - **string**
+- email - **string**
+- role - **string**
+
+# Document Signee
+- document_id **integer**
+- signee_id **integer**
+- order **integer**

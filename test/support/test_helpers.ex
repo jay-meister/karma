@@ -1,5 +1,5 @@
 defmodule Karma.TestHelpers do
-  alias Karma.{Repo, User, Project, Offer, Startpack, Document, Signee}
+  alias Karma.{Repo, User, Project, Offer, Startpack, Document, Signee, DocumentSignee}
 
   def insert_user(attrs \\ %{}) do
     changes = Map.merge(default_user(), attrs)
@@ -57,6 +57,14 @@ defmodule Karma.TestHelpers do
     project
     |> Ecto.build_assoc(:signees, %{})
     |> Signee.changeset(changes)
+    |> Repo.insert!
+  end
+
+  def insert_document_signee(document, signee, attrs \\ %{}) do
+    default_document_signee = %{document_id: document.id, signee_id: signee.id, order: 2}
+    changes = Map.merge(default_document_signee, attrs)
+
+    DocumentSignee.changeset(%DocumentSignee{}, changes)
     |> Repo.insert!
   end
 
