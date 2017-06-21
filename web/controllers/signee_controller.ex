@@ -52,7 +52,7 @@ defmodule Karma.SigneeController do
             changeset = DocumentSignee.changeset(%DocumentSignee{})
 
             render conn,
-            "add.html",
+            "new.html",
             signees: signee_names,
             project: project,
             changeset: changeset,

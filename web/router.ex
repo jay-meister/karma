@@ -32,9 +32,9 @@ defmodule Karma.Router do
     resources "/startpack", StartpackController, except: [:new, :create]
     resources "/projects", ProjectController do
       resources "/documents", DocumentController do
-        get "/signees/add", SigneeController, :add
-        post "/signees/add", SigneeController, :add_signee
-        delete "/signees/add", SigneeController, :clear_signees
+        get "/signees/new", SigneeController, :add
+        post "/signees/new", SigneeController, :add_signee
+        delete "/signees", SigneeController, :clear_signees
       end
       resources "/signees", SigneeController, only: [:create, :delete]
       resources "/offers", OfferController

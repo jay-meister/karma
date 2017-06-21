@@ -59,7 +59,7 @@ defmodule Karma.SigneeControllerTest do
     document_signee = %{document_id: document.id, signee_id: signee.id, order: 2}
     conn = post conn, project_document_signee_path(conn, :add_signee, project, document), document_signee: document_signee
     assert Phoenix.Controller.get_flash(conn, :info) == "Signee #{signee.name} added to document approval chain!"
-    assert redirected_to(conn, 302) == "/projects/#{project.id}/documents/#{document.id}/signees/add"
+    assert redirected_to(conn, 302) == "/projects/#{project.id}/documents/#{document.id}/signees/new"
     refute Repo.get_by(DocumentSignee, document_id: document.id, signee_id: signee.id) == nil
   end
 
@@ -68,7 +68,7 @@ defmodule Karma.SigneeControllerTest do
     document_signee = %{document_id: "", signee_id: "", order: ""}
     conn = post conn, project_document_signee_path(conn, :add_signee, project, document), document_signee: document_signee
     assert Phoenix.Controller.get_flash(conn, :error) == "You must select a signee"
-    assert redirected_to(conn, 302) == "/projects/#{project.id}/documents/#{document.id}/signees/add"
+    assert redirected_to(conn, 302) == "/projects/#{project.id}/documents/#{document.id}/signees/new"
     assert Repo.get_by(DocumentSignee, document_id: document.id, signee_id: signee.id) == nil
   end
 
@@ -81,6 +81,6 @@ defmodule Karma.SigneeControllerTest do
     insert_document_signee(document, signee_3)
     conn = delete conn, project_document_signee_path(conn, :clear_signees, project, document)
     assert Phoenix.Controller.get_flash(conn, :info) == "3 Signees cleared successfully!"
-    assert redirected_to(conn, 302) == "/projects/#{project.id}/documents/#{document.id}/signees/add"
+    assert redirected_to(conn, 302) == "/projects/#{project.id}/documents/#{document.id}/signees/new"
   end
 end
