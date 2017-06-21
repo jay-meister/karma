@@ -149,3 +149,8 @@
 - name - **string**
 - email - **string**
 - role - **string**
+
+# Document Signee
+- document_id **integer**
+- signee_id **integer**
+- order **integer**

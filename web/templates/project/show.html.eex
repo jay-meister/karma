@@ -75,7 +75,6 @@
     <div class="tc k-bg-indigo white pa4 f2 br3">You have not uploaded any deals yet</div>
   <% end %>
   <%= for deal <- @deals do %>
-  <% IO.inspect deal.id %>
     <div class="dib">
       <div class="relative">
         <img class="w5 dib ma1" src="/images/pdf.svg" />
