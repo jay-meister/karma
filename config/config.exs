@@ -48,3 +48,7 @@ config :ex_aws,
    host: "#{System.get_env("BUCKET_NAME")}.s3.amazonaws.com",
    region: "eu-west-1"
   ]
+
+# Add docusign url
+config :karma, :docusign_login_url,
+  "https://demo.docusign.net/restapi/v2/login_information"
