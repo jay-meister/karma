@@ -41,7 +41,7 @@ defmodule Karma.Router do
       resources "/offers", OfferController do
         # project_offer_altered_document_path(conn, project, offer, alt_doc)
         # /projects/:project_id/offers/:offer_id/altered_documents/:id/sign
-        get "altered_documents/:id/sign", AlteredDocumentController, :sign
+        get "/altered_documents/:id/sign", AlteredDocumentController, :sign
       end
       put "/offers/:id/response", OfferController, :response
     end
