@@ -1,19 +1,23 @@
 defmodule Karma.Sign do
   import Ecto.Query
 
-  def new_envelope(merged, user, _path) do
+  def new_envelope(merged, user) do
     # login with docusign
     case login(headers()) do
       {:error, msg} ->
         {:error, msg}
       {:ok, base_url} ->
-        base_url
+        url = base_url <> "/envelopes"
 
         signers = get_and_prepare_approval_chain(merged, user)
         documents = get_and_prepare_document(merged, user)
 
         # build up envelope body
-        build_envelope(documents, signers, base_url)
+        body = build_envelope_body(documents, signers)
+        |> Poison.encode!()
+
+        res = HTTPoison.post(url, body, headers())
+        IO.inspect res
         # store envelope info from the response
         # return :ok
     end
@@ -119,7 +123,7 @@ defmodule Karma.Sign do
     ]
   end
 
-  def build_envelope(documents, chain) do
+  def build_envelope_body(documents, chain) do
     %{
       "emailSubject": "DocuSign test",
       "emailBlurb": "Shows how to create and send an envelope from a document.",

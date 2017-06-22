@@ -24,6 +24,7 @@
       <img src="/images/pdf.svg" class="w5" />
       <div class="mt2 mb2">Merged Contract</div>
       <%= component "button.html", title: "Download", link: @contract.merged_url %>
+      <%= component "button.html", title: "Sign", link: project_offer_altered_document_path(@conn, :sign, @offer.project_id, @offer, @contract) %>
     </div>
   <%= end %>
 
