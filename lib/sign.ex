@@ -1,23 +1,23 @@
 defmodule Karma.Sign do
   import Ecto.Query
 
-  # def new_envelope(merged, user, _path) do
-  #   # login with docusign
-  #   case login(headers()) do
-  #     {:error, msg} ->
-  #       {:error, msg}
-  #     {:ok, base_url} ->
-  #       base_url
-  #
-  #       signers = get_and_prepare_approval_chain(merged, user)
-  #       documents = get_and_prepare_document(merged)
-  #       # download document from S3
-  #       # get approval chain from db
-  #       # build up envelope body
-  #       # store envelope info from the response
-  #       # return :ok
-  #   end
-  # end
+  def new_envelope(merged, user, _path) do
+    # login with docusign
+    case login(headers()) do
+      {:error, msg} ->
+        {:error, msg}
+      {:ok, base_url} ->
+        base_url
+
+        signers = get_and_prepare_approval_chain(merged, user)
+        documents = get_and_prepare_document(merged, user)
+
+        # build up envelope body
+        build_envelope(documents, signers, base_url)
+        # store envelope info from the response
+        # return :ok
+    end
+  end
 
 
   # document related
@@ -117,5 +117,15 @@ defmodule Karma.Sign do
      "Accept": "Application/json; Charset=utf-8",
      "Content-Type": "application/json"
     ]
+  end
+
+  def build_envelope(documents, chain) do
+    %{
+      "emailSubject": "DocuSign test",
+      "emailBlurb": "Shows how to create and send an envelope from a document.",
+      "recipients": %{"signers": chain},
+      "documents": documents,
+      "status": "sent"
+    }
   end
 end
