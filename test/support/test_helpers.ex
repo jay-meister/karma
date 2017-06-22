@@ -2,6 +2,35 @@ defmodule Karma.TestHelpers do
   alias Karma.{Repo, User, Project, Offer, Startpack,
     Document, Signee, DocumentSignee, AlteredDocument}
 
+  def mother_setup() do
+    user = insert_user() # This represents the user that created the project (PM)
+    contractor = insert_user(%{email: "cont@gmail.com"})
+    project = insert_project(user)
+    offer = insert_offer(project)
+    document = insert_document(project)
+    signee1 = insert_signee(project, %{email: "signee1@gmail.com"})
+    signee2 = insert_signee(project, %{email: "signee2@gmail.com"})
+    signee3 = insert_signee(project, %{email: "signee3@gmail.com"})
+    doc_sign1 = insert_document_signee(document, signee1, %{order: 2})
+    doc_sign2 = insert_document_signee(document, signee2, %{order: 3})
+    doc_sign3 = insert_document_signee(document, signee3, %{order: 1})
+    conn = login_user(Phoenix.ConnTest.build_conn, user)
+
+    {:ok,
+      conn: conn,
+      user: user,
+      project: project,
+      offer: offer,
+      document: document,
+      contractor: contractor,
+      signee1: signee1,
+      signee2: signee2,
+      doc_sign1: doc_sign1,
+      doc_sign2: doc_sign2,
+      doc_sign3: doc_sign3
+    }
+  end
+
   def insert_user(attrs \\ %{}) do
     changes = Map.merge(default_user(), attrs)
 

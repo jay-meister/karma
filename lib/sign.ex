@@ -1,6 +1,8 @@
 defmodule Karma.Sign do
   import Ecto.Query
 
+  alias Karma.{AlteredDocument, Repo}
+
   def new_envelope(merged, user) do
     # login with docusign
     case login(headers()) do
@@ -8,7 +10,6 @@ defmodule Karma.Sign do
         {:error, msg}
       {:ok, base_url} ->
         url = base_url <> "/envelopes"
-
         signers = get_and_prepare_approval_chain(merged, user)
         documents = get_and_prepare_document(merged, user)
 
@@ -16,8 +17,16 @@ defmodule Karma.Sign do
         body = build_envelope_body(documents, signers)
         |> Poison.encode!()
 
-        res = HTTPoison.post(url, body, headers())
-        IO.inspect res
+        case HTTPoison.post(url, body, headers(), timeout: 20000) do
+          {:ok, %HTTPoison.Response{body: body, headers: _headers, status_code: 201}} ->
+            %{"envelopeId" => envelope_id} = Poison.decode!(body)
+            altered =
+              AlteredDocument.signing_started_changeset(merged, %{envelope_id: envelope_id})
+              |> Repo.update!()
+            {:ok, altered}
+          error ->
+            {:error, "Error making signature request"}
+        end
         # store envelope info from the response
         # return :ok
     end
@@ -31,9 +40,7 @@ defmodule Karma.Sign do
       {:error, _error} ->
         {:error, "There was an error retrieving the document"}
       {:ok, file} ->
-
-        # get the original document so we can name the file properly
-        original = Karma.Repo.get(Karma.Document, merged.document_id)
+        original = Repo.get(Karma.Document, merged.document_id)
 
         # encode file, then prepare for docusign
         Base.encode64(file)
@@ -86,7 +93,7 @@ defmodule Karma.Sign do
       where: ds.document_id == ^altered_document.document_id,
       order_by: ds.order
 
-    Karma.Repo.all(query)
+    Repo.all(query)
   end
 
   # api related

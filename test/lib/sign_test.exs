@@ -1,36 +1,11 @@
 defmodule Karma.SignTest do
   use Karma.ConnCase
-  alias Karma.{Sign, Signee}
+  alias Karma.{Sign, Signee, AlteredDocument}
 
   import Mock
 
   setup do
-    user = insert_user() # This represents the user that created the project (PM)
-    contractor = insert_user(%{email: "cont@gmail.com"})
-    project = insert_project(user)
-    offer = insert_offer(project)
-    document = insert_document(project)
-    signee1 = insert_signee(project, %{email: "signee1@gmail.com"})
-    signee2 = insert_signee(project, %{email: "signee2@gmail.com"})
-    signee3 = insert_signee(project, %{email: "signee3@gmail.com"})
-    doc_sign1 = insert_document_signee(document, signee1, %{order: 2})
-    doc_sign2 = insert_document_signee(document, signee2, %{order: 3})
-    doc_sign3 = insert_document_signee(document, signee3, %{order: 1})
-    conn = login_user(build_conn(), user)
-
-    {:ok,
-      conn: conn,
-      user: user,
-      project: project,
-      offer: offer,
-      document: document,
-      contractor: contractor,
-      signee1: signee1,
-      signee2: signee2,
-      doc_sign1: doc_sign1,
-      doc_sign2: doc_sign2,
-      doc_sign3: doc_sign3
-    }
+    mother_setup()
   end
 
 
@@ -93,6 +68,45 @@ defmodule Karma.SignTest do
     end] do
       formatted_doc = Sign.get_and_prepare_document(alt_doc, contractor)
       assert "Joe-Blogs-PAYE-#{alt_doc.offer_id}.pdf" == hd(formatted_doc).name
+    end
+  end
+
+  test "build_envelope_body" do
+    chain = %{
+      signee_1: "Signee 1",
+      signee_2: "Signee 2",
+    }
+    envelope_body = Sign.build_envelope_body(["doc1", "doc2"], chain)
+
+    assert envelope_body == %{
+      "emailSubject": "DocuSign test",
+      "emailBlurb": "Shows how to create and send an envelope from a document.",
+      "recipients": %{
+        "signers": %{
+          signee_1: "Signee 1",
+          signee_2: "Signee 2",
+        }
+      },
+      "documents": ["doc1", "doc2"],
+      "status": "sent"
+    }
+  end
+
+  test "new_envelope", %{user: user, document: document, offer: offer} do
+    merged_document = insert_merged_document(document, offer)
+    encoded = Poison.encode!(%{"loginAccounts" => [%{"baseUrl" => "oh_yeah"}]})
+    with_mocks([
+      {Karma.S3, [],
+       [get_object: fn(_) -> {:ok, "www.aws.someurl.pdf"} end]},
+      {HTTPoison, [],
+       [post: fn(_, _, _, _) -> {:ok, %HTTPoison.Response{body: encoded, headers: %{}, status_code: 201}} end,
+       get: fn(_, _, _) -> {:ok, %HTTPoison.Response{status_code: 200}} end]},
+     {Poison, [],
+       [decode!: fn(_) -> %{"loginAccounts" => [%{"baseUrl" => "oh_yeah"}], "envelopeId" => "2"} end,
+       encode!: fn(_) -> "encoded" end]}
+    ]) do
+      {:ok, altered_document} = Karma.Sign.new_envelope(merged_document, user)
+      refute Repo.get_by(AlteredDocument, envelope_id: altered_document.envelope_id) == nil
     end
   end
 end

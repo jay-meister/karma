@@ -7,11 +7,15 @@ defmodule Karma.AlteredDocumentController do
 
     altered = Repo.get(AlteredDocument, id)
 
-    Sign.new_envelope(altered, conn.assigns.current_user)
-
-    conn
-    |> put_flash(:info, "document signed :)")
-    |> redirect(to: project_offer_path(conn, :show, p_id, o_id))
+    case Sign.new_envelope(altered, conn.assigns.current_user) do
+      {:ok, _altered_document} ->
+        conn
+        |> put_flash(:info, "Document sent to signees")
+        |> redirect(to: project_offer_path(conn, :show, p_id, o_id))
+      {:error, msg} ->
+        conn
+        |> put_flash(:error, msg)
+        |> redirect(to: project_offer_path(conn, :show, p_id, o_id))
+    end
   end
-
 end

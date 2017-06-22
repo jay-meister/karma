@@ -27,14 +27,14 @@ defmodule Karma.AlteredDocument do
     |> put_change(:status, "merged")
     |> validate_required([:status])
   end
-  # 
-  # def signing_started_changeset(struct, params \\ %{}) do
-  #   struct
-  #   |> changeset(params)
-  #   |> put_change(:status, "signing")
-  #   |> validate_required([:envelope_id, :status])
-  # end
-  #
+
+  def signing_started_changeset(struct, params \\ %{}) do
+    struct
+    |> changeset(params)
+    |> put_change(:status, "signing")
+    |> validate_required([:envelope_id, :status])
+  end
+
   # def signing_completed_changeset(struct, params \\ %{}) do
   #   struct
   #   |> changeset(params)

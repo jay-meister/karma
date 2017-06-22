@@ -26,7 +26,13 @@
           <img src="/images/pdf.svg" class="w5" />
           <div class="mt2 mb2">Merged <%= document.document.name %> Document</div>
           <%= component "button.html", title: "Download", link: document.merged_url %>
-          <%= component "button.html", title: "Sign", link: project_offer_altered_document_path(@conn, :sign, @offer.project_id, @offer, document) %>
+          <div class="h3">
+            <%= if document.status != "signing" do %>
+              <%= component "button.html", title: "Sign", link: project_offer_altered_document_path(@conn, :sign, @offer.project_id, @offer, document) %>
+            <% else %>
+              <div class="">Document sent to signees</div>
+            <% end %>
+          </div>
         </div>
       <% end %>
     </div>
