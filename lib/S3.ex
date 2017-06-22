@@ -74,7 +74,7 @@ defmodule Karma.S3 do
     |> ExAws.request!
 
     case res do
-      %{body: body, headers: _headers, status_code: 200} ->
+      %{body: body, status_code: 200} ->
         {:ok, body}
       _error ->
         {:error, "error downloading from S3"}
