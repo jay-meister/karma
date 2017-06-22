@@ -57,56 +57,66 @@
   <%= if length(@forms) == 0 do %>
     <div class="tc k-bg-indigo white pa4 f2 br3">You have not uploaded any forms yet</div>
   <% end %>
-  <%= for form <- @forms do %>
-    <div class="dib">
-      <div class="relative">
-        <img class="w5 dib ma1" src="/images/pdf.svg" />
-        <%= link to: project_document_path(@conn, :delete, @project, form),
-          method: :delete,
-          data: [confirm: "Are you sure?"] do %>
-          <img class="absolute k-w2-5 top-0 left-1" src="/images/delete.svg" />
-        <% end %>
+  <div class="tc">
+    <%= for form <- @forms do %>
+      <div class="dib tc">
+        <div class="relative dib">
+          <img class="w5 dib ma1" src="/images/pdf.svg" />
+          <%= link to: project_document_path(@conn, :delete, @project, form),
+            method: :delete,
+            data: [confirm: "Are you sure?"] do %>
+            <img class="absolute k-w2-5 top-0 left-1" src="/images/delete.svg" />
+          <% end %>
+        </div>
+        <div class="tc f5"><%= form.name %></div>
+        <%= component "button.html", title: "Approval chain", link: project_document_signee_path(@conn, :add, @project, form), class: "w-50" %>
       </div>
-      <div class="tc f5"><%= form.name %></div>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
   <%= component "form_divider.html", title: "Deals" %>
   <%= if length(@deals) == 0 do %>
     <div class="tc k-bg-indigo white pa4 f2 br3">You have not uploaded any deals yet</div>
   <% end %>
-  <%= for deal <- @deals do %>
-    <div class="dib">
-      <div class="relative">
-        <img class="w5 dib ma1" src="/images/pdf.svg" />
-        <%= link to: project_document_path(@conn, :delete, @project, deal),
-          method: :delete,
-          data: [confirm: "Are you sure?"] do %>
-          <img class="absolute k-w2-5 top-0 left-1" src="/images/delete.svg" />
-        <% end %>
+  <div class="tc">
+    <%= for deal <- @deals do %>
+      <div class="dib tc">
+        <div class="relative dib">
+          <img class="w5 dib ma1" src="/images/pdf.svg" />
+          <%= link to: project_document_path(@conn, :delete, @project, deal),
+            method: :delete,
+            data: [confirm: "Are you sure?"] do %>
+            <img class="absolute k-w2-5 top-0 left-1" src="/images/delete.svg" />
+          <% end %>
+        </div>
+        <div class="tc f5"><%= deal.name %></div>
+        <div class="w-50">
+          <%= component "button.html", title: "Approval chain", link: project_document_signee_path(@conn, :add, @project, deal)%>
+        </div>
       </div>
-      <div class="tc f5"><%= deal.name %></div>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
   <%= component "form_divider.html", title: "Info" %>
   <%= if length(@info) == 0 do %>
     <div class="tc k-bg-indigo white pa4 f2 br3">You have not uploaded any info yet</div>
   <% end %>
-  <%= for info <- @info do %>
-    <div class="dib">
-      <div class="relative">
-        <img class="w5 dib ma1" src="/images/pdf.svg" />
-        <%= link to: project_document_path(@conn, :delete, @project, info),
-          method: :delete,
-          data: [confirm: "Are you sure?"] do %>
-          <img class="absolute k-w2-5 top-0 left-1" src="/images/delete.svg" />
-        <% end %>
+  <div class="tc">
+    <%= for info <- @info do %>
+      <div class="dib tc">
+        <div class="relative dib">
+          <img class="w5 dib ma1" src="/images/pdf.svg" />
+          <%= link to: project_document_path(@conn, :delete, @project, info),
+            method: :delete,
+            data: [confirm: "Are you sure?"] do %>
+            <img class="absolute k-w2-5 top-0 left-1" src="/images/delete.svg" />
+          <% end %>
+        </div>
+        <div class="tc f5"><%= info.name %></div>
       </div>
-      <div class="tc f5"><%= info.name %></div>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 </div>
 
-<div class="w-50-l pa3 bw2 b--dashed k-b--indigo k-m-auto">
+<div class="w-50-l pa3 ba k-b--indigo k-m-auto br3">
   <div class="tc mb3 f2">Upload a project document</div>
   <%= form_for @document_changeset, project_document_path(@conn, :create, @project), [multipart: true], fn f -> %>
   <div class="mt4">

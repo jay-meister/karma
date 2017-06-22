@@ -138,4 +138,24 @@ defmodule Karma.MergerTest do
       assert {:ok, "www.aws.another.pdf"} = Merger.merge(offer, document)
     end
   end
+
+  test "merge_multiple function: success" do
+    pm = insert_user()
+    project = insert_project(pm)
+    contractor = insert_user(%{email: "contractor@gmail.com"})
+    insert_startpack(%{user_id: contractor.id})
+    offer = insert_offer(project, %{user_id: contractor.id, box_rental_required?: false, equipment_rental_required?: false})
+    document_1 = insert_document(project, %{name: offer.contract_type, url: "www.image_url.pdf"})
+    document_2 = insert_document(project, %{name: offer.contract_type, url: "www.image_url.pdf"})
+    documents = [document_1, document_2]
+    with_mocks([
+      {Karma.S3, [],
+       [download: fn(_, _) -> {:ok, "www.aws.someurl.pdf"} end,
+        upload: fn(_) -> {:ok, :url, "www.aws.another.pdf"} end]},
+      {Karma.ScriptRunner, [],
+       [run_merge_script: fn(_) -> {"destination.pdf", 0} end]}
+    ]) do
+      assert {:ok, "Documents merged"} = Merger.merge_multiple(offer, documents)
+    end
+  end
 end
