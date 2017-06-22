@@ -69,7 +69,7 @@
           <% end %>
         </div>
         <div class="tc f5"><%= form.name %></div>
-        <%= component "button.html", title: "Approval chain", link: "/projects/#{@project.id}/documents/#{form.id}/signees/new", class: "w-50" %>
+        <%= component "button.html", title: "Approval chain", link: project_document_signee_path(@conn, :add, @project, form), class: "w-50" %>
       </div>
     <% end %>
   </div>
@@ -90,7 +90,7 @@
         </div>
         <div class="tc f5"><%= deal.name %></div>
         <div class="w-50">
-          <%= component "button.html", title: "Approval chain", link: "/projects/#{@project.id}/documents/#{deal.id}/signees/new"%>
+          <%= component "button.html", title: "Approval chain", link: project_document_signee_path(@conn, :add, @project, deal)%>
         </div>
       </div>
     <% end %>
