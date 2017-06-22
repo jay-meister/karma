@@ -6,7 +6,6 @@ defmodule Karma.AlteredDocumentController do
     # get document
 
     altered = Repo.get(AlteredDocument, id)
-    IO.inspect altered
 
     Sign.new_envelope(altered, conn.assigns.current_user)
 

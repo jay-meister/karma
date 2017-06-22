@@ -243,17 +243,16 @@ defmodule Karma.OfferControllerTest do
   end
 
 
-  test "offer accepted, merged document success", %{project: project} do
+  test "offer accepted, merged documents success", %{project: project} do
     contractor = insert_user(%{email: "contractor@gmail.com"})
     offer = insert_offer(project, %{user_id: contractor.id})
     insert_document(project, %{name: offer.contract_type, url: "www.image_url"})
     conn = login_user(build_conn(), contractor)
     with_mock Karma.Mailer, [deliver_later: fn(string) -> string end] do
-      with_mock Karma.Merger, [merge: fn(_, _) -> {:ok, "www.image_url.com"} end] do
+      with_mock Karma.Merger, [merge_multiple: fn(_, _) -> {:ok, "Documents merged"} end] do
         conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: true}
         assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
-        # ensure the url to the new merged document has been added
-        assert Repo.get_by(Karma.AlteredDocument, offer_id: offer.id).merged_url == "www.image_url.com"
+        assert Phoenix.Controller.get_flash(conn, :info) == "Documents merged"
       end
     end
   end
@@ -264,11 +263,9 @@ defmodule Karma.OfferControllerTest do
     insert_document(project, %{name: offer.contract_type, url: "www.image_url"})
     conn = login_user(build_conn(), contractor)
     with_mock Karma.Mailer, [deliver_later: fn(string) -> string end] do
-      with_mock Karma.Merger, [merge: fn(_, _) -> {:error, "some flash message"} end] do
+      with_mock Karma.Merger, [merge_multiple: fn(_, _) -> {:error, "some flash message"} end] do
         conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: true}
         assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
-        # ensure no merge happened
-        refute Repo.get_by(Karma.AlteredDocument, offer_id: offer.id)
         # ensure offer is still not accepted
         assert Repo.get(Offer, offer.id).accepted == nil
       end
@@ -280,7 +277,7 @@ defmodule Karma.OfferControllerTest do
     offer = insert_offer(project, %{user_id: contractor.id})
     conn = login_user(build_conn(), contractor)
     conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: true}
-    assert Phoenix.Controller.get_flash(conn, :error) == "There was no document to merge your data with"
+    assert Phoenix.Controller.get_flash(conn, :error) == "There were no documents to merge your data with"
     assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
     # Ensure offer wasn't accepted on the DB
     assert Repo.get(Offer, offer.id).accepted == nil

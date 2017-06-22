@@ -19,12 +19,16 @@
     <div class="k-bg-indigo white tc pa4 br3 ma2 f2 mt3">You have rejected this offer!</div>
   <% end %>
 
-  <%= if @contract && @is_contractor? do %>
-    <div class="tc mt3">
-      <img src="/images/pdf.svg" class="w5" />
-      <div class="mt2 mb2">Merged Contract</div>
-      <%= component "button.html", title: "Download", link: @contract.merged_url %>
-      <%= component "button.html", title: "Sign", link: project_offer_altered_document_path(@conn, :sign, @offer.project_id, @offer, @contract) %>
+  <%= if length(@documents) > 0 && @is_contractor? do %>
+    <div class="tc">
+      <%= for document <- @documents do %>
+        <div class="tc mt3 dib ma2">
+          <img src="/images/pdf.svg" class="w5" />
+          <div class="mt2 mb2">Merged <%= document.document.name %> Document</div>
+          <%= component "button.html", title: "Download", link: document.merged_url %>
+          <%= component "button.html", title: "Sign", link: project_offer_altered_document_path(@conn, :sign, @offer.project_id, @offer, document) %>
+        </div>
+      <% end %>
     </div>
   <%= end %>
 

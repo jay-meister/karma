@@ -1,6 +1,24 @@
 defmodule Karma.Merger do
   alias Karma.{Repo, Formatter}
 
+  def merge_multiple(_offer, []) do
+    {:ok, "Documents merged"}
+  end
+
+  def merge_multiple(offer, documents) do
+    [document | tail] = documents
+    case merge(offer, document) do
+      {:ok, url} ->
+
+        Ecto.build_assoc(offer, :altered_documents, document_id: document.id)
+        |> Karma.AlteredDocument.merged_changeset(%{merged_url: url})
+        |> Repo.insert()
+
+        merge_multiple(offer, tail)
+      {:error, error} -> {:error, error}
+    end
+  end
+
   def merge(offer, document) do
     # download document
 
