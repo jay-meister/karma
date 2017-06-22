@@ -26,6 +26,15 @@ defmodule Karma.Controllers.Helpers do
     Ecto.assoc(document, :signees)
   end
 
+  def get_forms_for_merging(offer) do
+    IO.inspect offer
+    Karma.Document
+    |> Karma.Offer.get_contract(offer)
+    |> Karma.Offer.get_box_rental_form(offer)
+    |> Karma.Offer.get_equipment_rental_form(offer)
+    |> Karma.Offer.get_vehicle_allowance_form(offer)
+  end
+
   def get_email_from_hash(hash) do
     case RedisCli.get(hash) do
       {:ok, nil} -> {:error, "User not in Redis"}

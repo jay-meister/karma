@@ -250,10 +250,13 @@ defmodule Karma.OfferController do
     project = Repo.get(Project, project_id) |> Repo.preload(:user)
     changeset = Offer.offer_response_changeset(offer, offer_params)
 
-    # get the original documents
-    query = from d in Document, where: d.project_id == ^project_id
-    documents = Repo.all(query)
+    # query = from d in Document, where: d.project_id == ^project_id
+    # get the original contract
+    form_query = Document.get_forms_for_merging(offer)
 
+    IO.inspect form_query
+    documents = Repo.all(form_query)
+    IO.inspect documents
     # check if there is a document to be merged
     case length(documents) > 0 do
       false -> # prevent accepting offer if no document
