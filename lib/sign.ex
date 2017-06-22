@@ -19,27 +19,34 @@ defmodule Karma.Sign do
   #   end
   # end
 
-  def get_and_prepare_document(merged) do
+
+  # document related
+  def get_and_prepare_document(merged, user) do
     # download file,
-    file_name = Karma.Merger.get_file_name(merged.merged_url)
-    case Karma.S3.download(merged.url, System.cwd() <> "/tmp/" <> file_name) do
+    case Karma.S3.get_object(merged.merged_url) do
       {:error, _error} ->
         {:error, "There was an error retrieving the document"}
-      {:ok, doc_path} ->
-        file = File.read!(doc_path)
+      {:ok, file} ->
 
-        # encode file,
-        encoded = Base.encode64(file)
+        # get the original document so we can name the file properly
+        original = Karma.Repo.get(Karma.Document, merged.document_id)
 
-        # add name and document_id
-        [%{"documentId": merged.id,
-           "name": "#{merged.category}-#{merged.offer_id}.pdf",
-           "documentBase64": encoded
-        }]
+        # encode file, then prepare for docusign
+        Base.encode64(file)
+        |> prepare_document(merged, original, user)
     end
   end
 
 
+  def prepare_document(encoded, merged, original, user) do
+    [%{"documentId": merged.id,
+       "name": "#{user.first_name}-#{user.last_name}-#{original.name}-#{merged.offer_id}.pdf",
+       "documentBase64": encoded
+    }]
+  end
+
+
+  # approval chain related
   def get_and_prepare_approval_chain(merged, contractor) do
     merged
     |> get_approval_chain()
@@ -78,7 +85,7 @@ defmodule Karma.Sign do
     Karma.Repo.all(query)
   end
 
-
+  # api related
   def login(headers) do
     url = Application.get_env(:karma, :docusign_login_url)
     case HTTPoison.get(url, headers, []) do
@@ -90,7 +97,6 @@ defmodule Karma.Sign do
         {:error, "Error logging into docusign"}
     end
   end
-
 
   def get_base_url(%{"loginAccounts" => accounts}) do
     # accounts is a list of accounts attached to our user
