@@ -356,4 +356,17 @@ defmodule Karma.Startpack do
       end
      end)
   end
+
+  def loan_out_changeset(struct, params, loan_out) do
+    case loan_out do
+      "true" ->
+        struct
+        |> cast(params, [:loan_out_company_registration_number, :loan_out_company_address, :loan_out_company_cert_image])
+        |> validate_required([:loan_out_company_registration_number, :loan_out_company_address, :loan_out_company_cert_image])
+      "false" ->
+        struct
+        |> cast(params, [])
+    end
+
+  end
 end

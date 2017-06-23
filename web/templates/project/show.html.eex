@@ -127,7 +127,7 @@
       # "DIRECT HIRE",
       "PAYE",
       "SCHEDULE-D",
-      # "LOAN OUT",
+      "LOAN OUT",
       # "CONSTRUCTION DIRECT HIRE",
       # "CONSTRUCTION PAYE",
       # "CONSTRUCTION SCHEDULE-D",
