@@ -24,4 +24,23 @@ defmodule Karma.Document do
   def is_pdf?(file_params) do
     file_params.content_type == "application/pdf"
   end
+
+
+  # get contract related to this offer
+  def get_contract(query, offer) do
+    from d in query,
+    or_where: d.project_id == ^offer.project_id
+    and d.name == ^offer.contract_type
+  end
+
+  def get_conditional_form(query, offer, checker, form_name) do
+    if checker do
+      from d in query,
+      or_where: d.project_id == ^offer.project_id
+      and d.name == ^form_name
+    else
+      query
+    end
+  end
+  
 end

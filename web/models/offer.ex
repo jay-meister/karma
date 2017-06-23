@@ -162,6 +162,7 @@ defmodule Karma.Offer do
     |> validate_required([:accepted])
   end
 
+
   # queries
   # get projects created by specified user
   def projects_offers(query, project) do
@@ -169,39 +170,4 @@ defmodule Karma.Offer do
     where: p.project_id == ^project.id
   end
 
-
-  # get contract related to this offer
-  def get_contract(query, offer) do
-    from d in query,
-    or_where: d.project_id == ^offer.project_id
-    and d.name == ^offer.contract_type
-  end
-  # get box rental form
-  def get_box_rental_form(query, offer) do
-    if offer.box_rental_required? do
-      from d in query,
-      or_where: d.project_id == ^offer.project_id
-      and d.name == "BOX RENTAL FORM"
-    else
-      query
-    end
-  end
-  def get_equipment_rental_form(query, offer) do
-    if offer.equipment_rental_required? do
-      from d in query,
-      or_where: d.project_id == ^offer.project_id
-      and d.name == "EQUIPMENT RENTAL FORM"
-    else
-      query
-    end
-  end
-  def get_vehicle_allowance_form(query, offer) do
-    if offer.vehicle_allowance_per_week > 0 do
-      from d in query,
-      or_where: d.project_id == ^offer.project_id
-      and d.name == "VEHICLE ALLOWANCE FORM"
-    else
-      query
-    end
-  end
 end

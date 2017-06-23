@@ -1,7 +1,7 @@
 defmodule Karma.OfferController do
   use Karma.Web, :controller
 
-  alias Karma.{User, Offer, Project, Startpack, AlteredDocument, Merger, Document}
+  alias Karma.{User, Offer, Project, Startpack, AlteredDocument, Merger}
 
   import Karma.ProjectController, only: [add_project_to_conn: 2, block_if_not_project_manager: 2]
 
@@ -250,13 +250,10 @@ defmodule Karma.OfferController do
     project = Repo.get(Project, project_id) |> Repo.preload(:user)
     changeset = Offer.offer_response_changeset(offer, offer_params)
 
-    # query = from d in Document, where: d.project_id == ^project_id
-    # get the original contract
-    form_query = Document.get_forms_for_merging(offer)
-
-    IO.inspect form_query
+    # get the relevant original forms for merging
+    form_query = Karma.Controllers.Helpers.get_forms_for_merging(offer)
     documents = Repo.all(form_query)
-    IO.inspect documents
+
     # check if there is a document to be merged
     case length(documents) > 0 do
       false -> # prevent accepting offer if no document

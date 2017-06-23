@@ -296,15 +296,18 @@ defmodule Karma.OfferControllerTest do
 
 
   test "get relevant documents for merge", %{offer: offer, project: project} do
-    contract = insert_document(project, %{name: "PAYE"})
-    box_rental_form = insert_document(project, %{name: "BOX RENTAL FORM"})
-    # add more documents
+    # offer is PAYE, Box rental true, Equipment rental true, vehicle allowance 0
+    _contract = insert_document(project, %{name: "PAYE"})
+    _box_rental_form = insert_document(project, %{name: "BOX RENTAL FORM"})
+    _equipment_rental_form = insert_document(project, %{name: "EQUIPMENT RENTAL FORM"})
+    _vehicle_allowance_form = insert_document(project, %{name: "VEHICLE ALLOWANCE FORM"})
 
-    docs = Karma.Controllers.Helpers.get_forms_for_merging(offer)
-    docs = Repo.all(docs)
-    IO.inspect docs
+    query = Karma.Controllers.Helpers.get_forms_for_merging(offer)
+    docs = Repo.all(query)
 
-    # check that the correct documents are added
+    document_names = docs |> Enum.map(&Map.get(&1, :name)) |> Enum.sort()
 
+    # assert the correct forms are retrieved (not vehicle allowance)
+    assert document_names == ["BOX RENTAL FORM", "EQUIPMENT RENTAL FORM", "PAYE"]
   end
 end
