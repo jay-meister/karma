@@ -24,11 +24,9 @@ defmodule Karma.Sign do
               AlteredDocument.signing_started_changeset(merged, %{envelope_id: envelope_id})
               |> Repo.update!()
             {:ok, altered}
-          error ->
+          _error ->
             {:error, "Error making signature request"}
         end
-        # store envelope info from the response
-        # return :ok
     end
   end
 
@@ -66,17 +64,14 @@ defmodule Karma.Sign do
     |> add_index_to_chain()
   end
 
-  def add_index_to_chain(chain) do
-    chain
-    |> Enum.with_index()
-    |> Enum.map(fn({signee, index}) ->
-        Map.merge(signee, %{"recipientId": index + 1, "routingOrder": index + 1})
-      end)
-  end
+  def get_approval_chain(altered_document) do
+    query = from s in Karma.Signee,
+      join: ds in Karma.DocumentSignee,
+      on: s.id == ds.signee_id,
+      where: ds.document_id == ^altered_document.document_id,
+      order_by: ds.order
 
-  def add_contractor_to_chain(chain, user) do
-    user = %{email: user.email, name: "#{user.first_name} #{user.last_name}"}
-    [user] ++ chain
+    Repo.all(query)
   end
 
   def format_approval_chain(signees) do
@@ -86,14 +81,18 @@ defmodule Karma.Sign do
     |> Enum.map(&Map.take(&1, [:email, :name]))
   end
 
-  def get_approval_chain(altered_document) do
-    query = from s in Karma.Signee,
-      join: ds in Karma.DocumentSignee,
-      on: s.id == ds.signee_id,
-      where: ds.document_id == ^altered_document.document_id,
-      order_by: ds.order
+  def add_contractor_to_chain(chain, user) do
+    user = %{email: user.email, name: "#{user.first_name} #{user.last_name}"}
+    [user] ++ chain
+  end
 
-    Repo.all(query)
+
+  def add_index_to_chain(chain) do
+    chain
+    |> Enum.with_index()
+    |> Enum.map(fn({signee, index}) ->
+        Map.merge(signee, %{"recipientId": index + 1, "routingOrder": index + 1})
+      end)
   end
 
   # api related

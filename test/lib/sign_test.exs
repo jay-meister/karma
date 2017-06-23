@@ -34,9 +34,10 @@ defmodule Karma.SignTest do
       ] = chain
   end
   test "format approval chain function", %{document: document, offer: offer} do
-    formatted = insert_merged_document(document, offer)
-    |> Sign.get_approval_chain()
-    |> Sign.format_approval_chain()
+    formatted =
+      insert_merged_document(document, offer)
+      |> Sign.get_approval_chain()
+      |> Sign.format_approval_chain()
 
     assert hd(formatted) == %{email: "signee3@gmail.com", name: "John Smith"}
   end
@@ -52,8 +53,7 @@ defmodule Karma.SignTest do
       [%{email: "cont@gmail.com", name: "Joe Blogs", recipientId: 1, routingOrder: 1},
        %{email: "signee3@gmail.com", name: "John Smith", recipientId: 2, routingOrder: 2},
        %{email: "signee1@gmail.com", name: "John Smith", recipientId: 3, routingOrder: 3},
-       %{email: "signee2@gmail.com", name: "John Smith", recipientId: 4, routingOrder: 4}
-      ]
+       %{email: "signee2@gmail.com", name: "John Smith", recipientId: 4, routingOrder: 4}]
 
   end
 
