@@ -37,7 +37,12 @@ defmodule Karma.Router do
         delete "/signees", SigneeController, :clear_signees
       end
       resources "/signees", SigneeController, only: [:create, :delete]
-      resources "/offers", OfferController
+
+      resources "/offers", OfferController do
+        # project_offer_altered_document_path(conn, project, offer, alt_doc)
+        # /projects/:project_id/offers/:offer_id/altered_documents/:id/sign
+        get "/altered_documents/:id/sign", AlteredDocumentController, :sign
+      end
       put "/offers/:id/response", OfferController, :response
     end
   end
