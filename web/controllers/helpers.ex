@@ -1,6 +1,7 @@
 defmodule Karma.Controllers.Helpers do
 
-  alias Karma.RedisCli
+  alias Karma.{Offer, Document, RedisCli}
+
 
   def user_startpack(user) do
     Ecto.assoc(user, :startpacks)
@@ -24,6 +25,14 @@ defmodule Karma.Controllers.Helpers do
 
   def document_signees(document) do
     Ecto.assoc(document, :signees)
+  end
+
+  def get_forms_for_merging(offer) do
+    Document
+    |> Document.get_contract(offer)
+    |> Document.get_conditional_form(offer, offer.box_rental_required?, "BOX RENTAL FORM")
+    |> Document.get_conditional_form(offer, offer.equipment_rental_required?, "EQUIPMENT RENTAL FORM")
+    |> Document.get_conditional_form(offer, offer.vehicle_allowance_per_week > 0, "VEHICLE ALLOWANCE FORM")
   end
 
   def get_email_from_hash(hash) do
