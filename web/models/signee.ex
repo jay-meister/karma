@@ -16,6 +16,7 @@ defmodule Karma.Signee do
     |> cast(params, [:name, :role, :email, :project_id])
     |> validate_required([:name, :role, :email, :project_id])
     |> validate_format(:email, ~r/@/)
+    |> unique_constraint(:unique_project_signees, name: :unique_project_signees)
   end
 
 end
