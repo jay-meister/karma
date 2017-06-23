@@ -1,6 +1,6 @@
 defmodule Karma.Controllers.Helpers do
 
-  alias Karma.{Offer, Document, RedisCli}
+  alias Karma.{Document, RedisCli}
 
 
   def user_startpack(user) do
