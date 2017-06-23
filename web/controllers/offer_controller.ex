@@ -158,8 +158,16 @@ defmodule Karma.OfferController do
   def show(conn, %{"project_id" => project_id, "id" => id}) do
     offer = conn.assigns.offer
     user = conn.assigns.current_user
+    project = Repo.get(Project, project_id)
+
+    info_documents =
+      Repo.all(project_documents(project))
+      |> Enum.filter(fn doc -> doc.category == "Info" end)
+
     query = from a in AlteredDocument, where: a.offer_id == ^id
-    offer_related_documents = Repo.all(query) |> Repo.preload(:document)
+    merged_documents = Repo.all(query) |> Repo.preload(:document)
+    deal_documents = Enum.filter(merged_documents, fn altered_doc -> altered_doc.document.category == "Deal" end)
+    form_documents = Enum.filter(merged_documents, fn altered_doc -> altered_doc.document.category == "Form" end)
     # todo fix this one
     case offer.user_id do
       nil ->
@@ -175,7 +183,9 @@ defmodule Karma.OfferController do
         project_id: project_id,
         changeset: changeset,
         edit_changeset: edit_changeset,
-        documents: offer_related_documents
+        info_documents: info_documents,
+        deal_documents: deal_documents,
+        form_documents: form_documents
         )
     end
   end
