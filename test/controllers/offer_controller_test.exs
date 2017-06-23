@@ -10,6 +10,7 @@ defmodule Karma.OfferControllerTest do
     user = insert_user() # This represents the user that created the project (PM)
     project = insert_project(user)
     offer = insert_offer(project)
+
     conn = login_user(build_conn(), user)
     {:ok, conn: conn, user: user, project: project, offer: offer}
   end
@@ -291,5 +292,22 @@ defmodule Karma.OfferControllerTest do
     conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: :invalid}
     assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
     assert Phoenix.Controller.get_flash(conn, :error) == "Error making response!"
+  end
+
+
+  test "get relevant documents for merge", %{offer: offer, project: project} do
+    # offer is PAYE, Box rental true, Equipment rental true, vehicle allowance 0
+    _contract = insert_document(project, %{name: "PAYE"})
+    _box_rental_form = insert_document(project, %{name: "BOX RENTAL FORM"})
+    _equipment_rental_form = insert_document(project, %{name: "EQUIPMENT RENTAL FORM"})
+    _vehicle_allowance_form = insert_document(project, %{name: "VEHICLE ALLOWANCE FORM"})
+
+    query = Karma.Controllers.Helpers.get_forms_for_merging(offer)
+    docs = Repo.all(query)
+
+    document_names = docs |> Enum.map(&Map.get(&1, :name)) |> Enum.sort()
+
+    # assert the correct forms are retrieved (not vehicle allowance)
+    assert document_names == ["BOX RENTAL FORM", "EQUIPMENT RENTAL FORM", "PAYE"]
   end
 end
