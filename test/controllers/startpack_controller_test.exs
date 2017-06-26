@@ -207,16 +207,4 @@ defmodule Karma.StartpackControllerTest do
       refute startpack.passport_url
     end
   end
-
-  test "renders startpack if loan out changeset is invalid", %{conn: conn, startpack: startpack} do
-    image_upload = %Plug.Upload{content_type: "image/png", path: "test/fixtures/foxy.png", filename: "foxy.png"}
-    valid =
-      @valid_attrs
-      |> Map.put("passport_image",  image_upload)
-
-    with_mock ExAws, [request!: fn(_) -> %{status_code: 500} end] do
-      conn = put conn, startpack_path(conn, :update, startpack), startpack: valid
-      assert html_response(conn, 200) =~ "Edit startpack"
-    end
-  end
 end

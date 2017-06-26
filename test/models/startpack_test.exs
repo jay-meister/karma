@@ -171,7 +171,8 @@ defmodule Karma.StartpackTest do
       passport_url:  "some content",
       agent_address: "some content",
       agent_bank_account_number: "some content",
-      agent_bank_account_name: "some content"
+      agent_bank_account_name: "some content",
+      use_loan_out_company?: false
     }
 
   test "changeset with valid attributes" do

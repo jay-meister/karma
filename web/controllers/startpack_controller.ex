@@ -32,7 +32,7 @@ defmodule Karma.StartpackController do
       end
   end
 
-  def update(conn, %{"id" => id, "startpack" => %{"use_loan_out_company?" => loan_out} = startpack_params}, user) do
+  def update(conn, %{"id" => id, "startpack" => startpack_params}, user) do
     startpack = Repo.get!(Startpack, id)
 
     image_changeset = Startpack.upload_type_validation(%Startpack{}, startpack_params)
@@ -50,31 +50,22 @@ defmodule Karma.StartpackController do
 
         offer_id = Map.get(conn.query_params, "offer_id", "")
 
-        loan_out_changeset = Startpack.loan_out_changeset(%Startpack{}, startpack_params, loan_out)
-
-        case loan_out_changeset.valid? do
-          false ->
+        case Repo.update(changeset) do
+          {:ok, _startpack} ->
+            case offer_id == "" do
+              true ->
+                conn
+                |> put_flash(:info, "Startpack updated successfully!")
+                |> redirect(to: startpack_path(conn, :index))
+              false ->
+                conn
+                |> put_flash(:info, "Startpack updated successfully!")
+                |> redirect(to: startpack_path(conn, :index, offer_id: offer_id))
+            end
+          {:error, _changeset} ->
             conn
             |> put_flash(:error, "Error updating startpack!")
-            |> render("index.html", changeset: loan_out_changeset, startpack: startpack, offer: %{}, user: user)
-          true ->
-            case Repo.update(changeset) do
-              {:ok, _startpack} ->
-                case offer_id == "" do
-                  true ->
-                    conn
-                    |> put_flash(:info, "Startpack updated successfully!")
-                    |> redirect(to: startpack_path(conn, :index))
-                  false ->
-                    conn
-                    |> put_flash(:info, "Startpack updated successfully!")
-                    |> redirect(to: startpack_path(conn, :index, offer_id: offer_id))
-                end
-              {:error, _changeset} ->
-                conn
-                |> put_flash(:error, "Error updating startpack!")
-                |> redirect(to: startpack_path(conn, :index))
-            end
+            |> redirect(to: startpack_path(conn, :index))
         end
     end
   end

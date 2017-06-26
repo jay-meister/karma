@@ -177,6 +177,7 @@ defmodule Karma.OfferController do
         edit_changeset = Offer.changeset(offer)
         startpack = Repo.get_by(Startpack, user_id: user.id)
         startpack =  Map.from_struct(startpack)
+        IO.inspect startpack.use_loan_out_company?
         changeset = Startpack.mother_changeset(%Startpack{}, startpack, offer)
         render(conn,
         "show.html",
@@ -288,6 +289,7 @@ defmodule Karma.OfferController do
               true ->
                 Karma.Email.send_offer_accepted_contractor(conn, offer)
                 |> Karma.Mailer.deliver_later()
+
 
                 # now merge data
                 case Merger.merge_multiple(offer, documents) do
