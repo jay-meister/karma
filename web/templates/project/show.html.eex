@@ -157,7 +157,7 @@
 <%= component "form_divider.html", title: "Signees" %>
 <%= if length(@signees) == 0 do %>
   <div class="tc k-bg-indigo white pa4 f2 br3 mb2">
-    You haven't added any signees to the project yet
+    Add signees to this document, in the order of approval
   </div>
 <% end %>
 <%= if length(@signees) != 0 do %>
