@@ -74,8 +74,8 @@ defmodule Karma.SigneeControllerTest do
 
   test "clear signees", %{conn: conn, project: project, document: document} do
     signee_1 = insert_signee(project)
-    signee_2 = insert_signee(project)
-    signee_3 = insert_signee(project)
+    signee_2 = insert_signee(project, %{email: "a_different@snailmail.com"})
+    signee_3 = insert_signee(project, %{email: "a_slug@snailmail.com"})
     insert_document_signee(document, signee_1)
     insert_document_signee(document, signee_2)
     insert_document_signee(document, signee_3)
