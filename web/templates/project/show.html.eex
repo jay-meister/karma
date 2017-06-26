@@ -168,7 +168,8 @@
         <div class="dib ml3"><%= signee.role %></div>
         <div class="dib ml3"><%= signee.email %></div>
         <%= link to: project_signee_path(@conn, :delete, @project, signee),
-          method: :delete do %>
+          method: :delete,
+          data: [confirm: "Are you sure?"] do %>
           <img class="absolute k-w2-5 k-top-center right-1" src="/images/delete.svg" />
         <% end %>
       </div>
