@@ -87,9 +87,11 @@ defmodule Karma.StartpackControllerTest do
       @valid_attrs
       |> Map.put("loan_out_company_cert_image",  loan_out_image)
 
-    conn = post conn, startpack_path(conn, :update, startpack, offer_id: offer.id), startpack: valid
-    assert redirected_to(conn) == startpack_path(conn, :index, offer_id: offer.id)
-    assert Repo.get_by(Startpack, user_id: user.id)
+    with_mock ExAws, [request!: fn(_) -> %{status_code: 200} end] do
+      conn = post conn, startpack_path(conn, :update, startpack, offer_id: offer.id), startpack: valid
+      assert redirected_to(conn) == startpack_path(conn, :index, offer_id: offer.id)
+      assert Repo.get_by(Startpack, user_id: user.id)
+    end
   end
 
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn, startpack: startpack} do
@@ -140,10 +142,12 @@ defmodule Karma.StartpackControllerTest do
       |> Map.delete("passport_url")
       |> Map.put("loan_out_company_cert_image",  loan_out_image)
 
-    conn = put conn, startpack_path(conn, :update, startpack), startpack: no_passport_image
-    assert redirected_to(conn) == startpack_path(conn, :index)
-    startpack = Repo.get_by(Startpack, user_id: user.id)
-    assert startpack.passport_url == "www.passport.com"
+    with_mock ExAws, [request!: fn(_) -> %{status_code: 200} end] do
+      conn = put conn, startpack_path(conn, :update, startpack), startpack: no_passport_image
+      assert redirected_to(conn) == startpack_path(conn, :index)
+      startpack = Repo.get_by(Startpack, user_id: user.id)
+      assert startpack.passport_url == "www.passport.com"
+    end
   end
 
   test "updates startpack with many file uploads", %{conn: conn, user: user, startpack: startpack} do
