@@ -38,7 +38,6 @@ defmodule Karma.StartpackController do
     image_changeset = Startpack.upload_type_validation(%Startpack{}, startpack_params)
     case image_changeset.valid? do
       false ->
-        IO.inspect image_changeset
         conn
         |> put_flash(:error, "Error updating startpack!")
         |> render("index.html", changeset: image_changeset, startpack: startpack, offer: %{}, user: user)
