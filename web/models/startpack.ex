@@ -56,6 +56,7 @@ defmodule Karma.Startpack do
     field :student_loan_plan_1?, :boolean, default: nil
     field :student_loan_finished_before_6_april?, :boolean, default: nil
     field :schedule_d_letter_url, :string
+    field :use_loan_out_company?, :string
     field :loan_out_company_registration_number, :string
     field :loan_out_company_address, :string
     field :loan_out_company_cert_url, :string
@@ -363,6 +364,7 @@ defmodule Karma.Startpack do
         struct
         |> cast(params, [:loan_out_company_registration_number, :loan_out_company_address, :loan_out_company_cert_image])
         |> validate_required([:loan_out_company_registration_number, :loan_out_company_address, :loan_out_company_cert_image])
+        |> Map.put(:action, :insert)
       "false" ->
         struct
         |> cast(params, [])
