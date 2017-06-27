@@ -6,7 +6,7 @@
   <div class="mb3">
     <%= if length(@document_signees) == 0 do %>
       <div class="tc k-bg-indigo white pa4 f2 br3">
-        You haven't added any signees to this document's approval chain yet
+        Add signees to this document, in the order of approval  
       </div>
     <% end %>
     <%= if length(@document_signees) != 0 do %>
