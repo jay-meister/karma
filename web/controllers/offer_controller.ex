@@ -286,6 +286,7 @@ defmodule Karma.OfferController do
                 |> put_flash(:info, "Offer rejected!")
                 |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
               true ->
+                initial_contract_type = offer.contract_type
                 contractor = Repo.get_by(User, email: offer.target_email) |> Repo.preload(:startpacks)
                 loan_out = contractor.startpacks.use_loan_out_company?
 
@@ -302,7 +303,7 @@ defmodule Karma.OfferController do
                   {:error, msg} ->
                     # Un-accept the offer so they can accept again when changes have been made
                     Repo.update(Ecto.Changeset.change(offer, %{accepted: nil}))
-
+                    Repo.update(Ecto.Changeset.change(offer, %{contract_type: initial_contract_type}))
                     conn
                     |> put_flash(:error, msg)
                     |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
