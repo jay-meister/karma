@@ -17,14 +17,15 @@ defmodule Karma.Sign do
         body = build_envelope_body(documents, signers)
         |> Poison.encode!()
 
-        case HTTPoison.post(url, body, headers(), recv_timeout: 10000) do
+        case HTTPoison.post(url, body, headers(), recv_timeout: 20000) do
           {:ok, %HTTPoison.Response{body: body, headers: _headers, status_code: 201}} ->
             %{"envelopeId" => envelope_id} = Poison.decode!(body)
             altered =
               AlteredDocument.signing_started_changeset(merged, %{envelope_id: envelope_id})
               |> Repo.update!()
             {:ok, altered}
-          _error ->
+          error ->
+            IO.inspect error
             {:error, "Error making signature request"}
         end
     end
@@ -48,8 +49,12 @@ defmodule Karma.Sign do
 
 
   def prepare_document(encoded, merged, original, user) do
-    [%{"documentId": merged.id,
+    [%{"documentId": "1",
        "name": "#{user.first_name}-#{user.last_name}-#{original.name}-#{merged.offer_id}.pdf",
+       "documentBase64": encoded
+    },
+    %{"documentId": "2",
+       "name": "second.pdf",
        "documentBase64": encoded
     }]
   end
@@ -76,20 +81,27 @@ defmodule Karma.Sign do
 
   def format_approval_chain(signees) do
     # format from signee struct to usable map (name and email keys)
-    signees
+    signees = signees
     |> Enum.map(&Map.from_struct/1)
     |> Enum.map(&Map.take(&1, [:email, :name]))
+
+    exclusion = %{excludedDocuments: ["2"]}
+    signee = Map.merge(hd(signees), exclusion)
+    [signee] ++ signees
   end
 
+
   def add_contractor_to_chain(chain, user) do
-    user = %{email: user.email, name: "#{user.first_name} #{user.last_name}"}
+    user = %{excludedDocuments: ["2"], email: user.email, name: "#{user.first_name} #{user.last_name}"}
     [user] ++ chain
   end
 
 
   def add_index_to_chain(chain) do
     chain
+    |> IO.inspect
     |> Enum.with_index()
+    |> IO.inspect
     |> Enum.map(fn({signee, index}) ->
         Map.merge(signee, %{"recipientId": index + 1, "routingOrder": index + 1})
       end)
@@ -135,7 +147,8 @@ defmodule Karma.Sign do
       "emailBlurb": "Please sign the document using link provided.",
       "recipients": %{"signers": chain},
       "documents": documents,
-      "status": "sent"
+      "status": "sent",
+      "envelopeDefinition": %{"enforceSignerVisibility": true}
     }
   end
 end
