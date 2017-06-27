@@ -67,7 +67,7 @@ defmodule Karma.ViewHelpersTest do
   test "check_loan_out with user" do
     contractor = insert_user(%{email: "test@email.co.uk"})
     update_startpack(contractor, %{use_loan_out_company?: true})
-    contract = ViewHelpers.check_loan_out("PAYE", "test@email.co.uk")
+    contract = ViewHelpers.check_loan_out("PAYE", contractor.user_id)
     assert contract == "LOAN OUT"
   end
 end

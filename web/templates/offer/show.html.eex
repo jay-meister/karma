@@ -130,7 +130,7 @@
     {:target_email, "Recipient email", nil},
     {:department, nil, nil},
     {:job_title, nil, nil},
-    {:contract_type, nil, check_loan_out(@offer.contract_type, @offer.target_email)},
+    {:contract_type, nil, check_loan_out(@offer.contract_type, @offer.user_id)},
     {:start_date, "Shoot start date", format_date(@offer.start_date)},
     {:daily_or_weekly, nil, nil},
     {:working_week, nil, nil},

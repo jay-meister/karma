@@ -2,8 +2,8 @@ defmodule Karma.ViewHelpers do
 
   alias Karma.{User, Repo}
 
-  def check_loan_out(contract, target_email) do
-    case Repo.get_by(User, email: target_email) do
+  def check_loan_out(contract, user_id) do
+    case Repo.get(User, user_id) do
       nil ->
         contract
       user ->
