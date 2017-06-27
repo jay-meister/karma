@@ -19,8 +19,8 @@
       </div>
     </div>
     <div class="h1 pt2" id="filename-container-<%= assigns[:atom] %>"></div>
-  <div><%= error_tag assigns[:form], assigns[:url_atom] %></div>
-  <div><%= error_tag assigns[:form], assigns[:atom] %></div>
+  <div class="mt3"><%= error_tag assigns[:form], assigns[:url_atom] %></div>
+  <div class="mt3"><%= error_tag assigns[:form], assigns[:atom] %></div>
 
 </div>
 

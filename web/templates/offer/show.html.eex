@@ -93,6 +93,20 @@
 <% end %>
 
 <h2>Offer for <%= @offer.target_email %></h2>
+<%= if @is_pm? && @offer.accepted do %>
+<%= component "form_divider.html", title: "Contractor supporting documents" %>
+  <div class="tc">
+    <%= for {name, document, condition} <- @supporting_documents do %>
+      <%= if condition do %>
+        <div class="tc mt3 dib ma2">
+          <img src="/images/pdf.svg" class="w5" />
+          <div class="mt2 mb2"><%= name %></div>
+          <%= component "button.html", title: "Download", link: document %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
 <ul class="list pl0">
   <%= component "form_divider.html", title: "Project info" %>
   <%= for {atom, label, formatted} <- [
