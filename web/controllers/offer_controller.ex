@@ -259,9 +259,11 @@ defmodule Karma.OfferController do
 
     project = Repo.get(Project, project_id) |> Repo.preload(:user)
     changeset = Offer.offer_response_changeset(offer, offer_params)
+    contractor = Repo.get_by(User, email: offer.target_email) |> Repo.preload(:startpacks)
+    loan_out = contractor.startpacks.use_loan_out_company?
 
     # get the relevant original forms for merging
-    form_query = Karma.Controllers.Helpers.get_forms_for_merging(offer)
+    form_query = Karma.Controllers.Helpers.get_forms_for_merging(offer, loan_out)
     documents = Repo.all(form_query)
 
     # check if there is a document to be merged
@@ -287,8 +289,6 @@ defmodule Karma.OfferController do
                 |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
               true ->
                 initial_contract_type = offer.contract_type
-                contractor = Repo.get_by(User, email: offer.target_email) |> Repo.preload(:startpacks)
-                loan_out = contractor.startpacks.use_loan_out_company?
 
                 if loan_out do
                   Repo.update(Ecto.Changeset.change(offer, %{contract_type: "LOAN OUT"}))
