@@ -54,7 +54,7 @@ defmodule Karma.User do
 
     struct
     |> changeset(params)
-    |> cast_assoc(:startpacks)
+    |> cast_assoc(:startpacks, required: true)
     |> terms_accepted(params)
     |> validate_password()
     |> put_password_hash()
