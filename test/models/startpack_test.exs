@@ -244,6 +244,19 @@ defmodule Karma.StartpackTest do
     assert changeset.valid?
   end
 
+  test "mother_changeset loan out true" do
+    with_allowances = %{project_id: 1,
+      box_rental_required?: true,
+      equipment_rental_required?: true,
+      box_rental_cap: 2000, # should fail as equipment rental is required
+      equipment_rental_cap: 2000 # should fail as equipment rental is required
+    }
+    valid_attrs_loan_out_true = Map.put(@valid_box_equipment_agent_attrs, :use_loan_out_company?, true)
+    offer = default_offer(with_allowances)
+    changeset = Startpack.mother_changeset(%Startpack{}, valid_attrs_loan_out_true, offer)
+    assert changeset.valid?
+  end
+
 
 
   # base changeset tests (unconditional required fields)

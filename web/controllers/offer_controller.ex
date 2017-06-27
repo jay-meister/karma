@@ -287,6 +287,13 @@ defmodule Karma.OfferController do
                 |> put_flash(:info, "Offer rejected!")
                 |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
               true ->
+                contractor = Repo.get_by(User, email: offer.target_email) |> Repo.preload(:startpacks)
+                loan_out = contractor.startpacks.use_loan_out_company?
+
+                if loan_out do
+                  Repo.update(Ecto.Changeset.change(offer, %{contract_type: "LOAN OUT"}))
+                end
+
                 Karma.Email.send_offer_accepted_contractor(conn, offer)
                 |> Karma.Mailer.deliver_later()
 
