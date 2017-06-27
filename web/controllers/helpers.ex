@@ -27,9 +27,9 @@ defmodule Karma.Controllers.Helpers do
     Ecto.assoc(document, :signees)
   end
 
-  def get_forms_for_merging(offer, loan_out) do
+  def get_forms_for_merging(offer) do
     Document
-    |> Document.get_contract(offer, loan_out)
+    |> Document.get_contract(offer)
     |> Document.get_conditional_form(offer, offer.box_rental_required?, "BOX RENTAL FORM")
     |> Document.get_conditional_form(offer, offer.equipment_rental_required?, "EQUIPMENT RENTAL FORM")
     |> Document.get_conditional_form(offer, offer.vehicle_allowance_per_week > 0, "VEHICLE ALLOWANCE FORM")

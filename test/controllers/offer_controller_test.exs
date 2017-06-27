@@ -307,7 +307,7 @@ defmodule Karma.OfferControllerTest do
     _equipment_rental_form = insert_document(project, %{name: "EQUIPMENT RENTAL FORM"})
     _vehicle_allowance_form = insert_document(project, %{name: "VEHICLE ALLOWANCE FORM"})
 
-    query = Karma.Controllers.Helpers.get_forms_for_merging(offer, false)
+    query = Karma.Controllers.Helpers.get_forms_for_merging(offer)
     docs = Repo.all(query)
 
     document_names = docs |> Enum.map(&Map.get(&1, :name)) |> Enum.sort()
