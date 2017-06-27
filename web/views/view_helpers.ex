@@ -3,10 +3,11 @@ defmodule Karma.ViewHelpers do
   alias Karma.{User, Repo}
 
   def check_loan_out(contract, user_id) do
-    case Repo.get(User, user_id) do
-      nil ->
+    case user_id == nil do
+      true ->
         contract
-      user ->
+      false ->
+        user = Repo.get(User, user_id)
         loaded_user = user |> Repo.preload(:startpacks)
         case loaded_user.startpacks.use_loan_out_company? do
           true ->
