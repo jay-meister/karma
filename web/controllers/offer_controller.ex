@@ -177,7 +177,6 @@ defmodule Karma.OfferController do
         edit_changeset = Offer.changeset(offer)
         startpack = Repo.get_by(Startpack, user_id: user.id)
         startpack =  Map.from_struct(startpack)
-        IO.inspect startpack.use_loan_out_company?
         changeset = Startpack.mother_changeset(%Startpack{}, startpack, offer)
         render(conn,
         "show.html",
