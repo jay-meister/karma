@@ -157,6 +157,28 @@ defmodule Karma.OfferController do
 
   def show(conn, %{"project_id" => project_id, "id" => id}) do
     offer = conn.assigns.offer
+    contractor =
+      case offer.accepted do
+        true ->
+          Repo.get(User, offer.user_id) |> Repo.preload(:startpacks)
+        _not_true ->
+          %{}
+      end
+    supporting_documents =
+      case offer.accepted do
+        true ->
+          [
+            {"Passport image", contractor.startpacks.passport_url, true},
+            {"Equipment rental list", contractor.startpacks.equipment_rental_url, offer.equipment_rental_required?},
+            {"Box rental list", contractor.startpacks.box_rental_url, offer.box_rental_required?},
+            {"Vehicle insureance image", contractor.startpacks.vehicle_insurance_url, offer.vehicle_allowance_per_week > 0},
+            {"Schedule d letter", contractor.startpacks.schedule_d_letter_url, offer.contract_type == "SCHEDULE D"},
+            {"Loan out company certificate", contractor.startpacks.loan_out_company_cert_url, contractor.startpacks.use_loan_out_company?},
+            {"P45 image", contractor.startpacks.p45_url, offer.contract_type == "PAYE"},
+          ]
+        _not_true ->
+          []
+      end
     user = conn.assigns.current_user
     project = Repo.get(Project, project_id)
 
@@ -172,7 +194,13 @@ defmodule Karma.OfferController do
     case offer.user_id do
       nil ->
         changeset = Startpack.changeset(%Startpack{})
-        render(conn, "show.html", project_id: project_id, changeset: changeset, contract: nil)
+        render(conn,
+        "show.html",
+        project_id: project_id,
+        changeset: changeset,
+        contract: nil,
+        contractor: contractor,
+        supporting_documents: supporting_documents)
       _ ->
         edit_changeset = Offer.changeset(offer)
         startpack = Repo.get_by(Startpack, user_id: user.id)
@@ -185,7 +213,9 @@ defmodule Karma.OfferController do
         edit_changeset: edit_changeset,
         info_documents: info_documents,
         deal_documents: deal_documents,
-        form_documents: form_documents
+        form_documents: form_documents,
+        contractor: contractor,
+        supporting_documents: supporting_documents
         )
     end
   end

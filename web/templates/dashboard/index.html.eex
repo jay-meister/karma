@@ -10,7 +10,6 @@
       <div class="br3 pa4 mb3 tc">
         <div class="f2">You haven't created any projects yet</div>
       </div>
-      <div class="w-50 k-h1px k-bg-indigo k-m-auto mb4 mt4"></div>
     <% end %>
   <%= if length(@projects) != 0 do %>
       <div class="br3 pv3 mb3">
@@ -31,7 +30,7 @@
 
 <div class="mb3 pt5 k-light-indigo bb f2 tl k-b-light-indigo">Offers</div>
 <%= if length(@offers) == 0 do %>
-  <div class="br3 pt5 pb3 mb3 tc">
+  <div class="br3 pt4 pb3 mb3 tc">
     <div class="f2">You don't have any offers yet</div>
   </div>
 <% end %>
