@@ -47,4 +47,20 @@ defmodule Karma.ViewHelpersTest do
 
     assert formatted_address == "Company address 2"
   end
+
+  test "get_thumbnail function" do
+    url = ViewHelpers.get_thumbnail("aaa.pdf")
+    assert url == "/images/pdf.svg"
+
+    url = ViewHelpers.get_thumbnail("aaa")
+    assert url == "aaa"
+  end
+
+  test "get_thumbnail_style function" do
+    class = ViewHelpers.get_thumbnail_style("aaa.pdf")
+    assert class == "absolute k-left--05 h5 mb3 db w4 k-top--4"
+
+    class = ViewHelpers.get_thumbnail_style("aaa")
+    assert class == "h5 mb3 db"
+  end
 end
