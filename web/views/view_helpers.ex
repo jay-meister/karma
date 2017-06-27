@@ -1,5 +1,23 @@
 defmodule Karma.ViewHelpers do
 
+  alias Karma.{User, Repo}
+
+  def check_loan_out(contract, user_id) do
+    case user_id == nil do
+      true ->
+        contract
+      false ->
+        user = Repo.get(User, user_id)
+        loaded_user = user |> Repo.preload(:startpacks)
+        case loaded_user.startpacks.use_loan_out_company? do
+          true ->
+            "LOAN OUT"
+          false ->
+            contract
+        end
+    end
+  end
+
   def get_offers(project, eval) do
     Integer.to_string(length(Enum.filter(project.offers, fn(offer) -> offer.accepted == eval end)))
   end

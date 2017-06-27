@@ -379,25 +379,34 @@
   conn: @conn
   %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :loan_out_company_registration_number
-  %>
+  <div conditional class="mb4">
+    <%= label f, :use_loan_out_company?, "Check the box if you deal through a loan out company", class: "dib mw-100 mb2 fw4" %>
+    <%= checkbox f, :use_loan_out_company?, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
+    <%= error_tag f, :use_loan_out_company? %>
 
-  <%= component "textarea.html",
-  form: f,
-  atom: :loan_out_company_address
-  %>
+    <div conditional_child class="mt4">
 
-  <%= component "file_upload.html",
-  form: f,
-  atom: :loan_out_company_cert_image,
-  url_atom: :loan_out_company_cert_url,
-  helper_text: "Upload a file of your loan out company certificate",
-  file_types: "pdf, jpeg, png",
-  image_url: @startpack.loan_out_company_cert_url,
-  conn: @conn
-  %>
+      <%= component "input.html",
+      form: f,
+      atom: :loan_out_company_registration_number
+      %>
+
+      <%= component "textarea.html",
+      form: f,
+      atom: :loan_out_company_address
+      %>
+
+      <%= component "file_upload.html",
+      form: f,
+      atom: :loan_out_company_cert_image,
+      url_atom: :loan_out_company_cert_url,
+      helper_text: "Upload a file of your loan out company certificate",
+      file_types: "pdf, jpeg, png",
+      image_url: @startpack.loan_out_company_cert_url,
+      conn: @conn
+      %>
+    </div>
+  </div>
 
   <%= component "input.html",
   form: f,

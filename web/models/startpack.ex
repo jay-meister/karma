@@ -56,6 +56,7 @@ defmodule Karma.Startpack do
     field :student_loan_plan_1?, :boolean, default: nil
     field :student_loan_finished_before_6_april?, :boolean, default: nil
     field :schedule_d_letter_url, :string
+    field :use_loan_out_company?, :boolean, default: true, null: false
     field :loan_out_company_registration_number, :string
     field :loan_out_company_address, :string
     field :loan_out_company_cert_url, :string
@@ -149,7 +150,8 @@ defmodule Karma.Startpack do
       :bank_account_number,
       :bank_sort_code,
       :bank_iban,
-      :bank_swift_code])
+      :bank_swift_code,
+      :use_loan_out_company?])
   end
 
   def base_requirements do
@@ -234,6 +236,7 @@ defmodule Karma.Startpack do
     |> vehicle_allowance_changeset(startpack, offer)
     |> student_loan_changeset(startpack)
     |> contract_type_changeset(startpack, offer)
+    |> loan_out_changeset(startpack)
   end
 
   def base_requirement_changeset(changeset, startpack) do
@@ -355,5 +358,16 @@ defmodule Karma.Startpack do
           |> Map.put(:action, :insert)
       end
      end)
+  end
+
+  def loan_out_changeset(struct, startpack) do
+    case startpack.use_loan_out_company? do
+      true ->
+        struct
+        |> cast(startpack, [:use_loan_out_company?, :loan_out_company_registration_number, :loan_out_company_address, :loan_out_company_cert_url])
+        |> validate_required([:use_loan_out_company?, :loan_out_company_registration_number, :loan_out_company_address, :loan_out_company_cert_url])
+      false ->
+        struct
+    end
   end
 end

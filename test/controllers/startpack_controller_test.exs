@@ -52,6 +52,7 @@ defmodule Karma.StartpackControllerTest do
     student_loan_finished_before_6_april?: true,
     agent_company: "some content",
     primary_address_2: "some content",
+    use_loan_out_company?: "true",
     loan_out_company_registration_number: "some content",
     loan_out_company_address: "some content",
     loan_out_company_cert_url: "some content",
@@ -63,8 +64,6 @@ defmodule Karma.StartpackControllerTest do
     bank_iban: "some content",
     bank_swift_code: "some content"
     }
-  @invalid_attrs %{user_id: nil}
-
 
   setup do
     user = insert_user()
@@ -80,9 +79,16 @@ defmodule Karma.StartpackControllerTest do
   end
 
   test "updates chosen resource and redirects when data is valid", %{conn: conn, user: user, offer: offer} do
-    conn = post conn, startpack_path(conn, :update, user.startpacks, offer_id: offer.id), startpack: @valid_attrs
-    assert redirected_to(conn) == startpack_path(conn, :index, offer_id: offer.id)
-    assert Repo.get_by(Startpack, user_id: user.id)
+    loan_out_image = %Plug.Upload{content_type: "image/png", path: "test/fixtures/foxy.png", filename: "foxy.png"}
+    valid =
+      @valid_attrs
+      |> Map.put("loan_out_company_cert_image",  loan_out_image)
+
+    with_mock ExAws, [request!: fn(_) -> %{status_code: 200} end] do
+      conn = post conn, startpack_path(conn, :update, user.startpacks, offer_id: offer.id), startpack: valid
+      assert redirected_to(conn) == startpack_path(conn, :index, offer_id: offer.id)
+      assert Repo.get_by(Startpack, user_id: user.id)
+    end
   end
 
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn, user: user} do
@@ -102,7 +108,11 @@ defmodule Karma.StartpackControllerTest do
 
   test "updates startpack and file is uploaded", %{conn: conn, user: user} do
     image_upload = %Plug.Upload{content_type: "image/png", path: "test/fixtures/foxy.png", filename: "foxy.png"}
-    valid = Map.put(@valid_attrs, "passport_image",  image_upload)
+    loan_out_image = %Plug.Upload{content_type: "image/png", path: "test/fixtures/foxy.png", filename: "foxy.png"}
+    valid =
+      @valid_attrs
+      |> Map.put("passport_image",  image_upload)
+      |> Map.put("loan_out_company_cert_image",  loan_out_image)
 
     with_mock ExAws, [request!: fn(_) -> %{status_code: 200} end] do
       conn = put conn, startpack_path(conn, :update, user.startpacks), startpack: valid
@@ -116,11 +126,18 @@ defmodule Karma.StartpackControllerTest do
     user = insert_user(%{email: "new@test.com"})
     _startpack = update_startpack(user, %{passport_url: "www.passport.com"})
     conn = login_user(build_conn(), user)
-    no_passport_image = Map.delete(@valid_attrs, "passport_url")
-    conn = put conn, startpack_path(conn, :update, user.startpacks), startpack: no_passport_image
-    assert redirected_to(conn) == startpack_path(conn, :index)
-    startpack = Repo.get_by(Startpack, user_id: user.id)
-    assert startpack.passport_url == "www.passport.com"
+    loan_out_image = %Plug.Upload{content_type: "image/png", path: "test/fixtures/foxy.png", filename: "foxy.png"}
+    no_passport_image =
+      @valid_attrs
+      |> Map.delete("passport_url")
+      |> Map.put("loan_out_company_cert_image",  loan_out_image)
+
+    with_mock ExAws, [request!: fn(_) -> %{status_code: 200} end] do
+      conn = put conn, startpack_path(conn, :update, user.startpacks), startpack: no_passport_image
+      assert redirected_to(conn) == startpack_path(conn, :index)
+      startpack = Repo.get_by(Startpack, user_id: user.id)
+      assert startpack.passport_url == "www.passport.com"
+    end
   end
 
   test "updates startpack with many file uploads", %{conn: conn, user: user} do
@@ -153,7 +170,11 @@ defmodule Karma.StartpackControllerTest do
 
   test "file uploads are restricted by file type", %{conn: conn, user: user} do
     image_upload = %Plug.Upload{content_type: "image/txt", path: "test/fixtures/foxy.png", filename: "foxy.png"}
-    invalid = Map.put(@valid_attrs, "passport_image",  image_upload)
+    loan_out_image = %Plug.Upload{content_type: "image/png", path: "test/fixtures/foxy.png", filename: "foxy.png"}
+    invalid =
+      @valid_attrs
+      |> Map.put("passport_image",  image_upload)
+      |> Map.put("loan_out_company_cert_image",  loan_out_image)
 
     conn = put conn, startpack_path(conn, :update, user.startpacks), startpack: invalid
     assert html_response(conn, 200) =~ ".png .jpg .pdf only"
@@ -161,7 +182,12 @@ defmodule Karma.StartpackControllerTest do
 
   test "updates chosen resource even if file upload errors", %{conn: conn, user: user} do
     image_upload = %Plug.Upload{content_type: "image/png", path: "test/fixtures/foxy.png", filename: "foxy.png"}
-    valid = Map.put(@valid_attrs, "passport_image",  image_upload)
+    loan_out_image = %Plug.Upload{content_type: "image/png", path: "test/fixtures/foxy.png", filename: "foxy.png"}
+
+    valid =
+      @valid_attrs
+      |> Map.put("passport_image",  image_upload)
+      |> Map.put("loan_out_company_cert_image",  loan_out_image)
 
     with_mock ExAws, [request!: fn(_) -> %{status_code: 500} end] do
       conn = put conn, startpack_path(conn, :update, user.startpacks), startpack: valid

@@ -170,7 +170,8 @@ defmodule Karma.StartpackTest do
       passport_url:  "some content",
       agent_address: "some content",
       agent_bank_account_number: "some content",
-      agent_bank_account_name: "some content"
+      agent_bank_account_name: "some content",
+      use_loan_out_company?: false
     }
 
   test "changeset with valid attributes" do
@@ -232,6 +233,19 @@ defmodule Karma.StartpackTest do
     }
     offer = default_offer(with_allowances)
     changeset = Startpack.mother_changeset(%Startpack{}, @valid_box_equipment_agent_attrs, offer)
+    assert changeset.valid?
+  end
+
+  test "mother_changeset loan out true" do
+    with_allowances = %{project_id: 1,
+      box_rental_required?: true,
+      equipment_rental_required?: true,
+      box_rental_cap: 2000, # should fail as equipment rental is required
+      equipment_rental_cap: 2000 # should fail as equipment rental is required
+    }
+    valid_attrs_loan_out_true = Map.put(@valid_box_equipment_agent_attrs, :use_loan_out_company?, true)
+    offer = default_offer(with_allowances)
+    changeset = Startpack.mother_changeset(%Startpack{}, valid_attrs_loan_out_true, offer)
     assert changeset.valid?
   end
 

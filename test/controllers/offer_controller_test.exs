@@ -246,7 +246,8 @@ defmodule Karma.OfferControllerTest do
 
   test "offer accepted, merged documents success", %{project: project} do
     contractor = insert_user(%{email: "contractor@gmail.com"})
-    offer = insert_offer(project, %{user_id: contractor.id})
+    offer = insert_offer(project, %{user_id: contractor.id, target_email: "contractor@gmail.com"})
+    update_startpack(contractor, %{use_loan_out_company?: true})
     insert_document(project, %{name: offer.contract_type, url: "www.image_url"})
     conn = login_user(build_conn(), contractor)
     with_mock Karma.Mailer, [deliver_later: fn(string) -> string end] do
@@ -260,7 +261,8 @@ defmodule Karma.OfferControllerTest do
 
   test "offer accepted, merged document failure", %{project: project} do
     contractor = insert_user(%{email: "contractor@gmail.com"})
-    offer = insert_offer(project, %{user_id: contractor.id})
+    offer = insert_offer(project, %{user_id: contractor.id, target_email: "contractor@gmail.com"})
+    update_startpack(contractor)
     insert_document(project, %{name: offer.contract_type, url: "www.image_url"})
     conn = login_user(build_conn(), contractor)
     with_mock Karma.Mailer, [deliver_later: fn(string) -> string end] do

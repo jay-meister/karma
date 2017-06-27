@@ -244,6 +244,7 @@ defmodule Karma.TestHelpers do
     student_loan_finished_before_6_april?: true,
     agent_company: "some content",
     primary_address_2: "some content",
+    use_loan_out_company?: "false",
     loan_out_company_registration_number: "some content",
     loan_out_company_address: "some content",
     loan_out_company_cert_url: "some content",
