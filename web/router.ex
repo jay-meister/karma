@@ -29,7 +29,7 @@ defmodule Karma.Router do
   scope "/", Karma do
     pipe_through [:browser, :authenticate]
     post "/startpack/:id", StartpackController, :update
-    resources "/startpack", StartpackController, except: [:new, :create]
+    resources "/startpack", StartpackController, except: [:new, :create, :delete]
     resources "/projects", ProjectController do
       resources "/documents", DocumentController do
         get "/signees/new", SigneeController, :add

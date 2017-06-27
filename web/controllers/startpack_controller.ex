@@ -64,19 +64,6 @@ defmodule Karma.StartpackController do
     end
   end
 
-
-  def delete(conn, %{"id" => id}, _user) do
-    startpack = Repo.get!(Startpack, id)
-
-    # Here we use delete! (with a bang) because we expect
-    # it to always work (and if it does not, it will raise).
-    Repo.delete!(startpack)
-
-    conn
-    |> put_flash(:info, "Startpack deleted successfully.")
-    |> redirect(to: startpack_path(conn, :index))
-  end
-
   def action(conn, _) do
     apply(__MODULE__, action_name(conn),
           [conn, conn.params, conn.assigns.current_user])

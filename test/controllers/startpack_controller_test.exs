@@ -90,13 +90,6 @@ defmodule Karma.StartpackControllerTest do
     assert redirected_to(conn, 302) =~ "/startpack"
   end
 
-  test "deletes chosen resource", %{conn: conn} do
-    startpack = Repo.insert! %Startpack{}
-    conn = delete conn, startpack_path(conn, :delete, startpack)
-    assert redirected_to(conn) == startpack_path(conn, :index)
-    refute Repo.get(Startpack, startpack.id)
-  end
-
   test "offer id that doesn't exist :index", %{conn: conn} do
     conn = get conn, "/startpack?offer_id=1000"
     assert html_response(conn, 200) =~ "Edit startpack"
