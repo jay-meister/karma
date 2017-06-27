@@ -3,7 +3,7 @@ defmodule Karma.UserController do
 
   plug :authenticate when action in [:index, :show, :edit, :update, :delete]
 
-  alias Karma.{User, LayoutView, Startpack}
+  alias Karma.{User, LayoutView}
 
   def index(conn, _params) do
     users = Repo.all(User)
@@ -16,16 +16,14 @@ defmodule Karma.UserController do
   end
 
   def create(conn, %{"user" => user_params}) do
+    # add startpack to the user
+    user_params = Map.merge(%{"startpacks" => %{}}, user_params)
     changeset = User.registration_changeset(%User{}, user_params)
 
     case Repo.insert(changeset) do
       {:ok, user} ->
         Karma.Email.send_verification_email(user)
         |> Karma.Mailer.deliver_later()
-
-        # add startpack to user
-        startpack_changeset = Startpack.changeset(%Startpack{}, %{user_id: user.id})
-        Repo.insert(startpack_changeset)
 
         # update offers user_id to all offers for this user
         from(o in Karma.Offer, where: o.target_email == ^user.email)

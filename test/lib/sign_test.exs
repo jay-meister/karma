@@ -79,8 +79,8 @@ defmodule Karma.SignTest do
     envelope_body = Sign.build_envelope_body(["doc1", "doc2"], chain)
 
     assert envelope_body == %{
-      "emailSubject": "DocuSign test",
-      "emailBlurb": "Shows how to create and send an envelope from a document.",
+      "emailSubject": "Karma document sign",
+      "emailBlurb": "Please sign the document using link provided.",
       "recipients": %{
         "signers": %{
           signee_1: "Signee 1",

@@ -50,37 +50,18 @@ defmodule Karma.StartpackController do
 
         offer_id = Map.get(conn.query_params, "offer_id", "")
 
-        case Repo.update(changeset) do
-          {:ok, _startpack} ->
-            case offer_id == "" do
-              true ->
-                conn
-                |> put_flash(:info, "Startpack updated successfully!")
-                |> redirect(to: startpack_path(conn, :index))
-              false ->
-                conn
-                |> put_flash(:info, "Startpack updated successfully!")
-                |> redirect(to: startpack_path(conn, :index, offer_id: offer_id))
-            end
-          {:error, _changeset} ->
+        _startpack = Repo.update!(changeset)
+        case offer_id == "" do
+          true ->
             conn
-            |> put_flash(:error, "Error updating startpack!")
+            |> put_flash(:info, "Startpack updated successfully!")
             |> redirect(to: startpack_path(conn, :index))
+          false ->
+            conn
+            |> put_flash(:info, "Startpack updated successfully!")
+            |> redirect(to: startpack_path(conn, :index, offer_id: offer_id))
         end
     end
-  end
-
-
-  def delete(conn, %{"id" => id}, _user) do
-    startpack = Repo.get!(Startpack, id)
-
-    # Here we use delete! (with a bang) because we expect
-    # it to always work (and if it does not, it will raise).
-    Repo.delete!(startpack)
-
-    conn
-    |> put_flash(:info, "Startpack deleted successfully.")
-    |> redirect(to: startpack_path(conn, :index))
   end
 
   def action(conn, _) do

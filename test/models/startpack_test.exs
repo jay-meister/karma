@@ -75,7 +75,6 @@ defmodule Karma.StartpackTest do
     agent_bank_account_number: "some content",
     agent_bank_account_name: "some content"
     }
-    @invalid_attrs %{}
 
     @valid_box_attrs %{
       box_rental_url: "box_url.com/image",
@@ -179,13 +178,6 @@ defmodule Karma.StartpackTest do
     changeset = Startpack.changeset(%Startpack{}, @valid_attrs)
     assert changeset.valid?
   end
-
-  test "changeset with invalid attributes" do
-    changeset = Startpack.changeset(%Startpack{}, @invalid_attrs)
-    refute changeset.valid?
-  end
-
-
 
 
 

@@ -14,7 +14,7 @@ defmodule Karma.MergerTest do
 
   test "get all data for merge" do
     contractor = insert_user(%{email: "contractor@gmail.com"})
-    startpack = insert_startpack(%{user_id: contractor.id})
+    startpack = update_startpack(contractor, %{gender: "other"})
     project = insert_project(contractor)
     offer = insert_offer(project, %{user_id: contractor.id, target_email: contractor.email})
     data = Merger.get_data_for_merge(offer)
@@ -70,7 +70,7 @@ defmodule Karma.MergerTest do
     pm = insert_user()
     project = insert_project(pm)
     contractor = insert_user(%{email: "contractor@gmail.com"})
-    insert_startpack(%{user_id: contractor.id})
+    _startpack = update_startpack(contractor, default_startpack())
     offer = insert_offer(project, %{user_id: contractor.id})
     document = insert_document(project, %{name: offer.contract_type, url: "www.image_url.pdf"})
 
@@ -86,7 +86,7 @@ defmodule Karma.MergerTest do
     pm = insert_user()
     project = insert_project(pm)
     contractor = insert_user(%{email: "contractor@gmail.com"})
-    insert_startpack(%{user_id: contractor.id})
+    _startpack = update_startpack(contractor)
     offer = insert_offer(project, %{user_id: contractor.id})
     document = insert_document(project, %{name: offer.contract_type, url: "www.image_url.pdf"})
 
@@ -105,7 +105,7 @@ defmodule Karma.MergerTest do
     pm = insert_user()
     project = insert_project(pm)
     contractor = insert_user(%{email: "contractor@gmail.com"})
-    insert_startpack(%{user_id: contractor.id})
+    _startpack = update_startpack(contractor)
     offer = insert_offer(project, %{user_id: contractor.id})
     document = insert_document(project, %{name: offer.contract_type, url: "www.image_url.pdf"})
 
@@ -124,7 +124,7 @@ defmodule Karma.MergerTest do
     pm = insert_user()
     project = insert_project(pm)
     contractor = insert_user(%{email: "contractor@gmail.com"})
-    insert_startpack(%{user_id: contractor.id})
+    _startpack = update_startpack(contractor)
     offer = insert_offer(project, %{user_id: contractor.id, box_rental_required?: false, equipment_rental_required?: false})
     document = insert_document(project, %{name: offer.contract_type, url: "www.image_url.pdf"})
 
@@ -143,7 +143,7 @@ defmodule Karma.MergerTest do
     pm = insert_user()
     project = insert_project(pm)
     contractor = insert_user(%{email: "contractor@gmail.com"})
-    insert_startpack(%{user_id: contractor.id})
+    _startpack = update_startpack(contractor)
     offer = insert_offer(project, %{user_id: contractor.id, box_rental_required?: false, equipment_rental_required?: false})
     document_1 = insert_document(project, %{name: offer.contract_type, url: "www.image_url.pdf"})
     document_2 = insert_document(project, %{name: offer.contract_type, url: "www.image_url.pdf"})

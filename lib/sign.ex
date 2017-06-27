@@ -17,7 +17,7 @@ defmodule Karma.Sign do
         body = build_envelope_body(documents, signers)
         |> Poison.encode!()
 
-        case HTTPoison.post(url, body, headers(), timeout: 20000) do
+        case HTTPoison.post(url, body, headers(), recv_timeout: 10000) do
           {:ok, %HTTPoison.Response{body: body, headers: _headers, status_code: 201}} ->
             %{"envelopeId" => envelope_id} = Poison.decode!(body)
             altered =
@@ -131,8 +131,8 @@ defmodule Karma.Sign do
 
   def build_envelope_body(documents, chain) do
     %{
-      "emailSubject": "DocuSign test",
-      "emailBlurb": "Shows how to create and send an envelope from a document.",
+      "emailSubject": "Karma document sign",
+      "emailBlurb": "Please sign the document using link provided.",
       "recipients": %{"signers": chain},
       "documents": documents,
       "status": "sent"
