@@ -70,9 +70,8 @@ defmodule Karma.StartpackControllerTest do
     user = insert_user()
     project = insert_project(user)
     offer = insert_offer(project)
-    startpack = insert_startpack(%{user_id: user.id})
     conn = login_user(build_conn(), user)
-    {:ok, conn: conn, user: user, project: project, startpack: startpack, offer: offer}
+    {:ok, conn: conn, user: user, project: project, offer: offer}
   end
 
   test "edit startpack view on index", %{conn: conn} do
@@ -80,22 +79,15 @@ defmodule Karma.StartpackControllerTest do
     assert html_response(conn, 200) =~ "Edit startpack"
   end
 
-  test "updates chosen resource and redirects when data is valid", %{conn: conn, user: user, startpack: startpack, offer: offer} do
-    conn = post conn, startpack_path(conn, :update, startpack, offer_id: offer.id), startpack: @valid_attrs
+  test "updates chosen resource and redirects when data is valid", %{conn: conn, user: user, offer: offer} do
+    conn = post conn, startpack_path(conn, :update, user.startpacks, offer_id: offer.id), startpack: @valid_attrs
     assert redirected_to(conn) == startpack_path(conn, :index, offer_id: offer.id)
     assert Repo.get_by(Startpack, user_id: user.id)
   end
 
-  test "does not update chosen resource and renders errors when data is invalid", %{conn: conn, startpack: startpack} do
-    conn = post conn, startpack_path(conn, :update, startpack), startpack: @invalid_attrs
+  test "does not update chosen resource and renders errors when data is invalid", %{conn: conn, user: user} do
+    conn = post conn, startpack_path(conn, :update, user.startpacks), startpack: %{}
     assert redirected_to(conn, 302) =~ "/startpack"
-  end
-
-  test "deletes chosen resource", %{conn: conn} do
-    startpack = Repo.insert! %Startpack{}
-    conn = delete conn, startpack_path(conn, :delete, startpack)
-    assert redirected_to(conn) == startpack_path(conn, :index)
-    refute Repo.get(Startpack, startpack.id)
   end
 
   test "offer id that doesn't exist :index", %{conn: conn} do
@@ -108,30 +100,30 @@ defmodule Karma.StartpackControllerTest do
     assert html_response(conn, 200) =~ "Edit startpack"
   end
 
-  test "updates startpack and file is uploaded", %{conn: conn, user: user, startpack: startpack} do
+  test "updates startpack and file is uploaded", %{conn: conn, user: user} do
     image_upload = %Plug.Upload{content_type: "image/png", path: "test/fixtures/foxy.png", filename: "foxy.png"}
     valid = Map.put(@valid_attrs, "passport_image",  image_upload)
 
     with_mock ExAws, [request!: fn(_) -> %{status_code: 200} end] do
-      conn = put conn, startpack_path(conn, :update, startpack), startpack: valid
+      conn = put conn, startpack_path(conn, :update, user.startpacks), startpack: valid
       assert redirected_to(conn) == startpack_path(conn, :index)
       startpack = Repo.get_by(Startpack, user_id: user.id)
       assert startpack.passport_url
     end
   end
 
-  test "update startpack leaves image url in if no file is added", %{conn: _conn} do
+  test "update startpack leaves image url in if no file is added" do
     user = insert_user(%{email: "new@test.com"})
+    _startpack = update_startpack(user, %{passport_url: "www.passport.com"})
     conn = login_user(build_conn(), user)
-    startpack = Repo.insert! %Startpack{user_id: user.id, passport_url: "www.passport.com"}
     no_passport_image = Map.delete(@valid_attrs, "passport_url")
-    conn = put conn, startpack_path(conn, :update, startpack), startpack: no_passport_image
+    conn = put conn, startpack_path(conn, :update, user.startpacks), startpack: no_passport_image
     assert redirected_to(conn) == startpack_path(conn, :index)
     startpack = Repo.get_by(Startpack, user_id: user.id)
     assert startpack.passport_url == "www.passport.com"
   end
 
-  test "updates startpack with many file uploads", %{conn: conn, user: user, startpack: startpack} do
+  test "updates startpack with many file uploads", %{conn: conn, user: user} do
     image_upload = %Plug.Upload{content_type: "image/png", path: "test/fixtures/foxy.png", filename: "foxy.png"}
 
     # possible solution for multiple fields
@@ -148,10 +140,10 @@ defmodule Karma.StartpackControllerTest do
     valid = Map.merge(@valid_attrs, images)
 
     with_mock ExAws, [request!: fn(_) ->
-      Process.sleep(500)
+      Process.sleep(200)
       %{status_code: 200}
     end] do
-      conn = put conn, startpack_path(conn, :update, startpack), startpack: valid
+      conn = put conn, startpack_path(conn, :update, user.startpacks), startpack: valid
       assert redirected_to(conn) == startpack_path(conn, :index)
       startpack = Repo.get_by(Startpack, user_id: user.id)
       assert startpack.passport_url
@@ -159,20 +151,20 @@ defmodule Karma.StartpackControllerTest do
   end
 
 
-  test "file uploads are restricted by file type", %{conn: conn, startpack: startpack} do
+  test "file uploads are restricted by file type", %{conn: conn, user: user} do
     image_upload = %Plug.Upload{content_type: "image/txt", path: "test/fixtures/foxy.png", filename: "foxy.png"}
     invalid = Map.put(@valid_attrs, "passport_image",  image_upload)
 
-    conn = put conn, startpack_path(conn, :update, startpack), startpack: invalid
+    conn = put conn, startpack_path(conn, :update, user.startpacks), startpack: invalid
     assert html_response(conn, 200) =~ ".png .jpg .pdf only"
   end
 
-  test "updates chosen resource even if file upload errors", %{conn: conn, user: user, startpack: startpack} do
+  test "updates chosen resource even if file upload errors", %{conn: conn, user: user} do
     image_upload = %Plug.Upload{content_type: "image/png", path: "test/fixtures/foxy.png", filename: "foxy.png"}
     valid = Map.put(@valid_attrs, "passport_image",  image_upload)
 
     with_mock ExAws, [request!: fn(_) -> %{status_code: 500} end] do
-      conn = put conn, startpack_path(conn, :update, startpack), startpack: valid
+      conn = put conn, startpack_path(conn, :update, user.startpacks), startpack: valid
       assert redirected_to(conn) == startpack_path(conn, :index)
       startpack = Repo.get_by(Startpack, user_id: user.id)
       assert startpack.gender == valid.gender

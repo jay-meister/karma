@@ -133,7 +133,7 @@ defmodule Karma.OfferControllerTest do
 
   test "offers show (PM): shows an offer to existing user", %{conn: conn, project: project} do
     user = insert_user(%{email: "contractor@gmail.com"})
-    insert_startpack(%{user_id: user.id})
+    _startpack = update_startpack(user)
     offer = insert_offer(project, %{target_email: "contractor@gmail.com"})
     insert_document(project, %{category: "Info"})
     conn = get conn, project_offer_path(conn, :show, offer.project_id, offer)
@@ -143,7 +143,7 @@ defmodule Karma.OfferControllerTest do
 
   test "offers show: contractor can view their offer", %{project: project} do
     user = insert_user(%{email: "contractor@gmail.com"})
-    insert_startpack(%{user_id: user.id})
+    _startpack = update_startpack(user)
 
     conn = login_user(build_conn(), user)
 

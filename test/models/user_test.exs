@@ -4,7 +4,7 @@ defmodule Karma.UserTest do
   alias Karma.User
 
   @invalid_attrs %{}
-  @valid_account_creation %{email: "test@test.com", first_name: "Joe", last_name: "Blogs", password: "123456", terms_accepted: true}
+  @valid_account_creation %{email: "test@test.com", first_name: "Joe", last_name: "Blogs", password: "123456", terms_accepted: true, startpacks: %{}}
   @invalid_account_creation %{email: "testtest.com", first_name: "Joe", last_name: "Blogs", password: "12345"}
 
   # Generic user changeset tests

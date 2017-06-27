@@ -53,13 +53,13 @@ defmodule Karma.TestHelpers do
     |> Repo.insert!
   end
 
-  def insert_startpack(attrs \\ %{}) do
-    changes = Map.merge(default_startpack(), attrs)
+  def update_startpack(user, attrs \\ %{}) do
+    startpack = Map.merge(default_startpack(), attrs)
 
-    Startpack.changeset(%Startpack{}, changes)
-    |> Repo.insert!
+    Repo.get_by(Startpack, user_id: user.id)
+    |> Startpack.changeset(startpack)
+    |> Repo.update!()
   end
-
 
   def insert_offer(project, attrs \\ %{}) do
     changes = Map.merge(default_offer(), attrs)
@@ -117,7 +117,8 @@ defmodule Karma.TestHelpers do
       email: "test@test.com",
       password: "123456",
       terms_accepted: true,
-      verified: true
+      verified: true,
+      startpacks: %{}
     }
 
     Map.merge(default, attrs)
@@ -252,8 +253,7 @@ defmodule Karma.TestHelpers do
     bank_account_number: "some content",
     bank_sort_code: "some content",
     bank_iban: "some content",
-    bank_swift_code: "some content",
-    user_id: 1
+    bank_swift_code: "some content"
     }
     Map.merge(default, attrs)
   end

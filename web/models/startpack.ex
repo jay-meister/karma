@@ -150,8 +150,8 @@ defmodule Karma.Startpack do
       :bank_sort_code,
       :bank_iban,
       :bank_swift_code])
-    |> validate_required([:user_id])
   end
+
   def base_requirements do
     [ # from startpack
       :date_of_birth,
