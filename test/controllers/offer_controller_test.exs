@@ -231,8 +231,9 @@ defmodule Karma.OfferControllerTest do
 
   test "offer rejected", %{project: project} do
     contractor = insert_user(%{email: "contractor@gmail.com"})
-    offer = insert_offer(project, %{user_id: contractor.id})
+    offer = insert_offer(project, %{user_id: contractor.id, target_email: contractor.email})
     insert_document(project, %{name: offer.contract_type, url: "www.image_url"})
+    insert_document(project, %{name: "LOAN OUT", url: "www.image_url"})
     conn = login_user(build_conn(), contractor)
     with_mock Karma.Mailer, [deliver_later: fn(string) -> string end] do
       conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: false}
@@ -249,6 +250,7 @@ defmodule Karma.OfferControllerTest do
     offer = insert_offer(project, %{user_id: contractor.id, target_email: "contractor@gmail.com"})
     update_startpack(contractor, %{use_loan_out_company?: true})
     insert_document(project, %{name: offer.contract_type, url: "www.image_url"})
+    insert_document(project, %{name: "LOAN OUT", url: "www.image_url"})
     conn = login_user(build_conn(), contractor)
     with_mock Karma.Mailer, [deliver_later: fn(string) -> string end] do
       with_mock Karma.Merger, [merge_multiple: fn(_, _) -> {:ok, "Documents merged"} end] do
@@ -277,7 +279,7 @@ defmodule Karma.OfferControllerTest do
 
   test "offer accepted, but document doesn't exist", %{project: project} do
     contractor = insert_user(%{email: "contractor@gmail.com"})
-    offer = insert_offer(project, %{user_id: contractor.id})
+    offer = insert_offer(project, %{user_id: contractor.id, target_email: contractor.email})
     conn = login_user(build_conn(), contractor)
     conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: true}
     assert Phoenix.Controller.get_flash(conn, :error) == "There were no documents to merge your data with"
@@ -288,8 +290,9 @@ defmodule Karma.OfferControllerTest do
 
   test "error responding to offer", %{project: project} do
     contractor = insert_user(%{email: "contractor@gmail.com"})
-    offer = insert_offer(project, %{user_id: contractor.id})
+    offer = insert_offer(project, %{user_id: contractor.id, target_email: contractor.email})
     insert_document(project, %{name: offer.contract_type, url: "www.image_url"})
+    insert_document(project, %{name: "LOAN OUT", url: "www.image_url"})
     conn = login_user(build_conn(), contractor)
     conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: :invalid}
     assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"

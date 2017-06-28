@@ -42,5 +42,5 @@ defmodule Karma.Document do
       query
     end
   end
-  
+
 end

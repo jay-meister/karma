@@ -289,9 +289,19 @@ defmodule Karma.OfferController do
 
     project = Repo.get(Project, project_id) |> Repo.preload(:user)
     changeset = Offer.offer_response_changeset(offer, offer_params)
+    contractor = Repo.get_by(User, email: offer.target_email) |> Repo.preload(:startpacks)
+    loan_out = contractor.startpacks.use_loan_out_company?
+    updated_offer =
+      case loan_out do
+        true ->
+          {:ok, updated_offer} = Repo.update(Ecto.Changeset.change(offer, %{contract_type: "LOAN OUT"}))
+          updated_offer
+        false ->
+          offer
+      end
 
     # get the relevant original forms for merging
-    form_query = Karma.Controllers.Helpers.get_forms_for_merging(offer)
+    form_query = Karma.Controllers.Helpers.get_forms_for_merging(updated_offer)
     documents = Repo.all(form_query)
 
     # check if there is a document to be merged
@@ -317,19 +327,13 @@ defmodule Karma.OfferController do
                 |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
               true ->
                 initial_contract_type = offer.contract_type
-                contractor = Repo.get_by(User, email: offer.target_email) |> Repo.preload(:startpacks)
-                loan_out = contractor.startpacks.use_loan_out_company?
 
-                if loan_out do
-                  Repo.update(Ecto.Changeset.change(offer, %{contract_type: "LOAN OUT"}))
-                end
-
-                Karma.Email.send_offer_accepted_contractor(conn, offer)
+                Karma.Email.send_offer_accepted_contractor(conn, updated_offer)
                 |> Karma.Mailer.deliver_later()
 
 
                 # now merge data
-                case Merger.merge_multiple(offer, documents) do
+                case Merger.merge_multiple(updated_offer, documents) do
                   {:error, msg} ->
                     # Un-accept the offer so they can accept again when changes have been made
                     Repo.update(Ecto.Changeset.change(offer, %{accepted: nil}))
