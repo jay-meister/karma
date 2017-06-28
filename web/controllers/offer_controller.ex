@@ -172,7 +172,7 @@ defmodule Karma.OfferController do
             {"Equipment rental list", contractor.startpacks.equipment_rental_url, offer.equipment_rental_required?},
             {"Box rental list", contractor.startpacks.box_rental_url, offer.box_rental_required?},
             {"Vehicle insureance image", contractor.startpacks.vehicle_insurance_url, offer.vehicle_allowance_per_week > 0},
-            {"Schedule d letter", contractor.startpacks.schedule_d_letter_url, offer.contract_type == "SCHEDULE D"},
+            {"Schedule D letter", contractor.startpacks.schedule_d_letter_url, offer.contract_type == "SCHEDULE D"},
             {"Loan out company certificate", contractor.startpacks.loan_out_company_cert_url, contractor.startpacks.use_loan_out_company?},
             {"P45 image", contractor.startpacks.p45_url, offer.contract_type == "PAYE"},
           ]
@@ -302,7 +302,12 @@ defmodule Karma.OfferController do
 
     # get the relevant original forms for merging
     form_query = Karma.Controllers.Helpers.get_forms_for_merging(updated_offer)
-    documents = Repo.all(form_query)
+    contract_documents = Repo.all(form_query)
+    form_documents =
+      Repo.all(project_documents(project))
+      |> Enum.filter(fn document -> document.category == "Form" end)
+
+    documents = contract_documents ++ form_documents
 
     # check if there is a document to be merged
     case length(documents) > 0 do
