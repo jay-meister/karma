@@ -20,6 +20,27 @@ import "phoenix_html"
 
 // import socket from "./socket"
 
+function document_upload_listeners() {
+  var document_category = document.getElementById('category_dropdown');
+  var contract_dropdown = document.getElementById('contract_dropdown');
+  var contract_dropdown_container = document.getElementById('contract_dropdown_container');
+  var non_contract_dropdown = document.getElementById('non_contract_dropdown');
+  var non_contract_dropdown_container = document.getElementById('non_contract_dropdown_container');
+  document_category.addEventListener("change", function(e) {
+    var category = e.target.value;
+    if (category === "Deal") {
+      contract_dropdown_container.className = contract_dropdown_container.className.replace(/dn/g, "");
+      non_contract_dropdown_container.className = non_contract_dropdown_container.className.concat(" dn");
+    } else if (category === "Form" || category === "Information") {
+      contract_dropdown_container.className = contract_dropdown_container.className.concat(" dn");
+      non_contract_dropdown_container.className = non_contract_dropdown_container.className.replace(/dn/g, "")
+    } else {
+      contract_dropdown_container.className = contract_dropdown_container.className.concat(" dn");
+      non_contract_dropdown_container.className = non_contract_dropdown_container.className.concat(" dn");
+    }
+  });
+}
+
 function addFileUploadNames(id) {
   var fileUploadContainer = document.getElementById("file-upload-container-" + id);
   var filenameContainer = document.getElementById("filename-container-" + id);
@@ -104,4 +125,5 @@ export var App = {
   setupListeners: setupListeners,
   studentLoanRadios: studentLoanRadios,
   hamburgerAnimate: hamburgerAnimate,
+  document_upload_listeners: document_upload_listeners,
 }
