@@ -24,7 +24,8 @@ defmodule Karma.Sign do
               AlteredDocument.signing_started_changeset(merged, %{envelope_id: envelope_id})
               |> Repo.update!()
             {:ok, altered}
-          _error ->
+          error ->
+            IO.inspect error
             {:error, "Error making signature request"}
         end
     end
@@ -48,9 +49,10 @@ defmodule Karma.Sign do
 
 
   def prepare_document(encoded, merged, original, user) do
-    [%{"documentId": merged.id,
+    [%{"documentId": 1,
        "name": "#{user.first_name}-#{user.last_name}-#{original.name}-#{merged.offer_id}.pdf",
-       "documentBase64": encoded
+       "documentBase64": encoded,
+       "transformPdfFields": "true"
     }]
   end
 
@@ -91,7 +93,11 @@ defmodule Karma.Sign do
     chain
     |> Enum.with_index()
     |> Enum.map(fn({signee, index}) ->
-        Map.merge(signee, %{"recipientId": index + 1, "routingOrder": index + 1})
+        index = index + 1
+        tabs = %{"signHereTabs": [%{documentId: "1", "tabLabel": "signature_#{index}", "pageNumber": "1"}]}
+        IO.inspect tabs
+        additional = %{"recipientId": index, "routingOrder": index, "tabs": tabs}
+        IO.inspect Map.merge(signee, additional)
       end)
   end
 

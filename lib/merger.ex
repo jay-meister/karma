@@ -32,12 +32,14 @@ defmodule Karma.Merger do
           get_data_for_merge(offer)
           |> Formatter.format_data()
           |> format()
+          |> IO.inspect
           |> Poison.encode!()
 
         # do merge
         merged_path = get_merged_path(doc_path, offer, document)
         case wrap_merge_script(json, doc_path, merged_path) do
-          {:error, _error} ->
+          {:error, error} ->
+            IO.inspect error
             {:error, "There was an error creating the document"}
           {:ok, merged_path} ->
             # save to S3
