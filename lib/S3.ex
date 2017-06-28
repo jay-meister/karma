@@ -55,6 +55,21 @@ defmodule Karma.S3 do
     end
   end
 
+  def download_many() do
+    urls = [
+      "5": "https://engine-image-uploads.s3.amazonaws.com/engine-image-uploads/d4a9f8adb58b4e0b83c47e8f3b21d421-fillable.pdf",
+      "3": "https://engine-image-uploads.s3.amazonaws.com/engine-image-uploads/ccd6d66cb4304b369a025efe3b26e68b-fillable.pdf"
+    ]
+
+    for {id, url} <- urls do
+      path = System.cwd() <> "/tmp/altered_document_" <> Atom.to_string(id) <> ".pdf"
+      download_with_id(url, path, id)
+    end
+  end
+  def download_with_id(url, file_destination, id) do
+    res = download(url, file_destination)
+    Tuple.insert_at(res, 2, id)
+  end
   def download(url, file_destination) do
     case get_object(url) do
       {:ok, body} ->
