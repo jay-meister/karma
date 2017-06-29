@@ -28,9 +28,21 @@ defmodule Karma.Document do
 
   # get contract related to this offer
   def get_contract(query, offer) do
+    contract_type =
+      case offer do
+        %{contract_type: "LOAN OUT", department: "Construction"} -> "CONSTRUCTION LOAN OUT"
+        %{contract_type: "LOAN OUT", department: "Transport"} -> "TRANSPORT LOAN OUT"
+        _else -> offer.contract_type
+      end
     from d in query,
     or_where: d.project_id == ^offer.project_id
-    and d.name == ^offer.contract_type
+    and d.name == ^contract_type
+  end
+
+  def get_start_form(query, offer) do
+    from d in query,
+    or_where: d.project_id == ^offer.project_id
+    and d.name == "START FORM"
   end
 
   def get_conditional_form(query, offer, checker, form_name) do

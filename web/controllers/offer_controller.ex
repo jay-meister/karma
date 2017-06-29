@@ -109,9 +109,10 @@ defmodule Karma.OfferController do
   end
 
   def create(conn, %{"offer" => offer_params, "project_id" => project_id}) do
-    project = Repo.get(Project, project_id) |> Repo.preload(:user)
+    project = Repo.get(Project, project_id) |> Repo.preload(:user) |> Repo.preload(:documents)
+    project_documents = Enum.map(project.documents, fn document -> document.name end)
     %{"department" => department, "job_title" => job_title} = offer_params
-    contract_type = determine_contract_type(department, job_title)
+    contract_type = determine_contract_type(department, job_title, project_documents)
     offer_params = Map.put(offer_params, "contract_type", contract_type)
     # first check the values provided by the user are valid
     validation_changeset = Offer.form_validation(%Offer{}, offer_params)
@@ -132,7 +133,7 @@ defmodule Karma.OfferController do
       job_title: job_title)
     else
       # run calculations and add them to the offer_params
-      calculations = parse_offer_strings(offer_params) |> run_calculations(project)
+      calculations = parse_offer_strings(offer_params) |> run_calculations(project, project_documents)
       offer_params = Map.merge(offer_params, calculations)
 
       changeset = changeset_maybe_with_user(offer_params, project)
@@ -149,7 +150,6 @@ defmodule Karma.OfferController do
           job_titles = Karma.Job.titles()
           job_departments = Karma.Job.departments()
           job_title = Map.get(changeset.changes, :job_title, "")
-
           render(conn, "new.html", changeset: changeset, project_id: project_id, job_titles: job_titles, job_departments: job_departments, job_title: job_title)
       end
     end
@@ -180,8 +180,7 @@ defmodule Karma.OfferController do
           []
       end
     user = conn.assigns.current_user
-    project = Repo.get(Project, project_id)
-
+    project = Repo.get(Project, project_id) |> Repo.preload(:documents)
     info_documents =
       Repo.all(project_documents(project))
       |> Enum.filter(fn doc -> doc.category == "Info" end)
@@ -238,7 +237,9 @@ defmodule Karma.OfferController do
       |> Repo.preload(:user)
       |> Repo.preload(:project)
 
-    project = Repo.get(Project, project_id) |> Repo.preload(:user)
+    project = Repo.get(Project, project_id) |> Repo.preload(:user) |> Repo.preload(:documents)
+    project_documents = Enum.map(project.documents, fn document -> document.name end)
+
     job_titles = Karma.Job.titles()
     job_departments = Karma.Job.departments()
     ops = [
@@ -262,10 +263,10 @@ defmodule Karma.OfferController do
           |> render("edit.html", ops ++ [changeset: validation_changeset])
         false ->
           # run calculations and add them to the offer_params
-          calculations = parse_offer_strings(offer_params) |> run_calculations(project)
+          calculations = parse_offer_strings(offer_params) |> run_calculations(project, project_documents)
           offer_params = Map.merge(offer_params, calculations)
           %{"department" => department, "job_title" => job_title} = offer_params
-          contract_type = determine_contract_type(department, job_title)
+          contract_type = determine_contract_type(department, job_title, project_documents)
           offer_params = Map.put(offer_params, "contract_type", contract_type)
           changeset = Offer.changeset(offer, offer_params)
 
@@ -291,14 +292,18 @@ defmodule Karma.OfferController do
     changeset = Offer.offer_response_changeset(offer, offer_params)
     contractor = Repo.get_by(User, email: offer.target_email) |> Repo.preload(:startpacks)
     loan_out = contractor.startpacks.use_loan_out_company?
-    updated_offer =
+    contract_type =
       case loan_out do
         true ->
-          {:ok, updated_offer} = Repo.update(Ecto.Changeset.change(offer, %{contract_type: "LOAN OUT"}))
-          updated_offer
-        false ->
-          offer
-      end
+          case offer do
+            %{department: "Construction"} -> "CONSTRUCTION LOAN OUT"
+            %{department: "Transport"} -> "TRANSPORT LOAN OUT"
+            _else -> "LOAN OUT"
+          end
+          false ->
+            offer.contract_type
+          end
+    updated_offer = Repo.update!(Ecto.Changeset.change(offer, %{contract_type: contract_type}))
 
     # get the relevant original forms for merging
     form_query = Karma.Controllers.Helpers.get_forms_for_merging(updated_offer)
@@ -403,7 +408,7 @@ defmodule Karma.OfferController do
     Enum.reduce(keys, params, fn(i, acc) -> Map.update!(acc, i, f) end)
   end
 
-  def run_calculations(params, project) do
+  def run_calculations(params, project, project_documents) do
     %{"fee_per_day_inc_holiday" => fee_per_day_inc_holiday,
     "working_week" => working_week,
     "job_title" => job_title,
@@ -417,7 +422,7 @@ defmodule Karma.OfferController do
     fee_per_week_inc_holiday = calc_fee_per_week_inc_holiday(fee_per_day_inc_holiday, working_week)
     fee_per_week_exc_holiday = calc_fee_per_week_exc_holiday(fee_per_week_inc_holiday, project.holiday_rate)
     holiday_pay_per_week = calc_holiday_pay_per_week(fee_per_week_inc_holiday, fee_per_week_exc_holiday)
-    contract_type = determine_contract_type(department, job_title)
+    contract_type = determine_contract_type(department, job_title, project_documents)
     sixth_day_fee_inc_holiday = calc_day_fee_inc_holidays(fee_per_day_inc_holiday, sixth_day_fee_multiplier)
     sixth_day_fee_exc_holiday = calc_day_fee_exc_holidays(fee_per_day_exc_holiday, sixth_day_fee_multiplier)
     seventh_day_fee_inc_holiday = calc_day_fee_inc_holidays(fee_per_day_inc_holiday, seventh_day_fee_multiplier)

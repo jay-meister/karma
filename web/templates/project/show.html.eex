@@ -171,7 +171,7 @@
   </div>
     <%= component "file_upload.html",
     form: f,
-    atom: :filetest,
+    atom: :file,
     file_types: "pdf",
     conn: @conn
     %>
