@@ -42,33 +42,6 @@ defmodule Karma.Controllers.Helpers do
     end
   end
 
-  def get_category(file_type) do
-    case Enum.member?([
-      "DIRECT HIRE",
-      "PAYE",
-      "SCHEDULE-D",
-      "LOAN OUT",
-      "CONSTRUCTION DIRECT HIRE",
-      "CONSTRUCTION PAYE",
-      "CONSTRUCTION SCHEDULE-D",
-      "CONSTRUCTION LOAN OUT",
-      "BOX RENTAL FORM",
-      "EQUIPMENT RENTAL FORM",
-      "VEHICLE ALLOWANCE FORM"
-      ], file_type) do
-        true -> "Deal"
-        false ->
-          case Enum.member?([
-            "NDA",
-            "INFO DOCUMENT RECEIPT DECLARATION",
-            "COMPLIANCE TRAINING"
-            ], file_type) do
-              true -> "Form"
-              false -> "Info"
-            end
-    end
-  end
-
   def get_base_url() do
     dev_env? = Mix.env == :dev
     case dev_env? do

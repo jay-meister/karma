@@ -37,54 +37,51 @@ defmodule Karma.DocumentController do
     render(conn, "new.html", changeset: changeset, project: project)
   end
 
-  def create(conn, %{"document" => %{"file" => file_params, "name" => name, "contract_name" => contract_name, "category" => category} = document_params, "project_id" => project_id}) do
+  def create(conn, %{"document" => %{"name" => name, "contract_name" => contract_name, "category" => category} = document_params, "project_id" => project_id}) do
     project = Repo.get_by(Project, id: project_id)
-    IO.inspect document_params
-    document_name =
-      case name == "" do
-        true -> contract_name
-        false -> name
-      end
-    document_params =
-      Map.delete(document_params, "name")
-      |> Map.put_new("name", document_name)
-    case Document.is_pdf?(file_params) do
-      false ->
-        conn
-        |> put_flash(:error, "Upload error, PDFs only")
-        |> redirect(to: project_path(conn, :show, project))
-      true ->
-        IO.inspect file_params
-        updated_params =
-          case S3.upload({:url, file_params}) do
-            {:ok, :url, url} ->
-              Map.delete(document_params, "file")
-              |> Map.put_new("url", url)
-            {:error, :url, error} ->
-              IO.inspect error
-              conn
-              |> put_flash(:error, "Error uploading document!")
-              |> redirect(to: project_path(conn, :show, project))
-              document_params
-          end
-
+    if category == "" || (contract_name == "" && name == "") || !Map.has_key?(document_params, "file") do
+      conn
+      |> put_flash(:error, "File upload fields can't be empty!")
+      |> redirect(to: project_path(conn, :show, project))
+      |> halt()
+    else
+      %{"file" => file_params, "name" => name, "contract_name" => contract_name} = document_params
+      document_name =
+        case name == "" do
+          true -> contract_name
+          false -> name
+        end
+      document_params =
+        Map.delete(document_params, "name")
+        |> Map.put_new("name", document_name)
+      case Document.is_pdf?(file_params) do
+        false ->
+          conn
+          |> put_flash(:error, "Upload error, PDFs only")
+          |> redirect(to: project_path(conn, :show, project))
+        true ->
+          updated_params =
+            case S3.upload({:url, file_params}) do
+              {:ok, :url, url} ->
+                Map.delete(document_params, "file")
+                |> Map.put_new("url", url)
+              {:error, :url, _error} ->
+                conn
+                |> put_flash(:error, "Error uploading document!")
+                |> redirect(to: project_path(conn, :show, project))
+                document_params
+            end
           changeset =
             project
             |> build_assoc(:documents)
             |> Document.changeset(updated_params)
 
-          case Repo.insert(changeset) do
-            {:ok, _document} ->
-              conn
-              |> put_flash(:info, "Document uploaded successfully.")
-              |> redirect(to: project_path(conn, :show, project))
-              {:error, changeset} ->
-                IO.inspect changeset
-                conn
-                |> put_flash(:error, "Error uploading document!")
-                |> redirect(to: project_path(conn, :show, project))
-          end
-      end
+          Repo.insert(changeset)
+          conn
+          |> put_flash(:info, "Document uploaded successfully.")
+          |> redirect(to: project_path(conn, :show, project))
+        end
+    end
   end
 
   def show(conn, %{"id" => id, "project_id" => project_id}) do
