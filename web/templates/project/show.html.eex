@@ -122,27 +122,51 @@
   <div class="mt4">
     <%= component "dropdown.html",
     form: f,
-    atom: :name,
+    atom: :category,
     options: [
-      # "DIRECT HIRE",
+      "Deal",
+      "Form",
+      "Info"
+      ],
+    prompt: "Pick a document category",
+    label: "Category",
+    id: "category_dropdown"
+    %>
+    <%= component "dropdown.html",
+    form: f,
+    atom: :contract_name,
+    options: [
+      "START FORM",
+      "DIRECT HIRE",
       "PAYE",
       "SCHEDULE-D",
       "LOAN OUT",
-      # "CONSTRUCTION DIRECT HIRE",
-      # "CONSTRUCTION PAYE",
-      # "CONSTRUCTION SCHEDULE-D",
-      # "CONSTRUCTION LOAN OUT",
-      "BOX RENTAL FORM",
-      "EQUIPMENT RENTAL FORM",
-      "VEHICLE ALLOWANCE FORM",
-      "NDA",
-      "INFO RECEIPT DECLARATION",
-      "COMPLIANCE TRAINING",
-      "STUDIO POLICIES",
-      "PROJECT MEMO"
+      "CONSTRUCTION DIRECT HIRE",
+      "CONSTRUCTION PAYE",
+      "CONSTRUCTION SCHEDULE-D",
+      "CONSTRUCTION LOAN OUT",
+      "TRANSPORT DIRECT HIRE",
+      "TRANSPORT PAYE",
+      "TRANSPORT SCHEDULE-D",
+      "TRANSPORT LOAN OUT",
+      "BOX RENTAL",
+      "EQUIPMENT RENTAL",
+      "VEHICLE ALLOWANCE"
       ],
-    prompt: "Pick a document type",
-    label: "Type"
+    prompt: "Pick a contract type",
+    label: "Contract",
+    id: "contract_dropdown",
+    container_id: "contract_dropdown_container",
+    class: "dn"
+    %>
+    <%= component "input.html",
+    form: f,
+    atom: :name,
+    placeholder: "Enter the document name",
+    label: "Name",
+    id: "non_contract_dropdown",
+    container_id: "non_contract_dropdown_container",
+    class: "dn"
     %>
   </div>
     <%= component "file_upload.html",
@@ -199,3 +223,5 @@
     %>
   <% end %>
 </div>
+<script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+<script>require("web/static/js/app").App.document_upload_listeners()</script>

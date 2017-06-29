@@ -4,7 +4,7 @@ defmodule Karma.DocumentControllerTest do
   import Mock
 
   alias Karma.Document
-  @valid_attrs %{url: "some content", name: "NDA"}
+  @valid_attrs %{url: "some content", name: "NDA", contract_name: "", category: "Deal"}
   @invalid_attrs %{}
 
   setup do
@@ -32,14 +32,26 @@ defmodule Karma.DocumentControllerTest do
     assert Phoenix.Controller.get_flash(conn, :error) =~ "PDFs only"
   end
 
-  test "creates resource and redirects when data is valid", %{conn: conn, project: project} do
+  test "creates resource and redirects when data is valid - name", %{conn: conn, project: project} do
     file_upload = %Plug.Upload{content_type: "application/pdf", path: "test/fixtures/foxy.png", filename: "foxy.png"}
     valid = Map.put(@valid_attrs, "file",  file_upload)
-
+    repo_valid = %{url: "some content", name: "NDA"}
     with_mock ExAws, [request!: fn(_) -> %{status_code: 200} end] do
       conn = post conn, project_document_path(conn, :create, project), document: valid
       assert redirected_to(conn) == project_path(conn, :show, project)
-      assert Repo.get_by(Document, @valid_attrs)
+      assert Repo.get_by(Document, repo_valid)
+    end
+  end
+
+  test "creates resource and redirects when data is valid - contract_name", %{conn: conn, project: project} do
+    file_upload = %Plug.Upload{content_type: "application/pdf", path: "test/fixtures/foxy.png", filename: "foxy.png"}
+    contract_name_map = %{url: "some content", name: "", contract_name: "NDA", category: "Deal"}
+    valid = Map.put(contract_name_map, "file",  file_upload)
+    repo_valid = %{url: "some content", name: "NDA"}
+    with_mock ExAws, [request!: fn(_) -> %{status_code: 200} end] do
+      conn = post conn, project_document_path(conn, :create, project), document: valid
+      assert redirected_to(conn) == project_path(conn, :show, project)
+      assert Repo.get_by(Document, repo_valid)
     end
   end
 
@@ -95,9 +107,10 @@ defmodule Karma.DocumentControllerTest do
 
   test "updates chosen resource and redirects when data is valid", %{conn: conn, project: project} do
     document = Repo.insert! %Document{}
-    conn = put conn, project_document_path(conn, :update, project, document), document: Map.merge(@valid_attrs, %{category: "category"})
+    repo_valid = %{url: "some content", name: "NDA"}
+    conn = put conn, project_document_path(conn, :update, project, document), document: Map.merge(repo_valid, %{category: "category"})
     assert redirected_to(conn) == project_document_path(conn, :show, project, document)
-    assert Repo.get_by(Document, @valid_attrs)
+    assert Repo.get_by(Document, repo_valid)
   end
 
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn, project: project} do
