@@ -1,5 +1,5 @@
 <table>
-  <td class="k-minw-20">
+  <td class="k-minw-10">
     <strong><%= assigns[:label] %>:</strong>
   </td>
   <td>

@@ -402,6 +402,10 @@ select {
   color: #757de8;
 }
 
+.radio {
+  top: 50%;
+  margin-top: -8px;
+}
 /* conditional checkbox in form */
 [conditional]  input[type=checkbox]:checked  + [conditional_child] {
   display: block;
