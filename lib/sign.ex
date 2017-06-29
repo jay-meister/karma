@@ -136,12 +136,13 @@ defmodule Karma.Sign do
   end
 
   def build_envelope_body(documents, chain) do
-    %{
+    bod = %{
       "emailSubject": "Karma document sign",
       "emailBlurb": "Please sign the document using link provided.",
       "recipients": %{"signers": chain},
       "documents": documents,
       "status": "sent"
     }
+    IO.inspect bod
   end
 end
