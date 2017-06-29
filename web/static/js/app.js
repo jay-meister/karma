@@ -31,7 +31,7 @@ function document_upload_listeners() {
     if (category === "Deal") {
       contract_dropdown_container.className = contract_dropdown_container.className.replace(/dn/g, "");
       non_contract_dropdown_container.className = non_contract_dropdown_container.className.concat(" dn");
-    } else if (category === "Form" || category === "Information") {
+    } else if (category === "Form" || category === "Info") {
       contract_dropdown_container.className = contract_dropdown_container.className.concat(" dn");
       non_contract_dropdown_container.className = non_contract_dropdown_container.className.replace(/dn/g, "")
     } else {

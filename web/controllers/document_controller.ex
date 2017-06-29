@@ -48,9 +48,10 @@ defmodule Karma.DocumentController do
       %{"file" => file_params, "name" => name, "contract_name" => contract_name} = document_params
       document_name =
         case name == "" do
-          true -> contract_name
-          false -> name
+          true -> String.upcase(contract_name)
+          false -> String.upcase(name)
         end
+
       document_params =
         Map.delete(document_params, "name")
         |> Map.put_new("name", document_name)

@@ -126,7 +126,7 @@
     options: [
       "Deal",
       "Form",
-      "Information"
+      "Info"
       ],
     prompt: "Pick a document category",
     label: "Category",
