@@ -1,12 +1,18 @@
 <div class="mb4" selector="container-<%= assigns[:atom] %>">
   <%= label assigns[:form], assigns[:atom], assigns[:label], class: "dib mw-100 mb2 fw4" %>
-  <%= for {description, value} <- assigns[:radios] do %>
-    <div class="flex items-center mb3">
-      <%= radio_button assigns[:form], assigns[:atom], value, class: "mr4 w1", selector: assigns[:atom] %>
-      <%= label assigns[:form], assigns[:atom], Atom.to_string(description), class: "" %>
-    </div>
-  <% end %>
-  <%= error_tag assigns[:form], assigns[:atom] %>
+  <div>
+    <%= for {description, value} <- assigns[:radios] do %>
+      <div class="relative mb4">
+        <div class="absolute radio">
+          <%= radio_button assigns[:form], assigns[:atom], value, class: "w2", selector: assigns[:atom] %>
+        </div>
+        <div class="pl4">
+          <%= label assigns[:form], assigns[:atom], Atom.to_string(description), class: "" %>
+        </div>
+      </div>
+    <% end %>
+    <%= error_tag assigns[:form], assigns[:atom] %>
+  <div>
 </div>
 
 <!-- <div class="flex items-center mb2">
