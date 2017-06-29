@@ -55,23 +55,24 @@ defmodule Karma.S3 do
     end
   end
 
-  def download_many(_urls) do
+  def download_many(urls) do
     urls = [
-      "5": "https://engine-image-uploads.s3.amazonaws.com/engine-image-uploads/d4a9f8adb58b4e0b83c47e8f3b21d421-fillable.pdf",
-      "3": "https://engine-image-uploads.s3.amazonaws.com/engine-image-uploads/ccd6d66cb4304b369a025efe3b26e68b-fillable.pdf"
+      {"5", "https://engine-image-uploads.s3.amazonaws.com/engine-image-uploads/d4a9f8adb58b4e0b83c47e8f3b21d421-fillable.pdf"},
+      {"3", "https://engine-image-uploads.s3.amazonaws.com/engine-image-uploads/ccd6d66cb4304b369a025efe3b26e68b-fillable.pdf"}
     ]
-
     ops = [max_concurrency: System.schedulers_online() * 3, timeout: 20000]
 
-    tasks = Task.async_stream(urls, &download_with_id/1, ops)
+    Task.async_stream(urls, &download_with_id/1, ops)
     |> Enum.to_list()
-    IO.inspect tasks
+    |> Enum.filter(fn {_async_res, {res, _url_key, _url}} -> res != :error end)
+    |> Enum.map(fn {_async_res, { _res, id, url}} -> {id, url} end)
   end
 
+
   def download_with_id({id, url}) do
-    file_destination = System.cwd() <> "/tmp/altered_document_" <> Atom.to_string(id) <> ".pdf"
+    file_destination = System.cwd() <> "/tmp/altered_document_" <> id <> ".pdf"
     download(url, file_destination)
-    |> Tuple.insert_at(2, id)
+    |> Tuple.insert_at(1, String.to_integer(id))
   end
 
   def download(url, file_destination) do
