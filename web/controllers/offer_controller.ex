@@ -111,8 +111,9 @@ defmodule Karma.OfferController do
   def create(conn, %{"offer" => offer_params, "project_id" => project_id}) do
     project = Repo.get(Project, project_id) |> Repo.preload(:user) |> Repo.preload(:documents)
     project_documents = Enum.map(project.documents, fn document -> document.name end)
-    %{"department" => department, "job_title" => job_title} = offer_params
-    contract_type = determine_contract_type(department, job_title, project_documents)
+    %{"department" => department, "job_title" => job_title, "daily_or_weekly" => daily_or_weekly} = offer_params
+    daily = daily_or_weekly == "daily"
+    contract_type = determine_contract_type(department, job_title, project_documents, daily)
     offer_params = Map.put(offer_params, "contract_type", contract_type)
     # first check the values provided by the user are valid
     validation_changeset = Offer.form_validation(%Offer{}, offer_params)
@@ -133,7 +134,7 @@ defmodule Karma.OfferController do
       job_title: job_title)
     else
       # run calculations and add them to the offer_params
-      calculations = parse_offer_strings(offer_params) |> run_calculations(project, project_documents)
+      calculations = parse_offer_strings(offer_params) |> run_calculations(project, project_documents, daily)
       offer_params = Map.merge(offer_params, calculations)
 
       changeset = changeset_maybe_with_user(offer_params, project)
@@ -239,7 +240,7 @@ defmodule Karma.OfferController do
 
     project = Repo.get(Project, project_id) |> Repo.preload(:user) |> Repo.preload(:documents)
     project_documents = Enum.map(project.documents, fn document -> document.name end)
-
+    daily = offer.daily_or_weekly == "daily"
     job_titles = Karma.Job.titles()
     job_departments = Karma.Job.departments()
     ops = [
@@ -263,10 +264,11 @@ defmodule Karma.OfferController do
           |> render("edit.html", ops ++ [changeset: validation_changeset])
         false ->
           # run calculations and add them to the offer_params
-          calculations = parse_offer_strings(offer_params) |> run_calculations(project, project_documents)
+          calculations = parse_offer_strings(offer_params) |> run_calculations(project, project_documents, daily)
           offer_params = Map.merge(offer_params, calculations)
-          %{"department" => department, "job_title" => job_title} = offer_params
-          contract_type = determine_contract_type(department, job_title, project_documents)
+          %{"department" => department, "job_title" => job_title, "daily_or_weekly" => daily_or_weekly} = offer_params
+          daily = daily_or_weekly == "daily"
+          contract_type = determine_contract_type(department, job_title, project_documents, daily)
           offer_params = Map.put(offer_params, "contract_type", contract_type)
           changeset = Offer.changeset(offer, offer_params)
 
@@ -288,17 +290,34 @@ defmodule Karma.OfferController do
       |> Repo.preload(:user)
       |> Repo.preload(:project)
 
-    project = Repo.get(Project, project_id) |> Repo.preload(:user)
+    project = Repo.get(Project, project_id) |> Repo.preload(:user) |> Repo.preload(:documents)
+    project_documents = Enum.map(project.documents, fn document -> document.name end)
+
     changeset = Offer.offer_response_changeset(offer, offer_params)
     contractor = Repo.get_by(User, email: offer.target_email) |> Repo.preload(:startpacks)
     loan_out = contractor.startpacks.use_loan_out_company?
+    daily_construction_loan_out = offer.daily_or_weekly == "daily" && Enum.member?(project_documents, "DAILY CONSTRUCTION LOAN OUT")
+    daily_transport_loan_out = offer.daily_or_weekly == "daily" && Enum.member?(project_documents, "DAILY TRANSPORT LOAN OUT")
+    daily = offer.daily_or_weekly == "daily"
     contract_type =
       case loan_out do
         true ->
           case offer do
-            %{department: "Construction"} -> "CONSTRUCTION LOAN OUT"
-            %{department: "Transport"} -> "TRANSPORT LOAN OUT"
-            _else -> "LOAN OUT"
+            %{department: "Construction"} ->
+              case daily_construction_loan_out do
+                true -> "DAILY CONSTRUCTION LOAN OUT"
+                false -> "CONSTRUCTION LOAN OUT"
+              end
+            %{department: "Transport"} ->
+              case daily_transport_loan_out do
+                true -> "DAILY TRANSPORT LOAN OUT"
+                false -> "TRANSPORT LOAN OUT"
+              end
+            _else ->
+              case daily do
+                true -> "DAILY LOAN OUT"
+                false -> "LOAN OUT"
+              end
           end
           false ->
             offer.contract_type
@@ -408,7 +427,7 @@ defmodule Karma.OfferController do
     Enum.reduce(keys, params, fn(i, acc) -> Map.update!(acc, i, f) end)
   end
 
-  def run_calculations(params, project, project_documents) do
+  def run_calculations(params, project, project_documents, daily) do
     %{"fee_per_day_inc_holiday" => fee_per_day_inc_holiday,
     "working_week" => working_week,
     "job_title" => job_title,
@@ -422,7 +441,7 @@ defmodule Karma.OfferController do
     fee_per_week_inc_holiday = calc_fee_per_week_inc_holiday(fee_per_day_inc_holiday, working_week)
     fee_per_week_exc_holiday = calc_fee_per_week_exc_holiday(fee_per_week_inc_holiday, project.holiday_rate)
     holiday_pay_per_week = calc_holiday_pay_per_week(fee_per_week_inc_holiday, fee_per_week_exc_holiday)
-    contract_type = determine_contract_type(department, job_title, project_documents)
+    contract_type = determine_contract_type(department, job_title, project_documents, daily)
     sixth_day_fee_inc_holiday = calc_day_fee_inc_holidays(fee_per_day_inc_holiday, sixth_day_fee_multiplier)
     sixth_day_fee_exc_holiday = calc_day_fee_exc_holidays(fee_per_day_exc_holiday, sixth_day_fee_multiplier)
     seventh_day_fee_inc_holiday = calc_day_fee_inc_holidays(fee_per_day_inc_holiday, seventh_day_fee_multiplier)
