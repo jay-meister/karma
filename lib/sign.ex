@@ -18,7 +18,9 @@ defmodule Karma.Sign do
         |> Poison.encode!()
 
         case HTTPoison.post(url, body, headers(), recv_timeout: 10000) do
-          {:ok, %HTTPoison.Response{body: body, headers: _headers, status_code: 201}} ->
+          {:ok, %HTTPoison.Response{body: body, headers: headers, status_code: 201}} ->
+            IO.inspect headers
+            IO.inspect body
             %{"envelopeId" => envelope_id} = Poison.decode!(body)
             altered =
               AlteredDocument.signing_started_changeset(merged, %{envelope_id: envelope_id})
@@ -49,11 +51,11 @@ defmodule Karma.Sign do
 
 
   def prepare_document(encoded, merged, original, user) do
-    [%{"documentId": 1,
+    %{"documentId": 1,
        "name": "#{user.first_name}-#{user.last_name}-#{original.name}-#{merged.offer_id}.pdf",
-       "documentBase64": encoded,
+       "documentBase64": "encoded",
        "transformPdfFields": "true"
-    }]
+    }
   end
 
 
@@ -88,13 +90,19 @@ defmodule Karma.Sign do
     [user] ++ chain
   end
 
-
   def add_index_to_chain(chain) do
     chain
     |> Enum.with_index()
     |> Enum.map(fn({signee, index}) ->
         index = index + 1
-        tabs = %{"signHereTabs": [%{documentId: "1", "tabLabel": "signature_#{index}", "pageNumber": "1"}]}
+        tabs = %{
+          "signHereTabs": [
+            %{documentId: "1", "tabLabel": "signature_#{index}\\*", "pageNumber": "1"}
+          ],
+          "textTabs": [
+            %{ tabLabel: "signature_#{index}\\*" }
+          ]
+        }
         IO.inspect tabs
         additional = %{"recipientId": index, "routingOrder": index, "tabs": tabs}
         IO.inspect Map.merge(signee, additional)
@@ -135,14 +143,23 @@ defmodule Karma.Sign do
     ]
   end
 
-  def build_envelope_body(documents, chain) do
+  def build_envelope_body(document, chain) do
     bod = %{
       "emailSubject": "Karma document sign",
       "emailBlurb": "Please sign the document using link provided.",
-      "recipients": %{"signers": chain},
-      "documents": documents,
+      "compositeTemplates": [
+        %{"inlineTemplates": [
+          %{"sequence": "1",
+            "recipients": %{
+              "signers": chain
+            }
+          }
+          ],
+          "document": document
+        }
+      ],
       "status": "sent"
     }
-    IO.inspect bod
+    bod
   end
 end
