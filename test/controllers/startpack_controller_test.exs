@@ -49,6 +49,8 @@ defmodule Karma.StartpackControllerTest do
     passport_full_name: "some content",
     agent_tel: "some content",
     vehicle_insurance_url: "some content",
+    vehicle_license_url: "some content",
+    vehicle_business_use_insurance_url: "some content",
     student_loan_finished_before_6_april?: true,
     agent_company: "some content",
     primary_address_2: "some content",

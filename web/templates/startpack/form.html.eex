@@ -306,6 +306,26 @@
   conn: @conn
   %>
 
+  <%= component "file_upload.html",
+  form: f,
+  atom: :vehicle_business_use_insurance_image,
+  url_atom: :vehicle_business_use_insurance_url,
+  helper_text: "Upload a file of proof of vehicle insurance for business use",
+  file_types: "pdf, jpeg, png",
+  image_url: @startpack.vehicle_business_use_insurance_url,
+  conn: @conn
+  %>
+
+  <%= component "file_upload.html",
+  form: f,
+  atom: :vehicle_license_image,
+  url_atom: :vehicle_license_url,
+  helper_text: "Upload a file of your driving license",
+  file_types: "pdf, jpeg, png",
+  image_url: @startpack.vehicle_license_url,
+  conn: @conn
+  %>
+
   <%= component "form_divider.html", title: "Payment info" %>
 
   <%= component "input.html",
