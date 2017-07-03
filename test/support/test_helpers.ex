@@ -164,7 +164,7 @@ defmodule Karma.TestHelpers do
       contract_type: "PAYE",
       contractor_details_accepted: true,
       currency: "gbp",
-      daily_or_weekly: "daily",
+      daily_or_weekly: "weekly",
       department: "Accounts",
       equipment_rental_required?: true,
       equipment_rental_cap: 0,

@@ -46,45 +46,45 @@ defmodule Karma.Controllers.HelpersTest do
   end
 
   test "determine_contract_type(department, job_title) Accounts" do
-    sch_d_contract = Helpers.determine_contract_type("Accounts", "Financial Controller", [])
-    paye_contract = Helpers.determine_contract_type("Accounts", "Accounts Clerk", [])
+    sch_d_contract = Helpers.determine_contract_type("Accounts", "Financial Controller", [], false)
+    paye_contract = Helpers.determine_contract_type("Accounts", "Accounts Clerk", [], false)
 
     assert sch_d_contract == "SCHEDULE-D"
     assert paye_contract == "PAYE"
   end
 
   test "determine_contract_type(department, job_title) Action Vehicles" do
-    paye_contract = Helpers.determine_contract_type("Action Vehicles", "Carriage Master", [])
+    paye_contract = Helpers.determine_contract_type("Action Vehicles", "Carriage Master", [], false)
 
     assert paye_contract == "PAYE"
   end
 
   test "determine_contract_type(department, job_title) Assistant Directors" do
-    sch_d_contract = Helpers.determine_contract_type("Assistant Director", "1st Assistant Director", [])
-    paye_contract = Helpers.determine_contract_type("Assistant Director", "2nd Assistant Director", [])
+    sch_d_contract = Helpers.determine_contract_type("Assistant Director", "1st Assistant Director", [], false)
+    paye_contract = Helpers.determine_contract_type("Assistant Director", "2nd Assistant Director", [], false)
 
     assert sch_d_contract == "SCHEDULE-D"
     assert paye_contract == "PAYE"
   end
 
   test "determine_contract_type(department, job_title) Aerial" do
-    sch_d_contract = Helpers.determine_contract_type("Aerial", "Aerial Cameraman", [])
+    sch_d_contract = Helpers.determine_contract_type("Aerial", "Aerial Cameraman", [], false)
 
     assert sch_d_contract == "SCHEDULE-D"
   end
 
   test "determine_contract_type(department, job_title) Animals" do
-    sch_d_contract = Helpers.determine_contract_type("Animals", "Animal Wrangler", [])
-    paye_contract = Helpers.determine_contract_type("Animals", "Assistant Horse Master", [])
+    sch_d_contract = Helpers.determine_contract_type("Animals", "Animal Wrangler", [], false)
+    paye_contract = Helpers.determine_contract_type("Animals", "Assistant Horse Master", [], false)
 
     assert sch_d_contract == "SCHEDULE-D"
     assert paye_contract == "PAYE"
   end
 
   test "determine_contract_type(department, job_title) Armoury" do
-    sch_d_contract = Helpers.determine_contract_type("Armoury", "Archery Instructor", [])
-    paye_contract = Helpers.determine_contract_type("Armoury", "Armoury Concept Artist", [])
-    conditional_contract = Helpers.determine_contract_type("Armoury", "Senior Model Maker", [])
+    sch_d_contract = Helpers.determine_contract_type("Armoury", "Archery Instructor", [], false)
+    paye_contract = Helpers.determine_contract_type("Armoury", "Armoury Concept Artist", [], false)
+    conditional_contract = Helpers.determine_contract_type("Armoury", "Senior Model Maker", [], false)
 
     assert sch_d_contract == "SCHEDULE-D"
     assert paye_contract == "PAYE"
@@ -92,9 +92,9 @@ defmodule Karma.Controllers.HelpersTest do
   end
 
   test "determine_contract_type(department, job_title) Art" do
-    sch_d_contract = Helpers.determine_contract_type("Art", "Art Director", [])
-    paye_contract = Helpers.determine_contract_type("Art", "Art Trainee", [])
-    conditional_contract = Helpers.determine_contract_type("Art", "Scenic Painter", [])
+    sch_d_contract = Helpers.determine_contract_type("Art", "Art Director", [], false)
+    paye_contract = Helpers.determine_contract_type("Art", "Art Trainee", [], false)
+    conditional_contract = Helpers.determine_contract_type("Art", "Scenic Painter", [], false)
 
 
     assert sch_d_contract == "SCHEDULE-D"
@@ -103,9 +103,9 @@ defmodule Karma.Controllers.HelpersTest do
   end
 
   test "determine_contract_type(department, job_title) Camera" do
-    sch_d_contract = Helpers.determine_contract_type("Camera", "Director Of Photography", [])
-    paye_contract = Helpers.determine_contract_type("Camera", "1st Assistant Camera", [])
-    conditional_contract = Helpers.determine_contract_type("Camera", "Camera Operator", [])
+    sch_d_contract = Helpers.determine_contract_type("Camera", "Director Of Photography", [], false)
+    paye_contract = Helpers.determine_contract_type("Camera", "1st Assistant Camera", [], false)
+    conditional_contract = Helpers.determine_contract_type("Camera", "Camera Operator", [], false)
 
 
     assert sch_d_contract == "SCHEDULE-D"
@@ -114,9 +114,9 @@ defmodule Karma.Controllers.HelpersTest do
   end
 
   test "determine_contract_type(department, job_title) Cast" do
-    sch_d_contract = Helpers.determine_contract_type("Cast", "Actor", [])
-    paye_contract = Helpers.determine_contract_type("Cast", "Actor Double", [])
-    conditional_contract = Helpers.determine_contract_type("Cast", "Unit Driver", [])
+    sch_d_contract = Helpers.determine_contract_type("Cast", "Actor", [], false)
+    paye_contract = Helpers.determine_contract_type("Cast", "Actor Double", [], false)
+    conditional_contract = Helpers.determine_contract_type("Cast", "Unit Driver", [], false)
 
 
     assert sch_d_contract == "SCHEDULE-D"
@@ -125,9 +125,9 @@ defmodule Karma.Controllers.HelpersTest do
   end
 
   test "determine_contract_type(department, job_title) Construction" do
-    sch_d_contract = Helpers.determine_contract_type("Construction", "Buyer", [])
-    paye_contract = Helpers.determine_contract_type("Construction", "Carpenter", [])
-    conditional_contract = Helpers.determine_contract_type("Construction", "Scenic Painter", [])
+    sch_d_contract = Helpers.determine_contract_type("Construction", "Buyer", [], false)
+    paye_contract = Helpers.determine_contract_type("Construction", "Carpenter", [], false)
+    conditional_contract = Helpers.determine_contract_type("Construction", "Scenic Painter", [], false)
 
 
     assert sch_d_contract == "CONSTRUCTION SCHEDULE-D"
@@ -136,17 +136,17 @@ defmodule Karma.Controllers.HelpersTest do
   end
 
   test "determine_contract_type(department, job_title) Continuity" do
-    sch_d_contract = Helpers.determine_contract_type("Continuity", "Script Supervisor", [])
-    paye_contract = Helpers.determine_contract_type("Continuity", "Assistant Script Supervisor", [])
+    sch_d_contract = Helpers.determine_contract_type("Continuity", "Script Supervisor", [], false)
+    paye_contract = Helpers.determine_contract_type("Continuity", "Assistant Script Supervisor", [], false)
 
     assert sch_d_contract == "SCHEDULE-D"
     assert paye_contract == "PAYE"
   end
 
   test "determine_contract_type(department, job_title) Costume" do
-    sch_d_contract = Helpers.determine_contract_type("Costume", "Buyer", [])
-    paye_contract = Helpers.determine_contract_type("Costume", "Assistant Buyer", [])
-    conditional_contract = Helpers.determine_contract_type("Costume", "Seamstress", [])
+    sch_d_contract = Helpers.determine_contract_type("Costume", "Buyer", [], false)
+    paye_contract = Helpers.determine_contract_type("Costume", "Assistant Buyer", [], false)
+    conditional_contract = Helpers.determine_contract_type("Costume", "Seamstress", [], false)
 
 
     assert sch_d_contract == "SCHEDULE-D"
@@ -155,24 +155,24 @@ defmodule Karma.Controllers.HelpersTest do
   end
 
   test "determine_contract_type(department, job_title) DIT" do
-    conditional_contract = Helpers.determine_contract_type("DIT", "Data Wrangler", [])
-    paye_contract = Helpers.determine_contract_type("DIT", "Array DIT", [])
+    conditional_contract = Helpers.determine_contract_type("DIT", "Data Wrangler", [], false)
+    paye_contract = Helpers.determine_contract_type("DIT", "Array DIT", [], false)
 
     assert conditional_contract == "PAYE"
     assert paye_contract == "PAYE"
   end
 
   test "determine_contract_type(department, job_title) Drapes" do
-    conditional_contract = Helpers.determine_contract_type("Drapes", "Drapesman", [])
-    paye_contract = Helpers.determine_contract_type("Drapes", "Drapes Master", [])
+    conditional_contract = Helpers.determine_contract_type("Drapes", "Drapesman", [], false)
+    paye_contract = Helpers.determine_contract_type("Drapes", "Drapes Master", [], false)
 
     assert conditional_contract == "PAYE"
     assert paye_contract == "PAYE"
   end
 
   test "determine_contract_type(department, job_title) Editorial" do
-    sch_d_contract = Helpers.determine_contract_type("Editorial", "Assembly Editor", [])
-    paye_contract = Helpers.determine_contract_type("Editorial", "Assistant Editor", [])
+    sch_d_contract = Helpers.determine_contract_type("Editorial", "Assembly Editor", [], false)
+    paye_contract = Helpers.determine_contract_type("Editorial", "Assistant Editor", [], false)
 
 
     assert sch_d_contract == "SCHEDULE-D"
@@ -180,9 +180,9 @@ defmodule Karma.Controllers.HelpersTest do
   end
 
   test "determine_contract_type(department, job_title) Electrical" do
-    sch_d_contract = Helpers.determine_contract_type("Electrical", "VFX Editor", [])
-    paye_contract = Helpers.determine_contract_type("Electrical", "Desk Operator", [])
-    conditional_contract = Helpers.determine_contract_type("Electrical", "Balloon Technician", [])
+    sch_d_contract = Helpers.determine_contract_type("Electrical", "VFX Editor", [], false)
+    paye_contract = Helpers.determine_contract_type("Electrical", "Desk Operator", [], false)
+    conditional_contract = Helpers.determine_contract_type("Electrical", "Balloon Technician", [], false)
 
 
     assert sch_d_contract == "SCHEDULE-D"
@@ -191,15 +191,15 @@ defmodule Karma.Controllers.HelpersTest do
   end
 
   test "determine_contract_type(department, job_title) Greens" do
-    paye_contract = Helpers.determine_contract_type("Greens", "Greens Person", [])
+    paye_contract = Helpers.determine_contract_type("Greens", "Greens Person", [], false)
 
     assert paye_contract == "PAYE"
   end
 
   test "determine_contract_type(department, job_title) Grip" do
-    sch_d_contract = Helpers.determine_contract_type("Grip", "Crane Grip", [])
-    paye_contract = Helpers.determine_contract_type("Grip", "Grip Rigger", [])
-    conditional_contract = Helpers.determine_contract_type("Grip", "Best Boy Grip", [])
+    sch_d_contract = Helpers.determine_contract_type("Grip", "Crane Grip", [], false)
+    paye_contract = Helpers.determine_contract_type("Grip", "Grip Rigger", [], false)
+    conditional_contract = Helpers.determine_contract_type("Grip", "Best Boy Grip", [], false)
 
 
     assert sch_d_contract == "SCHEDULE-D"
@@ -208,8 +208,8 @@ defmodule Karma.Controllers.HelpersTest do
   end
 
   test "determine_contract_type(department, job_title) Hair And Makeup" do
-    sch_d_contract = Helpers.determine_contract_type("Hair And Makeup", "Hair Designer", [])
-    paye_contract = Helpers.determine_contract_type("Hair And Makeup", "Hairdresser", [])
+    sch_d_contract = Helpers.determine_contract_type("Hair And Makeup", "Hair Designer", [], false)
+    paye_contract = Helpers.determine_contract_type("Hair And Makeup", "Hairdresser", [], false)
 
 
     assert sch_d_contract == "SCHEDULE-D"
@@ -217,14 +217,14 @@ defmodule Karma.Controllers.HelpersTest do
   end
 
   test "determine_contract_type(department, job_title) IT" do
-    paye_contract = Helpers.determine_contract_type("IT", "1st Line IT Support", [])
+    paye_contract = Helpers.determine_contract_type("IT", "1st Line IT Support", [], false)
 
     assert paye_contract == "PAYE"
   end
 
   test "determine_contract_type(department, job_title) Locations" do
-    sch_d_contract = Helpers.determine_contract_type("Locations", "Location Manager", [])
-    paye_contract = Helpers.determine_contract_type("Locations", "Locations Marshall", [])
+    sch_d_contract = Helpers.determine_contract_type("Locations", "Location Manager", [], false)
+    paye_contract = Helpers.determine_contract_type("Locations", "Locations Marshall", [], false)
 
 
     assert sch_d_contract == "SCHEDULE-D"
@@ -232,26 +232,26 @@ defmodule Karma.Controllers.HelpersTest do
   end
 
   test "determine_contract_type(department, job_title) Medical" do
-    sch_d_contract = Helpers.determine_contract_type("Medical", "Medic", [])
+    sch_d_contract = Helpers.determine_contract_type("Medical", "Medic", [], false)
 
     assert sch_d_contract == "SCHEDULE-D"
   end
 
   test "determine_contract_type(department, job_title) Military" do
-    sch_d_contract = Helpers.determine_contract_type("Military", "Military Advisor", [])
+    sch_d_contract = Helpers.determine_contract_type("Military", "Military Advisor", [], false)
 
     assert sch_d_contract == "SCHEDULE-D"
   end
 
   test "determine_contract_type(department, job_title) Photography" do
-    conditional_contract = Helpers.determine_contract_type("Photography", "Photographer", [])
+    conditional_contract = Helpers.determine_contract_type("Photography", "Photographer", [], false)
 
     assert conditional_contract == "PAYE"
   end
 
   test "determine_contract_type(department, job_title) Post Production" do
-    sch_d_contract = Helpers.determine_contract_type("Post Production", "Post Production Supervisor", [])
-    paye_contract = Helpers.determine_contract_type("Post Production", "Coordinator", [])
+    sch_d_contract = Helpers.determine_contract_type("Post Production", "Post Production Supervisor", [], false)
+    paye_contract = Helpers.determine_contract_type("Post Production", "Coordinator", [], false)
 
 
     assert sch_d_contract == "SCHEDULE-D"
@@ -259,8 +259,8 @@ defmodule Karma.Controllers.HelpersTest do
   end
 
   test "determine_contract_type(department, job_title) Production" do
-    sch_d_contract = Helpers.determine_contract_type("Production", "Co-Producer", [])
-    paye_contract = Helpers.determine_contract_type("Production", "Cast Assistant", [])
+    sch_d_contract = Helpers.determine_contract_type("Production", "Co-Producer", [], false)
+    paye_contract = Helpers.determine_contract_type("Production", "Cast Assistant", [], false)
 
 
     assert sch_d_contract == "SCHEDULE-D"
@@ -268,9 +268,9 @@ defmodule Karma.Controllers.HelpersTest do
   end
 
   test "determine_contract_type(department, job_title) Props" do
-    sch_d_contract = Helpers.determine_contract_type("Props", "HOD Prop Modeller", [])
-    paye_contract = Helpers.determine_contract_type("Props", "Chargehand Dresser", [])
-    conditional_contract = Helpers.determine_contract_type("Props", "Chargehand Dressing Prop", [])
+    sch_d_contract = Helpers.determine_contract_type("Props", "HOD Prop Modeller", [], false)
+    paye_contract = Helpers.determine_contract_type("Props", "Chargehand Dresser", [], false)
+    conditional_contract = Helpers.determine_contract_type("Props", "Chargehand Dressing Prop", [], false)
 
 
     assert sch_d_contract == "SCHEDULE-D"
@@ -279,14 +279,14 @@ defmodule Karma.Controllers.HelpersTest do
   end
 
   test "determine_contract_type(department, job_title) Publicity" do
-    sch_d_contract = Helpers.determine_contract_type("Publicity", "Unit Publicist", [])
+    sch_d_contract = Helpers.determine_contract_type("Publicity", "Unit Publicist", [], false)
 
     assert sch_d_contract == "SCHEDULE-D"
   end
 
   test "determine_contract_type(department, job_title) Rigging" do
-    sch_d_contract = Helpers.determine_contract_type("Rigging", "HOD Rigger", [])
-    paye_contract = Helpers.determine_contract_type("Rigging", "Rigger", [])
+    sch_d_contract = Helpers.determine_contract_type("Rigging", "HOD Rigger", [], false)
+    paye_contract = Helpers.determine_contract_type("Rigging", "Rigger", [], false)
 
 
     assert sch_d_contract == "SCHEDULE-D"
@@ -294,15 +294,15 @@ defmodule Karma.Controllers.HelpersTest do
   end
 
   test "determine_contract_type(department, job_title) Security" do
-    paye_contract = Helpers.determine_contract_type("Security", "Security", [])
+    paye_contract = Helpers.determine_contract_type("Security", "Security", [], false)
 
     assert paye_contract == "PAYE"
   end
 
   test "determine_contract_type(department, job_title) Set Dec" do
-    sch_d_contract = Helpers.determine_contract_type("Set Dec", "Art Director", [])
-    paye_contract = Helpers.determine_contract_type("Set Dec", "Coordinator", [])
-    conditional_contract = Helpers.determine_contract_type("Set Dec", "Scenic Textile Artist", [])
+    sch_d_contract = Helpers.determine_contract_type("Set Dec", "Art Director", [], false)
+    paye_contract = Helpers.determine_contract_type("Set Dec", "Coordinator", [], false)
+    conditional_contract = Helpers.determine_contract_type("Set Dec", "Scenic Textile Artist", [], false)
 
 
     assert sch_d_contract == "SCHEDULE-D"
@@ -311,8 +311,8 @@ defmodule Karma.Controllers.HelpersTest do
   end
 
   test "determine_contract_type(department, job_title) SFX" do
-    sch_d_contract = Helpers.determine_contract_type("SFX", "Floor Director", [])
-    paye_contract = Helpers.determine_contract_type("SFX", "Floor Technician", [])
+    sch_d_contract = Helpers.determine_contract_type("SFX", "Floor Director", [], false)
+    paye_contract = Helpers.determine_contract_type("SFX", "Floor Technician", [], false)
 
 
     assert sch_d_contract == "SCHEDULE-D"
@@ -320,8 +320,8 @@ defmodule Karma.Controllers.HelpersTest do
   end
 
   test "determine_contract_type(department, job_title) Sound" do
-    sch_d_contract = Helpers.determine_contract_type("Sound", "Production Sound Mixer", [])
-    paye_contract = Helpers.determine_contract_type("Sound", "1st Assistant Sound", [])
+    sch_d_contract = Helpers.determine_contract_type("Sound", "Production Sound Mixer", [], false)
+    paye_contract = Helpers.determine_contract_type("Sound", "1st Assistant Sound", [], false)
 
 
     assert sch_d_contract == "SCHEDULE-D"
@@ -329,21 +329,21 @@ defmodule Karma.Controllers.HelpersTest do
   end
 
   test "determine_contract_type(department, job_title) Standby" do
-    paye_contract = Helpers.determine_contract_type("Standby", "Rigger", [])
+    paye_contract = Helpers.determine_contract_type("Standby", "Rigger", [], false)
 
     assert paye_contract == "PAYE"
   end
 
   test "determine_contract_type(department, job_title) Studio Unit" do
-    paye_contract = Helpers.determine_contract_type("Studio Unit", "Studio Unit Manager", [])
+    paye_contract = Helpers.determine_contract_type("Studio Unit", "Studio Unit Manager", [], false)
 
     assert paye_contract == "PAYE"
   end
 
   test "determine_contract_type(department, job_title) Stunts" do
-    sch_d_contract = Helpers.determine_contract_type("Stunts", "Stunt Coordinator", [])
-    paye_contract = Helpers.determine_contract_type("Stunts", "Rigger", [])
-    conditional_contract = Helpers.determine_contract_type("Stunts", "Wire Rigger", [])
+    sch_d_contract = Helpers.determine_contract_type("Stunts", "Stunt Coordinator", [], false)
+    paye_contract = Helpers.determine_contract_type("Stunts", "Rigger", [], false)
+    conditional_contract = Helpers.determine_contract_type("Stunts", "Wire Rigger", [], false)
 
 
     assert sch_d_contract == "SCHEDULE-D"
@@ -352,16 +352,16 @@ defmodule Karma.Controllers.HelpersTest do
   end
 
   test "determine_contract_type(department, job_title) Supporting Artist" do
-    sch_d_contract = Helpers.determine_contract_type("Supporting Artist", "Pay Direct Extra", [])
+    sch_d_contract = Helpers.determine_contract_type("Supporting Artist", "Pay Direct Extra", [], false)
 
     assert sch_d_contract == "SCHEDULE-D"
   end
 
   test "determine_contract_type(department, job_title) Transport" do
-    sch_d_contract = Helpers.determine_contract_type("Transport", "Transport Captain", ["TRANSPORT DIRECT HIRE"])
-    paye_contract = Helpers.determine_contract_type("Transport", "Transport Coordinator", ["TRANSPORT DIRECT HIRE"])
-    conditional_contract = Helpers.determine_contract_type("Transport", "Unit Driver", ["TRANSPORT DIRECT HIRE"])
-    direct_hire = Helpers.determine_contract_type("Transport", "Rushes Runner", ["TRANSPORT DIRECT HIRE"])
+    sch_d_contract = Helpers.determine_contract_type("Transport", "Transport Captain", ["TRANSPORT DIRECT HIRE"], false)
+    paye_contract = Helpers.determine_contract_type("Transport", "Transport Coordinator", ["TRANSPORT DIRECT HIRE"], false)
+    conditional_contract = Helpers.determine_contract_type("Transport", "Unit Driver", ["TRANSPORT DIRECT HIRE"], false)
+    direct_hire = Helpers.determine_contract_type("Transport", "Rushes Runner", ["TRANSPORT DIRECT HIRE"], false)
 
 
     assert sch_d_contract == "SCHEDULE-D"
@@ -371,14 +371,14 @@ defmodule Karma.Controllers.HelpersTest do
   end
 
   test "determine_contract_type(department, job_title) Underwater" do
-    sch_d_contract = Helpers.determine_contract_type("Underwater", "Cameraman", [])
+    sch_d_contract = Helpers.determine_contract_type("Underwater", "Cameraman", [], false)
 
     assert sch_d_contract == "SCHEDULE-D"
   end
 
   test "determine_contract_type(department, job_title) VFX" do
-    sch_d_contract = Helpers.determine_contract_type("VFX", "VFX Producer", [])
-    paye_contract = Helpers.determine_contract_type("VFX", "Data Wrangler", [])
+    sch_d_contract = Helpers.determine_contract_type("VFX", "VFX Producer", [], false)
+    paye_contract = Helpers.determine_contract_type("VFX", "Data Wrangler", [], false)
 
 
     assert sch_d_contract == "SCHEDULE-D"
@@ -386,14 +386,36 @@ defmodule Karma.Controllers.HelpersTest do
   end
 
   test "determine_contract_type(department, job_title) Video" do
-    paye_contract = Helpers.determine_contract_type("Video", "Video Assistant", [])
+    paye_contract = Helpers.determine_contract_type("Video", "Video Assistant", [], false)
 
     assert paye_contract == "PAYE"
   end
 
   test "determine_contract_type(department, job_title) Voice" do
-    sch_d_contract = Helpers.determine_contract_type("Voice", "Voice Coach", [])
+    sch_d_contract = Helpers.determine_contract_type("Voice", "Voice Coach", [], false)
 
     assert sch_d_contract == "SCHEDULE-D"
+  end
+
+  test "determine_contract_type daily contracts" do
+    daily_construction_direct_hire_paye = Helpers.determine_contract_type("Construction", "Crew Chef", ["DAILY CONSTRUCTION DIRECT HIRE"], true)
+    daily_construction_direct_hire_overwrite_paye = Helpers.determine_contract_type("Construction", "Crew Chef", ["DAILY CONSTRUCTION DIRECT HIRE", "CONSTRUCTION DIRECT HIRE"], true)
+    daily_construction_direct_hire_sch_d = Helpers.determine_contract_type("Construction", "Cast Chef", ["DAILY CONSTRUCTION DIRECT HIRE"], true)
+    daily_construction_direct_hire_overwrite_sch_d = Helpers.determine_contract_type("Construction", "Cast Chef", ["DAILY CONSTRUCTION DIRECT HIRE", "CONSTRUCTION DIRECT HIRE"], true)
+    daily_transport_direct_hire_paye = Helpers.determine_contract_type("Transport", "Transport Operator", ["DAILY TRANSPORT DIRECT HIRE"], true)
+    daily_transport_paye = Helpers.determine_contract_type("Transport", "Transport Operator", ["DAILY TRANSPORT PAYE"], true)
+    daily_transport_direct_hire_overwrite_paye = Helpers.determine_contract_type("Transport", "Transport Coordinator", ["DAILY CONSTRUCTION DIRECT HIRE", "CONSTRUCTION DIRECT HIRE", "DIRECT HIRE"], true)
+    daily_transport_direct_hire_sch_d = Helpers.determine_contract_type("Transport", "Transport Captain", ["DAILY TRANSPORT DIRECT HIRE", "DAILY DIRECT HIRE"], true)
+    daily_transport_direct_hire_overwrite_sch_d = Helpers.determine_contract_type("Transport", "Transport Manager", ["DAILY DIRECT HIRE", "DIRECT HIRE"], true)
+
+    assert daily_construction_direct_hire_paye == "DAILY CONSTRUCTION DIRECT HIRE"
+    assert daily_construction_direct_hire_overwrite_paye == "DAILY CONSTRUCTION DIRECT HIRE"
+    assert daily_construction_direct_hire_sch_d == "DAILY CONSTRUCTION DIRECT HIRE"
+    assert daily_construction_direct_hire_overwrite_sch_d == "DAILY CONSTRUCTION DIRECT HIRE"
+    assert daily_transport_direct_hire_paye == "DAILY TRANSPORT DIRECT HIRE"
+    assert daily_transport_direct_hire_overwrite_paye == "DIRECT HIRE"
+    assert daily_transport_direct_hire_sch_d == "DAILY DIRECT HIRE"
+    assert daily_transport_paye == "DAILY TRANSPORT PAYE"
+    assert daily_transport_direct_hire_overwrite_sch_d == "DAILY DIRECT HIRE"
   end
 end
