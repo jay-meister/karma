@@ -396,4 +396,26 @@ defmodule Karma.Controllers.HelpersTest do
 
     assert sch_d_contract == "SCHEDULE-D"
   end
+
+  test "determine_contract_type daily contracts" do
+    daily_construction_direct_hire_paye = Helpers.determine_contract_type("Construction", "Crew Chef", ["DAILY CONSTRUCTION DIRECT HIRE"], true)
+    daily_construction_direct_hire_overwrite_paye = Helpers.determine_contract_type("Construction", "Crew Chef", ["DAILY CONSTRUCTION DIRECT HIRE", "CONSTRUCTION DIRECT HIRE"], true)
+    daily_construction_direct_hire_sch_d = Helpers.determine_contract_type("Construction", "Cast Chef", ["DAILY CONSTRUCTION DIRECT HIRE"], true)
+    daily_construction_direct_hire_overwrite_sch_d = Helpers.determine_contract_type("Construction", "Cast Chef", ["DAILY CONSTRUCTION DIRECT HIRE", "CONSTRUCTION DIRECT HIRE"], true)
+    daily_transport_direct_hire_paye = Helpers.determine_contract_type("Transport", "Transport Operator", ["DAILY TRANSPORT DIRECT HIRE"], true)
+    daily_transport_paye = Helpers.determine_contract_type("Transport", "Transport Operator", ["DAILY TRANSPORT PAYE"], true)
+    daily_transport_direct_hire_overwrite_paye = Helpers.determine_contract_type("Transport", "Transport Coordinator", ["DAILY CONSTRUCTION DIRECT HIRE", "CONSTRUCTION DIRECT HIRE", "DIRECT HIRE"], true)
+    daily_transport_direct_hire_sch_d = Helpers.determine_contract_type("Transport", "Transport Captain", ["DAILY TRANSPORT DIRECT HIRE", "DAILY DIRECT HIRE"], true)
+    daily_transport_direct_hire_overwrite_sch_d = Helpers.determine_contract_type("Transport", "Transport Manager", ["DAILY DIRECT HIRE", "DIRECT HIRE"], true)
+
+    assert daily_construction_direct_hire_paye == "DAILY CONSTRUCTION DIRECT HIRE"
+    assert daily_construction_direct_hire_overwrite_paye == "DAILY CONSTRUCTION DIRECT HIRE"
+    assert daily_construction_direct_hire_sch_d == "DAILY CONSTRUCTION DIRECT HIRE"
+    assert daily_construction_direct_hire_overwrite_sch_d == "DAILY CONSTRUCTION DIRECT HIRE"
+    assert daily_transport_direct_hire_paye == "DAILY TRANSPORT DIRECT HIRE"
+    assert daily_transport_direct_hire_overwrite_paye == "DIRECT HIRE"
+    assert daily_transport_direct_hire_sch_d == "DAILY DIRECT HIRE"
+    assert daily_transport_paye == "DAILY TRANSPORT PAYE"
+    assert daily_transport_direct_hire_overwrite_sch_d == "DAILY DIRECT HIRE"
+  end
 end
