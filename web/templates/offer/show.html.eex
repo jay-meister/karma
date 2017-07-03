@@ -149,7 +149,7 @@
     <%= if Map.has_key?(@contractor, :first_name) do %>
       <div>
         <%= for {atom, label, formatted} <- [
-          {:first_name, "Recipient name", "#{@contractor.first_name} #{@contractor.last_name}"}
+          {:first_name, "Recipient fullname", "#{@contractor.first_name} #{@contractor.last_name}"}
         ] do %>
           <%= component "data.html",
           data: formatted || Map.get(@contractor, atom),
@@ -192,7 +192,7 @@
   </div>
   <div class="mt4">
     <%= for {atom, label, formatted} <- [
-      {:start_date, "Shoot start date", format_date(@offer.start_date)}
+      {:start_date, "Start date", format_date(@offer.start_date)}
     ] do %>
       <%= component "data.html",
       data: formatted || Map.get(@offer, atom),
@@ -203,7 +203,16 @@
   <div class="mt4">
     <%= for {atom, label, formatted} <- [
       {:daily_or_weekly, nil, nil},
-      {:working_week, nil, nil},
+      {:working_week, nil, nil}
+    ] do %>
+      <%= component "data.html",
+      data: formatted || Map.get(@offer, atom),
+      label: label || format_label(atom)
+      %>
+    <% end %>
+  </div>
+  <div class="mt4">
+    <%= for {atom, label, formatted} <- [
       {:additional_notes, nil, nil}
     ] do %>
       <%= component "data.html",
