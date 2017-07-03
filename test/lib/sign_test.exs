@@ -33,27 +33,34 @@ defmodule Karma.SignTest do
       %Signee{email: "signee2@gmail.com"}
       ] = chain
   end
-  test "format approval chain function", %{document: document, offer: offer} do
+
+  test "format approval chain function", %{document: document, offer: offer, signee3: signee3} do
     formatted =
       insert_merged_document(document, offer)
       |> Sign.get_approval_chain()
       |> Sign.format_approval_chain()
 
-    assert hd(formatted) == %{email: "signee3@gmail.com", name: "John Smith"}
+    assert hd(formatted) == %{email: "signee3@gmail.com", name: "John Smith", id: signee3.id}
   end
+
   test "add index to chain function" do
-    indexed = Sign.add_index_to_chain([%{name: "jack"}, %{name: "brad"}])
-    assert hd(indexed) == %{name: "jack", recipientId: 1, routingOrder: 1}
+    merged = %{id: 333}
+    chain = [%{name: "jack", id: 1}, %{name: "brad", id: 2}]
+    indexed = Sign.add_index_to_chain(chain, merged)
+    assert hd(indexed) == %{name: "jack", recipientId: 2, routingOrder: 1, tabs: %{signHereTabs: [%{documentId: 333, tabLabel: "signature_1\\*"}]}}
   end
-  test "get and prepare approval chain function", %{document: document, offer: offer, contractor: contractor} do
+  test "get and prepare approval chain function", %{document: document, offer: offer,
+    contractor: contractor, signee1: signee1, signee2: signee2, signee3: signee3} do
     alt_doc = insert_merged_document(document, offer)
 
-    fully_formatted_chain = Sign.get_and_prepare_approval_chain(alt_doc, contractor)
+    fully_formatted_chain =
+      Sign.get_and_prepare_approval_chain(alt_doc, contractor)
+      |> Enum.map(&Map.delete(&1, :tabs))
     assert fully_formatted_chain ==
       [%{email: "cont@gmail.com", name: "Joe Blogs", recipientId: 1, routingOrder: 1},
-       %{email: "signee3@gmail.com", name: "John Smith", recipientId: 2, routingOrder: 2},
-       %{email: "signee1@gmail.com", name: "John Smith", recipientId: 3, routingOrder: 3},
-       %{email: "signee2@gmail.com", name: "John Smith", recipientId: 4, routingOrder: 4}]
+       %{email: "signee3@gmail.com", name: "John Smith", recipientId: signee3.id + 1, routingOrder: 2},
+       %{email: "signee1@gmail.com", name: "John Smith", recipientId: signee1.id + 1, routingOrder: 3},
+       %{email: "signee2@gmail.com", name: "John Smith", recipientId: signee2.id + 1, routingOrder: 4}]
 
   end
 
@@ -67,27 +74,29 @@ defmodule Karma.SignTest do
       {:ok, System.cwd()<>"/test/fixtures/fillable.pdf"}
     end] do
       formatted_doc = Sign.get_and_prepare_document(alt_doc, contractor)
-      assert "Joe-Blogs-PAYE-#{alt_doc.offer_id}.pdf" == hd(formatted_doc).name
+      assert "Joe-Blogs-PAYE-#{alt_doc.offer_id}.pdf" == formatted_doc.name
     end
   end
 
   test "build_envelope_body" do
-    chain = %{
+    chain = [%{
       signee_1: "Signee 1",
       signee_2: "Signee 2",
-    }
-    envelope_body = Sign.build_envelope_body(["doc1", "doc2"], chain)
+    }]
+    envelope_body = Sign.build_envelope_body("doc1", chain)
 
     assert envelope_body == %{
       "emailSubject": "Karma document sign",
       "emailBlurb": "Please sign the document using link provided.",
-      "recipients": %{
-        "signers": %{
-          signee_1: "Signee 1",
-          signee_2: "Signee 2",
-        }
-      },
-      "documents": ["doc1", "doc2"],
+      compositeTemplates: [
+        %{document: "doc1",
+          inlineTemplates: [
+            %{recipients: %{
+                signers: [%{signee_1: "Signee 1", signee_2: "Signee 2"}]},
+              sequence: "1"
+            }
+          ]
+        }],
       "status": "sent"
     }
   end

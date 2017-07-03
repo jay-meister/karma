@@ -18,16 +18,13 @@ defmodule Karma.Sign do
         |> Poison.encode!()
 
         case HTTPoison.post(url, body, headers(), recv_timeout: 10000) do
-          {:ok, %HTTPoison.Response{body: body, headers: headers, status_code: 201}} ->
-            IO.inspect headers
-            IO.inspect body
+          {:ok, %HTTPoison.Response{body: body, headers: _headers, status_code: 201}} ->
             %{"envelopeId" => envelope_id} = Poison.decode!(body)
             altered =
               AlteredDocument.signing_started_changeset(merged, %{envelope_id: envelope_id})
               |> Repo.update!()
             {:ok, altered}
-          error ->
-            IO.inspect error
+          _error ->
             {:error, "Error making signature request"}
         end
     end
@@ -53,7 +50,6 @@ defmodule Karma.Sign do
   def prepare_document(encoded, merged, original, user) do
     %{"documentId": merged.id,
        "name": "#{user.first_name}-#{user.last_name}-#{original.name}-#{merged.offer_id}.pdf",
-       "documentBase64": "encoded",
        "documentBase64": encoded,
        "transformPdfFields": "true"
     }
@@ -66,7 +62,7 @@ defmodule Karma.Sign do
     |> get_approval_chain()
     |> format_approval_chain()
     |> add_contractor_to_chain(contractor)
-    |> add_index_to_chain()
+    |> add_index_to_chain(merged)
   end
 
   def get_approval_chain(altered_document) do
@@ -91,26 +87,25 @@ defmodule Karma.Sign do
     [user] ++ chain
   end
 
-  def add_index_to_chain(chain) do
+  def add_index_to_chain(chain, merged) do
     chain
     |> Enum.with_index()
     |> Enum.map(fn({signee, index}) ->
         index = index + 1
         tabs = %{
           "signHereTabs": [
-            %{documentId: "1", "tabLabel": "signature_#{index}\\*"}
-          ]#,
+            %{documentId: merged.id, "tabLabel": "signature_#{index}\\*"}
+          ]
           # "textTabs": [
           #   %{ tabLabel: "signature_#{index}\\*" }
           # ]
         }
-        IO.inspect tabs
-        IO.inspect Map.merge(signee, additional)
         # contractor has id set to 0, signees have id set to their signee id on our table
         # add one to this id, so contractors id will become 1, required to be positive by docusign
         additional = %{"recipientId": signee.id + 1, "routingOrder": index, "tabs": tabs}
         Map.merge(signee, additional)
       end)
+    |> Enum.map(&Map.delete(&1, :id))
   end
 
   # api related
@@ -148,7 +143,7 @@ defmodule Karma.Sign do
   end
 
   def build_envelope_body(document, chain) do
-    bod = %{
+    %{
       "emailSubject": "Karma document sign",
       "emailBlurb": "Please sign the document using link provided.",
       "compositeTemplates": [
@@ -164,6 +159,5 @@ defmodule Karma.Sign do
       ],
       "status": "sent"
     }
-    bod
   end
 end
