@@ -4,6 +4,17 @@
       <p>Fill out the fields below to complete your startpack!</p>
     </div>
   <% end %>
+  <%= if length(@uploaded_files) != 0 do %>
+  <%= component "form_divider.html", title: "Uploaded files" %>
+  <div class="tc">
+    <%= for file <- @uploaded_files do %>
+      <div class="dib">
+        <img class="w5" src="/images/pdf.svg"  />
+        <div class="f5"><%= file.name %></div>
+      </div>
+    <% end %>
+  </div>
+  <% end %>
   <%= component "form_divider.html", title: "Profile info" %>
   <br />
   <br />
@@ -11,7 +22,6 @@
   data: @user.email,
   label: "Email address"
   %>
-
   <%= component "information.html",
   data: @user.first_name,
   label: "First name"

@@ -20,5 +20,6 @@
                           offer: @offer,
                           startpack: @startpack,
                           conn: @conn,
-                          user: @user %>
+                          user: @user,
+                          uploaded_files: @uploaded_files %>
 </div>
