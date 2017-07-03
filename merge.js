@@ -1,12 +1,13 @@
 var pdfFiller   = require('pdffiller')
 
 // get argument list
-args = process.argv;
+args = process.argv
 var json = JSON.parse(args[2])
 var source_path = args[3]
 var destination_path = args[4]
+var should_flatten = false
 
-pdfFiller.fillForm( source_path, destination_path, json, function(err) {
+pdfFiller.fillFormWithFlatten( source_path, destination_path, json, should_flatten, function(err) {
     if (err) {
       process.exit(1)
     }

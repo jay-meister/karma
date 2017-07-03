@@ -25,6 +25,7 @@ defmodule Karma.TestHelpers do
       contractor: contractor,
       signee1: signee1,
       signee2: signee2,
+      signee3: signee3,
       doc_sign1: doc_sign1,
       doc_sign2: doc_sign2,
       doc_sign3: doc_sign3

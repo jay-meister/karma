@@ -48,10 +48,11 @@ defmodule Karma.Sign do
 
 
   def prepare_document(encoded, merged, original, user) do
-    [%{"documentId": merged.id,
+    %{"documentId": merged.id,
        "name": "#{user.first_name}-#{user.last_name}-#{original.name}-#{merged.offer_id}.pdf",
-       "documentBase64": encoded
-    }]
+       "documentBase64": encoded,
+       "transformPdfFields": "true"
+    }
   end
 
 
@@ -61,7 +62,7 @@ defmodule Karma.Sign do
     |> get_approval_chain()
     |> format_approval_chain()
     |> add_contractor_to_chain(contractor)
-    |> add_index_to_chain()
+    |> add_index_to_chain(merged)
   end
 
   def get_approval_chain(altered_document) do
@@ -78,21 +79,33 @@ defmodule Karma.Sign do
     # format from signee struct to usable map (name and email keys)
     signees
     |> Enum.map(&Map.from_struct/1)
-    |> Enum.map(&Map.take(&1, [:email, :name]))
+    |> Enum.map(&Map.take(&1, [:email, :name, :id]))
   end
 
   def add_contractor_to_chain(chain, user) do
-    user = %{email: user.email, name: "#{user.first_name} #{user.last_name}"}
+    user = %{email: user.email, name: "#{user.first_name} #{user.last_name}", id: 0}
     [user] ++ chain
   end
 
-
-  def add_index_to_chain(chain) do
+  def add_index_to_chain(chain, merged) do
     chain
     |> Enum.with_index()
     |> Enum.map(fn({signee, index}) ->
-        Map.merge(signee, %{"recipientId": index + 1, "routingOrder": index + 1})
+        index = index + 1
+        tabs = %{
+          "signHereTabs": [
+            %{documentId: merged.id, "tabLabel": "signature_#{index}\\*"}
+          ]
+          # "textTabs": [
+          #   %{ tabLabel: "signature_#{index}\\*" }
+          # ]
+        }
+        # contractor has id set to 0, signees have id set to their signee id on our table
+        # add one to this id, so contractors id will become 1, required to be positive by docusign
+        additional = %{"recipientId": signee.id + 1, "routingOrder": index, "tabs": tabs}
+        Map.merge(signee, additional)
       end)
+    |> Enum.map(&Map.delete(&1, :id))
   end
 
   # api related
@@ -129,12 +142,21 @@ defmodule Karma.Sign do
     ]
   end
 
-  def build_envelope_body(documents, chain) do
+  def build_envelope_body(document, chain) do
     %{
       "emailSubject": "Karma document sign",
       "emailBlurb": "Please sign the document using link provided.",
-      "recipients": %{"signers": chain},
-      "documents": documents,
+      "compositeTemplates": [
+        %{"inlineTemplates": [
+          %{"sequence": "1",
+            "recipients": %{
+              "signers": chain
+            }
+          }
+          ],
+          "document": document
+        }
+      ],
       "status": "sent"
     }
   end
