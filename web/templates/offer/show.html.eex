@@ -91,8 +91,13 @@
     <% end %>
   </div>
 <% end %>
-
-<h2>Offer for <%= @offer.target_email %></h2>
+<%= if @is_pm? do %>
+  <%= if Map.has_key?(@contractor, :first_name) do %>
+    <h2>Offer for <%= "#{@contractor.first_name} #{@contractor.last_name} " %><span class="fw3"><%= "(#{@contractor.email})" %></span></h2>
+  <% else %>
+    <h2>Offer for <%= @offer.target_email %></h2>
+  <% end %>
+<% end %>
 <%= if @is_pm? && @offer.accepted do %>
 <%= component "form_divider.html", title: "Contractor supporting documents" %>
   <div class="tc">
@@ -140,17 +145,31 @@
   <% end %>
 
   <%= component "form_divider.html", title: "Offer details" %>
-  <div class="mb4">
-    <%= for {atom, label, formatted} <- [
-      {:target_email, "Recipient email", nil}
-    ] do %>
-      <%= component "data.html",
-      data: formatted || Map.get(@offer, atom),
-      label: label || format_label(atom)
-      %>
+  <div class="mt4">
+    <%= if Map.has_key?(@contractor, :first_name) do %>
+      <div>
+        <%= for {atom, label, formatted} <- [
+          {:first_name, "Recipient name", "#{@contractor.first_name} #{@contractor.last_name}"}
+        ] do %>
+          <%= component "data.html",
+          data: formatted || Map.get(@contractor, atom),
+          label: label || format_label(atom)
+          %>
+        <% end %>
+      </div>
     <% end %>
+    <div>
+      <%= for {atom, label, formatted} <- [
+        {:target_email, "Recipient email", nil}
+      ] do %>
+        <%= component "data.html",
+        data: formatted || Map.get(@offer, atom),
+        label: label || format_label(atom)
+        %>
+      <% end %>
+    </div>
   </div>
-  <div class="mb4">
+  <div class="mt4">
     <%= for {atom, label, formatted} <- [
       {:department, nil, nil},
       {:job_title, nil, nil}
@@ -161,7 +180,7 @@
       %>
     <% end %>
   </div>
-  <div class="mb4">
+  <div class="mt4">
     <%= for {atom, label, formatted} <- [
       {:contract_type, nil, check_loan_out(@offer.contract_type, @offer.user_id)}
     ] do %>
@@ -171,7 +190,7 @@
       %>
     <% end %>
   </div>
-  <div class="mb4">
+  <div class="mt4">
     <%= for {atom, label, formatted} <- [
       {:start_date, "Shoot start date", format_date(@offer.start_date)}
     ] do %>
@@ -181,7 +200,7 @@
       %>
     <% end %>
   </div>
-  <div class="mb4">
+  <div class="mt4">
     <%= for {atom, label, formatted} <- [
       {:daily_or_weekly, nil, nil},
       {:working_week, nil, nil},
@@ -195,7 +214,7 @@
   </div>
 
   <%= component "form_divider.html", title: "Fees" %>
-  <div class="mb4">
+  <div class="mt4">
     <%= for {atom, label, formatted} <- [
       {:currency, nil, nil}
     ] do %>
@@ -205,7 +224,7 @@
       %>
     <% end %>
   </div>
-  <div class="mb4">
+  <div class="mt4">
     <%= for {atom, label, formatted} <- [
       {:fee_per_day_inc_holiday, nil, nil},
       {:fee_per_day_exc_holiday, nil, nil},
@@ -218,7 +237,7 @@
     <% end %>
   </div>
 
-  <div class="mb4">
+  <div class="mt4">
     <%= for {atom, label, formatted} <- [
       {:fee_per_week_inc_holiday, nil, nil},
       {:fee_per_week_exc_holiday, nil, nil},
@@ -231,7 +250,7 @@
     <% end %>
   </div>
 
-  <div class="mb4">
+  <div class="mt4">
     <%= for {atom, label, formatted} <- [
       {:sixth_day_fee_multiplier, nil, nil},
       {:sixth_day_fee_inc_holiday, nil, nil},
@@ -244,7 +263,7 @@
     <% end %>
   </div>
 
-  <div class="mb4">
+  <div class="mt4">
     <%= for {atom, label, formatted} <- [
       {:seventh_day_fee_multiplier, nil, nil},
       {:seventh_day_fee_inc_holiday, nil, nil},
@@ -260,7 +279,7 @@
 
 
   <%= component "form_divider.html", title: "Allowances" %>
-  <div class="mb4">
+  <div class="mt4">
     <%= for {atom, label, formatted} <- [
       {:other_deal_provisions, nil, nil}
     ] do %>
@@ -270,7 +289,7 @@
       %>
     <% end %>
   </div>
-  <div class="mb4">
+  <div class="mt4">
     <%= for {atom, label, formatted} <- [
       {:box_rental_description, nil, nil},
       {:box_rental_fee_per_week, nil, nil},
@@ -283,7 +302,7 @@
       %>
     <% end %>
   </div>
-  <div class="mb4">
+  <div class="mt4">
     <%= for {atom, label, formatted} <- [
       {:equipment_rental_description, nil, nil},
       {:equipment_rental_fee_per_week, nil, nil},
@@ -296,7 +315,7 @@
       %>
     <% end %>
   </div>
-  <div class="mb4">
+  <div class="mt4">
     <%= for {atom, label, formatted} <- [
       {:vehicle_allowance_per_week, nil, nil}
     ] do %>
