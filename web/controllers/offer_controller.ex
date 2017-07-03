@@ -159,7 +159,7 @@ defmodule Karma.OfferController do
   def show(conn, %{"project_id" => project_id, "id" => id}) do
     offer = conn.assigns.offer
     contractor =
-      case Repo.get(User, offer.user_id) |> Repo.preload(:startpacks) do
+      case Repo.get_by(User, email: offer.target_email) |> Repo.preload(:startpacks) do
         nil -> %{}
         contractor -> contractor
       end
