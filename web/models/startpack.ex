@@ -47,6 +47,8 @@ defmodule Karma.Startpack do
     field :vehicle_colour, :string
     field :vehicle_registration, :string
     field :vehicle_insurance_url, :string
+    field :vehicle_license_url, :string
+    field :vehicle_business_use_insurance_url, :string
     field :national_insurance_number, :string
     field :vat_number, :string
     field :p45_url, :string
@@ -132,6 +134,8 @@ defmodule Karma.Startpack do
       :vehicle_colour,
       :vehicle_registration,
       :vehicle_insurance_url,
+      :vehicle_license_url,
+      :vehicle_business_use_insurance_url,
       :national_insurance_number,
       :vat_number,
       :p45_url,
@@ -204,7 +208,9 @@ defmodule Karma.Startpack do
       :vehicle_model,
       :vehicle_colour,
       :vehicle_registration,
-      :vehicle_insurance_url
+      :vehicle_insurance_url,
+      :vehicle_business_use_insurance_url,
+      :vehicle_license_url
     ]
   end
 
