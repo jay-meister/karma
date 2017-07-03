@@ -140,60 +140,171 @@
   <% end %>
 
   <%= component "form_divider.html", title: "Offer details" %>
-  <%= for {atom, label, formatted} <- [
-    {:target_email, "Recipient email", nil},
-    {:department, nil, nil},
-    {:job_title, nil, nil},
-    {:contract_type, nil, check_loan_out(@offer.contract_type, @offer.user_id)},
-    {:start_date, "Shoot start date", format_date(@offer.start_date)},
-    {:daily_or_weekly, nil, nil},
-    {:working_week, nil, nil},
-    {:additional_notes, nil, nil}
-  ] do %>
-    <%= component "data.html",
-    data: formatted || Map.get(@offer, atom),
-    label: label || format_label(atom)
-    %>
-  <% end %>
+  <div class="mb4">
+    <%= for {atom, label, formatted} <- [
+      {:target_email, "Recipient email", nil}
+    ] do %>
+      <%= component "data.html",
+      data: formatted || Map.get(@offer, atom),
+      label: label || format_label(atom)
+      %>
+    <% end %>
+  </div>
+  <div class="mb4">
+    <%= for {atom, label, formatted} <- [
+      {:department, nil, nil},
+      {:job_title, nil, nil}
+    ] do %>
+      <%= component "data.html",
+      data: formatted || Map.get(@offer, atom),
+      label: label || format_label(atom)
+      %>
+    <% end %>
+  </div>
+  <div class="mb4">
+    <%= for {atom, label, formatted} <- [
+      {:contract_type, nil, check_loan_out(@offer.contract_type, @offer.user_id)}
+    ] do %>
+      <%= component "data.html",
+      data: formatted || Map.get(@offer, atom),
+      label: label || format_label(atom)
+      %>
+    <% end %>
+  </div>
+  <div class="mb4">
+    <%= for {atom, label, formatted} <- [
+      {:start_date, "Shoot start date", format_date(@offer.start_date)}
+    ] do %>
+      <%= component "data.html",
+      data: formatted || Map.get(@offer, atom),
+      label: label || format_label(atom)
+      %>
+    <% end %>
+  </div>
+  <div class="mb4">
+    <%= for {atom, label, formatted} <- [
+      {:daily_or_weekly, nil, nil},
+      {:working_week, nil, nil},
+      {:additional_notes, nil, nil}
+    ] do %>
+      <%= component "data.html",
+      data: formatted || Map.get(@offer, atom),
+      label: label || format_label(atom)
+      %>
+    <% end %>
+  </div>
 
   <%= component "form_divider.html", title: "Fees" %>
-  <%= for {atom, label, formatted} <- [
-    {:currency, nil, nil},
-    {:fee_per_day_inc_holiday, nil, nil},
-    {:sixth_day_fee_multiplier, nil, nil},
-    {:seventh_day_fee_multiplier, nil, nil},
-    {:fee_per_day_exc_holiday, nil, nil},
-    {:fee_per_week_inc_holiday, nil, nil},
-    {:fee_per_week_exc_holiday, nil, nil},
-    {:holiday_pay_per_day, nil, nil},
-    {:holiday_pay_per_week, nil, nil},
-    {:sixth_day_fee_inc_holiday, nil, nil},
-    {:sixth_day_fee_exc_holiday, nil, nil},
-    {:seventh_day_fee_inc_holiday, nil, nil},
-    {:seventh_day_fee_exc_holiday, nil, nil}
-  ] do %>
-    <%= component "data.html",
-    data: formatted || Map.get(@offer, atom),
-    label: label || format_label(atom)
-    %>
-  <% end %>
+  <div class="mb4">
+    <%= for {atom, label, formatted} <- [
+      {:currency, nil, nil}
+    ] do %>
+      <%= component "data.html",
+      data: formatted || Map.get(@offer, atom),
+      label: label || format_label(atom)
+      %>
+    <% end %>
+  </div>
+  <div class="mb4">
+    <%= for {atom, label, formatted} <- [
+      {:fee_per_day_inc_holiday, nil, nil},
+      {:fee_per_day_exc_holiday, nil, nil},
+      {:holiday_pay_per_day, nil, nil}
+    ] do %>
+      <%= component "data.html",
+      data: formatted || Map.get(@offer, atom),
+      label: label || format_label(atom)
+      %>
+    <% end %>
+  </div>
+
+  <div class="mb4">
+    <%= for {atom, label, formatted} <- [
+      {:fee_per_week_inc_holiday, nil, nil},
+      {:fee_per_week_exc_holiday, nil, nil},
+      {:holiday_pay_per_week, nil, nil}
+    ] do %>
+      <%= component "data.html",
+      data: formatted || Map.get(@offer, atom),
+      label: label || format_label(atom)
+      %>
+    <% end %>
+  </div>
+
+  <div class="mb4">
+    <%= for {atom, label, formatted} <- [
+      {:sixth_day_fee_multiplier, nil, nil},
+      {:sixth_day_fee_inc_holiday, nil, nil},
+      {:sixth_day_fee_exc_holiday, nil, nil}
+    ] do %>
+      <%= component "data.html",
+      data: formatted || Map.get(@offer, atom),
+      label: label || format_label(atom)
+      %>
+    <% end %>
+  </div>
+
+  <div class="mb4">
+    <%= for {atom, label, formatted} <- [
+      {:seventh_day_fee_multiplier, nil, nil},
+      {:seventh_day_fee_inc_holiday, nil, nil},
+      {:seventh_day_fee_exc_holiday, nil, nil}
+    ] do %>
+      <%= component "data.html",
+      data: formatted || Map.get(@offer, atom),
+      label: label || format_label(atom)
+      %>
+    <% end %>
+  </div>
+
+
 
   <%= component "form_divider.html", title: "Allowances" %>
-  <%= for {atom, label, formatted} <- [
-    {:other_deal_provisions, nil, nil},
-    {:box_rental_description, nil, nil},
-    {:box_rental_fee_per_week, nil, nil},
-    {:box_rental_cap, nil, nil},
-    {:box_rental_period, nil, nil},
-    {:equipment_rental_description, nil, nil},
-    {:equipment_rental_fee_per_week, nil, nil},
-    {:equipment_rental_cap, nil, nil},
-    {:equipment_rental_period, nil, nil},
-    {:vehicle_allowance_per_week, nil, nil}
-  ] do %>
-    <%= component "data.html",
-    data: formatted || Map.get(@offer, atom),
-    label: label || format_label(atom)
-    %>
-  <% end %>
+  <div class="mb4">
+    <%= for {atom, label, formatted} <- [
+      {:other_deal_provisions, nil, nil}
+    ] do %>
+      <%= component "data.html",
+      data: formatted || Map.get(@offer, atom),
+      label: label || format_label(atom)
+      %>
+    <% end %>
+  </div>
+  <div class="mb4">
+    <%= for {atom, label, formatted} <- [
+      {:box_rental_description, nil, nil},
+      {:box_rental_fee_per_week, nil, nil},
+      {:box_rental_cap, nil, nil},
+      {:box_rental_period, nil, nil}
+    ] do %>
+      <%= component "data.html",
+      data: formatted || Map.get(@offer, atom),
+      label: label || format_label(atom)
+      %>
+    <% end %>
+  </div>
+  <div class="mb4">
+    <%= for {atom, label, formatted} <- [
+      {:equipment_rental_description, nil, nil},
+      {:equipment_rental_fee_per_week, nil, nil},
+      {:equipment_rental_cap, nil, nil},
+      {:equipment_rental_period, nil, nil}
+    ] do %>
+      <%= component "data.html",
+      data: formatted || Map.get(@offer, atom),
+      label: label || format_label(atom)
+      %>
+    <% end %>
+  </div>
+  <div class="mb4">
+    <%= for {atom, label, formatted} <- [
+      {:vehicle_allowance_per_week, nil, nil}
+    ] do %>
+      <%= component "data.html",
+      data: formatted || Map.get(@offer, atom),
+      label: label || format_label(atom)
+      %>
+    <% end %>
+  </div>
+
 </ul>
