@@ -51,9 +51,10 @@ defmodule Karma.Sign do
 
 
   def prepare_document(encoded, merged, original, user) do
-    %{"documentId": 1,
+    %{"documentId": merged.id,
        "name": "#{user.first_name}-#{user.last_name}-#{original.name}-#{merged.offer_id}.pdf",
        "documentBase64": "encoded",
+       "documentBase64": encoded,
        "transformPdfFields": "true"
     }
   end
@@ -82,11 +83,11 @@ defmodule Karma.Sign do
     # format from signee struct to usable map (name and email keys)
     signees
     |> Enum.map(&Map.from_struct/1)
-    |> Enum.map(&Map.take(&1, [:email, :name]))
+    |> Enum.map(&Map.take(&1, [:email, :name, :id]))
   end
 
   def add_contractor_to_chain(chain, user) do
-    user = %{email: user.email, name: "#{user.first_name} #{user.last_name}"}
+    user = %{email: user.email, name: "#{user.first_name} #{user.last_name}", id: 0}
     [user] ++ chain
   end
 
@@ -97,15 +98,18 @@ defmodule Karma.Sign do
         index = index + 1
         tabs = %{
           "signHereTabs": [
-            %{documentId: "1", "tabLabel": "signature_#{index}\\*", "pageNumber": "1"}
-          ],
-          "textTabs": [
-            %{ tabLabel: "signature_#{index}\\*" }
-          ]
+            %{documentId: "1", "tabLabel": "signature_#{index}\\*"}
+          ]#,
+          # "textTabs": [
+          #   %{ tabLabel: "signature_#{index}\\*" }
+          # ]
         }
         IO.inspect tabs
-        additional = %{"recipientId": index, "routingOrder": index, "tabs": tabs}
         IO.inspect Map.merge(signee, additional)
+        # contractor has id set to 0, signees have id set to their signee id on our table
+        # add one to this id, so contractors id will become 1, required to be positive by docusign
+        additional = %{"recipientId": signee.id + 1, "routingOrder": index, "tabs": tabs}
+        Map.merge(signee, additional)
       end)
   end
 
