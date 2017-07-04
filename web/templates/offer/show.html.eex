@@ -24,6 +24,13 @@
 
   <%= if @offer.accepted do %>
     <div class="k-bg-indigo white tc pa4 br3 ma2 f2 mt3">Congratulations! <br /> You have accepted this offer!</div>
+    <div class="h3">
+      <%= if hd(@deal_documents).status != "signing" do %>
+        <%= component "button.html", title: "Sign Documents", link: project_offer_altered_document_path(@conn, :sign, @offer.project_id, @offer) %>
+      <% else %>
+        <div class="k-w4-5 k-m-auto">Documents sent</div>
+      <% end %>
+    </div>
   <% end %>
   <%= if @offer.accepted == false do %>
     <div class="k-bg-indigo white tc pa4 br3 ma2 f2 mt3">You have rejected this offer!</div>
@@ -37,13 +44,7 @@
           <img src="/images/pdf.svg" class="w5" />
           <div class="mt2 mb2">Merged <%= document.document.name %> Document</div>
           <%= component "button.html", title: "Download", link: document.merged_url %>
-          <div class="h3">
-            <%= if document.status != "signing" do %>
-              <%= component "button.html", title: "Sign", link: project_offer_altered_document_path(@conn, :sign, @offer.project_id, @offer, document) %>
-            <% else %>
-              <div class="">Document sent to signees</div>
-            <% end %>
-          </div>
+
         </div>
       <% end %>
     </div>
@@ -57,13 +58,6 @@
           <img src="/images/pdf.svg" class="w5" />
           <div class="mt2 mb2">Merged <%= document.document.name %> Document</div>
           <%= component "button.html", title: "Download", link: document.merged_url %>
-          <div class="h3">
-            <%= if document.status != "signing" do %>
-              <%= component "button.html", title: "Sign", link: project_offer_altered_document_path(@conn, :sign, @offer.project_id, @offer, document) %>
-            <% else %>
-              <div class="">Document sent to signees</div>
-            <% end %>
-          </div>
         </div>
       <% end %>
     </div>

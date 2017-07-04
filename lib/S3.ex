@@ -55,6 +55,15 @@ defmodule Karma.S3 do
     end
   end
 
+  def get_many_objects(urls) do
+    ops = [max_concurrency: System.schedulers_online() * 3, timeout: 20000]
+
+    Task.async_stream(urls, &get_object/1, ops)
+    |> Enum.to_list()
+    |> Enum.filter(fn {:ok, {res, _file}} -> res != :error end)
+    |> Enum.map(fn {_async_res, { _res, file}} -> file end)
+  end
+
   def download(url, file_destination) do
     case get_object(url) do
       {:ok, body} ->

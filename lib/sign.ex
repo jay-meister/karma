@@ -1,56 +1,71 @@
 defmodule Karma.Sign do
   import Ecto.Query
 
-  alias Karma.{AlteredDocument, Repo}
+  alias Karma.{AlteredDocument, Repo, S3}
 
-  def new_envelope(merged, user) do
+  def new_envelope(altered_docs, user) do
     # login with docusign
     case login(headers()) do
       {:error, msg} ->
         {:error, msg}
       {:ok, base_url} ->
         url = base_url <> "/envelopes"
-        signers = get_and_prepare_approval_chain(merged, user)
-        documents = get_and_prepare_document(merged, user)
 
-        # build up envelope body
-        body = build_envelope_body(documents, signers)
-        |> Poison.encode!()
+        body =
+          altered_docs
+          # download the files from S3, encode and add them to the array
+          |> add_encoded_file_to_docs()
+          # add index so we can sequence documents
+          |> Enum.with_index()
+          # build documents into composite templates
+          |> Enum.map(&get_composite_template(&1, user))
+          # attach templates to the body
+          |> build_envelope_body()
+          |> Poison.encode!()
 
-        case HTTPoison.post(url, body, headers(), recv_timeout: 10000) do
+        case HTTPoison.post(url, body, headers(), recv_timeout: 40000) do
           {:ok, %HTTPoison.Response{body: body, headers: _headers, status_code: 201}} ->
             %{"envelopeId" => envelope_id} = Poison.decode!(body)
-            altered =
-              AlteredDocument.signing_started_changeset(merged, %{envelope_id: envelope_id})
-              |> Repo.update!()
-            {:ok, altered}
+            [%{offer_id: offer_id} | _t] = altered_docs
+
+            AlteredDocument.set_documents_to_signing(offer_id, envelope_id)
+            |> Repo.update_all([])
+
+            {:ok, "success"}
           _error ->
             {:error, "Error making signature request"}
         end
     end
   end
 
-
-  # document related
-  def get_and_prepare_document(merged, user) do
-    # download file,
-    case Karma.S3.get_object(merged.merged_url) do
-      {:error, _error} ->
-        {:error, "There was an error retrieving the document"}
-      {:ok, file} ->
-        original = Repo.get(Karma.Document, merged.document_id)
-
-        # encode file, then prepare for docusign
-        Base.encode64(file)
-        |> prepare_document(merged, original, user)
-    end
+  def get_composite_template({merged, index}, user) do
+    %{"inlineTemplates": [
+      %{"sequence": Integer.to_string(index + 1),
+        "recipients": %{
+          "signers": get_and_prepare_approval_chain(merged, user)
+        }
+      }
+      ],
+      "document": prepare_document(merged, user)
+    }
+  end
+  def add_encoded_file_to_docs(altered_docs) do
+    # download the merged documents from the urls
+    altered_docs
+    |> Enum.map(fn(doc) -> doc.merged_url end)
+    |> S3.get_many_objects()
+    |> Enum.zip(altered_docs)
+    |> Enum.map(fn({file, doc}) ->
+        Map.merge(Map.from_struct(doc), %{encoded_file: Base.encode64(file)})
+      end)
   end
 
 
-  def prepare_document(encoded, merged, original, user) do
+  def prepare_document(merged, user) do
+    original = Repo.get(Karma.Document, merged.document_id)
     %{"documentId": merged.id,
        "name": "#{user.first_name}-#{user.last_name}-#{original.name}-#{merged.offer_id}.pdf",
-       "documentBase64": encoded,
+       "documentBase64": merged.encoded_file,
        "transformPdfFields": "true"
     }
   end
@@ -58,18 +73,17 @@ defmodule Karma.Sign do
 
   # approval chain related
   def get_and_prepare_approval_chain(merged, contractor) do
-    merged
-    |> get_approval_chain()
+    get_approval_chain(merged)
     |> format_approval_chain()
     |> add_contractor_to_chain(contractor)
     |> add_index_to_chain(merged)
   end
 
-  def get_approval_chain(altered_document) do
+  def get_approval_chain(original) do
     query = from s in Karma.Signee,
       join: ds in Karma.DocumentSignee,
       on: s.id == ds.signee_id,
-      where: ds.document_id == ^altered_document.document_id,
+      where: ds.document_id == ^original.document_id,
       order_by: ds.order
 
     Repo.all(query)
@@ -142,21 +156,11 @@ defmodule Karma.Sign do
     ]
   end
 
-  def build_envelope_body(document, chain) do
+  def build_envelope_body(templates) do
     %{
       "emailSubject": "Karma document sign",
       "emailBlurb": "Please sign the document using link provided.",
-      "compositeTemplates": [
-        %{"inlineTemplates": [
-          %{"sequence": "1",
-            "recipients": %{
-              "signers": chain
-            }
-          }
-          ],
-          "document": document
-        }
-      ],
+      "compositeTemplates": templates,
       "status": "sent"
     }
   end

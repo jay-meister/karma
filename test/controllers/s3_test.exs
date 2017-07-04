@@ -76,6 +76,16 @@ defmodule Karma.S3Test do
     end
   end
 
+  test "S3.get_many_objects" do
+    bucket = System.get_env("BUCKET_NAME")
+    url = "https://#{bucket}.s3.amazonaws.com/#{bucket}"
+    urls = [url <> "something.pdf", url <> "else.pdf"]
+    with_mock ExAws, [request!: fn(_) -> %{status_code: 200, body: <<37, 80>>, headers: []} end] do
+      res = S3.get_many_objects(urls)
+      assert res == [<<37, 80>>, <<37, 80>>]
+    end
+  end
+
   test "save_file_to_filepath success" do
     with_mock File, [write!: fn(_, _) -> :ok end] do
       destination_file_path = S3.save_file_to_filepath("test.pdf", "some file")
