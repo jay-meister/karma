@@ -48,7 +48,6 @@ defmodule Karma.Startpack do
     field :vehicle_registration, :string
     field :vehicle_insurance_url, :string
     field :vehicle_license_url, :string
-    field :vehicle_business_use_insurance_url, :string
     field :national_insurance_number, :string
     field :vat_number, :string
     field :p45_url, :string
@@ -74,6 +73,7 @@ defmodule Karma.Startpack do
     field :box_rental_image, :any, virtual: true
     field :equipment_rental_image, :any, virtual: true
     field :vehicle_insurance_image, :any, virtual: true
+    field :vehicle_license_image, :any, virtual: true
     field :p45_image, :any, virtual: true
     field :schedule_d_letter_image, :any, virtual: true
     field :loan_out_company_cert_image, :any, virtual: true
@@ -135,7 +135,6 @@ defmodule Karma.Startpack do
       :vehicle_registration,
       :vehicle_insurance_url,
       :vehicle_license_url,
-      :vehicle_business_use_insurance_url,
       :national_insurance_number,
       :vat_number,
       :p45_url,
@@ -209,7 +208,6 @@ defmodule Karma.Startpack do
       :vehicle_colour,
       :vehicle_registration,
       :vehicle_insurance_url,
-      :vehicle_business_use_insurance_url,
       :vehicle_license_url
     ]
   end
@@ -375,5 +373,19 @@ defmodule Karma.Startpack do
       false ->
         struct
     end
+  end
+
+  def delete_changeset(struct, startpack) do
+    struct
+    |> cast(startpack, [
+      :box_rental_url,
+      :equipment_rental_url,
+      :schedule_d_letter_url,
+      :passport_url,
+      :vehicle_insurance_url,
+      :vehicle_license_url,
+      :p45_url,
+      :loan_out_company_cert_url
+      ])
   end
 end

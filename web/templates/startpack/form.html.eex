@@ -1,9 +1,29 @@
 <div class="pt4">
   <%= if length(@changeset.errors) != 0 do %>
-    <div class="alert alert-danger">
-      <p>Fill out the fields below to complete your startpack!</p>
+      <div class="alert alert-danger">
+        <p>Fill out the fields below to complete your startpack!</p>
+      </div>
+  <% end %>
+  <%= if length(@uploaded_files) != 0 do %>
+    <%= component "form_divider.html", title: "Uploaded files" %>
+    <div class="tc">
+      <%= for file <- @uploaded_files do %>
+        <div class="dib mb4">
+          <%= form_for @delete_changeset, startpack_path(@conn, :delete_uploaded_files, @startpack), fn f -> %>
+            <div class="dib relative">
+              <img class="w5" src="/images/pdf.svg"  />
+              <div class="f5 tc"><%= file.name %></div>
+              <%= hidden_input f, file.atom, value: nil %>
+              <%= submit "x", class: "k-bg-error k-light-indigo br-100 bn absolute k-top--0-5 left-0 pl3 pr3 f2 nunito tc outline-0 pointer" %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
     </div>
   <% end %>
+</div>
+
+<div>
   <%= component "form_divider.html", title: "Profile info" %>
   <br />
   <br />
@@ -11,7 +31,6 @@
   data: @user.email,
   label: "Email address"
   %>
-
   <%= component "information.html",
   data: @user.first_name,
   label: "First name"
@@ -23,452 +42,448 @@
   %>
   <%= component "button.html", link: user_path(@conn, :edit, @user), title: "Edit profile info" %>
 </div>
+<div>
+  <%= form_for @changeset, @action, [multipart: true], fn f -> %>
 
-<%= form_for @changeset, @action, [multipart: true], fn f -> %>
+    <div class="pt5-ns pt4">
+    <%= component "form_divider.html", title: "Basic info" %>
+    <%= component "dropdown.html",
+    form: f,
+    atom: :gender,
+    options: ["Male": "male", "Female": "female", "Other": "other", "Prefer not to say": "n/a"],
+    prompt: "Select one"
+    %>
 
-  <div class="pt5-ns pt4">
-  <%= component "form_divider.html", title: "Basic info" %>
-  <%= component "dropdown.html",
-  form: f,
-  atom: :gender,
-  options: ["Male": "male", "Female": "female", "Other": "other", "Prefer not to say": "n/a"],
-  prompt: "Select one"
-  %>
+    <%= component "input.html",
+    form: f,
+    atom: :middle_names,
+    label: "Middle name(s)"
+    %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :middle_names,
-  label: "Middle name(s)"
-  %>
+    <%= component "input.html",
+    form: f,
+    atom: :aka,
+    label: "Also known as"
+    %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :aka,
-  label: "Also known as"
-  %>
+    <%= component "input.html",
+    form: f,
+    atom: :screen_credit_name
+    %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :screen_credit_name
-  %>
+    <%= component "input.html",
+    form: f,
+    atom: :mobile_tel
+    %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :mobile_tel
-  %>
+    <%= component "input.html",
+    form: f,
+    atom: :emergency_contact_name
+    %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :emergency_contact_name
-  %>
+    <%= component "input.html",
+    form: f,
+    atom: :emergency_contact_relationship
+    %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :emergency_contact_relationship
-  %>
+    <%= component "input.html",
+    form: f,
+    atom: :emergency_contact_tel
+    %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :emergency_contact_tel
-  %>
+    <%= component "form_divider.html", title: "Personal info" %>
 
-  <%= component "form_divider.html", title: "Personal info" %>
+    <%= component "date.html",
+    form: f,
+    atom: :date_of_birth,
+    year_from: 1930,
+    year_to: Date.utc_today().year - 16,
+    dob: true
+    %>
 
-  <%= component "date.html",
-  form: f,
-  atom: :date_of_birth,
-  year_from: 1930,
-  year_to: Date.utc_today().year - 16,
-  dob: true
-  %>
+    <%= component "input.html",
+    form: f,
+    atom: :place_of_birth
+    %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :place_of_birth
-  %>
-
-  <%= component "input.html",
-  form: f,
-  atom: :country_of_legal_nationality
-  %>
-
-
-  <%= component "input.html",
-  form: f,
-  atom: :country_of_permanent_residence
-  %>
+    <%= component "input.html",
+    form: f,
+    atom: :country_of_legal_nationality
+    %>
 
 
-  <%= component "input.html",
-  form: f,
-  atom: :passport_number
-  %>
+    <%= component "input.html",
+    form: f,
+    atom: :country_of_permanent_residence
+    %>
 
 
-  <%= component "date.html",
-  form: f,
-  atom: :passport_expiry_date
-  %>
+    <%= component "input.html",
+    form: f,
+    atom: :passport_number
+    %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :passport_issuing_country
-  %>
 
-  <%= component "file_upload.html",
-  form: f,
-  atom: :passport_image,
-  url_atom: :passport_url,
-  helper_text: "Upload an image of your passport",
-  file_types: "pdf, jpeg, png",
-  image_url: @startpack.passport_url,
-  hide_label: true,
-  conn: @conn
-  %>
+    <%= component "date.html",
+    form: f,
+    atom: :passport_expiry_date
+    %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :passport_full_name,
-  placeholder: "Your full name as it appears on your passport (inc. middle name(s))"
-  %>
+    <%= component "input.html",
+    form: f,
+    atom: :passport_issuing_country
+    %>
 
-  <%= component "form_divider.html", title: "Contact info" %>
+    <%= component "file_upload.html",
+    form: f,
+    atom: :passport_image,
+    url_atom: :passport_url,
+    helper_text: "Upload an image of your passport",
+    file_types: "pdf, jpeg, png",
+    image_url: @startpack.passport_url,
+    hide_label: true,
+    conn: @conn
+    %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :primary_address_1
-  %>
+    <%= component "input.html",
+    form: f,
+    atom: :passport_full_name,
+    placeholder: "Your full name as it appears on your passport (inc. middle name(s))"
+    %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :primary_address_2
-  %>
+    <%= component "form_divider.html", title: "Contact info" %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :primary_address_city
-  %>
+    <%= component "input.html",
+    form: f,
+    atom: :primary_address_1
+    %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :primary_address_postcode
-  %>
+    <%= component "input.html",
+    form: f,
+    atom: :primary_address_2
+    %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :primary_address_country
-  %>
+    <%= component "input.html",
+    form: f,
+    atom: :primary_address_city
+    %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :primary_address_tel
-  %>
+    <%= component "input.html",
+    form: f,
+    atom: :primary_address_postcode
+    %>
 
-  <%= component "form_divider.html", title: "Deal info" %>
+    <%= component "input.html",
+    form: f,
+    atom: :primary_address_country
+    %>
 
-  <div conditional class="mb4">
-    <%= label f, "Check the box if your deal will be done through your agent", class: "dib mw-100 mb2 fw4" %>
-    <%= checkbox f, :agent_deal?, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :agent_deal? %>
+    <%= component "input.html",
+    form: f,
+    atom: :primary_address_tel
+    %>
 
-    <div conditional_child class="mt4">
-      <%= component "input.html",
-      form: f,
-      atom: :agent_name
-      %>
+    <%= component "form_divider.html", title: "Deal info" %>
 
-      <%= component "input.html",
-      form: f,
-      atom: :agent_company
-      %>
+    <div conditional class="mb4">
+      <%= label f, "Check the box if your deal will be done through your agent", class: "dib mw-100 mb2 fw4" %>
+      <%= checkbox f, :agent_deal?, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
+      <%= error_tag f, :agent_deal? %>
 
-      <%= component "input.html",
-      form: f,
-      atom: :agent_address
-      %>
+      <div conditional_child class="mt4">
+        <%= component "input.html",
+        form: f,
+        atom: :agent_name
+        %>
 
-      <%= component "input.html",
-      form: f,
-      atom: :agent_tel
-      %>
+        <%= component "input.html",
+        form: f,
+        atom: :agent_company
+        %>
 
-      <%= component "input.html",
-      form: f,
-      atom: :agent_email_address
-      %>
+        <%= component "input.html",
+        form: f,
+        atom: :agent_address
+        %>
 
-      <%= component "input.html",
-      form: f,
-      atom: :agent_bank_name
-      %>
+        <%= component "input.html",
+        form: f,
+        atom: :agent_tel
+        %>
 
-      <%= component "input.html",
-      form: f,
-      atom: :agent_bank_address
-      %>
+        <%= component "input.html",
+        form: f,
+        atom: :agent_email_address
+        %>
 
-      <%= component "input.html",
-      form: f,
-      atom: :agent_bank_sort_code
-      %>
+        <%= component "input.html",
+        form: f,
+        atom: :agent_bank_name
+        %>
 
-      <%= component "input.html",
-      form: f,
-      atom: :agent_bank_account_number
-      %>
+        <%= component "input.html",
+        form: f,
+        atom: :agent_bank_address
+        %>
 
-      <%= component "input.html",
-      form: f,
-      atom: :agent_bank_account_name
-      %>
+        <%= component "input.html",
+        form: f,
+        atom: :agent_bank_sort_code
+        %>
 
-      <%= component "input.html",
-      form: f,
-      atom: :agent_bank_account_swift_code,
-      label: "Agent bank account SWIFT code"
-      %>
+        <%= component "input.html",
+        form: f,
+        atom: :agent_bank_account_number
+        %>
 
-      <%= component "input.html",
-      form: f,
-      atom: :agent_bank_account_iban,
-      label: "Agent bank account IBAN"
-      %>
+        <%= component "input.html",
+        form: f,
+        atom: :agent_bank_account_name
+        %>
+
+        <%= component "input.html",
+        form: f,
+        atom: :agent_bank_account_swift_code,
+        label: "Agent bank account SWIFT code"
+        %>
+
+        <%= component "input.html",
+        form: f,
+        atom: :agent_bank_account_iban,
+        label: "Agent bank account IBAN"
+        %>
+      </div>
     </div>
-  </div>
 
-  <%= component "form_divider.html", title: "Allowances" %>
+    <%= component "form_divider.html", title: "Allowances" %>
 
-  <%= component "number_input.html",
-  form: f,
-  atom: :box_rental_value,
-  label: "Box rental inventory value",
-  placeholder: "Enter a number"
-  %>
+    <%= component "number_input.html",
+    form: f,
+    atom: :box_rental_value,
+    label: "Box rental inventory value",
+    placeholder: "Enter a number"
+    %>
 
-  <%= component "file_upload.html",
-  form: f,
-  atom: :box_rental_image,
-  url_atom: :box_rental_url,
-  helper_text: "Upload your box rental inventory list with insurance values",
-  file_types: "pdf, jpeg, png",
-  image_url: @startpack.box_rental_url,
-  hide_label: true,
-  conn: @conn
-  %>
+    <%= component "file_upload.html",
+    form: f,
+    atom: :box_rental_image,
+    url_atom: :box_rental_url,
+    helper_text: "Upload your box rental inventory list with insurance values",
+    file_types: "pdf, jpeg, png",
+    image_url: @startpack.box_rental_url,
+    hide_label: true,
+    conn: @conn
+    %>
 
-  <%= component "number_input.html",
-  form: f,
-  atom: :equipment_rental_value,
-  label: "Equipment rental inventory value",
-  placeholder: "Enter a number"
-  %>
+    <%= component "number_input.html",
+    form: f,
+    atom: :equipment_rental_value,
+    label: "Equipment rental inventory value",
+    placeholder: "Enter a number"
+    %>
 
-  <%= component "file_upload.html",
-  form: f,
-  atom: :equipment_rental_image,
-  url_atom: :equipment_rental_url,
-  helper_text: "Upload your equipment rental inventory list with insurance values",
-  file_types: "pdf, jpeg, png",
-  image_url: @startpack.equipment_rental_url,
-  hide_label: true,
-  conn: @conn
-  %>
+    <%= component "file_upload.html",
+    form: f,
+    atom: :equipment_rental_image,
+    url_atom: :equipment_rental_url,
+    helper_text: "Upload your equipment rental inventory list with insurance values",
+    file_types: "pdf, jpeg, png",
+    image_url: @startpack.equipment_rental_url,
+    hide_label: true,
+    conn: @conn
+    %>
 
-  <div class="mb3 f3">Your vehicle details for site access and parking:</div>
+    <div class="mb3 f3">Your vehicle details for site access and parking:</div>
 
-  <%= component "input.html",
-  form: f,
-  atom: :vehicle_make
-  %>
+    <%= component "input.html",
+    form: f,
+    atom: :vehicle_make
+    %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :vehicle_model
-  %>
+    <%= component "input.html",
+    form: f,
+    atom: :vehicle_model
+    %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :vehicle_colour
-  %>
+    <%= component "input.html",
+    form: f,
+    atom: :vehicle_colour
+    %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :vehicle_registration
-  %>
+    <%= component "input.html",
+    form: f,
+    atom: :vehicle_registration
+    %>
 
-  <%= component "file_upload.html",
-  form: f,
-  atom: :vehicle_insurance_image,
-  url_atom: :vehicle_insurance_url,
-  helper_text: "Upload a file of your vehicle insurance",
-  file_types: "pdf, jpeg, png",
-  image_url: @startpack.vehicle_insurance_url,
-  conn: @conn
-  %>
+    <%= component "file_upload.html",
+    form: f,
+    atom: :vehicle_insurance_image,
+    url_atom: :vehicle_insurance_url,
+    helper_text: "Upload a file of your vehicle insurance (for business use if you receive vehicle allowance)",
+    file_types: "pdf, jpeg, png",
+    image_url: @startpack.vehicle_insurance_url,
+    hide_label: true,
+    conn: @conn
+    %>
 
-  <%= component "file_upload.html",
-  form: f,
-  atom: :vehicle_business_use_insurance_image,
-  url_atom: :vehicle_business_use_insurance_url,
-  helper_text: "Upload a file of proof of vehicle insurance for business use",
-  file_types: "pdf, jpeg, png",
-  image_url: @startpack.vehicle_business_use_insurance_url,
-  conn: @conn
-  %>
+    <%= component "file_upload.html",
+    form: f,
+    atom: :vehicle_license_image,
+    url_atom: :vehicle_license_url,
+    helper_text: "Upload a file of your driving licence",
+    file_types: "pdf, jpeg, png",
+    image_url: @startpack.vehicle_license_url,
+    hide_label: true,
+    conn: @conn
+    %>
 
-  <%= component "file_upload.html",
-  form: f,
-  atom: :vehicle_license_image,
-  url_atom: :vehicle_license_url,
-  helper_text: "Upload a file of your driving license",
-  file_types: "pdf, jpeg, png",
-  image_url: @startpack.vehicle_license_url,
-  conn: @conn
-  %>
+    <%= component "form_divider.html", title: "Payment info" %>
 
-  <%= component "form_divider.html", title: "Payment info" %>
+    <%= component "input.html",
+    form: f,
+    atom: :national_insurance_number
+    %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :national_insurance_number
-  %>
+    <%= component "input.html",
+    form: f,
+    atom: :vat_number,
+    label: "VAT number"
+    %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :vat_number,
-  label: "VAT number"
-  %>
+    <%= component "file_upload.html",
+    form: f,
+    atom: :p45_image,
+    url_atom: :p45_url,
+    helper_text: "Upload a file of your P45",
+    file_types: "pdf, jpeg, png",
+    image_url: @startpack.p45_url,
+    hide_label: true,
+    conn: @conn
+    %>
 
-  <%= component "file_upload.html",
-  form: f,
-  atom: :p45_image,
-  url_atom: :p45_url,
-  helper_text: "Upload a file of your P45",
-  file_types: "pdf, jpeg, png",
-  image_url: @startpack.p45_url,
-  conn: @conn
-  %>
+    <%= component "radio.html",
+    form: f,
+    atom: :for_paye_only,
+    label: "For PAYE contracts only (select one)",
+    radios: Karma.StartpackView.for_paye_only()
+    %>
 
-  <%= component "radio.html",
-  form: f,
-  atom: :for_paye_only,
-  label: "For PAYE contracts only (select one)",
-  radios: Karma.StartpackView.for_paye_only()
-  %>
+    <div conditional class="mb4">
+      <%= label f, :student_loan_not_repayed?, "Check the box if you have a student loan which is not fully repaid", class: "dib mw-100 mb2 fw4" %>
+      <%= checkbox f, :student_loan_not_repayed?, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
+      <%= error_tag f, :student_loan_not_repayed? %>
 
-  <div conditional class="mb4">
-    <%= label f, :student_loan_not_repayed?, "Check the box if you have a student loan which is not fully repaid", class: "dib mw-100 mb2 fw4" %>
-    <%= checkbox f, :student_loan_not_repayed?, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :student_loan_not_repayed? %>
+      <div conditional_child class="mt4">
 
-    <div conditional_child class="mt4">
+        <%= component "radio.html",
+        form: f,
+        atom: :student_loan_repay_direct?,
+        radios: ["Yes": true, "No": false],
+        label: "You am repaying my Loan direct to the Student Loan Co."
+        %>
 
-      <%= component "radio.html",
-      form: f,
-      atom: :student_loan_repay_direct?,
-      radios: ["Yes": true, "No": false],
-      label: "You am repaying my Loan direct to the Student Loan Co."
-      %>
+        <%= component "radio.html",
+        form: f,
+        atom: :student_loan_plan_1?,
+        radios: ["Student loan Plan 1": true, "Student loan Plan 2": false],
+        label: "Which student loan plan do you have?"
+        %>
 
-      <%= component "radio.html",
-      form: f,
-      atom: :student_loan_plan_1?,
-      radios: ["Student loan Plan 1": true, "Student loan Plan 2": false],
-      label: "Which student loan plan do you have?"
-      %>
+        <%= component "radio.html",
+        form: f,
+        atom: :student_loan_finished_before_6_april?,
+        radios: ["Yes": true, "No": false],
+        label: "You finished your studies before last April 6th."
+        %>
 
-      <%= component "radio.html",
-      form: f,
-      atom: :student_loan_finished_before_6_april?,
-      radios: ["Yes": true, "No": false],
-      label: "You finished your studies before last April 6th."
-      %>
-
+      </div>
     </div>
-  </div>
 
-  <%= component "file_upload.html",
-  form: f,
-  atom: :schedule_d_letter_image,
-  label: "Schedule D letter file",
-  url_atom: :schedule_d_letter_url,
-  helper_text: "Upload a file of your Schedule D letter",
-  file_types: "pdf, jpeg, png",
-  image_url: @startpack.schedule_d_letter_url,
-  hide_label: true,
-  conn: @conn
-  %>
+    <%= component "file_upload.html",
+    form: f,
+    atom: :schedule_d_letter_image,
+    label: "Schedule D letter file",
+    url_atom: :schedule_d_letter_url,
+    helper_text: "Upload a file of your Schedule D letter",
+    file_types: "pdf, jpeg, png",
+    image_url: @startpack.schedule_d_letter_url,
+    hide_label: true,
+    conn: @conn
+    %>
 
-  <div conditional class="mb4">
-    <%= label f, :use_loan_out_company?, "Check the box if you deal through a loan out company", class: "dib mw-100 mb2 fw4" %>
-    <%= checkbox f, :use_loan_out_company?, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :use_loan_out_company? %>
+    <div conditional class="mb4">
+      <%= label f, :use_loan_out_company?, "Check the box if you deal through a loan out company", class: "dib mw-100 mb2 fw4" %>
+      <%= checkbox f, :use_loan_out_company?, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
+      <%= error_tag f, :use_loan_out_company? %>
 
-    <div conditional_child class="mt4">
+      <div conditional_child class="mt4">
 
-      <%= component "input.html",
-      form: f,
-      atom: :loan_out_company_registration_number
-      %>
+        <%= component "input.html",
+        form: f,
+        atom: :loan_out_company_registration_number
+        %>
 
-      <%= component "textarea.html",
-      form: f,
-      atom: :loan_out_company_address
-      %>
+        <%= component "textarea.html",
+        form: f,
+        atom: :loan_out_company_address
+        %>
 
-      <%= component "file_upload.html",
-      form: f,
-      atom: :loan_out_company_cert_image,
-      url_atom: :loan_out_company_cert_url,
-      helper_text: "Upload a file of your loan out company certificate",
-      file_types: "pdf, jpeg, png",
-      image_url: @startpack.loan_out_company_cert_url,
-      conn: @conn
-      %>
+        <%= component "file_upload.html",
+        form: f,
+        atom: :loan_out_company_cert_image,
+        url_atom: :loan_out_company_cert_url,
+        helper_text: "Upload a file of your loan out company certificate",
+        file_types: "pdf, jpeg, png",
+        image_url: @startpack.loan_out_company_cert_url,
+        hide_label: true,
+        conn: @conn
+        %>
+      </div>
     </div>
-  </div>
 
-  <%= component "input.html",
-  form: f,
-  atom: :bank_name
-  %>
+    <%= component "input.html",
+    form: f,
+    atom: :bank_name
+    %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :bank_address
-  %>
+    <%= component "input.html",
+    form: f,
+    atom: :bank_address
+    %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :bank_account_users_full_name,
-  label: "Full name on bank account"
-  %>
+    <%= component "input.html",
+    form: f,
+    atom: :bank_account_users_full_name,
+    label: "Full name on bank account"
+    %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :bank_account_number
-  %>
+    <%= component "input.html",
+    form: f,
+    atom: :bank_account_number
+    %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :bank_sort_code
-  %>
+    <%= component "input.html",
+    form: f,
+    atom: :bank_sort_code
+    %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :bank_iban,
-  label: "Bank IBAN"
-  %>
+    <%= component "input.html",
+    form: f,
+    atom: :bank_iban,
+    label: "Bank IBAN"
+    %>
 
-  <%= component "input.html",
-  form: f,
-  atom: :bank_swift_code,
-  label: "Bank SWIFT code"
-  %>
-  </div>
+    <%= component "input.html",
+    form: f,
+    atom: :bank_swift_code,
+    label: "Bank SWIFT code"
+    %>
+    </div>
 
-  <%= component "submit_button.html", title: "Update Startpack" %>
-<% end %>
+    <%= component "submit_button.html", title: "Update Startpack" %>
+  <% end %>
+</div>
+
 
 
 <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
