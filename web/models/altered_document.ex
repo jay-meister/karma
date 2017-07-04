@@ -28,11 +28,11 @@ defmodule Karma.AlteredDocument do
     |> validate_required([:status])
   end
 
-  def signing_started_changeset(struct, params \\ %{}) do
-    struct
-    |> changeset(params)
-    |> put_change(:status, "signing")
-    |> validate_required([:envelope_id, :status])
+  def set_documents_to_signing(offer_id, envelope_id) do
+    from ad in Karma.AlteredDocument,
+    where: ad.offer_id == ^offer_id,
+    update: [set: [status: "signing"]],
+    update: [set: [envelope_id: ^envelope_id]]
   end
 
   # def signing_completed_changeset(struct, params \\ %{}) do
