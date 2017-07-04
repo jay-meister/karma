@@ -29,6 +29,7 @@ defmodule Karma.Router do
   scope "/", Karma do
     pipe_through [:browser, :authenticate]
     post "/startpack/:id", StartpackController, :update
+    post "/startpack/:id/delete-file", StartpackController, :delete_uploaded_files
     resources "/startpack", StartpackController, except: [:new, :create, :delete]
     resources "/projects", ProjectController do
       resources "/documents", DocumentController do
