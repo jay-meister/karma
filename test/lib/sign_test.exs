@@ -76,29 +76,6 @@ defmodule Karma.SignTest do
       assert "Joe-Blogs-PAYE-#{alt_doc.offer_id}.pdf" == formatted_doc.name
   end
 
-  # test "build_envelope_body" do
-  #   chain = [%{
-  #     signee_1: "Signee 1",
-  #     signee_2: "Signee 2",
-  #   }]
-  #   envelope_body = Sign.build_envelope_body("doc1", chain)
-  #
-  #   assert envelope_body == %{
-  #     "emailSubject": "Karma document sign",
-  #     "emailBlurb": "Please sign the document using link provided.",
-  #     compositeTemplates: [
-  #       %{document: "doc1",
-  #         inlineTemplates: [
-  #           %{recipients: %{
-  #               signers: [%{signee_1: "Signee 1", signee_2: "Signee 2"}]},
-  #             sequence: "1"
-  #           }
-  #         ]
-  #       }],
-  #     "status": "sent"
-  #   }
-  # end
-
   test "build_envelope_body" do
     envelope_body = Sign.build_envelope_body("templates")
 
