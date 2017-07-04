@@ -200,8 +200,7 @@ defmodule Karma.StartpackControllerTest do
   end
 
   test "deletes uploaded files: success", %{conn: conn, user: user} do
-    startpack_user = user |> Repo.preload(:startpacks)
-    startpack = startpack_user.startpacks
+    startpack = Repo.get_by(Startpack, user_id: user.id)
     conn = post conn, startpack_path(conn, :delete_uploaded_files, startpack), startpack: %{p45_url: nil}
     assert redirected_to(conn, 302) == "/startpack"
     assert Phoenix.Controller.get_flash(conn, :info) == "File deleted successfully!"
