@@ -1,27 +1,34 @@
 defmodule Karma.Sign do
   import Ecto.Query
 
-  alias Karma.{AlteredDocument, Repo}
+  alias Karma.{AlteredDocument, Repo, S3}
 
-  def new_envelope(merged, user) do
+  def new_envelope(altered_docs, user) do
     # login with docusign
     case login(headers()) do
       {:error, msg} ->
         {:error, msg}
       {:ok, base_url} ->
         url = base_url <> "/envelopes"
-        signers = get_and_prepare_approval_chain(merged, user)
-        documents = get_and_prepare_document(merged, user)
+        # signers = get_and_prepare_approval_chain(altered_docs, user)
+        # documents = get_and_prepare_document(altered_docs, user)
+        #
+        # # build up envelope body
+        # body = build_envelope_body(documents, signers)
+        # |> Poison.encode!()
 
-        # build up envelope body
-        body = build_envelope_body(documents, signers)
-        |> Poison.encode!()
+        body =
+          altered_docs
+          |> add_file_to_docs()
+          |> get_composite_templates()
+            
+          # |> build_envelope_body()
 
         case HTTPoison.post(url, body, headers(), recv_timeout: 10000) do
           {:ok, %HTTPoison.Response{body: body, headers: _headers, status_code: 201}} ->
             %{"envelopeId" => envelope_id} = Poison.decode!(body)
             altered =
-              AlteredDocument.signing_started_changeset(merged, %{envelope_id: envelope_id})
+              AlteredDocument.signing_started_changeset(altered_docs, %{envelope_id: envelope_id})
               |> Repo.update!()
             {:ok, altered}
           _error ->
@@ -30,6 +37,14 @@ defmodule Karma.Sign do
     end
   end
 
+  def add_file_to_docs(altered_docs) do
+    # download the merged documents from the urls
+    altered_docs
+    |> Enum.map(fn(doc) -> {doc.id, doc.merged_url} end)
+    |> S3.download_many()
+    |> Enum.zip(altered_docs)
+    |> Enum.map(fn({doc, {_id, path}}) -> Map.merge(Map.from_struct(doc), %{path: path}) end)
+  end
 
   # document related
   def get_and_prepare_document(merged, user) do
