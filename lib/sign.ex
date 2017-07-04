@@ -73,18 +73,17 @@ defmodule Karma.Sign do
 
   # approval chain related
   def get_and_prepare_approval_chain(merged, contractor) do
-    merged
-    |> get_approval_chain()
+    get_approval_chain(merged)
     |> format_approval_chain()
     |> add_contractor_to_chain(contractor)
     |> add_index_to_chain(merged)
   end
 
-  def get_approval_chain(altered_document) do
+  def get_approval_chain(original) do
     query = from s in Karma.Signee,
       join: ds in Karma.DocumentSignee,
       on: s.id == ds.signee_id,
-      where: ds.document_id == ^altered_document.document_id,
+      where: ds.document_id == ^original.document_id,
       order_by: ds.order
 
     Repo.all(query)
@@ -157,21 +156,11 @@ defmodule Karma.Sign do
     ]
   end
 
-  def build_envelope_body(document, chain) do
+  def build_envelope_body(templates) do
     %{
       "emailSubject": "Karma document sign",
       "emailBlurb": "Please sign the document using link provided.",
-      "compositeTemplates": [
-        %{"inlineTemplates": [
-          %{"sequence": "1",
-            "recipients": %{
-              "signers": chain
-            }
-          }
-          ],
-          "document": document
-        }
-      ],
+      "compositeTemplates": templates,
       "status": "sent"
     }
   end
