@@ -50,7 +50,6 @@ defmodule Karma.StartpackControllerTest do
     agent_tel: "some content",
     vehicle_insurance_url: "some content",
     vehicle_license_url: "some content",
-    vehicle_business_use_insurance_url: "some content",
     student_loan_finished_before_6_april?: true,
     agent_company: "some content",
     primary_address_2: "some content",
@@ -198,5 +197,15 @@ defmodule Karma.StartpackControllerTest do
       assert startpack.gender == valid.gender
       refute startpack.passport_url
     end
+  end
+
+  test "deletes uploaded files: success", %{conn: conn, user: user} do
+    startpack_user = user |> Repo.preload(:startpacks)
+    startpack = startpack_user.startpacks
+    conn = post conn, startpack_path(conn, :delete_uploaded_files, startpack), startpack: %{p45_url: nil}
+    assert redirected_to(conn, 302) == "/startpack"
+    assert Phoenix.Controller.get_flash(conn, :info) == "File deleted successfully!"
+    updated_startpack = Repo.get(Startpack, startpack.id)
+    assert updated_startpack.p45_url == nil
   end
 end

@@ -51,7 +51,6 @@ defmodule Karma.StartpackTest do
     agent_tel: "some content",
     vehicle_insurance_url: "some content",
     vehicle_license_url: "some content",
-    vehicle_business_use_insurance_url: "some content",
     student_loan_finished_before_6_april?: true,
     agent_company: "some content",
     primary_address_2: "some content",
@@ -150,7 +149,6 @@ defmodule Karma.StartpackTest do
       agent_tel: "some content",
       vehicle_insurance_url: "some content",
       vehicle_license_url: "some content",
-      vehicle_business_use_insurance_url: "some content",
       student_loan_finished_before_6_april?: true,
       agent_company: "some content",
       primary_address_2: "some content",
@@ -311,7 +309,6 @@ defmodule Karma.StartpackTest do
       vehicle_colour: "something",
       vehicle_registration: "something",
       vehicle_insurance_url: "something",
-      vehicle_business_use_insurance_url: "something",
       vehicle_license_url: "something"
     }
     changeset = Startpack.vehicle_allowance_changeset(%Startpack{}, valid, offer)

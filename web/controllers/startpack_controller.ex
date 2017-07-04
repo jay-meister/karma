@@ -39,13 +39,15 @@ defmodule Karma.StartpackController do
 
   def update(conn, %{"id" => id, "startpack" => startpack_params}, user) do
     startpack = Repo.get!(Startpack, id)
-
+    startpack_map = Map.from_struct(startpack)
+    uploaded_files = get_uploaded_files(startpack_map)
+    delete_changeset = Startpack.delete_changeset(%Startpack{}, startpack_map)
     image_changeset = Startpack.upload_type_validation(%Startpack{}, startpack_params)
     case image_changeset.valid? do
       false ->
         conn
         |> put_flash(:error, "Error updating startpack!")
-        |> render("index.html", changeset: image_changeset, startpack: startpack, offer: %{}, user: user)
+        |> render("index.html", changeset: image_changeset, startpack: startpack, offer: %{}, user: user, delete_changeset: delete_changeset, uploaded_files: uploaded_files)
       true ->
         urls = Karma.S3.upload_many(startpack_params, @file_upload_keys)
 
@@ -69,6 +71,15 @@ defmodule Karma.StartpackController do
     end
   end
 
+  def delete_uploaded_files(conn, %{"id" => startpack_id, "startpack" => startpack_params}, user) do
+    startpack = Repo.get(Startpack, startpack_id)
+    changeset = Startpack.delete_changeset(startpack, startpack_params)
+    Repo.update!(changeset)
+    conn
+    |> put_flash(:info, "File deleted successfully!")
+    |> redirect(to: startpack_path(conn, :index))
+  end
+
   def action(conn, _) do
     apply(__MODULE__, action_name(conn),
           [conn, conn.params, conn.assigns.current_user])
@@ -83,15 +94,16 @@ defmodule Karma.StartpackController do
   end
 
   defp get_uploaded_files(startpack_map) do
-    upload_map = Map.take(startpack_map, [:loan_out_company_cert_url,
-    :schedule_d_letter_url,
-    :p45_url,
-    :equipment_rental_url,
-    :box_rental_url,
-    :vehicle_license_url,
-    :vehicle_business_use_insurance_url,
-    :vehicle_insurance_url,
-    :passport_url])
+    upload_map = Map.take(startpack_map, [
+      :loan_out_company_cert_url,
+      :schedule_d_letter_url,
+      :p45_url,
+      :equipment_rental_url,
+      :box_rental_url,
+      :vehicle_license_url,
+      :vehicle_insurance_url,
+      :passport_url
+      ])
     upload_atoms = Map.keys(upload_map)
     upload_values = Map.values(upload_map)
     upload_names = Enum.map(upload_atoms, fn atom -> convert_atom_to_name(atom) end)

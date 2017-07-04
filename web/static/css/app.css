@@ -21,6 +21,19 @@ body {
   top: -6rem;
 }
 
+.k-top--0-5 {
+  top: -0.5rem;
+}
+
+.nunito {
+  font-family: 'Nunito', sans-serif;
+  font-weight: bold;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
 
 .k-button-no-underline:hover {
   text-decoration: none;

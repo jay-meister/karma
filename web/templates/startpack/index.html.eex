@@ -21,5 +21,7 @@
                           startpack: @startpack,
                           conn: @conn,
                           user: @user,
-                          uploaded_files: @uploaded_files %>
+                          uploaded_files: @uploaded_files,
+                          delete_changeset: @delete_changeset,
+                          offer_id: offer_id %>
 </div>
