@@ -70,7 +70,7 @@ defmodule Karma.StartpackController do
     end
   end
 
-  def delete_uploaded_files(conn, %{"id" => startpack_id, "startpack" => startpack_params}, user) do
+  def delete_uploaded_files(conn, %{"id" => startpack_id, "startpack" => startpack_params}, _user) do
     startpack = Repo.get(Startpack, startpack_id)
     changeset = Startpack.delete_changeset(startpack, startpack_params)
     Repo.update!(changeset)
