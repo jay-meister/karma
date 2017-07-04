@@ -319,7 +319,7 @@
     form: f,
     atom: :vehicle_insurance_image,
     url_atom: :vehicle_insurance_url,
-    helper_text: "Upload a file of your vehicle insurance (for business use if you receive vehicle allowance)",
+    helper_text: "Upload a file of proof of vehicle insurance for business use",
     file_types: "pdf, jpeg, png",
     image_url: @startpack.vehicle_insurance_url,
     hide_label: true,
