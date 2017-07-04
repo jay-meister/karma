@@ -68,45 +68,54 @@ defmodule Karma.SignTest do
 
   # get document and prepare
   test "get and prepare document success", %{document: document, offer: offer, contractor: contractor} do
-    alt_doc = insert_merged_document(document, offer)
+    alt_doc =
+      insert_merged_document(document, offer)
+      |> Map.put(:encoded_file, "YWFhYWFh")
 
-    with_mock Karma.S3, [get_object: fn(_) ->
-      {:ok, System.cwd()<>"/test/fixtures/fillable.pdf"}
-    end] do
-      formatted_doc = Sign.get_and_prepare_document(alt_doc, contractor)
+      formatted_doc = Sign.prepare_document(alt_doc, contractor)
       assert "Joe-Blogs-PAYE-#{alt_doc.offer_id}.pdf" == formatted_doc.name
-    end
   end
 
+  # test "build_envelope_body" do
+  #   chain = [%{
+  #     signee_1: "Signee 1",
+  #     signee_2: "Signee 2",
+  #   }]
+  #   envelope_body = Sign.build_envelope_body("doc1", chain)
+  #
+  #   assert envelope_body == %{
+  #     "emailSubject": "Karma document sign",
+  #     "emailBlurb": "Please sign the document using link provided.",
+  #     compositeTemplates: [
+  #       %{document: "doc1",
+  #         inlineTemplates: [
+  #           %{recipients: %{
+  #               signers: [%{signee_1: "Signee 1", signee_2: "Signee 2"}]},
+  #             sequence: "1"
+  #           }
+  #         ]
+  #       }],
+  #     "status": "sent"
+  #   }
+  # end
+
   test "build_envelope_body" do
-    chain = [%{
-      signee_1: "Signee 1",
-      signee_2: "Signee 2",
-    }]
-    envelope_body = Sign.build_envelope_body("doc1", chain)
+    envelope_body = Sign.build_envelope_body("templates")
 
     assert envelope_body == %{
       "emailSubject": "Karma document sign",
       "emailBlurb": "Please sign the document using link provided.",
-      compositeTemplates: [
-        %{document: "doc1",
-          inlineTemplates: [
-            %{recipients: %{
-                signers: [%{signee_1: "Signee 1", signee_2: "Signee 2"}]},
-              sequence: "1"
-            }
-          ]
-        }],
+      "compositeTemplates": "templates",
       "status": "sent"
     }
   end
 
-  test "new_envelope", %{user: user, document: document, offer: offer} do
+  test "new_envelope success", %{user: user, document: document, offer: offer} do
     merged_document = insert_merged_document(document, offer)
     encoded = Poison.encode!(%{"loginAccounts" => [%{"baseUrl" => "oh_yeah"}]})
     with_mocks([
       {Karma.S3, [],
-       [get_object: fn(_) -> {:ok, "www.aws.someurl.pdf"} end]},
+       [get_many_objects: fn(_) -> ["www.aws.someurl.pdf"] end]},
       {HTTPoison, [],
        [post: fn(_, _, _, _) -> {:ok, %HTTPoison.Response{body: encoded, headers: %{}, status_code: 201}} end,
        get: fn(_, _, _) -> {:ok, %HTTPoison.Response{status_code: 200}} end]},
@@ -114,8 +123,26 @@ defmodule Karma.SignTest do
        [decode!: fn(_) -> %{"loginAccounts" => [%{"baseUrl" => "oh_yeah"}], "envelopeId" => "2"} end,
        encode!: fn(_) -> "encoded" end]}
     ]) do
-      {:ok, altered_document} = Karma.Sign.new_envelope(merged_document, user)
-      refute Repo.get_by(AlteredDocument, envelope_id: altered_document.envelope_id) == nil
+      {:ok, _msg} = Karma.Sign.new_envelope([merged_document], user)
+      assert Repo.get(AlteredDocument, merged_document.id).envelope_id
+    end
+  end
+
+  test "new_envelope failure", %{user: user, document: document, offer: offer} do
+    merged_document = insert_merged_document(document, offer)
+    encoded = Poison.encode!(%{"loginAccounts" => [%{"baseUrl" => "oh_yeah"}]})
+    with_mocks([
+      {Karma.S3, [],
+       [get_many_objects: fn(_) -> ["www.aws.someurl.pdf"] end]},
+      {HTTPoison, [],
+       [post: fn(_, _, _, _) -> {:error, %HTTPoison.Response{body: encoded, headers: %{}, status_code: 201}} end,
+       get: fn(_, _, _) -> {:ok, %HTTPoison.Response{status_code: 200}} end]},
+     {Poison, [],
+       [decode!: fn(_) -> %{"loginAccounts" => [%{"baseUrl" => "oh_yeah"}], "envelopeId" => "2"} end,
+       encode!: fn(_) -> "encoded" end]}
+    ]) do
+      {:error, _msg} = Karma.Sign.new_envelope([merged_document], user)
+      refute Repo.get(AlteredDocument, merged_document.id).envelope_id
     end
   end
 end
