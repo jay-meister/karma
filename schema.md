@@ -117,7 +117,6 @@
 - vehicle_registration - **string**
 - vehicle_insurance_url - **string**
 - vehicle_license_url - **string**
-- vehicle_business_use_insurance_url - **string**
 - national_insurance_number - **string**
 - vat_number - **string**
 - p45_url - **string**

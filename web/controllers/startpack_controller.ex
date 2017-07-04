@@ -6,7 +6,6 @@ defmodule Karma.StartpackController do
    @file_upload_keys [
      {"passport_image", "passport_url"},
      {"vehicle_insurance_image", "vehicle_insurance_url"},
-     {"vehicle_business_use_insurance_image", "vehicle_business_use_insurance_url"},
      {"vehicle_license_image", "vehicle_license_url"},
      {"box_rental_image", "box_rental_url"},
      {"equipment_rental_image", "equipment_rental_url"},
