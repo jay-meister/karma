@@ -115,14 +115,22 @@ defmodule Karma.DocumentController do
 
   def delete(conn, %{"id" => id, "project_id" => project_id}) do
     project = Repo.get_by(Project, id: project_id)
-    document = Repo.get!(Document, id)
 
-    # Here we use delete! (with a bang) because we expect
-    # it to always work (and if it does not, it will raise).
-    Repo.delete!(document)
-
-    conn
-    |> put_flash(:info, "Document deleted successfully.")
-    |> redirect(to: project_path(conn, :show, project))
+    changeset =
+      Repo.get!(Document, id)
+      |> Ecto.Changeset.change
+      |> Ecto.Changeset.no_assoc_constraint(:altered_documents)
+      |> Repo.delete
+      |> IO.inspect
+    case changeset do
+      {:ok, _} ->
+        conn
+        |> put_flash(:info, "Document deleted successfully.")
+        |> redirect(to: project_path(conn, :show, project))
+      {:error, _} ->
+        conn
+        |> put_flash(:error, "You cannot delete a document after an offer has been accepted")
+        |> redirect(to: project_path(conn, :show, project))
+    end
   end
 end
