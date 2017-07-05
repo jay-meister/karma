@@ -148,7 +148,20 @@ defmodule Karma.Offer do
       "TRANSPORT PAYE",
       "TRANSPORT SCHEDULE-D",
       "TRANSPORT DIRECT HIRE",
-      "TRANSPORT LOAN OUT"
+      "TRANSPORT LOAN OUT",
+      "DIRECT HIRE",
+      "DAILY PAYE",
+      "DAILY SCHEDULE-D",
+      "DAILY LOAN OUT",
+      "DAILY CONSTRUCTION PAYE",
+      "DAILY CONSTRUCTION SCHEDULE-D",
+      "DAILY CONSTRUCTION DIRECT HIRE",
+      "DAILY CONSTRUCTION LOAN OUT",
+      "DAILY TRANSPORT PAYE",
+      "DAILY TRANSPORT SCHEDULE-D",
+      "DAILY TRANSPORT DIRECT HIRE",
+      "DAILY TRANSPORT LOAN OUT",
+      "DAILY DIRECT HIRE"
       ])
     |> validate_inclusion(:daily_or_weekly, ["daily", "weekly"])
     |> validate_inclusion(:working_week, [5.0, 5.5, 6.0])
