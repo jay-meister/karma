@@ -15,14 +15,26 @@
       nil -> "pl3"
       _ -> "k-pl4-5"
     end %>
-    <%= text_input assigns[:form],
-    assigns[:atom],
-    disabled: assigns[:disabled] || false,
-    placeholder: assigns[:placeholder],
-    type: assigns[:type] || "",
-    class: "border-box no-placeholder k-dark-grey pa3 br3 w-100 outline-0 lato ba k-b--input #{padding} #{bg_color}",
-    autocomplete: assigns[:autocomplete] || "off"
-    %>
+    <%= if assigns[:value] != nil do %>
+      <%= text_input assigns[:form],
+      assigns[:atom],
+      disabled: assigns[:disabled] || false,
+      placeholder: assigns[:placeholder],
+      value: assigns[:value],
+      type: assigns[:type] || "",
+      class: "border-box no-placeholder k-dark-grey pa3 br3 w-100 outline-0 lato ba k-b--input #{padding} #{bg_color}",
+      autocomplete: assigns[:autocomplete] || "off"
+      %>
+    <% else %>
+      <%= text_input assigns[:form],
+      assigns[:atom],
+      disabled: assigns[:disabled] || false,
+      placeholder: assigns[:placeholder],
+      type: assigns[:type] || "",
+      class: "border-box no-placeholder k-dark-grey pa3 br3 w-100 outline-0 lato ba k-b--input #{padding} #{bg_color}",
+      autocomplete: assigns[:autocomplete] || "off"
+      %>
+    <% end %>
     <%= if assigns[:image_name] do %>
       <img src="/images/<%= assigns[:image_name] %>.svg" class="absolute w2 top-1 k-left-0-5"/>
     <% end %>

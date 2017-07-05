@@ -3,7 +3,7 @@ defmodule Karma.UserController do
 
   plug :authenticate when action in [:index, :show, :edit, :update, :delete]
 
-  alias Karma.{User, LayoutView}
+  alias Karma.{User, LayoutView, RedisCli}
 
   def index(conn, _params) do
     users = Repo.all(User)
@@ -12,7 +12,18 @@ defmodule Karma.UserController do
 
   def new(conn, _params) do
     changeset = User.changeset(%User{})
-    render(conn, "new.html", layout: {LayoutView, "pre_login.html"}, changeset: changeset)
+    case Map.has_key?(conn.query_params, "te") do
+      true ->
+        target_email_hash = conn.query_params["te"]
+        target_email =
+          case RedisCli.query(["GET", target_email_hash]) do
+            {:ok, nil} -> nil
+            {:ok, email} -> email
+          end
+        render(conn, "new.html", layout: {LayoutView, "pre_login.html"}, changeset: changeset, target_email: target_email)
+      false ->
+        render(conn, "new.html", layout: {LayoutView, "pre_login.html"}, changeset: changeset, target_email: nil)
+    end
   end
 
   def create(conn, %{"user" => user_params}) do
@@ -34,7 +45,18 @@ defmodule Karma.UserController do
         Click the link in the email to gain full access to Karma.")
         |> redirect(to: session_path(conn, :new))
       {:error, changeset} ->
-        render(conn, "new.html", layout: {LayoutView, "pre_login.html"}, changeset: changeset)
+        case Map.has_key?(conn.query_params, "te") do
+          true ->
+            target_email_hash = conn.query_params["te"]
+            target_email =
+              case RedisCli.query(["GET", target_email_hash]) do
+                {:ok, nil} -> nil
+                {:ok, email} -> email
+              end
+            render(conn, "new.html", layout: {LayoutView, "pre_login.html"}, changeset: changeset, target_email: target_email)
+          false ->
+            render(conn, "new.html", layout: {LayoutView, "pre_login.html"}, changeset: changeset, target_email: nil)
+        end
     end
   end
 
