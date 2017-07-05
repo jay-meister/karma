@@ -61,7 +61,7 @@
     <%= for form <- @forms do %>
       <div class="dib tc">
         <div class="relative dib">
-          <img class="w5 dib ma1" src="/images/pdf.svg" />
+          <img class="w5 dib ma1" src="/images/file.png" />
           <%= link to: project_document_path(@conn, :delete, @project, form),
             method: :delete,
             data: [confirm: "Are you sure?"] do %>
@@ -81,7 +81,7 @@
     <%= for deal <- @deals do %>
       <div class="dib tc">
         <div class="relative dib">
-          <img class="w5 dib ma1" src="/images/pdf.svg" />
+          <img class="w5 dib ma1" src="/images/file.png" />
           <%= link to: project_document_path(@conn, :delete, @project, deal),
             method: :delete,
             data: [confirm: "Are you sure?"] do %>
@@ -103,7 +103,7 @@
     <%= for info <- @info do %>
       <div class="dib tc">
         <div class="relative dib">
-          <img class="w5 dib ma1" src="/images/pdf.svg" />
+          <img class="w5 dib ma1" src="/images/file.png" />
           <%= link to: project_document_path(@conn, :delete, @project, info),
             method: :delete,
             data: [confirm: "Are you sure?"] do %>
