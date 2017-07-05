@@ -42,7 +42,8 @@ defmodule Karma.Sign do
     %{"inlineTemplates": [
       %{"sequence": Integer.to_string(index + 1),
         "recipients": %{
-          "signers": get_and_prepare_approval_chain(merged, user)
+          "signers": get_and_prepare_approval_chain(merged, user),
+          "certifiedDeliveries": get_certified_deliveries(merged)
         }
       }
       ],
@@ -73,17 +74,18 @@ defmodule Karma.Sign do
 
   # approval chain related
   def get_and_prepare_approval_chain(merged, contractor) do
-    get_approval_chain(merged)
+    get_approval_chain(merged, "Signee")
     |> format_approval_chain()
     |> add_contractor_to_chain(contractor)
     |> add_index_to_chain(merged)
   end
 
-  def get_approval_chain(original) do
+  def get_approval_chain(original, approver_type) do
     query = from s in Karma.Signee,
       join: ds in Karma.DocumentSignee,
       on: s.id == ds.signee_id,
-      where: ds.document_id == ^original.document_id,
+      where: ds.document_id == ^original.document_id
+      and s.approver_type == ^approver_type,
       order_by: ds.order
 
     Repo.all(query)
@@ -121,6 +123,15 @@ defmodule Karma.Sign do
       end)
     |> Enum.map(&Map.delete(&1, :id))
   end
+
+  def get_certified_deliveries(merged) do
+    get_approval_chain(merged, "Recipient")
+    |> format_approval_chain()
+    |> add_index_to_chain(merged)
+    |> Enum.map(&Map.drop(&1, [:id, :routingOrder, :tabs]))
+  end
+
+
 
   # api related
   def login(headers) do

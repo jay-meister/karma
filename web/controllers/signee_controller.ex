@@ -47,7 +47,7 @@ defmodule Karma.SigneeController do
             |> halt()
           document ->
             signees = Repo.all(project_signees(project))
-            signee_names = Enum.map(signees, fn signee -> {signee.name, signee.id} end)
+            signee_names = Enum.map(signees, fn signee -> {"#{signee.name} (#{signee.approver_type})", signee.id} end)
             document_signees = Repo.all(document_signees(document))
             changeset = DocumentSignee.changeset(%DocumentSignee{})
 

@@ -8,12 +8,14 @@ defmodule Karma.TestHelpers do
     project = insert_project(user)
     offer = insert_offer(project)
     document = insert_document(project)
-    signee1 = insert_signee(project, %{email: "signee1@gmail.com"})
-    signee2 = insert_signee(project, %{email: "signee2@gmail.com"})
-    signee3 = insert_signee(project, %{email: "signee3@gmail.com"})
-    doc_sign1 = insert_document_signee(document, signee1, %{order: 2})
-    doc_sign2 = insert_document_signee(document, signee2, %{order: 3})
-    doc_sign3 = insert_document_signee(document, signee3, %{order: 1})
+    signee1 = insert_approver(project, %{email: "signee1@gmail.com"})
+    signee2 = insert_approver(project, %{email: "signee2@gmail.com"})
+    signee3 = insert_approver(project, %{email: "signee3@gmail.com"})
+    recipient_1 = insert_approver(project, %{email: "recipient1@gmail.com", approver_type: "Recipient"})
+    doc_sign1 = insert_document_approver(document, signee1, %{order: 2})
+    doc_sign2 = insert_document_approver(document, signee2, %{order: 3})
+    doc_sign3 = insert_document_approver(document, signee3, %{order: 1})
+    doc_recip1 = insert_document_approver(document, recipient_1, %{order: 4})
     conn = login_user(Phoenix.ConnTest.build_conn, user)
 
     {:ok,
@@ -28,7 +30,8 @@ defmodule Karma.TestHelpers do
       signee3: signee3,
       doc_sign1: doc_sign1,
       doc_sign2: doc_sign2,
-      doc_sign3: doc_sign3
+      doc_sign3: doc_sign3,
+      doc_recip1: doc_recip1
     }
   end
 
@@ -81,8 +84,8 @@ defmodule Karma.TestHelpers do
     |> Repo.insert!
   end
 
-  def insert_signee(project, attrs \\ %{}) do
-    default_signee = %{name: "John Smith", email: "johnsmith@gmail.com", role: "Producer"}
+  def insert_approver(project, attrs \\ %{}) do
+    default_signee = %{name: "John Smith", approver_type: "Signee", email: "johnsmith@gmail.com", role: "Producer"}
     changes = Map.merge(default_signee, attrs)
 
     project
@@ -91,7 +94,7 @@ defmodule Karma.TestHelpers do
     |> Repo.insert!
   end
 
-  def insert_document_signee(document, signee, attrs \\ %{}) do
+  def insert_document_approver(document, signee, attrs \\ %{}) do
     default_document_signee = %{document_id: document.id, signee_id: signee.id, order: 2}
     changes = Map.merge(default_document_signee, attrs)
 

@@ -3,7 +3,7 @@ defmodule Karma.SigneeControllerTest do
 
   alias Karma.{Signee, DocumentSignee}
 
-  @valid_attrs %{name: "First Last", email: "test@email.com", role: "Tester"}
+  @valid_attrs %{name: "First Last", email: "test@email.com", role: "Tester", approver_type: "Signee"}
   @invalid_attrs %{name: "", email: "", role: ""}
 
 
@@ -30,7 +30,7 @@ defmodule Karma.SigneeControllerTest do
   end
 
   test "delete a signee", %{conn: conn, project: project} do
-    signee = insert_signee(project)
+    signee = insert_approver(project)
     conn = delete conn, project_signee_path(conn, :delete, project, signee)
     assert Phoenix.Controller.get_flash(conn, :info) == "Signee deleted successfully."
     assert redirected_to(conn, 302) == "/projects/#{project.id}"
@@ -55,7 +55,7 @@ defmodule Karma.SigneeControllerTest do
   end
 
   test "add signee to document", %{conn: conn, project: project, document: document} do
-    signee = insert_signee(project)
+    signee = insert_approver(project)
     document_signee = %{document_id: document.id, signee_id: signee.id, order: 2}
     conn = post conn, project_document_signee_path(conn, :add_signee, project, document), document_signee: document_signee
     assert Phoenix.Controller.get_flash(conn, :info) == "Signee #{signee.name} added to document approval chain!"
@@ -64,7 +64,7 @@ defmodule Karma.SigneeControllerTest do
   end
 
   test "add signee to document invalid", %{conn: conn, project: project, document: document} do
-    signee = insert_signee(project)
+    signee = insert_approver(project)
     document_signee = %{document_id: "", signee_id: "", order: ""}
     conn = post conn, project_document_signee_path(conn, :add_signee, project, document), document_signee: document_signee
     assert Phoenix.Controller.get_flash(conn, :error) == "You must select a signee"
@@ -73,12 +73,12 @@ defmodule Karma.SigneeControllerTest do
   end
 
   test "clear signees", %{conn: conn, project: project, document: document} do
-    signee_1 = insert_signee(project)
-    signee_2 = insert_signee(project, %{email: "a_different@snailmail.com"})
-    signee_3 = insert_signee(project, %{email: "a_slug@snailmail.com"})
-    insert_document_signee(document, signee_1)
-    insert_document_signee(document, signee_2)
-    insert_document_signee(document, signee_3)
+    signee_1 = insert_approver(project)
+    signee_2 = insert_approver(project, %{email: "a_different@snailmail.com"})
+    signee_3 = insert_approver(project, %{email: "a_slug@snailmail.com"})
+    insert_document_approver(document, signee_1)
+    insert_document_approver(document, signee_2)
+    insert_document_approver(document, signee_3)
     conn = delete conn, project_document_signee_path(conn, :clear_signees, project, document)
     assert Phoenix.Controller.get_flash(conn, :info) == "3 Signees cleared successfully!"
     assert redirected_to(conn, 302) == "/projects/#{project.id}/documents/#{document.id}/signees/new"

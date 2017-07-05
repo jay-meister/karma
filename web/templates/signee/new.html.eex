@@ -17,6 +17,7 @@
             <div class="dib ml3"><%= signee.name %></div>
             <div class="dib ml3"><%= signee.role %></div>
             <div class="dib ml3"><%= signee.email %></div>
+            <div class="dib ml3">(<%= signee.approver_type %>)</div>
           </div>
         </li>
         <% end %>
@@ -32,7 +33,7 @@
       options: @signees,
       form: f,
       atom: :signee_id,
-      prompt: "Select signee"
+      prompt: "Select approver"
       %>
 
       <%= hidden_input f, :order, value: length(@document_signees) + 2 %>

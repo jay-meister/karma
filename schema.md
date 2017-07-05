@@ -149,6 +149,7 @@
 # signees
 - name - **string**
 - email - **string**
+- approver_type - **string**
 - role - **string**
 
 # Document Signee
