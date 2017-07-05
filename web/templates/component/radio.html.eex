@@ -12,7 +12,7 @@
       </div>
     <% end %>
     <%= error_tag assigns[:form], assigns[:atom] %>
-  <div>
+  </div>
 </div>
 
 <!-- <div class="flex items-center mb2">
