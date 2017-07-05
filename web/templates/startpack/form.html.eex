@@ -379,7 +379,7 @@
         form: f,
         atom: :student_loan_repay_direct?,
         radios: ["Yes": true, "No": false],
-        label: "You am repaying my Loan direct to the Student Loan Co."
+        label: "You are repaying your Loan direct to the Student Loan Co."
         %>
 
         <%= component "radio.html",
