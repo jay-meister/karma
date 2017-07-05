@@ -41,7 +41,7 @@
     <div class="tc">
       <%= for document <- @deal_documents do %>
         <div class="tc mt3 dib ma2">
-          <img src="/images/pdf.svg" class="w5" />
+          <img src="/images/file.png" class="w5" />
           <div class="mt2 mb2">Merged <%= document.document.name %> Document</div>
           <%= component "button.html", title: "Download", link: document.merged_url %>
 
@@ -55,7 +55,7 @@
     <div class="tc">
       <%= for document <- @form_documents do %>
         <div class="tc mt3 dib ma2">
-          <img src="/images/pdf.svg" class="w5" />
+          <img src="/images/file.png" class="w5" />
           <div class="mt2 mb2">Merged <%= document.document.name %> Document</div>
           <%= component "button.html", title: "Download", link: document.merged_url %>
         </div>
@@ -68,7 +68,7 @@
     <div class="tc">
       <%= for document <- @info_documents do %>
         <div class="tc mt3 dib ma2">
-          <img src="/images/pdf.svg" class="w5" />
+          <img src="/images/file.png" class="w5" />
           <div class="mt2 mb2"><%= document.name %> Document</div>
           <%= component "button.html", title: "Download", link: document.url %>
           <div class="h3">
@@ -101,7 +101,7 @@
     <%= for {name, document, condition} <- @supporting_documents do %>
       <%= if condition do %>
         <div class="tc mt3 dib ma2">
-          <img src="/images/pdf.svg" class="w5" />
+          <img src="/images/file.png" class="w5" />
           <div class="mt2 mb2"><%= name %></div>
           <%= component "button.html", title: "Download", link: document %>
         </div>

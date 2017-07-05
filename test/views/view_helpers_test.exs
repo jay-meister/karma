@@ -50,7 +50,7 @@ defmodule Karma.ViewHelpersTest do
 
   test "get_thumbnail function" do
     url = ViewHelpers.get_thumbnail("aaa.pdf")
-    assert url == "/images/pdf.svg"
+    assert url == "/images/file.png"
 
     url = ViewHelpers.get_thumbnail("aaa")
     assert url == "aaa"
@@ -58,7 +58,7 @@ defmodule Karma.ViewHelpersTest do
 
   test "get_thumbnail_style function" do
     class = ViewHelpers.get_thumbnail_style("aaa.pdf")
-    assert class == "absolute k-left--05 h5 mb3 db w4 k-top--4"
+    assert class == "absolute k-left--05 k-h10 mb3 db k-w3 top--1"
 
     class = ViewHelpers.get_thumbnail_style("aaa")
     assert class == "h5 mb3 db"
