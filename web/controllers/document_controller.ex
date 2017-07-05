@@ -121,7 +121,7 @@ defmodule Karma.DocumentController do
       |> Ecto.Changeset.change
       |> Ecto.Changeset.no_assoc_constraint(:altered_documents)
       |> Repo.delete
-      |> IO.inspect
+      
     case changeset do
       {:ok, _} ->
         conn

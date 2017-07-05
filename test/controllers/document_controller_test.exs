@@ -126,6 +126,17 @@ defmodule Karma.DocumentControllerTest do
     refute Repo.get(Document, document.id)
   end
 
+  test "does not delete document if child altered document exists", %{conn: conn, project: project} do
+    document = Repo.insert! %Document{}
+    offer = insert_offer(project)
+    _altered = insert_merged_document(document, offer)
+
+    conn = delete conn, project_document_path(conn, :delete, project, document)
+    assert redirected_to(conn) == project_path(conn, :show, project)
+
+    assert Repo.get(Document, document.id)
+  end
+
   test "can only upload documents of unique type", %{conn: conn, project: project} do
     insert_document(project)
     conn = post conn, project_document_path(conn, :create, project), document: %{name: "PAYE"}
