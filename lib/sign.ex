@@ -73,17 +73,18 @@ defmodule Karma.Sign do
 
   # approval chain related
   def get_and_prepare_approval_chain(merged, contractor) do
-    get_approval_chain(merged)
+    get_approval_chain(merged, "Signee")
     |> format_approval_chain()
     |> add_contractor_to_chain(contractor)
     |> add_index_to_chain(merged)
   end
 
-  def get_approval_chain(original) do
+  def get_approval_chain(original, approver_type) do
     query = from s in Karma.Signee,
       join: ds in Karma.DocumentSignee,
       on: s.id == ds.signee_id,
-      where: ds.document_id == ^original.document_id,
+      where: ds.document_id == ^original.document_id
+      and s.approver_type == ^approver_type,
       order_by: ds.order
 
     Repo.all(query)
