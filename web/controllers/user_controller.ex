@@ -12,18 +12,7 @@ defmodule Karma.UserController do
 
   def new(conn, _params) do
     changeset = User.changeset(%User{})
-    case Map.has_key?(conn.query_params, "te") do
-      true ->
-        target_email_hash = conn.query_params["te"]
-        target_email =
-          case RedisCli.query(["GET", target_email_hash]) do
-            {:ok, nil} -> nil
-            {:ok, email} -> email
-          end
-        render(conn, "new.html", layout: {LayoutView, "pre_login.html"}, changeset: changeset, target_email: target_email)
-      false ->
-        render(conn, "new.html", layout: {LayoutView, "pre_login.html"}, changeset: changeset, target_email: nil)
-    end
+    handle_query_params(conn, changeset)
   end
 
   def create(conn, %{"user" => user_params}) do
@@ -45,18 +34,7 @@ defmodule Karma.UserController do
         Click the link in the email to gain full access to Karma.")
         |> redirect(to: session_path(conn, :new))
       {:error, changeset} ->
-        case Map.has_key?(conn.query_params, "te") do
-          true ->
-            target_email_hash = conn.query_params["te"]
-            target_email =
-              case RedisCli.query(["GET", target_email_hash]) do
-                {:ok, nil} -> nil
-                {:ok, email} -> email
-              end
-            render(conn, "new.html", layout: {LayoutView, "pre_login.html"}, changeset: changeset, target_email: target_email)
-          false ->
-            render(conn, "new.html", layout: {LayoutView, "pre_login.html"}, changeset: changeset, target_email: nil)
-        end
+        handle_query_params(conn, changeset)
     end
   end
 
@@ -96,4 +74,20 @@ defmodule Karma.UserController do
     |> put_flash(:info, "User deleted successfully.")
     |> redirect(to: user_path(conn, :index))
   end
+
+  defp handle_query_params(conn, changeset) do
+    case Map.has_key?(conn.query_params, "te") do
+      true ->
+        target_email_hash = conn.query_params["te"]
+        target_email =
+          case RedisCli.query(["GET", target_email_hash]) do
+            {:ok, nil} -> nil
+            {:ok, email} -> email
+          end
+        render(conn, "new.html", layout: {LayoutView, "pre_login.html"}, changeset: changeset, target_email: target_email)
+      false ->
+        render(conn, "new.html", layout: {LayoutView, "pre_login.html"}, changeset: changeset, target_email: nil)
+    end
+  end
+
 end
