@@ -203,6 +203,8 @@
         <div class="dib ml3"><%= signee.name %></div>
         <div class="dib ml3"><%= signee.role %></div>
         <div class="dib ml3"><%= signee.email %></div>
+        <div class="dib ml3">(<%= signee.approver_type %>)</div>
+
         <%= link to: project_signee_path(@conn, :delete, @project, signee),
           method: :delete,
           data: [confirm: "Are you sure?"] do %>
@@ -228,6 +230,12 @@
     form: f,
     atom: :role,
     placeholder: "Producer"
+    %>
+    <%= component "dropdown.html",
+    form: f,
+    atom: :approver_type,
+    options: ["Signee", "Recipient"],
+    prompt: "Please Select"
     %>
     <%= component "submit_button.html",
     form: f,
