@@ -1,5 +1,5 @@
 defmodule Karma.Controllers.Helpers do
-
+  import Ecto.Query
   alias Karma.{Document, RedisCli}
 
 
@@ -20,7 +20,10 @@ defmodule Karma.Controllers.Helpers do
   end
 
   def project_signees(project) do
-    Ecto.assoc(project, :signees)
+    from s in Karma.Signee,
+    where: s.project_id == ^project.id,
+    order_by: s.approver_type,
+    order_by: s.name
   end
 
   def document_signees(document) do
