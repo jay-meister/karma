@@ -1,7 +1,7 @@
 defmodule Karma.OfferController do
   use Karma.Web, :controller
 
-  alias Karma.{User, Offer, Project, Startpack, AlteredDocument, Merger}
+  alias Karma.{User, Offer, Project, Startpack, AlteredDocument, Merger, Formatter}
 
   import Karma.ProjectController, only: [add_project_to_conn: 2, block_if_not_project_manager: 2]
 
@@ -42,7 +42,11 @@ defmodule Karma.OfferController do
   def add_offer_to_conn(conn, _) do
     %{"id" => offer_id} = conn.params
     # offer
-    offer = Repo.get_by(Offer, id: offer_id)
+    offer =
+      case Repo.get_by(Offer, id: offer_id) do
+        nil -> nil
+        offer -> Formatter.format_offer_data(offer)
+      end
     conn = assign(conn, :offer, offer)
     case conn.assigns.offer do
       nil ->

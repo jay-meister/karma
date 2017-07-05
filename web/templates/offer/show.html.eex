@@ -179,7 +179,7 @@
   </div>
   <div class="mt4">
     <%= for {atom, label, formatted} <- [
-      {:start_date, "Start date", format_date(@offer.start_date)},
+      {:start_date, "Start date", @offer.start_date},
       {:contract_type, nil, check_loan_out(@offer.contract_type, @offer.user_id)},
       {:daily_or_weekly, nil, nil},
       {:working_week, nil, nil}

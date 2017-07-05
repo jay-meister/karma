@@ -155,7 +155,8 @@ defmodule Karma.OfferControllerTest do
     assert html_response(conn, 200) =~ msg
   end
 
-  test "renders page not found when id is nonexistent", %{conn: conn, project: project} do
+  test "renders page not found when id is nonexistent", %{conn: conn, project: project, offer: offer} do
+    conn = assign(conn, :offer, offer)
     conn = get conn, project_offer_path(conn, :show, project, -1)
     assert html_response(conn, 200) =~ "Offer could not be found"
   end
