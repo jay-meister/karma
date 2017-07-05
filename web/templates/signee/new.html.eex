@@ -33,7 +33,7 @@
       options: @signees,
       form: f,
       atom: :signee_id,
-      prompt: "Select signee"
+      prompt: "Select approver"
       %>
 
       <%= hidden_input f, :order, value: length(@document_signees) + 2 %>

@@ -42,7 +42,8 @@ defmodule Karma.Sign do
     %{"inlineTemplates": [
       %{"sequence": Integer.to_string(index + 1),
         "recipients": %{
-          "signers": get_and_prepare_approval_chain(merged, user)
+          "signers": get_and_prepare_approval_chain(merged, user),
+          "certifiedDeliveries": get_certified_deliveries(merged)
         }
       }
       ],
@@ -122,6 +123,15 @@ defmodule Karma.Sign do
       end)
     |> Enum.map(&Map.delete(&1, :id))
   end
+
+  def get_certified_deliveries(merged) do
+    get_approval_chain(merged, "Recipient")
+    |> format_approval_chain()
+    |> add_index_to_chain(merged)
+    |> Enum.map(&Map.drop(&1, [:id, :routingOrder, :tabs]))
+  end
+
+
 
   # api related
   def login(headers) do
