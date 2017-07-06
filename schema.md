@@ -94,7 +94,7 @@
 - primary_address_postcode - **string**
 - primary_address_country - **string**
 - primary_address_tel - **string**
-- agent_deal,- **boolean**, default: false, null: false
+- agent_deal?- **boolean**, default: false, null: false
 - agent_name - **string**
 - agent_company - **string**
 - agent_address - **text**
@@ -121,10 +121,10 @@
 - vat_number - **string**
 - p45_url - **string**
 - for_paye_only - **string**
-- student_loan_not_repayed,- **boolean**, default: false, null: false
-- student_loan_repay_direct,- **boolean**, default: nil
-- student_loan_plan_1,- **boolean**, default: nil
-- student_loan_finished_before_6_april,- **boolean**, default: nil
+- student_loan_not_repayed?- **boolean**, default: false, null: false
+- student_loan_repay_direct?- **boolean**, default: nil
+- student_loan_plan_1?- **boolean**, default: nil
+- student_loan_finished_before_6_april?- **boolean**, default: nil
 - schedule_d_letter_url - **string**
 - loan_out_company_registration_number - **string**
 - loan_out_company_address - **text**

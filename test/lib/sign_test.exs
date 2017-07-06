@@ -45,22 +45,33 @@ defmodule Karma.SignTest do
 
   test "add index to chain function" do
     merged = %{id: 333}
-    chain = [%{name: "jack", id: 1}, %{name: "brad", id: 2}]
+    chain = [%{name: "jack", id: 0}, %{name: "brad", id: 2}]
     indexed = Sign.add_index_to_chain(chain, merged)
-    assert hd(indexed) == %{name: "jack", recipientId: 2, routingOrder: 1, tabs: %{signHereTabs: [%{documentId: 333, tabLabel: "signature_1\\*"}]}}
+    assert hd(indexed) == %{name: "jack", recipientId: 2, routingOrder: 2, tabs: %{signHereTabs: [%{documentId: 333, tabLabel: "signature_1\\*"}]}}
   end
+
+  test "add agent to chain when not an agent deal" do
+    chain = Sign.add_agent_to_chain_if_needed([], nil, %{agent_deal?: false})
+    assert chain == []
+  end
+
   test "get and prepare approval chain function", %{document: document, offer: offer,
     contractor: contractor, signee1: signee1, signee2: signee2, signee3: signee3} do
-    alt_doc = insert_merged_document(document, offer)
+      agent_details = %{agent_deal?: true, agent_email_address: "agent@gmail.com", agent_name: "Secret Agent"}
+      alt_doc = insert_merged_document(document, offer)
+      _startpack = update_startpack(contractor, agent_details)
+      contractor = Repo.preload(contractor, :startpacks, force: true)
 
-    fully_formatted_chain =
-      Sign.get_and_prepare_approval_chain(alt_doc, contractor)
-      |> Enum.map(&Map.delete(&1, :tabs))
-    assert fully_formatted_chain ==
-      [%{email: "cont@gmail.com", name: "Joe Blogs", recipientId: 1, routingOrder: 1},
-       %{email: "signee3@gmail.com", name: "John Smith", recipientId: signee3.id + 1, routingOrder: 2},
-       %{email: "signee1@gmail.com", name: "John Smith", recipientId: signee1.id + 1, routingOrder: 3},
-       %{email: "signee2@gmail.com", name: "John Smith", recipientId: signee2.id + 1, routingOrder: 4}]
+      fully_formatted_chain =
+        Sign.get_and_prepare_approval_chain(alt_doc, contractor)
+        |> Enum.map(&Map.delete(&1, :tabs))
+
+      assert fully_formatted_chain ==
+        [%{email: "agent@gmail.com", name: "Secret Agent", recipientId: 1, routingOrder: 1},
+         %{email: "cont@gmail.com", name: "Joe Blogs", recipientId: 2, routingOrder: 2},
+         %{email: "signee3@gmail.com", name: "John Smith", recipientId: signee3.id + 2, routingOrder: 3},
+         %{email: "signee1@gmail.com", name: "John Smith", recipientId: signee1.id + 2, routingOrder: 4},
+         %{email: "signee2@gmail.com", name: "John Smith", recipientId: signee2.id + 2, routingOrder: 5}]
 
   end
 
