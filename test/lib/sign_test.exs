@@ -72,10 +72,25 @@ defmodule Karma.SignTest do
          %{email: "signee3@gmail.com", name: "John Smith", recipientId: signee3.id + 2, routingOrder: 3},
          %{email: "signee1@gmail.com", name: "John Smith", recipientId: signee1.id + 2, routingOrder: 4},
          %{email: "signee2@gmail.com", name: "John Smith", recipientId: signee2.id + 2, routingOrder: 5}]
-
   end
 
+  test "get_carbon_copies function", %{document: document, offer: offer,
+    contractor: contractor, recipient_1: recipient_1} do
+      agent_details = %{agent_deal?: false}
+      alt_doc = insert_merged_document(document, offer)
+      _startpack = update_startpack(contractor, agent_details)
 
+      chain = ["signee", "signee", "signee", "signee"]
+
+      carbon_copies = Sign.get_carbon_copies(alt_doc, chain)
+
+      assert carbon_copies ==
+        [%{email: recipient_1.email,
+          name: recipient_1.name,
+          recipientId: recipient_1.id + 2,
+          routingOrder: Kernel.length(chain) + 2
+        }]
+  end
 
   # get document and prepare
   test "get and prepare document success", %{document: document, offer: offer, contractor: contractor} do
