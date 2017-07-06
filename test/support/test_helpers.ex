@@ -120,7 +120,7 @@ defmodule Karma.TestHelpers do
     default = %{first_name: "Joe",
       last_name: "Blogs",
       email: "test@test.com",
-      password: "123456",
+      password: "Password123!",
       terms_accepted: true,
       verified: true,
       startpacks: %{}
@@ -243,6 +243,7 @@ defmodule Karma.TestHelpers do
     student_loan_repay_direct?: true,
     bank_swift_code: "some content",
     vehicle_model: "some content",
+    vehicle_bring_own?: false,
     primary_address_country: "some content",
     passport_full_name: "some content",
     agent_tel: "some content",

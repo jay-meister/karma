@@ -11,8 +11,7 @@
   form: f,
   atom: :recipient_fullname,
   placeholder: " in full, eg, James not Jim, Smith",
-  label: "Recipient fullname",
-  disabled: @target_email_disabled
+  label: "Recipient fullname"
   %>
 
   <%= component "input.html",
@@ -157,7 +156,7 @@
   <%= component "number_input.html",
   form: f,
   atom: :vehicle_allowance_per_week,
-  placeholder: "Enter a number"
+  placeholder: ""
   %>
 
   <br>

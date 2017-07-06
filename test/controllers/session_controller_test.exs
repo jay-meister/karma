@@ -29,7 +29,7 @@ defmodule Karma.SessionControllerTest do
 
     test "Login: Valid session /session/new", %{conn: conn} do
       conn = post conn, session_path(conn, :create,
-      %{"session" => %{"email" => "test@test.com", "password" => "123456"}})
+      %{"session" => %{"email" => "test@test.com", "password" => "Password123!"}})
       assert redirected_to(conn, 302) == dashboard_path(conn, :index)
     end
 
@@ -48,7 +48,7 @@ defmodule Karma.SessionControllerTest do
     test "Login: Not verified", %{conn: conn} do
       user = insert_user(%{email: "test2@test.com", verified: false})
       conn = post conn, session_path(conn, :create,
-      %{"session" => %{"email" => "test2@test.com", "password" => "123456"}})
+      %{"session" => %{"email" => "test2@test.com", "password" => "Password123!"}})
       {:ok, hash} = RedisCli.get(user.email)
       assert html_response(conn, 302) =~ "/verification/verify/#{hash}"
     end

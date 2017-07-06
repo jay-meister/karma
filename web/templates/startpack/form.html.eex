@@ -294,7 +294,10 @@
     %>
 
     <div class="mb3 f3">Your vehicle details for site access and parking:</div>
-
+    <%= label f, :vehicle_bring_own?, "Check the box if you bring your own vehicle", class: "dib mw-100 mb2 fw4" %>
+    <%= checkbox f, :vehicle_bring_own?, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
+    <%= error_tag f, :vehicle_bring_own? %>
+    <br />
     <%= component "input.html",
     form: f,
     atom: :vehicle_make
