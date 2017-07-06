@@ -3,6 +3,11 @@ defmodule Karma.Sign do
 
   alias Karma.{AlteredDocument, Repo, S3}
 
+  @default_increment 2
+  # when creating an approval chain, we 'inject' the agent if necessary
+  # and the contractor to the beginning of the signee list
+  # which means we need to increment all signee ids by 2
+
   def new_envelope(altered_docs, user) do
     # login with docusign
     case login(headers()) do
@@ -106,7 +111,7 @@ defmodule Karma.Sign do
     [user] ++ chain
   end
 
-  def add_index_to_chain(chain, merged, increment \\ 2) do
+  def add_index_to_chain(chain, merged, increment \\ @default_increment) do
     # contractor has id set to 0, signees have id set to their signee id on our table
     # add 2 to this id, so contractors id will become 2, required to be positive by docusign
     # if an agent is to be added, they will be added at index 1
@@ -120,14 +125,14 @@ defmodule Karma.Sign do
             %{documentId: merged.id, "tabLabel": "signature_#{signing_index}\\*"}
           ]
         }
-        additional = %{"recipientId": signee.id + 2, "routingOrder": routing_index, "tabs": tabs}
+        additional = %{"recipientId": signee.id + @default_increment, "routingOrder": routing_index, "tabs": tabs}
         Map.merge(signee, additional)
       end)
     |> Enum.map(&Map.delete(&1, :id))
   end
 
   def get_carbon_copies(merged, chain) do
-    increment = Kernel.length(chain) + 2
+    increment = Kernel.length(chain) + @default_increment
     # we want to increment the routing order of the recipients by the length of the chain plus the 2
     get_approval_chain(merged, "Recipient")
     |> format_approval_chain()

@@ -72,7 +72,6 @@ defmodule Karma.SignTest do
          %{email: "signee3@gmail.com", name: "John Smith", recipientId: signee3.id + 2, routingOrder: 3},
          %{email: "signee1@gmail.com", name: "John Smith", recipientId: signee1.id + 2, routingOrder: 4},
          %{email: "signee2@gmail.com", name: "John Smith", recipientId: signee2.id + 2, routingOrder: 5}]
-
   end
 
   test "get_carbon_copies function", %{document: document, offer: offer,
@@ -91,7 +90,6 @@ defmodule Karma.SignTest do
           recipientId: recipient_1.id + 2,
           routingOrder: Kernel.length(chain) + 2
         }]
-
   end
 
   # get document and prepare
