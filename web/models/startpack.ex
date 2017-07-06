@@ -48,6 +48,7 @@ defmodule Karma.Startpack do
     field :vehicle_registration, :string
     field :vehicle_insurance_url, :string
     field :vehicle_license_url, :string
+    field :vehicle_bring_own?, :boolean, default: true, nil: false
     field :national_insurance_number, :string
     field :vat_number, :string
     field :p45_url, :string
@@ -135,6 +136,7 @@ defmodule Karma.Startpack do
       :vehicle_registration,
       :vehicle_insurance_url,
       :vehicle_license_url,
+      :vehicle_bring_own?,
       :national_insurance_number,
       :vat_number,
       :p45_url,
@@ -290,6 +292,18 @@ defmodule Karma.Startpack do
         |> validate_required(vehicle_allowance_keys())
       false ->
         changeset
+    end
+  end
+
+  def vehicle_bring_own_changeset(struct, %{"vehicle_bring_own?" => vehicle_bring_own?} = startpack_params) do
+    case vehicle_bring_own? do
+      "true" ->
+        struct
+        |> cast(startpack_params, vehicle_allowance_keys())
+        |> validate_required(vehicle_allowance_keys())
+      "false" ->
+        struct
+        |> cast(startpack_params, vehicle_allowance_keys())
     end
   end
 

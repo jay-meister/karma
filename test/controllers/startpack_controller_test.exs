@@ -50,6 +50,7 @@ defmodule Karma.StartpackControllerTest do
     agent_tel: "some content",
     vehicle_insurance_url: "some content",
     vehicle_license_url: "some content",
+    vehicle_bring_own?: "false",
     student_loan_finished_before_6_april?: true,
     agent_company: "some content",
     primary_address_2: "some content",
@@ -80,6 +81,7 @@ defmodule Karma.StartpackControllerTest do
   end
 
   test "updates chosen resource and redirects when data is valid", %{conn: conn, user: user, offer: offer} do
+    update_startpack(user, %{vehicle_bring_own?: false})
     loan_out_image = %Plug.Upload{content_type: "image/png", path: "test/fixtures/foxy.png", filename: "foxy.png"}
     valid =
       @valid_attrs
@@ -93,8 +95,13 @@ defmodule Karma.StartpackControllerTest do
   end
 
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn, user: user} do
-    conn = post conn, startpack_path(conn, :update, user.startpacks), startpack: %{}
-    assert redirected_to(conn, 302) =~ "/startpack"
+    conn = post conn, startpack_path(conn, :update, user.startpacks), startpack: %{"vehicle_bring_own?": "false"}
+    assert html_response(conn, 302) =~ "/startpack"
+  end
+
+  test "bring your own vehicle", %{conn: conn, user: user} do
+    conn = post conn, startpack_path(conn, :update, user.startpacks), startpack: %{"vehicle_bring_own?": "true"}
+    assert html_response(conn, 200) =~ "Edit startpack"
   end
 
   test "offer id that doesn't exist :index", %{conn: conn} do
@@ -108,6 +115,7 @@ defmodule Karma.StartpackControllerTest do
   end
 
   test "updates startpack and file is uploaded", %{conn: conn, user: user} do
+    update_startpack(user, %{vehicle_bring_own?: false})
     image_upload = %Plug.Upload{content_type: "image/png", path: "test/fixtures/foxy.png", filename: "foxy.png"}
     loan_out_image = %Plug.Upload{content_type: "image/png", path: "test/fixtures/foxy.png", filename: "foxy.png"}
     valid =
@@ -142,6 +150,7 @@ defmodule Karma.StartpackControllerTest do
   end
 
   test "updates startpack with many file uploads", %{conn: conn, user: user} do
+    update_startpack(user, %{vehicle_bring_own?: false})
     image_upload = %Plug.Upload{content_type: "image/png", path: "test/fixtures/foxy.png", filename: "foxy.png"}
 
     # possible solution for multiple fields
@@ -184,7 +193,7 @@ defmodule Karma.StartpackControllerTest do
   test "updates chosen resource even if file upload errors", %{conn: conn, user: user} do
     image_upload = %Plug.Upload{content_type: "image/png", path: "test/fixtures/foxy.png", filename: "foxy.png"}
     loan_out_image = %Plug.Upload{content_type: "image/png", path: "test/fixtures/foxy.png", filename: "foxy.png"}
-
+    update_startpack(user, %{vehicle_bring_own?: false})
     valid =
       @valid_attrs
       |> Map.put("passport_image",  image_upload)

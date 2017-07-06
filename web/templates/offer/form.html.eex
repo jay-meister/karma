@@ -11,8 +11,7 @@
   form: f,
   atom: :recipient_fullname,
   placeholder: "John Smith",
-  label: "Recipient fullname",
-  disabled: @target_email_disabled
+  label: "Recipient fullname"
   %>
 
   <%= component "input.html",
@@ -102,25 +101,25 @@
   <%= component "textarea.html",
   form: f,
   atom: :box_rental_description,
-  placeholder: "Describe the box rental"
+  placeholder: "Brief description of the box rental"
   %>
 
   <%= component "number_input.html",
   form: f,
   atom: :box_rental_fee_per_week,
-  placeholder: "Enter a number"
+  placeholder: ""
   %>
 
   <%= component "number_input.html",
   form: f,
   atom: :box_rental_cap,
-  placeholder: "Enter a number"
+  placeholder: ""
   %>
 
   <%= component "input.html",
   form: f,
   atom: :box_rental_period,
-  placeholder: "Enter the period you need box rental for"
+  placeholder: ""
   %>
 
   <%= component "checkbox.html",
@@ -132,31 +131,31 @@
   <%= component "input.html",
   form: f,
   atom: :equipment_rental_description,
-  placeholder: "Describe the equipment rental you need"
+  placeholder: "Brief description of the equipment rental"
   %>
 
   <%= component "number_input.html",
   form: f,
   atom: :equipment_rental_fee_per_week,
-  placeholder: "Enter a number"
+  placeholder: ""
   %>
 
   <%= component "number_input.html",
   form: f,
   atom: :equipment_rental_cap,
-  placeholder: "Enter a number"
+  placeholder: ""
   %>
 
   <%= component "input.html",
   form: f,
   atom: :equipment_rental_period,
-  placeholder: "Enter the period you need equipment rental for"
+  placeholder: ""
   %>
 
   <%= component "number_input.html",
   form: f,
   atom: :vehicle_allowance_per_week,
-  placeholder: "Enter a number"
+  placeholder: ""
   %>
 
   <br>
