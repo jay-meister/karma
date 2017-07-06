@@ -22,7 +22,8 @@ defmodule Karma.UserController do
     end
   end
 
-  def create(conn, %{"user" => user_params}) do
+  def create(conn, %{"user" => %{"email" => email} = user_params}) do
+    user_params = Map.put(user_params, "email", String.downcase(email))
     # add startpack to the user
     user_params = Map.merge(%{"startpacks" => %{}}, user_params)
     changeset = User.registration_changeset(%User{}, user_params)
