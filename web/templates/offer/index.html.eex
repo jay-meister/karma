@@ -1,4 +1,6 @@
 <%= link "Dashboard", to: dashboard_path(@conn, :index), class: "no-underline k-indigo" %>
+<img src="/images/breadcrumb-arrow.svg" class="w1 ml3" />
+<div class="ma2 k-light-indigo dib">Project</div>
 <section class="pt5">
   <h1 class="k-indigo top--header absolute fw4 mb0">Project details</h1>
   <%= link to: project_path(@conn, :show, @project.id), class: "no-underline" do %>
