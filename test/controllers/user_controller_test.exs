@@ -7,7 +7,7 @@ defmodule Karma.UserControllerTest do
 
   @user_attrs %{email: "test@test.com"}
   @valid_attrs %{email: "test@test.com", first_name: "Joe", last_name: "Blogs", password: "Password123!", terms_accepted: true}
-  @invalid_attrs %{}
+  @invalid_attrs %{email: ""}
 
   test "user paths require user authentication", %{conn: conn} do
     user = insert_user()
