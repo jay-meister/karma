@@ -78,6 +78,7 @@ defmodule Karma.Sign do
     |> format_approval_chain()
     |> add_contractor_to_chain(contractor)
     |> add_index_to_chain(merged)
+    |> add_agent_to_chain_if_needed(merged, contractor.startpacks)
   end
 
   def get_approval_chain(original, approver_type) do
@@ -104,21 +105,20 @@ defmodule Karma.Sign do
   end
 
   def add_index_to_chain(chain, merged) do
+    # contractor has id set to 0, signees have id set to their signee id on our table
+    # add 2 to this id, so contractors id will become 2, required to be positive by docusign
+    # if an agent is to be added, they will be added at index 1
     chain
     |> Enum.with_index()
     |> Enum.map(fn({signee, index}) ->
-        index = index + 1
+        signing_index = index + 1
+        routing_index = index + 2
         tabs = %{
           "signHereTabs": [
-            %{documentId: merged.id, "tabLabel": "signature_#{index}\\*"}
+            %{documentId: merged.id, "tabLabel": "signature_#{signing_index}\\*"}
           ]
-          # "textTabs": [
-          #   %{ tabLabel: "signature_#{index}\\*" }
-          # ]
         }
-        # contractor has id set to 0, signees have id set to their signee id on our table
-        # add one to this id, so contractors id will become 1, required to be positive by docusign
-        additional = %{"recipientId": signee.id + 1, "routingOrder": index, "tabs": tabs}
+        additional = %{"recipientId": signee.id + 2, "routingOrder": routing_index, "tabs": tabs}
         Map.merge(signee, additional)
       end)
     |> Enum.map(&Map.delete(&1, :id))
@@ -131,7 +131,26 @@ defmodule Karma.Sign do
     |> Enum.map(&Map.drop(&1, [:id, :routingOrder, :tabs]))
   end
 
-
+  def add_agent_to_chain_if_needed(chain, merged, startpack) do
+    case startpack.agent_deal? do
+      false ->
+        chain
+      true ->
+        tabs = %{
+                  "initialHereTabs": [
+                    %{documentId: merged.id, "tabLabel": "agent_initials\\*"}
+                  ]
+                }
+        agent =
+          %{tabs: tabs,
+            name: startpack.agent_name,
+            email: startpack.agent_email_address,
+            recipientId: 1,
+            routingOrder: 1
+        }
+        List.insert_at(chain, 0, agent)
+    end
+  end
 
   # api related
   def login(headers) do

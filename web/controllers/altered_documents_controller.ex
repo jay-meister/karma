@@ -5,8 +5,8 @@ defmodule Karma.AlteredDocumentController do
   def sign(conn, %{"project_id" => p_id, "offer_id" => o_id}) do
     # get documents
     altered_docs = Repo.all(from ad in AlteredDocument, where: ad.offer_id == ^o_id)
-
-    case Sign.new_envelope(altered_docs, conn.assigns.current_user) do
+    user = Repo.preload(conn.assigns.current_user, :startpacks)
+    case Sign.new_envelope(altered_docs, user) do
       {:ok, _msg} ->
         conn
         |> put_flash(:info, "Document sent to signees")
