@@ -6,7 +6,7 @@ defmodule Karma.UserControllerTest do
   alias Karma.{User, Email, RedisCli, Controllers.Helpers}
 
   @user_attrs %{email: "test@test.com"}
-  @valid_attrs %{email: "test@test.com", first_name: "Joe", last_name: "Blogs", password: "123456", terms_accepted: true}
+  @valid_attrs %{email: "test@test.com", first_name: "Joe", last_name: "Blogs", password: "Password123!", terms_accepted: true}
   @invalid_attrs %{}
 
   test "user paths require user authentication", %{conn: conn} do

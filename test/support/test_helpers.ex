@@ -120,7 +120,7 @@ defmodule Karma.TestHelpers do
     default = %{first_name: "Joe",
       last_name: "Blogs",
       email: "test@test.com",
-      password: "123456",
+      password: "Password123!",
       terms_accepted: true,
       verified: true,
       startpacks: %{}
