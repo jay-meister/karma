@@ -1,5 +1,8 @@
-<%= link "Back", to: project_offer_path(@conn, :index, @project), class: "ma2 k-indigo no-underline" %>
-<%= link "Edit", to: project_path(@conn, :edit, @project), class: "ma2 k-indigo no-underline"%>
+<%= link "Dashboard", to: dashboard_path(@conn, :index), class: "no-underline k-indigo" %>
+<img src="/images/breadcrumb-arrow.svg" class="w1 ml3" />
+<%= link "Project", to: project_offer_path(@conn, :index, @project), class: "ma2 k-indigo no-underline" %>
+
+<%= link "Edit project", to: project_path(@conn, :edit, @project), class: "ma1 k-indigo no-underline fr"%>
 
 <h2><%= @project.name %></h2>
 <ul class="list pl0">
