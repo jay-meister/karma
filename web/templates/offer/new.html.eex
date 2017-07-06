@@ -1,6 +1,10 @@
 <div class="ph3 ph6-ns mt6 center">
 
-  <%= link "Back", to: project_offer_path(@conn, :index, @project_id), class: "link k-indigo no-underline" %>
+  <%= link "Dashboard", to: dashboard_path(@conn, :index), class: "link k-indigo no-underline" %>
+  <img src="/images/breadcrumb-arrow.svg" class="w1 ml2" />
+  <%= link "Project", to: project_offer_path(@conn, :index, @project_id), class: "link k-indigo no-underline ml2" %>
+  <img src="/images/breadcrumb-arrow.svg" class="w1 ml2" />
+  <div class="ma2 k-light-indigo dib">Create offer</div>
 
   <h1 class="k-indigo top--header absolute fw4 mb0">Make new offer</h1>
 
