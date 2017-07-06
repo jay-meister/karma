@@ -205,7 +205,8 @@ defmodule Karma.Sign do
   end
 
   def get_email_blurb_and_subject(user, offer) do
-    sub = "#{offer.project.codename} - for signature: #{user.first_name} #{user.last_name}, #{offer.job_title} (#{offer.department})"
+    # Project_codename - agreement: User_first_name User_last_name, Offer_job_title (Offer_department)
+    sub = "#{offer.project.codename} - agreement: #{user.first_name} #{user.last_name}, #{offer.job_title} (#{offer.department})"
     blurb = "Dear #{user.first_name} #{user.last_name},\n\nPlease click 'REVIEW DOCUMENTS' above, to Docusign:"
 
     %{"emailSubject": sub,
