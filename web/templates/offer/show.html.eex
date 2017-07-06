@@ -8,7 +8,7 @@
   <%= if Map.has_key?(@contractor, :first_name) do %>
     <h1 class="top--header absolute fw4 mb0">Offer for <%= "#{@contractor.first_name} #{@contractor.last_name} " %></h1>
   <% else %>
-    <h1 class="top--header absolute fw4 mb0">Offer for <%= @offer.target_email %></h1>
+    <h1 class="top--header absolute fw4 mb0">Offer for <%= "#{@offer.recipient_fullname}" %></h1>
   <% end %>
 <% end %>
 <%= if !@is_pm? do %>
@@ -148,6 +148,17 @@
       <div>
         <%= for {atom, label, formatted} <- [
           {:first_name, "Recipient fullname", "#{@contractor.first_name} #{@contractor.last_name}"}
+        ] do %>
+          <%= component "data.html",
+          data: formatted || Map.get(@contractor, atom),
+          label: label || format_label(atom)
+          %>
+        <% end %>
+      </div>
+      <% else %>
+      <div>
+        <%= for {atom, label, formatted} <- [
+          {:recipient_fullname, "Recipient fullname", "#{@offer.recipient_fullname}"}
         ] do %>
           <%= component "data.html",
           data: formatted || Map.get(@contractor, atom),
