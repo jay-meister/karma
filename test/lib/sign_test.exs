@@ -100,7 +100,7 @@ defmodule Karma.SignTest do
     offer = Repo.preload(offer, :project)
 
     formatted_doc = Sign.prepare_document(alt_doc, contractor, offer)
-    assert "Joe Blogs, Cashier (Accounts) - weekly, PAYE, start: 2019-04-17.pdf" == formatted_doc.name
+    assert "JOE BLOGS, Cashier (Accounts) - WEEKLY, PAYE, start: 2019-04-17.pdf" == formatted_doc.name
   end
 
   test "build_envelope_body" do
