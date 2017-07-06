@@ -31,7 +31,8 @@ defmodule Karma.TestHelpers do
       doc_sign1: doc_sign1,
       doc_sign2: doc_sign2,
       doc_sign3: doc_sign3,
-      doc_recip1: doc_recip1
+      doc_recip1: doc_recip1,
+      recipient_1: recipient_1
     }
   end
 
