@@ -6,9 +6,8 @@ defmodule Karma.Document do
     field :category, :string
     field :name, :string
     belongs_to :project, Karma.Project
-    has_many :altered_documents, Karma.AlteredDocument
     many_to_many :signees, Karma.Signee, join_through: "documents_signees"
-
+    has_many :altered_documents, Karma.AlteredDocument
     timestamps()
   end
 
@@ -19,6 +18,7 @@ defmodule Karma.Document do
     struct
     |> cast(params, [:url, :category, :name])
     |> validate_required([:url, :category, :name])
+    |> foreign_key_constraint(:altered_documents_document_id_fkey)
   end
 
 
