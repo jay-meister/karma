@@ -42,6 +42,7 @@ defmodule Karma.Email do
       nil ->
         hash_string = Helpers.gen_rand_string(30)
         RedisCli.query(["SET", hash_string, offer.target_email])
+        RedisCli.query(["PERSIST", hash_string])
         {"new_offer_unregistered", R_Helpers.user_url(conn, :new, te: hash_string)} # user is not yet registered
       _ ->
         {"new_offer_registered", R_Helpers.project_offer_url(conn, :show, offer.project_id, offer)}
