@@ -1,13 +1,16 @@
 <%= link "Dashboard", to: dashboard_path(@conn, :index), class: "ma2 no-underline k-indigo" %>
 <%= if @is_pm? do %>
-  <%= link "Offers", to: project_offer_path(@conn, :index, @offer.project_id), class: "ma2 no-underline k-indigo" %>
-  <%= link "Edit Offer", to: project_offer_path(@conn, :edit, @offer.project_id, @offer), class: "ma2 no-underline k-indigo" %>
+  <img src="/images/breadcrumb-arrow.svg" class="w1 ml1" />
+  <%= link "Project", to: project_offer_path(@conn, :index, @offer.project_id), class: "ma2 no-underline k-indigo" %>
+  <%= link "Edit offer", to: project_offer_path(@conn, :edit, @offer.project_id, @offer), class: "ma1 no-underline k-indigo fr" %>
 <% end %>
+<img src="/images/breadcrumb-arrow.svg" class="w1 ml2" />
+<div class="ma2 k-light-indigo dib">Offer details</div>
 <%= if @is_pm? do %>
   <%= if Map.has_key?(@contractor, :first_name) do %>
     <h1 class="top--header absolute fw4 mb0">Offer for <%= "#{@contractor.first_name} #{@contractor.last_name} " %></h1>
   <% else %>
-    <h1 class="top--header absolute fw4 mb0">Offer for <%= @offer.target_email %></h1>
+    <h1 class="top--header absolute fw4 mb0">Offer for <%= "#{@offer.recipient_fullname}" %></h1>
   <% end %>
 <% end %>
 <%= if !@is_pm? do %>
@@ -155,6 +158,17 @@
           %>
         <% end %>
       </div>
+      <% else %>
+      <div>
+        <%= for {atom, label, formatted} <- [
+          {:recipient_fullname, "Recipient fullname", "#{@offer.recipient_fullname}"}
+        ] do %>
+          <%= component "data.html",
+          data: formatted || Map.get(@contractor, atom),
+          label: label || format_label(atom)
+          %>
+        <% end %>
+      </div>
     <% end %>
     <div>
       <%= for {atom, label, formatted} <- [
@@ -180,7 +194,7 @@
   </div>
   <div class="mt4">
     <%= for {atom, label, formatted} <- [
-      {:start_date, "Start date", format_date(@offer.start_date)},
+      {:start_date, "Start date", @offer.start_date},
       {:contract_type, nil, check_loan_out(@offer.contract_type, @offer.user_id)},
       {:daily_or_weekly, nil, nil},
       {:working_week, nil, nil}

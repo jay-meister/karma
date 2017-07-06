@@ -6,6 +6,15 @@
   <% end %>
 
   <%= component "form_divider.html", title: "Offer details" %>
+
+  <%= component "input.html",
+  form: f,
+  atom: :recipient_fullname,
+  placeholder: "John Smith",
+  label: "Recipient fullname",
+  disabled: @target_email_disabled
+  %>
+
   <%= component "input.html",
   form: f,
   atom: :target_email,

@@ -6,7 +6,7 @@
           <h2>Create account</h2>
         </div>
         <div class="">
-            <%= form_for @changeset, user_path(@conn, :create, te: @target_email), fn f -> %>
+            <%= form_for @changeset, user_path(@conn, :create, te: @target_email_hash), fn f -> %>
             <%= if @changeset.action do %>
               <div class="alert light-red mt3">
                 <p>Oops, something went wrong! Please check the errors below.</p>
@@ -30,7 +30,7 @@
             atom: :email,
             placeholder: "example@email.com",
             class: "mt5",
-            disabled: @target_email != nil,
+            readonly: (@target_email != nil),
             value: @target_email
             %>
 

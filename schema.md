@@ -29,6 +29,7 @@
 
 # Offers Schema
 
+- recipient_fullname - **string**
 - target_email - **string**
 - department - **string**
 - job_title - **string**

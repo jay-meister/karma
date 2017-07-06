@@ -1,7 +1,13 @@
-<%= link "Back", to: project_offer_path(@conn, :index, @project), class: "ma2 k-indigo no-underline" %>
-<%= link "Edit", to: project_path(@conn, :edit, @project), class: "ma2 k-indigo no-underline"%>
+<%= link "Dashboard", to: dashboard_path(@conn, :index), class: "no-underline k-indigo" %>
+<img src="/images/breadcrumb-arrow.svg" class="w1 ml3" />
+<%= link "Project", to: project_offer_path(@conn, :index, @project), class: "ma2 k-indigo no-underline" %>
+<img src="/images/breadcrumb-arrow.svg" class="w1 ml2" />
+<div class="ma2 k-light-indigo dib">Project details</div>
 
-<h2><%= @project.name %></h2>
+<%= link "Edit project", to: project_path(@conn, :edit, @project), class: "ma1 k-indigo no-underline fr"%>
+
+<h1 class="k-indigo top--header absolute fw4 mb0"><%= @project.name %></h1>
+
 <ul class="list pl0">
   <%= component "form_divider.html", title: "Project details" %>
   <%= for {atom, label, formatted} <- [
@@ -52,28 +58,9 @@
   <% end %>
 </ul>
 
+
 <div class="mb4">
-  <%= component "form_divider.html", title: "Forms" %>
-  <%= if length(@forms) == 0 do %>
-    <div class="tc k-bg-indigo white pa4 f2 br3">You have not uploaded any forms yet</div>
-  <% end %>
-  <div class="tc">
-    <%= for form <- @forms do %>
-      <div class="dib tc">
-        <div class="relative dib">
-          <img class="w5 dib ma1" src="/images/file.png" />
-          <%= link to: project_document_path(@conn, :delete, @project, form),
-            method: :delete,
-            data: [confirm: "Are you sure?"] do %>
-            <img class="absolute k-w2-5 top-0 left-1" src="/images/delete.svg" />
-          <% end %>
-        </div>
-        <div class="tc f5"><%= form.name %></div>
-        <%= component "button.html", title: "Approval chain", link: project_document_signee_path(@conn, :add, @project, form), class: "w-50" %>
-      </div>
-    <% end %>
-  </div>
-  <%= component "form_divider.html", title: "Deals" %>
+  <%= component "form_divider.html", title: "Contracts" %>
   <%= if length(@deals) == 0 do %>
     <div class="tc k-bg-indigo white pa4 f2 br3">You have not uploaded any deals yet</div>
   <% end %>
@@ -95,7 +82,27 @@
       </div>
     <% end %>
   </div>
-  <%= component "form_divider.html", title: "Info" %>
+  <%= component "form_divider.html", title: "Forms" %>
+  <%= if length(@forms) == 0 do %>
+    <div class="tc k-bg-indigo white pa4 f2 br3">You have not uploaded any forms yet</div>
+  <% end %>
+  <div class="tc">
+    <%= for form <- @forms do %>
+      <div class="dib tc">
+        <div class="relative dib">
+          <img class="w5 dib ma1" src="/images/file.png" />
+          <%= link to: project_document_path(@conn, :delete, @project, form),
+            method: :delete,
+            data: [confirm: "Are you sure?"] do %>
+            <img class="absolute k-w2-5 top-0 left-1" src="/images/delete.svg" />
+          <% end %>
+        </div>
+        <div class="tc f5"><%= form.name %></div>
+        <%= component "button.html", title: "Approval chain", link: project_document_signee_path(@conn, :add, @project, form), class: "w-50" %>
+      </div>
+    <% end %>
+  </div>
+  <%= component "form_divider.html", title: "Information" %>
   <%= if length(@info) == 0 do %>
     <div class="tc k-bg-indigo white pa4 f2 br3">You have not uploaded any info yet</div>
   <% end %>

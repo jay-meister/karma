@@ -13,7 +13,7 @@ defmodule Karma.DashboardController do
         projects =
           Repo.all(Helpers.user_projects(user))
           |> Repo.preload(:offers)
-        offers = Repo.all(Helpers.user_offers(user))
+        offers = Repo.all(Helpers.user_offers(user)) |> Repo.preload(:project)
 
         render conn, "index.html", projects: projects, offers: offers
     end

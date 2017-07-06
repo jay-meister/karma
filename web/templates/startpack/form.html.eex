@@ -138,7 +138,7 @@
     form: f,
     atom: :passport_image,
     url_atom: :passport_url,
-    helper_text: "Upload an image of your passport",
+    helper_text: "Upload a file of your passport",
     file_types: "pdf, jpeg, png",
     image_url: @startpack.passport_url,
     hide_label: true,

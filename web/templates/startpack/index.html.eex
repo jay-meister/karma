@@ -7,6 +7,9 @@
   <% end %>
 
 <h1 class="k-indigo top--header absolute fw4 mb0">Edit startpack</h1>
+<%= link "Dashboard", to: dashboard_path(@conn, :index), class: "no-underline k-indigo" %>
+<img src="/images/breadcrumb-arrow.svg" class="w1 ml3" />
+<div class="ma2 k-light-indigo dib">Startpack</div>
 
   <% offer_id = case Map.has_key?(@conn.query_params, "offer_id") do
       true ->

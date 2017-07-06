@@ -159,6 +159,7 @@ defmodule Karma.TestHelpers do
 
   def default_offer(attrs \\ %{}) do
     default = %{
+      recipient_fullname: "Full Name",
       active: true,
       additional_notes: "You will be allowed 3 days leave",
       box_rental_required?: true,
