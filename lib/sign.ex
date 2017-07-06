@@ -8,13 +8,14 @@ defmodule Karma.Sign do
   # and the contractor to the beginning of the signee list
   # which means we need to increment all signee ids by 2
 
-  def new_envelope(altered_docs, user) do
+  def new_envelope(altered_docs, user, offer) do
     # login with docusign
     case login(headers()) do
       {:error, msg} ->
         {:error, msg}
       {:ok, base_url} ->
         url = base_url <> "/envelopes"
+        blurb_and_subject = get_email_blurb_and_subject(user, offer)
 
         body =
           altered_docs
@@ -23,9 +24,9 @@ defmodule Karma.Sign do
           # add index so we can sequence documents
           |> Enum.with_index()
           # build documents into composite templates
-          |> Enum.map(&get_composite_template(&1, user))
+          |> Enum.map(&get_composite_template(&1, user, offer))
           # attach templates to the body
-          |> build_envelope_body()
+          |> build_envelope_body(blurb_and_subject)
           |> Poison.encode!()
 
         case HTTPoison.post(url, body, headers(), recv_timeout: 40000) do
@@ -43,7 +44,7 @@ defmodule Karma.Sign do
     end
   end
 
-  def get_composite_template({merged, index}, user) do
+  def get_composite_template({merged, index}, user, offer) do
     signers = get_and_prepare_approval_chain(merged, user)
 
     %{"inlineTemplates": [
@@ -54,7 +55,7 @@ defmodule Karma.Sign do
         }
       }
       ],
-      "document": prepare_document(merged, user)
+      "document": prepare_document(merged, user, offer)
     }
   end
   def add_encoded_file_to_docs(altered_docs) do
@@ -68,11 +69,11 @@ defmodule Karma.Sign do
       end)
   end
 
-
-  def prepare_document(merged, user) do
+  def prepare_document(merged, user, offer) do
+    # 'User_first_name User_last_name, Offer_job_title (Offer_department) - Offer_daily_or_weekly, Offer_contract_type, start: offer_start_date'
     original = Repo.get(Karma.Document, merged.document_id)
     %{"documentId": merged.id,
-       "name": "#{user.first_name}-#{user.last_name}-#{original.name}-#{merged.offer_id}.pdf",
+       "name": "#{String.upcase(user.first_name)} #{String.upcase(user.last_name)}, #{offer.job_title} (#{offer.department}) - #{String.upcase(offer.daily_or_weekly)}, #{original.name}, start: #{offer.start_date}.pdf",
        "documentBase64": merged.encoded_file,
        "transformPdfFields": "true"
     }
@@ -194,12 +195,22 @@ defmodule Karma.Sign do
     ]
   end
 
-  def build_envelope_body(templates) do
-    %{
-      "emailSubject": "Karma document sign",
-      "emailBlurb": "Please sign the document using link provided.",
+  # Project_codename - for signature: User_first_name User_last_name, Offer_job_title (Offer_department)
+  def build_envelope_body(templates, blurb_and_sub) do
+    body = %{
       "compositeTemplates": templates,
       "status": "sent"
+    }
+    Map.merge(blurb_and_sub, body)
+  end
+
+  def get_email_blurb_and_subject(user, offer) do
+    # Project_codename - agreement: User_first_name User_last_name, Offer_job_title (Offer_department)
+    sub = "#{offer.project.codename} - agreement: #{user.first_name} #{user.last_name}, #{offer.job_title} (#{offer.department})"
+    blurb = "Dear #{user.first_name} #{user.last_name},\n\nPlease click 'REVIEW DOCUMENTS' above, to Docusign:"
+
+    %{"emailSubject": sub,
+      "emailBlurb": blurb
     }
   end
 end

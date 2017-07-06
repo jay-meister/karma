@@ -97,17 +97,18 @@ defmodule Karma.SignTest do
     alt_doc =
       insert_merged_document(document, offer)
       |> Map.put(:encoded_file, "YWFhYWFh")
+    offer = Repo.preload(offer, :project)
 
-      formatted_doc = Sign.prepare_document(alt_doc, contractor)
-      assert "Joe-Blogs-PAYE-#{alt_doc.offer_id}.pdf" == formatted_doc.name
+    formatted_doc = Sign.prepare_document(alt_doc, contractor, offer)
+    assert "JOE BLOGS, Cashier (Accounts) - WEEKLY, PAYE, start: 2019-04-17.pdf" == formatted_doc.name
   end
 
   test "build_envelope_body" do
-    envelope_body = Sign.build_envelope_body("templates")
+    envelope_body = Sign.build_envelope_body("templates", %{"emailSubject": "he", "emailBlurb": "ha"})
 
     assert envelope_body == %{
-      "emailSubject": "Karma document sign",
-      "emailBlurb": "Please sign the document using link provided.",
+      "emailSubject": "he",
+      "emailBlurb": "ha",
       "compositeTemplates": "templates",
       "status": "sent"
     }
@@ -116,6 +117,7 @@ defmodule Karma.SignTest do
   test "new_envelope success", %{user: user, document: document, offer: offer} do
     merged_document = insert_merged_document(document, offer)
     encoded = Poison.encode!(%{"loginAccounts" => [%{"baseUrl" => "oh_yeah"}]})
+    offer = Repo.preload(offer, :project)
     with_mocks([
       {Karma.S3, [],
        [get_many_objects: fn(_) -> ["www.aws.someurl.pdf"] end]},
@@ -126,7 +128,7 @@ defmodule Karma.SignTest do
        [decode!: fn(_) -> %{"loginAccounts" => [%{"baseUrl" => "oh_yeah"}], "envelopeId" => "2"} end,
        encode!: fn(_) -> "encoded" end]}
     ]) do
-      {:ok, _msg} = Karma.Sign.new_envelope([merged_document], user)
+      {:ok, _msg} = Karma.Sign.new_envelope([merged_document], user, offer)
       assert Repo.get(AlteredDocument, merged_document.id).envelope_id
     end
   end
@@ -134,6 +136,7 @@ defmodule Karma.SignTest do
   test "new_envelope failure", %{user: user, document: document, offer: offer} do
     merged_document = insert_merged_document(document, offer)
     encoded = Poison.encode!(%{"loginAccounts" => [%{"baseUrl" => "oh_yeah"}]})
+    offer = Repo.preload(offer, :project)
     with_mocks([
       {Karma.S3, [],
        [get_many_objects: fn(_) -> ["www.aws.someurl.pdf"] end]},
@@ -144,7 +147,7 @@ defmodule Karma.SignTest do
        [decode!: fn(_) -> %{"loginAccounts" => [%{"baseUrl" => "oh_yeah"}], "envelopeId" => "2"} end,
        encode!: fn(_) -> "encoded" end]}
     ]) do
-      {:error, _msg} = Karma.Sign.new_envelope([merged_document], user)
+      {:error, _msg} = Karma.Sign.new_envelope([merged_document], user, offer)
       refute Repo.get(AlteredDocument, merged_document.id).envelope_id
     end
   end
