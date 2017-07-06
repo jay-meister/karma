@@ -1,6 +1,8 @@
 <div class="ph3 ph6-ns mt6 center">
 
-  <%= link "Back to dashboard", to: dashboard_path(@conn, :index), class: "link" %>
+  <%= link "Dashboard", to: dashboard_path(@conn, :index), class: "link no-underline k-indigo" %>
+  <img src="/images/breadcrumb-arrow.svg" class="w1 ml2" />
+  <div class="ma2 k-light-indigo dib">Create project</div>
 
   <h1 class="k-indigo top--header absolute fw4 mb0">Create project</h1>
 

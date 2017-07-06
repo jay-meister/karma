@@ -15,6 +15,9 @@
       nil -> "pl3"
       _ -> "k-pl4-5"
     end %>
+    <%= if assigns[:helper_text] do %>
+    <div class="k-light-indigo"><%= assigns[:helper_text] %></div>
+    <% end %>
     <%= if assigns[:value] != nil do %>
       <%= text_input assigns[:form],
       assigns[:atom],
