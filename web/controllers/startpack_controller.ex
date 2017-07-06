@@ -39,6 +39,7 @@ defmodule Karma.StartpackController do
   def update(conn, %{"id" => id, "startpack" => startpack_params}, user) do
     startpack = Repo.get!(Startpack, id)
     startpack_map = Map.from_struct(startpack)
+
     uploaded_files = get_uploaded_files(startpack_map)
     delete_changeset = Startpack.delete_changeset(%Startpack{}, startpack_map)
     image_changeset = Startpack.upload_type_validation(%Startpack{}, startpack_params)
@@ -48,7 +49,7 @@ defmodule Karma.StartpackController do
         |> put_flash(:error, "Error updating startpack!")
         |> render("index.html", changeset: image_changeset, startpack: startpack, offer: %{}, user: user, delete_changeset: delete_changeset, uploaded_files: uploaded_files)
       true ->
-        vehicle_changeset = Startpack.vehicle_bring_own_changeset(startpack, startpack_map)
+        vehicle_changeset = Startpack.vehicle_bring_own_changeset(startpack, startpack_params)
         case vehicle_changeset.valid? do
           false ->
             vehicle_changeset = %{vehicle_changeset | action: :insert}

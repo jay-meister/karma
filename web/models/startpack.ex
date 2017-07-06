@@ -295,15 +295,15 @@ defmodule Karma.Startpack do
     end
   end
 
-  def vehicle_bring_own_changeset(struct, startpack) do
-    case startpack.vehicle_bring_own? do
-      true ->
+  def vehicle_bring_own_changeset(struct, %{"vehicle_bring_own?" => vehicle_bring_own?} = startpack_params) do
+    case vehicle_bring_own? do
+      "true" ->
         struct
-        |> cast(startpack, vehicle_allowance_keys())
+        |> cast(startpack_params, vehicle_allowance_keys())
         |> validate_required(vehicle_allowance_keys())
-      false ->
+      "false" ->
         struct
-        |> cast(startpack, vehicle_allowance_keys())
+        |> cast(startpack_params, vehicle_allowance_keys())
     end
   end
 

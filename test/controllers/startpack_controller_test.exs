@@ -50,7 +50,7 @@ defmodule Karma.StartpackControllerTest do
     agent_tel: "some content",
     vehicle_insurance_url: "some content",
     vehicle_license_url: "some content",
-    vehicle_bring_own?: false,
+    vehicle_bring_own?: "false",
     student_loan_finished_before_6_april?: true,
     agent_company: "some content",
     primary_address_2: "some content",
@@ -95,7 +95,12 @@ defmodule Karma.StartpackControllerTest do
   end
 
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn, user: user} do
-    conn = post conn, startpack_path(conn, :update, user.startpacks), startpack: %{}
+    conn = post conn, startpack_path(conn, :update, user.startpacks), startpack: %{"vehicle_bring_own?": "false"}
+    assert html_response(conn, 302) =~ "/startpack"
+  end
+
+  test "bring your own vehicle", %{conn: conn, user: user} do
+    conn = post conn, startpack_path(conn, :update, user.startpacks), startpack: %{"vehicle_bring_own?": "true"}
     assert html_response(conn, 200) =~ "Edit startpack"
   end
 
