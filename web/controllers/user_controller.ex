@@ -16,17 +16,17 @@ defmodule Karma.UserController do
       true ->
         target_email_hash = conn.query_params["te"]
         target_email = get_target_email(target_email_hash)
-        render(conn, "new.html", layout: {LayoutView, "pre_login.html"}, changeset: changeset, target_email: target_email)
+        render(conn, "new.html", layout: {LayoutView, "pre_login.html"}, changeset: changeset, target_email: target_email, target_email_hash: target_email_hash)
       false ->
-        render(conn, "new.html", layout: {LayoutView, "pre_login.html"}, changeset: changeset, target_email: nil)
+        render(conn, "new.html", layout: {LayoutView, "pre_login.html"}, changeset: changeset, target_email: nil, target_email_hash: nil)
     end
   end
 
-  def create(conn, %{"user" => user_params}) do
+  def create(conn, %{"user" => %{"email" => email} = user_params}) do
+    user_params = Map.put(user_params, "email", String.downcase(email))
     # add startpack to the user
     user_params = Map.merge(%{"startpacks" => %{}}, user_params)
     changeset = User.registration_changeset(%User{}, user_params)
-
     case Repo.insert(changeset) do
       {:ok, user} ->
         Karma.Email.send_verification_email(user)
@@ -45,9 +45,9 @@ defmodule Karma.UserController do
           true ->
             target_email_hash = conn.query_params["te"]
             target_email = get_target_email(target_email_hash)
-            render(conn, "new.html", layout: {LayoutView, "pre_login.html"}, changeset: changeset, target_email: target_email)
+            render(conn, "new.html", layout: {LayoutView, "pre_login.html"}, changeset: changeset, target_email: target_email, target_email_hash: target_email_hash)
           false ->
-            render(conn, "new.html", layout: {LayoutView, "pre_login.html"}, changeset: changeset, target_email: nil)
+            render(conn, "new.html", layout: {LayoutView, "pre_login.html"}, changeset: changeset, target_email: nil, target_email_hash: nil)
         end
     end
   end

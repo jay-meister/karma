@@ -21,13 +21,13 @@ defmodule Karma.OfferControllerTest do
     rejected_offer = insert_offer(project, %{accepted: false, target_email: "email_2@gmail.com"})
 
     conn1 = get conn, project_offer_path(conn, :index, pending_offer.project_id)
-    assert html_response(conn1, 200) =~ pending_offer.target_email
+    assert html_response(conn1, 200) =~ pending_offer.recipient_fullname
 
     conn2 = get conn, project_offer_path(conn, :index, accepted_offer.project_id)
-    assert html_response(conn2, 200) =~ accepted_offer.target_email
+    assert html_response(conn2, 200) =~ accepted_offer.recipient_fullname
 
     conn3 = get conn, project_offer_path(conn, :index, rejected_offer.project_id)
-    assert html_response(conn3, 200) =~ rejected_offer.target_email
+    assert html_response(conn3, 200) =~ rejected_offer.recipient_fullname
   end
 
   test "renders form for new resources", %{conn: conn, offer: _offer, project: project} do
@@ -51,7 +51,7 @@ defmodule Karma.OfferControllerTest do
 
       # test the email is shown on the index view
       get_conn = get conn, project_offer_path(conn, :index, project)
-      assert html_response(get_conn, 200) =~ new_offer.target_email
+      assert html_response(get_conn, 200) =~ new_offer.recipient_fullname
       assert Repo.get_by(Offer, target_email: new_offer.target_email)
 
       # ensure email was sentt
@@ -89,7 +89,7 @@ defmodule Karma.OfferControllerTest do
 
       # test the contractor's email is shown on the index view
       get_conn = get conn, project_offer_path(conn, :index, project)
-      assert html_response(get_conn, 200) =~ contractor.email
+      assert html_response(get_conn, 200) =~ contractor.first_name
       offer = Repo.get_by(Offer, target_email: new_offer.target_email)
 
       # test the user has been linked with the offer
@@ -155,7 +155,8 @@ defmodule Karma.OfferControllerTest do
     assert html_response(conn, 200) =~ msg
   end
 
-  test "renders page not found when id is nonexistent", %{conn: conn, project: project} do
+  test "renders page not found when id is nonexistent", %{conn: conn, project: project, offer: offer} do
+    conn = assign(conn, :offer, offer)
     conn = get conn, project_offer_path(conn, :show, project, -1)
     assert html_response(conn, 200) =~ "Offer could not be found"
   end

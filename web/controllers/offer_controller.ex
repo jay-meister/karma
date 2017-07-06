@@ -1,7 +1,7 @@
 defmodule Karma.OfferController do
   use Karma.Web, :controller
 
-  alias Karma.{User, Offer, Project, Startpack, AlteredDocument, Merger}
+  alias Karma.{User, Offer, Project, Startpack, AlteredDocument, Merger, Formatter}
 
   import Karma.ProjectController, only: [add_project_to_conn: 2, block_if_not_project_manager: 2]
 
@@ -42,7 +42,11 @@ defmodule Karma.OfferController do
   def add_offer_to_conn(conn, _) do
     %{"id" => offer_id} = conn.params
     # offer
-    offer = Repo.get_by(Offer, id: offer_id)
+    offer =
+      case Repo.get_by(Offer, id: offer_id) do
+        nil -> nil
+        offer -> Formatter.format_offer_data(offer)
+      end
     conn = assign(conn, :offer, offer)
     case conn.assigns.offer do
       nil ->
@@ -90,6 +94,7 @@ defmodule Karma.OfferController do
       Offer
       |> Offer.projects_offers(project)
       |> Repo.all()
+      |> Repo.preload(:user)
 
     ops = [offers: offers, project: project]
     render conn, "index.html", ops
@@ -117,7 +122,6 @@ defmodule Karma.OfferController do
     offer_params = Map.put(offer_params, "contract_type", contract_type)
     # first check the values provided by the user are valid
     validation_changeset = Offer.form_validation(%Offer{}, offer_params)
-
     # if not valid, return to user with errors
     if !validation_changeset.valid? do
       changeset = %{validation_changeset | action: :insert} # manually set the action so errors are shown
@@ -396,7 +400,6 @@ defmodule Karma.OfferController do
   def changeset_maybe_with_user(params, project) do
     %{"target_email" => user_email} = params
     user = Repo.get_by(User, email: user_email)
-
     case user do
       nil -> # user is not yet registered or target_email is empty
         project
