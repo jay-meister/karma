@@ -2,7 +2,7 @@
 <img src="/images/breadcrumb-arrow.svg" class="w1 ml3" />
 <div class="ma2 k-light-indigo dib">Project</div>
 <section class="pt5">
-  <h1 class="k-indigo top--header absolute fw4 mb0">Project details</h1>
+  <h1 class="k-indigo top--header absolute fw4 mb0"><%= @project.name %></h1>
   <%= link to: project_path(@conn, :show, @project.id), class: "no-underline" do %>
     <div class="tl ba bw2 k-b--indigo bg-white k-indigo br3 pa4 tc mb2 mt2 pb3 relative">
       <div class="f2"><%= "#{@project.name}/\"#{@project.codename}\"" %></div>
