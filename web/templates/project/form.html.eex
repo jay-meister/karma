@@ -9,6 +9,7 @@
   <%= component "dropdown.html",
   form: f,
   atom: :type,
+  label: "Project type",
   options: ["Feature Film": "feature", "Television": "television"],
   prompt: "Project type..."
   %>
@@ -17,13 +18,13 @@
   form: f,
   atom: :budget,
   options: ["None/Low": "low", "Mid": "mid", "Big": "big"],
-  prompt: "Budget..."
+  prompt: "select..."
   %>
 
   <%= component "input.html",
   form: f,
   atom: :name,
-  placeholder: "Project name"
+  placeholder: "Project title"
   %>
 
   <%= component "input.html",
@@ -35,7 +36,7 @@
   <%= component "textarea.html",
   form: f,
   atom: :description,
-  placeholder: "Describe the project"
+  placeholder: "Brief description the project"
   %>
 
   <%= component "date.html",
@@ -47,21 +48,21 @@
   <%= component "number_input.html",
   form: f,
   atom: :duration,
-  placeholder: "Enter a number",
+  placeholder: "",
   label: "Duration (number of weeks)"
   %>
 
   <%= component "input.html",
   form: f,
   atom: :studio_name,
-  placeholder: "Universal etc...",
+  placeholder: "",
   label: "Studio/Production Company"
   %>
 
   <%= component "input.html",
   form: f,
   atom: :locations,
-  placeholder: "London, Somerset etc..."
+  placeholder: "e.g. Paris, London, Shepperton..."
   %>
 
   <%= component "dropdown.html",
@@ -82,37 +83,37 @@
   <%= component "input.html",
   form: f,
   atom: :company_name,
-  placeholder: "Company limited"
+  placeholder: ""
   %>
 
   <%= component "input.html",
   form: f,
   atom: :company_address_1,
-  placeholder: "Company address line 1"
+  placeholder: ""
   %>
 
   <%= component "input.html",
   form: f,
   atom: :company_address_2,
-  placeholder: "Company address line 2"
+  placeholder: ""
   %>
 
   <%= component "input.html",
   form: f,
   atom: :company_address_city,
-  placeholder: "City"
+  placeholder: ""
   %>
 
   <%= component "input.html",
   form: f,
   atom: :company_address_postcode,
-  placeholder: "Company postcode"
+  placeholder: ""
   %>
 
   <%= component "input.html",
   form: f,
   atom: :company_address_country,
-  placeholder: "Country"
+  placeholder: ""
   %>
 
   <%= component "form_divider.html", title: "Operating base details" %>
@@ -120,31 +121,31 @@
   <%= component "input.html",
   form: f,
   atom: :operating_base_address_1,
-  placeholder: "Operating base address line 1"
+  placeholder: ""
   %>
 
   <%= component "input.html",
   form: f,
   atom: :operating_base_address_2,
-  placeholder: "Operating base address line 2"
+  placeholder: ""
   %>
 
   <%= component "input.html",
   form: f,
   atom: :operating_base_address_city,
-  placeholder: "City"
+  placeholder: ""
   %>
 
   <%= component "input.html",
   form: f,
   atom: :operating_base_address_postcode,
-  placeholder: "Operating base postcode"
+  placeholder: ""
   %>
 
   <%= component "input.html",
   form: f,
   atom: :operating_base_address_country,
-  placeholder: "Country"
+  placeholder: ""
   %>
 
   <%= component "submit_button.html", title: "#{@button_text} Project" %>
