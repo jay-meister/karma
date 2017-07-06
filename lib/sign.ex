@@ -3,6 +3,11 @@ defmodule Karma.Sign do
 
   alias Karma.{AlteredDocument, Repo, S3}
 
+  @default_increment 2
+  # when creating an approval chain, we 'inject' the agent if necessary
+  # and the contractor to the beginning of the signee list
+  # which means we need to increment all signee ids by 2
+
   def new_envelope(altered_docs, user) do
     # login with docusign
     case login(headers()) do
@@ -39,11 +44,13 @@ defmodule Karma.Sign do
   end
 
   def get_composite_template({merged, index}, user) do
+    signers = get_and_prepare_approval_chain(merged, user)
+
     %{"inlineTemplates": [
       %{"sequence": Integer.to_string(index + 1),
         "recipients": %{
-          "signers": get_and_prepare_approval_chain(merged, user),
-          "certifiedDeliveries": get_certified_deliveries(merged)
+          "signers": signers,
+          "carbonCopies": get_carbon_copies(merged, signers)
         }
       }
       ],
@@ -104,7 +111,7 @@ defmodule Karma.Sign do
     [user] ++ chain
   end
 
-  def add_index_to_chain(chain, merged) do
+  def add_index_to_chain(chain, merged, increment \\ @default_increment) do
     # contractor has id set to 0, signees have id set to their signee id on our table
     # add 2 to this id, so contractors id will become 2, required to be positive by docusign
     # if an agent is to be added, they will be added at index 1
@@ -112,23 +119,25 @@ defmodule Karma.Sign do
     |> Enum.with_index()
     |> Enum.map(fn({signee, index}) ->
         signing_index = index + 1
-        routing_index = index + 2
+        routing_index = index + increment
         tabs = %{
           "signHereTabs": [
             %{documentId: merged.id, "tabLabel": "signature_#{signing_index}\\*"}
           ]
         }
-        additional = %{"recipientId": signee.id + 2, "routingOrder": routing_index, "tabs": tabs}
+        additional = %{"recipientId": signee.id + @default_increment, "routingOrder": routing_index, "tabs": tabs}
         Map.merge(signee, additional)
       end)
     |> Enum.map(&Map.delete(&1, :id))
   end
 
-  def get_certified_deliveries(merged) do
+  def get_carbon_copies(merged, chain) do
+    increment = Kernel.length(chain) + @default_increment
+    # we want to increment the routing order of the recipients by the length of the chain plus the 2
     get_approval_chain(merged, "Recipient")
     |> format_approval_chain()
-    |> add_index_to_chain(merged)
-    |> Enum.map(&Map.drop(&1, [:id, :routingOrder, :tabs]))
+    |> add_index_to_chain(merged, increment)
+    |> Enum.map(&Map.drop(&1, [:id, :tabs]))
   end
 
   def add_agent_to_chain_if_needed(chain, merged, startpack) do
@@ -136,11 +145,10 @@ defmodule Karma.Sign do
       false ->
         chain
       true ->
-        tabs = %{
-                  "initialHereTabs": [
-                    %{documentId: merged.id, "tabLabel": "agent_initials\\*"}
-                  ]
-                }
+        tabs =
+          %{"initialHereTabs": [
+            %{documentId: merged.id, "tabLabel": "agent_initials\\*"}
+          ]}
         agent =
           %{tabs: tabs,
             name: startpack.agent_name,
