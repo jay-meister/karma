@@ -27,8 +27,9 @@
     <div class="h3">
       <%= if hd(@deal_documents).status != "signing" do %>
         <%= component "button.html", title: "Sign Documents", link: project_offer_altered_document_path(@conn, :sign, @offer.project_id, @offer) %>
+        <div class="tc">This process may take up to 30 seconds - please don't navigate away</div>
       <% else %>
-        <div class="k-w4-5 k-m-auto">Documents sent</div>
+        <div class="tc">Documents sent</div>
       <% end %>
     </div>
   <% end %>
