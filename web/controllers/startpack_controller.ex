@@ -89,6 +89,7 @@ defmodule Karma.StartpackController do
     |> Atom.to_string()
     |> String.replace("_url", "")
     |> String.replace("_", " ")
+    |> String.replace("license", "licence")
     |> String.upcase()
   end
 

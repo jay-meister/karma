@@ -3,7 +3,7 @@ defmodule Karma.UserControllerTest do
 
   import Mock
 
-  alias Karma.{User, Email}
+  alias Karma.{User, Email, RedisCli, Controllers.Helpers}
 
   @user_attrs %{email: "test@test.com"}
   @valid_attrs %{email: "test@test.com", first_name: "Joe", last_name: "Blogs", password: "123456", terms_accepted: true}
@@ -39,6 +39,14 @@ defmodule Karma.UserControllerTest do
     assert html_response(conn, 200) =~ "Create account"
   end
 
+  test "email is pre-filled when sent from email", %{conn: conn} do
+    hash = Helpers.gen_rand_string(30)
+    RedisCli.query(["SET", hash, "test_prefill@gmail.com"])
+    conn = get conn, user_path(conn, :new, te: hash)
+    assert html_response(conn, 200) =~ "Create account"
+    assert html_response(conn, 200) =~ "test_prefill@gmail.com"
+  end
+
   test "creates resource and redirects when data is valid DEV", %{conn: conn} do
     with_mock Karma.Mailer, [deliver_later: fn(_) -> nil end] do
       Mix.env(:dev)
@@ -58,9 +66,26 @@ defmodule Karma.UserControllerTest do
     end
   end
 
+  test "creates resource and redirects with pre-filled email", %{conn: conn} do
+    with_mock Karma.Mailer, [deliver_later: fn(_) -> nil end] do
+      conn = post conn, user_path(conn, :create), user: @valid_attrs
+      assert redirected_to(conn) == session_path(conn, :new)
+      assert Repo.get_by(User, @user_attrs)
+      assert called Karma.Mailer.deliver_later(:_)
+    end
+  end
+
   test "does not create resource and renders errors when data is invalid", %{conn: conn} do
     conn = post conn, user_path(conn, :create), user: @invalid_attrs
     assert html_response(conn, 200) =~ "Create account"
+  end
+
+  test "does not create resource and renders errors when data is invalid - pre-filled email", %{conn: conn} do
+    hash = Helpers.gen_rand_string(30)
+    RedisCli.query(["SET", hash, "test_prefill@gmail.com"])
+    conn = post conn, user_path(conn, :create, te: hash), user: @invalid_attrs
+    assert html_response(conn, 200) =~ "Create account"
+    assert html_response(conn, 200) =~ "test_prefill@gmail.com"
   end
 
   test "shows chosen resource", %{conn: conn} do

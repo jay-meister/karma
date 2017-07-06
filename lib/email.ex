@@ -40,7 +40,9 @@ defmodule Karma.Email do
   def send_new_offer_email(conn, offer, project) do
     {template, url} = case offer.user_id do
       nil ->
-        {"new_offer_unregistered", R_Helpers.user_url(conn, :new)} # user is not yet registered
+        hash_string = Helpers.gen_rand_string(30)
+        RedisCli.query(["SET", hash_string, offer.target_email])
+        {"new_offer_unregistered", R_Helpers.user_url(conn, :new, te: hash_string)} # user is not yet registered
       _ ->
         {"new_offer_registered", R_Helpers.project_offer_url(conn, :show, offer.project_id, offer)}
     end
