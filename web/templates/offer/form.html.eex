@@ -10,7 +10,7 @@
   <%= component "input.html",
   form: f,
   atom: :recipient_fullname,
-  placeholder: "John Smith",
+  placeholder: " in full, eg, James not Jim, Smith",
   label: "Recipient fullname",
   disabled: @target_email_disabled
   %>
@@ -20,14 +20,15 @@
   atom: :target_email,
   placeholder: "example@email.com",
   label: "Recipient email",
-  disabled: @target_email_disabled
+  disabled: @target_email_disabled,
+  helper_text: "Ensure this is recipient's preferred email address for use on engine account..."
   %>
 
   <%= component "dropdown.html",
   form: f,
   atom: :department,
   options: @job_departments,
-  prompt: "Pick a job department...",
+  prompt: "select...",
   id: "department_dropdown"
   %>
 
@@ -35,7 +36,7 @@
   form: f,
   atom: :job_title,
   options: [],
-  prompt: "Pick a job title...",
+  prompt: "select...",
   id: "job_title_dropdown"
   %>
 
@@ -49,27 +50,27 @@
   form: f,
   atom: :daily_or_weekly,
   options: ["Daily": "daily", "Weekly": "weekly"],
-  prompt: "Select an option..."
+  prompt: "select..."
   %>
 
   <%= component "dropdown.html",
   form: f,
   atom: :working_week,
   options: ["5 days": 5.0, "5.5 days": 5.5, "6 days": 6.0],
-  prompt: "Select an option..."
+  prompt: "select..."
   %>
 
   <%= component "dropdown.html",
   form: f,
   atom: :currency,
   options: ["GBP": "gbp", "EUR": "eur", "USD": "usd"],
-  prompt: "Select an option..."
+  prompt: "select..."
   %>
 
   <%= component "number_input.html",
   form: f,
   atom: :fee_per_day_inc_holiday,
-  placeholder: "Enter a number",
+  placeholder: "",
   label: "Fee PER DAY including holiday"
   %>
 
@@ -88,7 +89,7 @@
   <%= component "textarea.html",
   form: f,
   atom: :other_deal_provisions,
-  placeholder: "Any other deal provisions?"
+  placeholder: "e.g. camera overtime, per diems, etc..."
   %>
 
   <%= component "form_divider.html", title: "Allowances" %>
@@ -102,25 +103,25 @@
   <%= component "textarea.html",
   form: f,
   atom: :box_rental_description,
-  placeholder: "Describe the box rental"
+  placeholder: ""
   %>
 
   <%= component "number_input.html",
   form: f,
   atom: :box_rental_fee_per_week,
-  placeholder: "Enter a number"
+  placeholder: ""
   %>
 
   <%= component "number_input.html",
   form: f,
   atom: :box_rental_cap,
-  placeholder: "Enter a number"
+  placeholder: ""
   %>
 
   <%= component "input.html",
   form: f,
   atom: :box_rental_period,
-  placeholder: "Enter the period you need box rental for"
+  placeholder: "e.g. 20 weeks, shoot period only, from hard start date only"
   %>
 
   <%= component "checkbox.html",
@@ -132,25 +133,25 @@
   <%= component "input.html",
   form: f,
   atom: :equipment_rental_description,
-  placeholder: "Describe the equipment rental you need"
+  placeholder: ""
   %>
 
   <%= component "number_input.html",
   form: f,
   atom: :equipment_rental_fee_per_week,
-  placeholder: "Enter a number"
+  placeholder: ""
   %>
 
   <%= component "number_input.html",
   form: f,
   atom: :equipment_rental_cap,
-  placeholder: "Enter a number"
+  placeholder: ""
   %>
 
   <%= component "input.html",
   form: f,
   atom: :equipment_rental_period,
-  placeholder: "Enter the period you need equipment rental for"
+  placeholder: "e.g. 20 weeks, shoot period only, from hard start date only"
   %>
 
   <%= component "number_input.html",
@@ -164,7 +165,7 @@
   <%= component "textarea.html",
   form: f,
   atom: :additional_notes,
-  placeholder: "Any additional notes?"
+  placeholder: "comments sent to recipient, e.g: as discussed, we'll review mobile phone reimbursement, if required."
   %>
 
 
