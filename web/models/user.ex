@@ -72,6 +72,7 @@ defmodule Karma.User do
   defp validate_password(changeset) do
     changeset
     |> validate_length(:password, min: 6, max: 100)
+    |> validate_format(:password, ~r/^(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/)
   end
 
   defp put_password_hash(changeset) do

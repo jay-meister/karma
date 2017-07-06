@@ -11,7 +11,7 @@ defmodule Karma.PasswordControllerTest do
 
 
   @valid_attrs %{email: "test@test.com"}
-  @valid_password %{password: "123456", password_confirmation: "123456"}
+  @valid_password %{password: "Password123!", password_confirmation: "Password123!"}
   @invalid_attrs %{email: "teeheehee@.com"}
 
 
@@ -69,7 +69,7 @@ defmodule Karma.PasswordControllerTest do
     assert redirected_to(conn) =~ dashboard_path(conn, :index)
 
     # Log in user with new password
-    valid_login = %{email: "test@test.com", password: "123456"}
+    valid_login = %{email: "test@test.com", password: "Password123!"}
     conn = post conn, session_path(conn, :create), %{session: valid_login}
     assert Phoenix.Controller.get_flash(conn, :info) =~ "Welcome back"
     assert redirected_to(conn) =~ dashboard_path(conn, :index)
