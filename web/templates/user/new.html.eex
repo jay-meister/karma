@@ -30,7 +30,7 @@
             atom: :email,
             placeholder: "example@email.com",
             class: "mt5",
-            disabled: (@target_email != nil),
+            readonly: (@target_email != nil),
             value: @target_email
             %>
 
