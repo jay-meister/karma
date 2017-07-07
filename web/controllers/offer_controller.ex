@@ -113,7 +113,8 @@ defmodule Karma.OfferController do
     job_title: "")
   end
 
-  def create(conn, %{"offer" => offer_params, "project_id" => project_id}) do
+  def create(conn, %{"offer" => %{"target_email" => email} = offer_params, "project_id" => project_id}) do
+    offer_params = Map.put(offer_params, "target_email", String.downcase(email))
     project = Repo.get(Project, project_id) |> Repo.preload(:user) |> Repo.preload(:documents)
     project_documents = Enum.map(project.documents, fn document -> document.name end)
     %{"department" => department, "job_title" => job_title, "daily_or_weekly" => daily_or_weekly} = offer_params
