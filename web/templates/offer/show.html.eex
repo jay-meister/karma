@@ -1,4 +1,4 @@
-<%= link "Dashboard", to: dashboard_path(@conn, :index), class: "ma2 no-underline k-indigo" %>
+<%= link "Dashboard", to: dashboard_path(@conn, :index), class: "mr2 no-underline k-indigo" %>
 <%= if @is_pm? do %>
   <img src="/images/breadcrumb-arrow.svg" class="w1 ml1" />
   <%= link "Project", to: project_offer_path(@conn, :index, @offer.project_id), class: "ma2 no-underline k-indigo" %>
