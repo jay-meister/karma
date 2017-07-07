@@ -120,7 +120,8 @@
   <%= component "input.html",
   form: f,
   atom: :box_rental_period,
-  placeholder: "e.g. 20 weeks, shoot period only, from hard start date only"
+  label: "Box rental terms",
+  placeholder: "e.g. 20 weeks, shoot period only, 5-day deal"
   %>
 
   <%= component "checkbox.html",
@@ -150,7 +151,8 @@
   <%= component "input.html",
   form: f,
   atom: :equipment_rental_period,
-  placeholder: "e.g. 20 weeks, shoot period only, from hard start date only"
+  label: "Equipment rental terms",
+  placeholder: "e.g. 20 weeks, shoot period only, 5-day deal"
   %>
 
   <%= component "number_input.html",
