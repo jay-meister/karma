@@ -1,10 +1,10 @@
 <style>
-  OL { counter-reset: item }
-  LI { display: block }
-  LI:before { content: counters(item, ".") " "; counter-increment: item }
+  ol { counter-reset: item }
+  li { display: block }
+  li:before { content: counters(item, ".") " "; counter-increment: item }
 </style>
 <h1 class="k-indigo top--header absolute fw4 mb0">Terms and conditions</h1>
-<div class="w-50">
+<div class="pt4">
   <div class="k-light-indigo lh-copy">
   <span class="fw6">Note:</span> Please read these Terms of Use carefully. If your Application is accepted
   by Team Engine, these Terms of Use will form part of a legally binding agreement
@@ -12,48 +12,682 @@
   and the Engine Services.
   </div>
   <ol>
-    <li>Definitions and Interpretation</li>
-    <li>Engine Platform and Engine Services
-        <ol>
-            <li>two.one</li>
-            <li>two.two</li>
-            <li>two.three</li>
-        </ol>
+    <li class="k-darker-grey fw6 mt4">Definitions and Interpretation
+      <ol>
+          <li class="k-grey mt4 fw3">Except to the extent expressly provided otherwise, in these Terms of Use:
+            <table class="w-100 collapse ba k-b--grey mt4">
+              <tr>
+                <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Agreement</span>”</td>
+                <td class="ba k-b--grey pa3 fw3">the contract between Team Engine and
+                  the Engine User made up of the Application, these Terms of Use
+                  and any documents expressly referred to in either of them, and
+                  any amendments to that contract from time to time.</td>
+              </tr>
+              <tr>
+                <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Application</span>”</td>
+                <td class="ba k-b--grey pa3 fw3">the Engine User’s application to create an Engine Profile
+                  and to use the Engine Services, as submitted by the Engine User via the Engine Platform.</td>
+              </tr>
+              <tr>
+                <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Basic Profile</span>”</td>
+                <td class="ba k-b--grey pa3 fw3">means an Engine Platform user profile that an Engine User
+                  can create on a free of charge basis and which includes the features set out at www.teamengine.co.uk</td>
+              </tr>
+              <tr>
+                <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Basic Project</span>”</td>
+                <td class="ba k-b--grey pa3 fw3">means a limited-functionality Project that Team Engine makes
+                  available on a free of charge basis.</td>
+              </tr>
+              <tr>
+                <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Business Days</span>”</td>
+                <td class="ba k-b--grey pa3 fw3">Mondays to Fridays, excluding English Bank and public holidays.</td>
+              </tr>
+              <tr>
+                <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Confidential Information</span>”</td>
+                <td class="ba k-b--grey pa3 fw3">means any information disclosed by either party to the other
+                  party during the Term (whether in writing, orally or otherwise) that at the time of disclosure
+                  is either marked as "confidential" or should reasonably be understood by the receiving party
+                  to be confidential.</td>
+              </tr>
+              <tr>
+                <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Data Protection Laws</span>”</td>
+                <td class="ba k-b--grey pa3 fw3">means: <br />
+                  <span class="mr5">(i)</span>        the EU Data Protection Directive (Directive 95/46/EC), the Data Protection Act
+                  1998 and Electronic Communications (EC Directive) Regulations 2003; <br />
+                  <span class="mr5">(ii)</span>        with effect from 25th May 2018, the EU General Data Protection Regulation
+                  (Regulation (EU) 2016/679); and<br />
+                  <span class="mr5">(iii)</span>        any other data protection laws and regulations, orders and any codes of
+                  practice, guidelines and recommendations issued by the Information Commissioner’s Office or
+                  any replacement or equivalent body, as amended and in force from time to time.</td>
+              </tr>
+              <tr>
+                <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Engine Profile</span>”</td>
+                <td class="ba k-b--grey pa3 fw3">means a Basic Profile, Standard Profile or a Premium Profile.</td>
+              </tr>
+              <tr>
+                <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Engine Platform</span>”</td>
+                <td class="ba k-b--grey pa3 fw3">Team Engine’s proprietary web portal that may be
+                  accessed by the Engine User to use the Engine Services.</td>
+              </tr>
+              <tr>
+                <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Engine Services</span>”</td>
+                <td class="ba k-b--grey pa3 fw3"><span class="mr5">(i)</span> to create and administer Projects; <br />
+                <span class="mr5">(ii)</span>to connect to other users’ Projects; and<br />
+                <span class="mr5">(iii)</span>to communicate and interact with other users
+                (including Project Participants), using the Engine Platform.</td>
+              </tr>
+              <tr>
+                <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Engine User</span>”</td>
+                <td class="ba k-b--grey pa3 fw3">means the person or entity identified as such in an Application.</td>
+              </tr>
+              <tr>
+                <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Engine User Data</span>”</td>
+                <td class="ba k-b--grey pa3 fw3">Means data uploaded to the Engine Platform, or otherwise
+                   provided by the Engine User to Team Engine, under or in relation to the Agreement.</td>
+              </tr>
+              <tr>
+                <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Engine User Personal Data</span>”</td>
+                <td class="ba k-b--grey pa3 fw3">means Personal Data provided or made available by the Engine
+                  User to Team Engine under or in relation to the Agreement.</td>
+              </tr>
+              <tr>
+                <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Force Majeure Event</span>”</td>
+                <td class="ba k-b--grey pa3 fw3">an event, or a series of related events, that is outside the
+                  reasonable control of the party affected (including failures of the internet or any public
+                  telecommunications network, hacker attacks, denial of service attacks, virus or other malicious
+                  software attacks or infections, power failures, industrial disputes affecting any third party,
+                  changes to the law, disasters, explosions, fires, floods, riots, terrorist attacks and wars).</td>
+              </tr>
+              <tr>
+                <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Intellectual Property Rights</span>”</td>
+                <td class="ba k-b--grey pa3 fw3">all intellectual property rights wherever in the world, whether
+                  registrable or unregistrable, registered or unregistered, including any application or right of
+                  application for such rights (and these "intellectual property rights" include copyright and related rights,
+                  database rights, confidential information, trade secrets, know-how, business names, trade names, trademarks,
+                  service marks, passing off rights, unfair competition rights, patents, petty patents, utility models,
+                  semi-conductor topography rights and rights in designs).</td>
+              </tr>
+              <tr>
+                <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">New Project Administrator</span>”</td>
+                <td class="ba k-b--grey pa3 fw3">has the meaning given to it in clause 3.3.</td>
+              </tr>
+              <tr>
+                <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Personal Data</span>”</td>
+                <td class="ba k-b--grey pa3 fw3">has the meaning given to it in the Data Protection Act 1998.</td>
+              </tr>
+              <tr>
+                <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Premium Profile</span>”</td>
+                <td class="ba k-b--grey pa3 fw3">means a chargeable Engine Platform user profile which, in addition
+                  to the features included in a Standard Profile, includes the features set out at www.teamengine.co.uk</td>
+              </tr>
+              <tr>
+                <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Premium Project</span>”</td>
+                <td class="ba k-b--grey pa3 fw3">means a chargeable Project that has the features described at www.teamengine.co.uk</td>
+              </tr>
+              <tr>
+                <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Profile Charges</span>”</td>
+                <td class="ba k-b--grey pa3 fw3">means the monthly or annual subscription charges payable by the
+                  Engine User for their Premium Profile or Standard Profile, as specified in the Application.</td>
+              </tr>
+              <tr>
+                <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Project Charges</span>”</td>
+                <td class="ba k-b--grey pa3 fw3">means the monthly or annual subscription charges payable by the Engine
+                  User in respect of a Premium Project or a Standard Project, as specified in the Application.</td>
+              </tr>
+              <tr>
+                <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Processing</span>”</td>
+                <td class="ba k-b--grey pa3 fw3">has the meaning given to it in the Data Protection Act 1998.</td>
+              </tr>
+              <tr>
+                <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Project</span>”</td>
+                <td class="ba k-b--grey pa3 fw3">a virtual meeting place on the Engine Platform which is
+                  created for a specific film or television production project and which enables the
+                  Engine User to connect, communicate and contract with other users and Project Participants.</td>
+              </tr>
+              <tr>
+                <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Project Participant</span>”</td>
+                <td class="ba k-b--grey pa3 fw3">means a third party user of the Engine Platform who has
+                  connected with a Project created by the Engine User.</td>
+              </tr>
+              <tr>
+                <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Project Transfer</span>”</td>
+                <td class="ba k-b--grey pa3 fw3">has the meaning given to it in clause 3.3.</td>
+              </tr>
+              <tr>
+                <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Standard Profile</span>”</td>
+                <td class="ba k-b--grey pa3 fw3">means a chargeable Engine Platform user profile which, in addition
+                  to the features included in a Basic Profile, includes the features set out at www.teamengine.co.uk</td>
+              </tr>
+              <tr>
+                <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Standard Project</span>”</td>
+                <td class="ba k-b--grey pa3 fw3">means a chargeable Project that has the features described at www.teamengine.co.uk</td>
+              </tr>
+              <tr>
+                <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Team Engine</span>”</td>
+                <td class="ba k-b--grey pa3 fw3">Team Engine Limited a company incorporated in England and Wales
+                  with registration number 10719437 and its registered office at 125
+                  High Street Odiham, Hook, Hampshire, RG29 1LA.</td>
+              </tr>
+              <tr>
+                <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Term</span>”</td>
+                <td class="ba k-b--grey pa3 fw3">the period starting on the date on which the Application
+                  is accepted by Team Engine and ending on the date when the Agreement is terminated
+                  in accordance with clause 15.</td>
+              </tr>
+            </table>
+          </li>
+          <li class="k-grey mt4 fw3"> In these Terms of Use, a reference to a statute or statutory provision includes a reference to:
+            <br />
+            (a) that statute or statutory provision as modified, consolidated and/or re-enacted from time to time; and
+            <br />
+            (b) any subordinate legislation made under that statute or statutory provision.</li>
+          <li class="k-grey mt4 fw3">The clause headings do not affect the interpretation of these Terms of Use.</li>
+          <li class="k-grey mt4 fw3"> In these Terms of Use, general words shall not be given a restrictive
+            interpretation by reason of being preceded or followed by words indicating a particular
+            class of acts, matters or things.</li>
+          <li class="k-grey mt4 fw3">  In case of an inconsistency or conflict between these Terms of
+            Use and any provision in an Application, the provision in the Application prevails.</li>
+      </ol>
     </li>
-    <li>Projects
-        <ol>
-            <li>three.one</li>
-            <li>three.two
-                <ol>
-                    <li>three.two.one</li>
-                    <li>three.two.two</li>
-                </ol>
-            </li>
-        </ol>
+    <li class="k-darker-grey fw6 mt4">Engine Platform and Engine Services
+      <ol>
+        <li class="k-grey mt4 fw3">  In case of an inconsistency or conflict between these Terms of
+          Use and any provision in an Application, the provision in the Application prevails.</li>
+        <li class="k-grey mt4 fw3">Team Engine grants to the Engine User a non-exclusive,
+          non-transferable licence to access and use the Engine Platform during the Term.</li>
+          <li class="k-grey mt4 fw3">The Engine User agrees that they will:
+            <br />
+            (a)comply with all applicable laws;
+            <br />
+            (b)  ensure that all Engine User Data is and remains accurate and not misleading;
+            <br />
+            (c) only use the Engine Platform and the Engine Services in a
+              professional manner, and only for the purposes for which it is made available; and
+            <br />
+            (d) choose a strong password and keep their login credentials
+              secure and confidential, and otherwise ensure that no unauthorised person
+              gains access to the Engine Platform or the Engine Services.</li>
+          <li class="k-grey mt4 fw3">The Engine User agrees that they will not: <br />
+            (a) sub-license, rent, lease, loan, or sell its right to access and
+            use the Engine Platform or the Engine Services to any third party, or <br />
+            use the Engine Platform or the Engine Services for the benefit of any third party; or <br />
+            (b) not use the Engine Platform or the Engine Services in any way that is unlawful, illegal, fraudulent or harmful, or in connection with any unlawful, illegal, fraudulent or harmful purpose or activity; or <br />
+            (c) upload to the Engine Platform inappropriate, inaccurate, or unlawful content; or <br />
+            (d) misrepresent their current or previous jobs and qualifications; or <br />
+            (e) misrepresent their affiliation or relationship with a person or entity, past or present; or <br />
+            (f) use or attempt to use any other person’s Engine Profile; or <br />
+            (g) send spam or other unwelcomed communications to others; or <br />
+            (h) post any Engine User Data, or otherwise act in a way, which is unlawful, libellous, abusive, obscene, discriminatory or otherwise objectionable; or <br />
+            (i) breach the intellectual property or other proprietary rights of Team Engine or any third party; or <br />
+            (j) upload to the Engine Platform anything that contains software viruses, worms, or any other harmful code; or <br />
+            (k) reverse engineer, decompile, disassemble, decipher or otherwise attempt to derive the source code for the Engine Platform or any related technology, or any part thereof; or <br />
+            (l) “scrape,” “crawl” or “spider” the Engine Platform, whether by manual means or using automated software, devices, scripts robots; or <br />
+            (m) interfere with the operation of, or place an unreasonable load on, the Engine Platform, including by way of spam, denial of service attacks or viruses, or otherwise use the Engine Platform in any way that causes, or may cause, damage to it.</li>
+          <li class="k-grey mt4 fw3">
+            If the Engine User is in breach of any of the conditions or restrictions set out in
+            clauses 2.3 or 2.4, then Team Engine may (without prejudice to its other rights under the Agreement)
+             with immediate effect and without any obligation to provide notice to the Engine User: <br />
+            (a) suspend the Engine User’s access to and use of the Engine Platform and the Engine Services for the duration of the Engine User’s default; or <br />
+            (b) terminate the Agreement under clause 15.3 and delete the Engine User’s Engine Profile.
+          </li>
+      </ol>
     </li>
-    <li>Support</li>
-    <li>Support</li>
-    <li>Support</li>
-    <li>Support</li>
-    <li>Support</li>
-    <li>Support</li>
-    <li>Support</li>
-    <li>Support</li>
-    <li>Support</li>
-    <li>Support</li>
-    <li>Support</li>
-    <li>Support</li>
-    <li>Support</li>
-    <li>Support</li>
-    <li>Support</li>
-    <li>Support</li>
-    <li>Support</li>
-    <li>Support</li>
-    <li>Support</li>
-    <li>Support</li>
-    <li>Support</li>
-    <li>Support</li>
-    <li>Support</li>
+    <li class="k-darker-grey fw6 mt4">Projects
+      <ol>
+        <li class="k-grey mt4 fw3"> The Engine User may from time to time create Projects on the Engine Platform.</li>
+        <li class="k-grey mt4 fw3"> Subject to clause 3.3, the Engine User is solely responsible for the
+          administration of Projects. In particular, the Engine User acknowledges that Team Engine does not
+          monitor or moderate activities undertaken, or content provided, in relation to, or in connection with, Projects.</li>
+        <li class="k-grey mt4 fw3">The Engine User may request that Team Engine transfers responsibility for the administration of
+          a Project (a “Project Transfer”) from the Engine User to another user of the Engine Platform (the “New Project Administrator”).
+          Team Engine shall arrange for such the Project Transfer as soon as reasonably practicable once it has received: <br />
+        (a) consent to the Project Transfer to the New Project Administrator from each Project Participant connected with the relevant Project; and <br />
+        (b) in the case of a Premium Project or a Standard Project, the New Project Administrator’s agreement to pay the Project Charges following the Project Transfer.</li>
+      </ol>
+    </li>
+    <li class="k-darker-grey fw6 mt4">Support
+      <ol>
+        <li class="k-grey mt4 fw3">Team Engine will provide the Engine User with support by email and/or instant
+           messaging via the Platform between 08:00 and 19:00 (UK time) on Business Days.</li>
+        <li class="k-grey mt4 fw3">  Team Engine shall use all reasonable commercial endeavours to
+          carry out scheduled or planned maintenance to the Engine Platform between 00:00 and 06:00,
+          and to give the Engine User at least two (2) Business Days’ prior notice of any maintenance that
+          will or is likely to result in disruption to the Engine Platform.</li>
+        <li class="k-grey mt4 fw3"> Team Engine shall use all reasonable commercial endeavours to ensure that availability of the Engine Platform
+          during any calendar month exceeds 90%. For the purpose of calculating availability, any periods of non-availability
+          caused by the following shall be disregarded:  <br />
+        (a) scheduled or planned maintenance; <br />
+        (b) non-availability of the internet, or a failure of the Engine User’s equipment, or a power outage at the Engine User’s premises; <br />
+        (c) any act or omission of the Engine User, or any person acting on behalf of the Engine User, which prevents or delays the availability of the Engine Services; and <br />
+        (d) a Force Majeure Event.</li>
+      </ol>
+    </li>
+    <li class="k-darker-grey fw6 mt4">Engine User’s obligations
+      <ol>
+        <li class="k-grey mt4 fw3">  The Engine User must provide to Team Engine,
+           or procure for Team Engine, such co-operation, support, advice, information
+           and documentation as Team Engine may reasonably request in connection with
+           the performance of its obligations under the Agreement.</li>
+      </ol>
+    </li>
+    <li class="k-darker-grey fw6 mt4">Engine User Data
+      <ol>
+        <li class="k-grey mt4 fw3">The Engine User grants to Team Engine a non-exclusive
+          licence to copy, reproduce, store, distribute, publish, export and translate
+          the Engine User Data to the extent reasonably required for the performance of
+          Team Engine's obligations and the exercise of Team Engine's rights under the
+          Agreement, together with the right to sub-license these rights to its hosting,
+          connectivity and telecommunications service providers to the extent reasonably
+          required for the performance of such obligations and the exercise of such rights.</li>
+        <li class="k-grey mt4 fw3">  The Engine User warrants to Team Engine that
+          the use of the Engine User Data by Team Engine in accordance with the Agreement will not:  <br />
+        (a) breach the provisions of any law, statute or regulation; or <br />
+        (b) infringe the Intellectual Property Rights or other legal rights of any person; or <br />
+        (c) give rise to any cause of action against Team Engine,
+        in each case in any jurisdiction and under any Data Protection Laws.</li>
+        <li class="k-grey mt4 fw3">The Engine User acknowledges and agrees that any Engine
+          User Data uploaded to, or otherwise included within, their Engine Profile
+          or a Project may be accessed by individuals outside the EEA.</li>
+      </ol>
+    </li>
+    <li class="k-darker-grey fw6 mt4">Intellectual Property Rights
+      <ol>
+        <li class="k-grey mt4 fw3">Nothing in the Agreement shall operate to assign or
+          transfer any Intellectual Property Rights from Team Engine to the Engine User, or
+          from the Engine User to Team Engine.</li>
+        <li class="k-grey mt4 fw3">All Intellectual Property Rights in in all materials
+          created or performed by Team Engine, solely or jointly with any person, in the
+          course of providing the Engine Services (“Work”) shall vest or remain vested
+          in Team Engine.</li>
+        <li class="k-grey mt4 fw3">Team Engine hereby grants to the Engine User
+          a royalty-free, non-exclusive licence to access and use the Work in
+          connection with the Engine User’s use of the Engine Services during the Term.</li>
+        <li class="k-grey mt4 fw3">At Team Engine’s request and expense,
+          the Engine User shall perform (or procure the performance of)
+          all further acts and things, and execute and deliver (or procure
+          the execution or delivery of) all further documents which Team Engine
+          reasonably considers necessary to vest ownership of the Work in
+          Team Engine or otherwise to give effect to this clause 7.</li>
+      </ol>
+    </li>
+    <li class="k-darker-grey fw6 mt4">Charges
+      <ol>
+        <li class="k-grey mt4 fw3">If the Engine User has purchased a Premium Profile or a Standard Profile,
+          the Engine User shall pay the Profile Charges: <br />
+        (a) in the case of a Premium Profile or Standard Profile
+        subscription which automatically renews on a monthly basis,
+        until the Engine User gives Team Engine at least seven (7)
+        days’ notice of cancellation prior to a monthly renewal; or <br />
+        (b) in the case of a Premium Profile or Standard Profile subscription
+        which automatically renews for successive, 12-month periods, until the
+        Engine User gives Team Engine at least thirty (30) days’ notice of
+        cancellation prior to the expiry of either the initial or a subsequent
+        12-month period.</li>
+        <li class="k-grey mt4 fw3">If the Engine User has purchased a Premium Project
+          or a Standard Project, the Engine User shall pay the Project Charges:<br />
+        (a) in the case of a Premium Project or Standard Project
+        subscription which automatically renews on a monthly basis,
+        until the Engine User gives Team Engine at least seven (7) days’
+        notice of cancellation prior to a monthly renewal; or <br />
+        (b) in the case of a Premium Project or Standard Project
+        subscription which automatically renews for successive,
+        12-month periods, until the Engine User gives Team Engine
+        at least thirty (30) days’ notice of cancellation prior to the
+        expiry of either the initial or a subsequent 12-month period.</li>
+        <li class="k-grey mt4 fw3">Payment of Profile Charges or the Project
+          Charges must be made by the Engine User via the Engine Platform.
+          Team Engine will issue VAT receipts on request.</li>
+        <li class="k-grey mt4 fw3">Team Engine may increase the Profile Charges
+          or the Project Charges by giving to the Engine User at least sixty
+          (60) days' prior written notice; provided that, in the case of a
+          subscription which renews for successive, 12-month period, any
+          such increase shall not be effective until after the Engine User has
+          had an opportunity to cancel their subscription. The Engine User
+          agrees that Team Engine may notify the Engine User of an increase of
+          the Profile Charges and/or the Project Charges by sending details of
+          such increase by email to the Engine User’s email address as
+          specified in the Application and/or by providing notification
+          of the increase on the Engine Platform login page.</li>
+        <li class="k-grey mt4 fw3">The Profile Charges and the Project
+          Charges are exclusive of UK value added tax (VAT) or any other
+           applicable sales tax, which will be added to Profile Charges
+           and the Project Charges and are payable by the Engine User to Team Engine.</li>
+        <li class="k-grey mt4 fw3"> If the Engine User does not pay any amount
+          properly due to Team Engine under the Agreement, Team Engine may:<br />
+          (a) charge the Engine User interest on the overdue amount at the
+          rate of 5% per annum above the Bank of England base rate from time to time
+          (which interest will accrue daily until the date of actual payment and be
+          compounded at the end of each calendar month); and <br />
+          (b) subject to giving the Engine User at least five (5) Business
+          Days’ prior notice of its intention to do so, suspend the Engine
+          Services (including, for the avoidance of doubt, access to any Projects
+          administered by the Engine User) until payment of all outstanding
+          sums has been received in full.</li>
+      </ol>
+    </li>
+    <li class="k-darker-grey fw6 mt4">Confidentiality
+      <ol>
+        <li class="k-grey mt4 fw3">Each party (the “Receiving Party”) shall:
+        (a) keep the Confidential Information of the other party (the “Disclosing Party”) strictly confidential; <br />
+        (b) not disclose the Disclosing Party’s Confidential Information to
+        any person without the Disclosing Party’s prior written consent, and
+        then only under conditions of confidentiality no less onerous than those
+        contained in these Terms of Use; <br />
+        (c) use the same degree of care to protect the confidentiality
+        of the Disclosing Party’s Confidential Information as the Receiving
+        Party uses to protect its own confidential information of a similar
+        nature, being at least a reasonable degree of care; and <br />
+        (d) act in good faith at all times in relation to the Disclosing Party’s Confidential Information.</li>
+        <li class="k-grey mt4 fw3">Notwithstanding clause 9.1, the Receiving Party may
+          disclose the Disclosing Party’s Confidential Information to its officers,
+          employees, professional advisers, insurers, agents and subcontractors who
+          are bound by a written agreement or professional obligation to protect the
+          confidentiality of such Confidential Information.</li>
+        <li class="k-grey mt4 fw3">This clause 9 imposes no
+          obligations upon the Receiving Party with respect to the Disclosing Party’s Confidential Information that:<br />
+          (a) is known to the Receiving Party before disclosure
+          under these Terms of Use and is not subject to any other obligation of confidentiality; <br />
+          (b) is or becomes publicly known through no act or default of the Receiving Party; or <br />
+          (c) is obtained by the Receiving Party from a third party in circumstances where the Receiving Party has no reason to believe that there has been a breach of an obligation of confidentiality.</li>
+        <li class="k-grey mt4 fw3">The restrictions in this clause 9 do not apply to the
+           extent that any Confidential Information is required to be disclosed
+            by any law or regulation, by any judicial or governmental order or
+            request, or pursuant to disclosure requirements relating to the
+            listing of the stock of the Receiving Party on any recognised stock
+            exchange.</li>
+        <li class="k-grey mt4 fw3">The provisions of this clause 9 shall
+          continue in force for a period of five (5) years following
+          the termination of the Agreement, at the end of which period
+          they will cease to have effect.</li>
+      </ol>
+    </li>
+    <li class="k-darker-grey fw6 mt4">Data protection
+      <ol>
+        <li class="k-grey mt4 fw3">The parties agree that,
+          in respect of any Engine User Personal Data that is provided
+          by the Engine User to Team Engine (including as part of the Application,
+          during the creation or administration of a Project, while
+          connecting with or participating in a Project, or otherwise)
+          then, for the purposes of Data Protection Laws, the Engine User
+          is the Data Controller and Team Engine is the Data Processor of
+          such Engine User Personal Data.</li>
+        <li class="k-grey mt4 fw3">Team Engine will, at all times: <br />
+          (a) carry out all Processing of Engine
+          User Personal Data pursuant strictly in accordance
+          with the Agreement and the Engine User’s written instructions from time to time; <br />
+          (b) have in place appropriate technical and organisational
+          security measures so that Engine User Personal Data is protected
+          against unauthorised or unlawful processing and against accidental loss,
+          destruction or damage; <br />
+          (c) only process the Engine User Personal Data for
+          the purposes of performing its obligations and exercising its
+          rights under the Agreement; and <br />
+          (d) process the Engine User Personal Data in compliance with all Data Protection Laws.</li>
+        <li class="k-grey mt4 fw3">Team Engine will notify the Engine User as soon as practicable if: <br />
+        (a) any of the Engine User Personal Data is lost or destroyed, or becomes damaged, corrupted or unusable;<br />
+        (b) Team Engine receives any complaint or regulatory notice which relates to the processing of any of the Engine User Personal Data; or<br />
+        (c) Team Engine receives a request from a data subject for access to any of the Engine User Personal Data.</li>
+        <li class="k-grey mt4 fw3">Team Engine will co-operate with the Engine User in relation to: <br />
+        (a) any request from the Engine User to amend or delete any of the Engine User Personal Data; <br />
+        (b) any complaint or regulatory notification relating to the processing of any of the Engine User Personal Data; and <br />
+        (c) any request from a data subject for access to any of the Engine User Personal Data,
+        at the cost and expense of the Engine User.</li>
+        <li class="k-grey mt4 fw3">The Engine User acknowledges and agrees that:
+        (a) following the creation of a Project, the Engine User is solely
+        responsible for obtaining all necessary consents from Project
+        Participants to the processing of Personal Data provided by such
+        Project Participants in relation to, or in connection with, that Project;  <br />
+        (b) if the Engine User provides Personal Data in relation to, or in
+        connection with, a Project administered by another user of the
+        Engine Platform, then Team Engine is not responsible for any use or
+        processing of the Engine User’s Personal Data by that other user outside
+        the Engine Platform; and <br />
+        (c) Engine User Personal Data provided to, or otherwise included within, a Project may be accessed by individuals outside the EEA.</li>
+      </ol>
+    </li>
+    <li class="k-darker-grey fw6 mt4">Warranties
+      <ol>
+        <li class="k-grey mt4 fw3">Team Engine warrants to the Engine User that: <br />
+        (a) Team Engine has the legal right and authority to enter into the Agreement and to perform its obligations under the Agreement; and<br />
+        (b) Team Engine will comply with all applicable legal and regulatory requirements applying to the exercise of Team Engine’s rights and the fulfilment of Team Engine’s obligations under the Agreement.</li>
+        <li class="k-grey mt4 fw3">Team Engine warrants to the Engine User that: <br />
+        (a) it has taken all commercially reasonable steps to ensure that the Engine Platform will be free from viruses, worms, Trojan horses, ransomware, spyware, adware and other malicious software programs; and<br />
+        (b) the Engine Platform will incorporate security features reflecting the requirements of good industry practice.</li>
+        <li class="k-grey mt4 fw3">Team Engine warrants to the Engine User that
+          the Engine Services, when used by the Engine User in accordance with the
+           Agreement, will not infringe the Intellectual Property Rights of any person in
+           any jurisdiction and under any applicable law.</li>
+        <li class="k-grey mt4 fw3"> If Team Engine reasonably determines, or any
+          third party alleges, that the use of the Engine Services by the Engine
+          User in accordance with the Agreement infringes any person's Intellectual
+          Property Rights, Team Engine may at its own cost and expense: <br />
+        (a) modify the Engine Services in such a way that they no longer infringe the relevant Intellectual Property Rights; or<br />
+        (b) procure for the Engine User the right to use the Engine Services in accordance with the Agreement; or<br />
+        (c) if neither of the options set out in (a) or (b) are commercially or technically practicable, terminate the Agreement.</li>
+        <li class="k-grey mt4 fw3">The Engine User warrants to Team Engine that
+          it has the legal right and authority to enter into the Agreement
+           and to perform its obligations under the Agreement.</li>
+        <li class="k-grey mt4 fw3"> All of the parties' warranties and representations
+          in respect of the subject matter of the Agreement are expressly set out in
+          these Terms of Use. To the maximum extent permitted by applicable law,
+          no other warranties or representations concerning the subject matter of
+          the Agreement will be implied into the Agreement or any related contract.</li>
+      </ol>
+    </li>
+    <li class="k-darker-grey fw6 mt4">Acknowledgements and warranty limitations
+      <ol>
+        <li class="k-grey mt4 fw3"> The Engine User acknowledges that
+          complex software is never wholly free from defects, errors and bugs;
+          and subject to the other provisions of the Agreement, Team Engine
+          gives no warranty or representation that the Engine Platform or the
+          Engine Services will be wholly free from defects, errors and bugs.</li>
+        <li class="k-grey mt4 fw3">The Engine User acknowledges that complex
+           software is never entirely free from security vulnerabilities;
+           and subject to clause 11.2(b) and the other provisions of the Agreement,
+           Team Engine gives no warranty or representation that the Engine
+           Services will be entirely secure.</li>
+        <li class="k-grey mt4 fw3"> The Engine User acknowledges that: <br />
+        (a) any agreement or arrangement entered into by the Engine User
+         with a Project Participant or other user of the Engine Platform
+         (including, but not limited to, a contractor agreement or employment
+          contract) is undertaken entirely at the Engine User’s own risk;<br />
+        (b) the Engine User is solely responsible for the carrying
+         out of any background checks of Project Participants, and the
+          verification of the accuracy and completeness of information provided by them; and<br />
+        (c) Team Engine provides no warranty and makes no representation regarding the competence, experience, honesty or suitability of any Project Participant.</li>
+        <li class="k-grey mt4 fw3">Except to the extent
+          expressly provided otherwise in the Agreement, Team Engine
+          does not warrant or represent that the Engine Platform, the
+          use of the Engine Services or the engagement of Project Participants
+          by the Engine User will be suitable for the Engine User’s purposes,
+          or will provide the Engine User with any specific result, return on
+          investment or other outcome.</li>
+      </ol>
+    </li>
+    <li class="k-darker-grey fw6 mt4">Limitations and exclusions of liability
+      <ol>
+        <li class="k-grey mt4 fw3">Nothing in the Agreement will: <br />
+        (a) limit or exclude any liability for death or personal injury resulting from negligence; <br />
+        (b) limit or exclude any liability for fraud or fraudulent misrepresentation; <br />
+        (c) limit any liabilities in any way that is not permitted under applicable law; or <br />
+        (d) exclude any liabilities that may not be excluded under applicable law.</li>
+        <li class="k-grey mt4 fw3">The limitations and exclusions of liability set out in this clause 13 and elsewhere in the Agreement: <br />
+        (a) are subject to clause 13.1; and <br />
+        (b) govern all liabilities arising under the Agreement or relating to the subject matter of the Agreement, including liabilities arising in contract, in tort (including negligence) and for breach of statutory duty, except to the extent expressly provided otherwise in the Agreement.</li>
+        <li class="k-grey mt4 fw3">Team Engine shall not be liable to the Engine User in respect of: <br />
+        (a) any losses arising out of a Force Majeure Event; or <br />
+        (b) any loss of profits or anticipated savings; or <br />
+        (c) any loss of revenue or income; or <br />
+        (d) any loss of use or production; or <br />
+        (e) any loss of business, contracts or opportunities; or <br />
+        (f) any loss or corruption of any data, database or software.</li>
+        <li class="k-grey mt4 fw3">Neither party shall be liable to the other party in respect of any special, indirect or consequential loss or damage.</li>
+        <li class="k-grey mt4 fw3">The liability of each party to the other party under the Agreement
+          in respect of any event or series of related events shall not exceed the higher of: <br />
+        (a) an amount equal to five (5) times all sums paid or payable by the Engine User to Team Engine under the Agreement; or <br />
+        (b) £10,000.</li>
+      </ol>
+    </li>
+    <li class="k-darker-grey fw6 mt4">Force Majeure Event
+      <ol>
+        <li class="k-grey mt4 fw3">If a Force Majeure Event gives rise
+          to a failure or delay in either party performing any obligation
+          under the Agreement (other than any obligation to make a payment),
+          that obligation will be suspended for the duration of the Force
+          Majeure Event.</li>
+        <li class="k-grey mt4 fw3"> A party that becomes aware of a Force
+           Majeure Event which gives rise to, or which is likely to give
+           rise to, any failure or delay in that party performing any
+           obligation under the Agreement, must:  <br />
+        (a) promptly notify the other; and <br />
+        (b) inform the other of the period for which it is estimated that such failure or delay will continue.</li>
+        <li class="k-grey mt4 fw3">A party whose performance of its obligations
+          under the Agreement is affected by a Force Majeure Event must take
+          reasonable steps to mitigate the effects of the Force Majeure Event.</li>
+      </ol>
+    </li>
+    <li class="k-darker-grey fw6 mt4"> Termination and suspension
+      <ol>
+        <li class="k-grey mt4 fw3">Team Engine may terminate the Agreement
+          at its discretion, and without being required to provide any
+          reason therefor, by giving thirty (30) days’ prior written notice of
+          termination to the Engine User.</li>
+        <li class="k-grey mt4 fw3">The Engine User may terminate the Agreement with immediate effect by deleting their Engine Profile.</li>
+        <li class="k-grey mt4 fw3">Either party may terminate the
+          Agreement immediately by giving written notice of termination
+          to the other party if the other party commits any material breach
+          of the Agreement which, in the case of a breach which is remediable,
+          is not remedied within fourteen (14) days of the date on which the
+          other party is given written notice requiring the breach to be remedied.</li>
+        <li class="k-grey mt4 fw3">Either party may terminate the Agreement immediately by giving written notice of termination to the other party if: <br />
+        (a) the other party is dissolved, ceases to conduct all (or substantially all)
+        of its business, is or becomes unable to pay its debts as they fall due, is or
+        becomes insolvent or is declared insolvent, or convenes a meeting or makes or
+        proposes to make any arrangement or composition with its creditors; or <br />
+        (b) an administrator, administrative receiver, liquidator, receiver, trustee,
+        manager or similar is appointed over any of the assets of the other party; or <br />
+        (c) an order is made for the winding up of the other party, or the other party passes a resolution for its winding up (other than for the purpose of a solvent company reorganisation where the resulting entity will assume all the obligations of the other party under the Agreement).</li>
+        <li class="k-grey mt4 fw3">Team Engine may suspend the provision of
+          the Engine Services, in whole or in part and with immediate effect,
+          on written notice to the Engine User if Team Engine, acting reasonably,
+          considers that the Engine User has committed or will commit a material
+          breach of any terms or conditions of the Agreement.</li>
+        <li class="k-grey mt4 fw3">Team Engine will provide the Engine
+          User with at least five (5) business days’ notice prior to
+          suspending the Engine Services under clause 15.5 to enable
+          the Engine User to remedy the breach, except where the breach
+          is not capable of remedy or where Team Engine reasonably
+          considers that the delay in providing such notice may damage
+          the Engine Services, affect the provision of the Engine Services
+           to other users, or is otherwise not reasonably practicable, in
+           which case Team Engine shall be entitled to suspend the Engine
+           Services without notice and with immediate effect.</li>
+      </ol>
+    </li>
+    <li class="k-darker-grey fw6 mt4">Effects of termination
+      <ol>
+        <li class="k-grey mt4 fw3">Upon the termination of the Agreement,
+          all of the provisions of these Terms of Use shall cease to have
+          effect, save that the following provisions of these Terms of Use
+          shall survive and continue to have effect (in accordance with their
+          express terms or otherwise indefinitely): clauses 1, 8, 9, 10 11, 12,
+          13, 16, 17, 18, 20, 21, 22, 23.1, 23.2, 24, 25 and 26.</li>
+        <li class="k-grey mt4 fw3">The termination of the Agreement shall not affect the accrued rights of either party.</li>
+        <li class="k-grey mt4 fw3">The Engine User acknowledges and agrees that: <br />
+        (a) if the Agreement is terminated by the Engine User under clause 15.2
+        or by Team Engine under clause 15.3 or clause 15.4, the Engine User is
+        liable to pay the Profile Charges and/or Project Charges until the immediately following renewal date; and <br />
+        (b) if (and only if) the Agreement is terminated by Team Engine under clause 15.1 or by the Engine User under clause 15.3 or clause 15.4, Team Engine shall provide the Engine User with a refund of any Profile Charges and/or Project Charges which relate to the period after the termination of the Agreement.</li>
+      </ol>
+    </li>
+    <li class="k-darker-grey fw6 mt4">Notices
+      <ol>
+        <li class="k-grey mt4 fw3"> Team Engine may give notices to the Engine User under the Agreement by: <br />
+        (a) posting a banner notice on the Engine Platform; or <br />
+        (b) sending an email to the Engine User using the email address provided by the Engine User in their Application.</li>
+        <li class="k-grey mt4 fw3">The Engine User may give notices to Team Engine by sending an email to info@teamengine.co.uk</li>
+
+      </ol>
+    </li>
+    <li class="k-darker-grey fw6 mt4">Subcontracting
+      <ol>
+        <li class="k-grey mt4 fw3">Team Engine may subcontract any of its obligations
+          under the Agreement, provided that Team Engine shall remain responsible
+          to the Engine User for the performance of any subcontracted obligations.</li>
+      </ol>
+    </li>
+    <li class="k-darker-grey fw6 mt4">Assignment
+      <ol>
+        <li class="k-grey mt4 fw3">The Engine User must not assign, transfer or
+          otherwise deal with its contractual rights and/or obligations under
+          the Agreement without the prior written consent of Team Engine, such consent
+          not to be unreasonably withheld or delayed.</li>
+      </ol>
+    </li>
+    <li class="k-darker-grey fw6 mt4">No waivers
+      <ol>
+        <li class="k-grey mt4 fw3">No breach of any provision of the
+           Agreement will be waived except with the express written consent
+           of the party not in breach.</li>
+      </ol>
+    </li>
+    <li class="k-darker-grey fw6 mt4">Severability
+      <ol>
+        <li class="k-grey mt4 fw3"> If a provision of the Agreement is
+          determined by any court or other competent authority to be
+          unlawful and/or unenforceable, the other provisions will continue in effect.</li>
+        <li class="k-grey mt4 fw3"> If any unlawful and/or unenforceable
+           provision of the Agreement would be lawful or enforceable if part
+           of it were deleted, that part will be deemed to be deleted, and the
+           rest of the provision will continue in effect.</li>
+      </ol>
+    </li>
+    <li class="k-darker-grey fw6 mt4">Third party rights
+      <ol>
+        <li class="k-grey mt4 fw3">The Agreement is for the benefit of the parties,
+           and is not intended to benefit or be enforceable by any third party.</li>
+      </ol>
+    </li>
+    <li class="k-darker-grey fw6 mt4">Variation
+      <ol>
+        <li class="k-grey mt4 fw3">The Agreement may not be varied except in accordance with clause 23.</li>
+        <li class="k-grey mt4 fw3">The Agreement may be varied by means of a written document signed by or on behalf of each party.</li>
+        <li class="k-grey mt4 fw3">Team Engine may vary the Agreement by
+          giving to the Engine User at least 30 days' written notice of
+          the proposed variation, providing that if Team Engine gives to
+          the Engine User a notice under this clause 23.3, the Engine User
+          shall have the right to terminate the Agreement by giving written
+          notice of termination to Team Engine at any time during the period of
+          14 days following receipt of Team Engine’s notice.</li>
+      </ol>
+    </li>
+    <li class="k-darker-grey fw6 mt4">Publicity
+      <ol>
+        <li class="k-grey mt4 fw3">Subject to obtaining the Engine User’s
+          prior written consent (not to be unreasonably withheld or delayed),
+          the Engine User agrees that Team Engine shall be entitled to use the
+          Engine User’s name and logo for marketing and publicity purposes).</li>
+      </ol>
+    </li>
+    <li class="k-darker-grey fw6 mt4">Entire agreement
+      <ol>
+        <li class="k-grey mt4 fw3">The Agreement shall constitute
+          the entire agreement between the parties in relation to its
+          subject matter, and shall supersede all previous agreements,
+          arrangements and understandings between the parties in respect
+          of that subject matter.</li>
+        <li class="k-grey mt4 fw3">Neither party will have any remedy in respect
+          of any misrepresentation (whether written or oral) made to it upon which
+          it relied in entering into the Agreement.</li>
+        <li class="k-grey mt4 fw3"> The provisions of this clause 25 are subject to clause 13.1.</li>
+      </ol>
+    </li>
+    <li class="k-darker-grey fw6 mt4">Law and jurisdiction
+      <ol>
+        <li class="k-grey mt4 fw3">The Agreement shall be governed by and construed in accordance with English law.</li>
+        <li class="k-grey mt4 fw3">Any disputes relating to the Agreement shall
+          be subject to the exclusive jurisdiction of the courts of England.</li>
+      </ol>
+    </li>
   </ol>
 </div>
-<iframe src="https://docs.google.com/document/d/1icF4qNKcJThcb1mfCal8nlxnXNRVPfTonG1c7kShhJg/pub?embedded=true"></iframe>
