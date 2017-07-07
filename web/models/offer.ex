@@ -137,7 +137,7 @@ defmodule Karma.Offer do
     |> validate_if_required(params, :box_rental_required?, @box_rental_fields)
     |> validate_if_required(params, :equipment_rental_required?, @equipment_rental_fields)
     |> validate_required_dropdowns()
-    |> validate_format(:target_email, ~r/@/)
+    |> validate_format(:target_email, ~r/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/)
   end
 
   def validate_required_dropdowns(changeset) do

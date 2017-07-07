@@ -41,7 +41,7 @@ defmodule Karma.User do
     struct
     |> cast(params, [:email])
     |> validate_required([:email])
-    |> validate_format(:email, ~r/@/)
+    |> validate_format(:email, ~r/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/)
   end
 
   def email_verification_changeset(struct, params \\ %{}) do
