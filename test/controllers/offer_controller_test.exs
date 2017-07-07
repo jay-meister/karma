@@ -76,7 +76,7 @@ defmodule Karma.OfferControllerTest do
   test "creates creates offer to a registered user", %{conn: conn, project: project} do
 
     contractor = insert_user(%{first_name: "Dave", last_name: "Seaman", email: "contractor@gmail.com"})
-    new_offer = default_offer(%{target_email: "contractor@gmail.com"})
+    new_offer = default_offer(%{target_email: "contractor@gmail.com", fee_per_day_inc_holiday: "200"})
 
     with_mock Karma.Mailer, [deliver_later: fn(email) ->
       assert email.html_body =~ "You have received an offer to work"

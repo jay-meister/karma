@@ -28,6 +28,8 @@ defmodule Karma.Router do
   # authed routes
   scope "/", Karma do
     pipe_through [:browser, :authenticate]
+    get "/terms", InfoController, :terms
+    get "/privacy", InfoController, :privacy
     post "/startpack/:id", StartpackController, :update
     post "/startpack/:id/delete-file", StartpackController, :delete_uploaded_files
     resources "/startpack", StartpackController, except: [:new, :create, :delete]

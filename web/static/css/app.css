@@ -166,6 +166,10 @@ nav {
   background-color: #707070;
 }
 
+.k-bg-darker-grey {
+  background-color: #525252;
+}
+
 .k-bg-input {
   background-color: #E9EAEB;
 }
@@ -249,6 +253,10 @@ nav {
 
 .k-dark-grey {
   color: #707070;
+}
+
+.k-darker-grey {
+  color: #525252;
 }
 
 .k-light-grey {
@@ -365,6 +373,10 @@ select {
 
 .k-minw-20 {
   min-width: 20rem;
+}
+
+.k-mt0-1 {
+  margin-top: 0.1rem;
 }
 
 /* 4-5 =~ 4.5 because it's between 4 and 5 in tachyons*/
