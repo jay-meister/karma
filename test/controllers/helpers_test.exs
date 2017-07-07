@@ -22,13 +22,13 @@ defmodule Karma.Controllers.HelpersTest do
   end
 
   test "calc_holiday_pay_per_day(fee_per_day_inc_holiday, fee_per_day_exc_holiday)" do
-    holiday_pay_per_day = Helpers.calc_holiday_pay_per_day(2, 1)
+    holiday_pay_per_day = Helpers.calc_holiday_pay_per_day(2.0, 1)
 
     assert holiday_pay_per_day == 1
   end
 
   test "calc_fee_per_week_inc_holiday(fee_per_day_inc_holiday, working_week)" do
-    fee_per_week_inc_holiday = Helpers.calc_fee_per_week_inc_holiday(1, 1)
+    fee_per_week_inc_holiday = Helpers.calc_fee_per_week_inc_holiday(1.0, 1)
 
     assert fee_per_week_inc_holiday == 1
   end
@@ -40,7 +40,7 @@ defmodule Karma.Controllers.HelpersTest do
   end
 
   test "calc_holiday_pay_per_week(fee_per_week_inc_holiday, fee_per_week_exc_holiday)" do
-    holiday_pay_per_week = Helpers.calc_holiday_pay_per_week(2, 1)
+    holiday_pay_per_week = Helpers.calc_holiday_pay_per_week(2.0, 1)
 
     assert holiday_pay_per_week == 1
   end

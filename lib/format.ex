@@ -34,7 +34,7 @@ defmodule Karma.Formatter do
         true ->
           %{
             startpack_data |
-            "box_rental_value": "#{currency_symbol}#{format_number(startpack_data.box_rental_value)}",
+            "box_rental_value": "#{currency_symbol} #{format_number(startpack_data.box_rental_value)}",
             }
         _not_true ->
           startpack_data
@@ -44,7 +44,7 @@ defmodule Karma.Formatter do
         true ->
           %{
             startpack_data |
-            "equipment_rental_value": "#{currency_symbol}#{format_number(startpack_data.equipment_rental_value)}",
+            "equipment_rental_value": "#{currency_symbol} #{format_number(startpack_data.equipment_rental_value)}",
             }
         _not_true ->
           startpack_data
@@ -70,17 +70,17 @@ defmodule Karma.Formatter do
     # format offer data
     offer_data = %{
       offer_data |
-      "vehicle_allowance_per_week": "#{currency_symbol}#{format_number(offer_data.vehicle_allowance_per_week)}",
-      "fee_per_day_inc_holiday": "#{currency_symbol}#{format_number(offer_data.fee_per_day_inc_holiday)}",
-      "fee_per_day_exc_holiday": "#{currency_symbol}#{format_number(offer_data.fee_per_day_exc_holiday)}",
-      "fee_per_week_inc_holiday": "#{currency_symbol}#{format_number(offer_data.fee_per_week_inc_holiday)}",
-      "fee_per_week_exc_holiday": "#{currency_symbol}#{format_number(offer_data.fee_per_week_exc_holiday)}",
-      "holiday_pay_per_day": "#{currency_symbol}#{format_number(offer_data.holiday_pay_per_week)}",
-      "holiday_pay_per_week": "#{currency_symbol}#{format_number(offer_data.holiday_pay_per_week)}",
-      "sixth_day_fee_inc_holiday": "#{currency_symbol}#{format_number(round(offer_data.sixth_day_fee_inc_holiday))}",
-      "sixth_day_fee_exc_holiday": "#{currency_symbol}#{format_number(round(offer_data.sixth_day_fee_exc_holiday))}",
-      "seventh_day_fee_inc_holiday": "#{currency_symbol}#{format_number(round(offer_data.seventh_day_fee_inc_holiday))}",
-      "seventh_day_fee_exc_holiday": "#{currency_symbol}#{format_number(round(offer_data.seventh_day_fee_exc_holiday))}",
+      "vehicle_allowance_per_week": "#{currency_symbol} #{format_number(offer_data.vehicle_allowance_per_week)}",
+      "fee_per_day_inc_holiday": "#{currency_symbol} #{format_number(offer_data.fee_per_day_inc_holiday)}",
+      "fee_per_day_exc_holiday": "#{currency_symbol} #{format_number(offer_data.fee_per_day_exc_holiday)}",
+      "fee_per_week_inc_holiday": "#{currency_symbol} #{format_number(offer_data.fee_per_week_inc_holiday)}",
+      "fee_per_week_exc_holiday": "#{currency_symbol} #{format_number(offer_data.fee_per_week_exc_holiday)}",
+      "holiday_pay_per_day": "#{currency_symbol} #{format_number(offer_data.holiday_pay_per_day)}",
+      "holiday_pay_per_week": "#{currency_symbol} #{format_number(offer_data.holiday_pay_per_week)}",
+      "sixth_day_fee_inc_holiday": "#{currency_symbol} #{format_number(offer_data.sixth_day_fee_inc_holiday)}",
+      "sixth_day_fee_exc_holiday": "#{currency_symbol} #{format_number(offer_data.sixth_day_fee_exc_holiday)}",
+      "seventh_day_fee_inc_holiday": "#{currency_symbol} #{format_number(offer_data.seventh_day_fee_inc_holiday)}",
+      "seventh_day_fee_exc_holiday": "#{currency_symbol} #{format_number(offer_data.seventh_day_fee_exc_holiday)}",
       "start_date": ViewHelpers.format_date(offer_data.start_date)
     }
     offer_data =
@@ -88,8 +88,8 @@ defmodule Karma.Formatter do
         true ->
           %{
             offer_data |
-            "box_rental_fee_per_week": "#{currency_symbol}#{format_number(offer_data.box_rental_fee_per_week)}",
-            "box_rental_cap": "#{currency_symbol}#{format_number(offer_data.box_rental_cap)}",
+            "box_rental_fee_per_week": "#{currency_symbol} #{format_number(offer_data.box_rental_fee_per_week)}",
+            "box_rental_cap": "#{currency_symbol} #{format_number(offer_data.box_rental_cap)}",
           }
         _not_true ->
           offer_data
@@ -99,8 +99,8 @@ defmodule Karma.Formatter do
         true ->
           %{
             offer_data |
-            "equipment_rental_fee_per_week": "#{currency_symbol}#{format_number(offer_data.equipment_rental_fee_per_week)}",
-            "equipment_rental_cap": "#{currency_symbol}#{format_number(offer_data.equipment_rental_cap)}",
+            "equipment_rental_fee_per_week": "#{currency_symbol} #{format_number(offer_data.equipment_rental_fee_per_week)}",
+            "equipment_rental_cap": "#{currency_symbol} #{format_number(offer_data.equipment_rental_cap)}",
           }
         _not_true ->
           offer_data
@@ -109,11 +109,7 @@ defmodule Karma.Formatter do
   end
 
   def format_number(number) do
-    number
-    |> Integer.to_char_list
-    |> Enum.reverse
-    |> Enum.chunk(3, 3, [])
-    |> Enum.join(",")
-    |> String.reverse
+    number = number / 1
+    :erlang.float_to_binary(number, [decimals: 2])
   end
 end
