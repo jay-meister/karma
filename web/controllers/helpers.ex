@@ -61,32 +61,34 @@ defmodule Karma.Controllers.Helpers do
   end
 
   def calc_day_fee_inc_holidays(fee_per_day_inc_holiday, day_fee_multiplier) do
-    fee_per_day_inc_holiday * day_fee_multiplier
+    (fee_per_day_inc_holiday * day_fee_multiplier) / 1
   end
 
   def calc_day_fee_exc_holidays(fee_per_day_exc_holiday, day_fee_multiplier) do
-    fee_per_day_exc_holiday * day_fee_multiplier
+    (fee_per_day_exc_holiday * day_fee_multiplier) / 1
   end
 
   def calc_fee_per_day_exc_holiday(fee_per_day_inc_holiday, project_holiday_rate) do
     divisible_rate = 1 + project_holiday_rate
-    round(fee_per_day_inc_holiday / divisible_rate)
+
+    Float.round((fee_per_day_inc_holiday / divisible_rate), 2)
+    # round(fee_per_day_inc_holiday / divisible_rate)
   end
 
   def calc_holiday_pay_per_day(fee_per_day_inc_holiday, fee_per_day_exc_holiday) do
-    round(fee_per_day_inc_holiday - fee_per_day_exc_holiday)
+    Float.round((fee_per_day_inc_holiday - fee_per_day_exc_holiday), 2)
   end
 
   def calc_fee_per_week_inc_holiday(fee_per_day_inc_holiday, working_week) do
-    round(fee_per_day_inc_holiday * working_week)
+    Float.round((fee_per_day_inc_holiday * working_week), 2)
   end
 
   def calc_fee_per_week_exc_holiday(fee_per_week_inc_holiday, project_holiday_rate) do
-    round(fee_per_week_inc_holiday / (1 + project_holiday_rate))
+    Float.round((fee_per_week_inc_holiday / (1 + project_holiday_rate)), 2)
   end
 
   def calc_holiday_pay_per_week(fee_per_week_inc_holiday, fee_per_week_exc_holiday) do
-    round(fee_per_week_inc_holiday - fee_per_week_exc_holiday)
+    Float.round((fee_per_week_inc_holiday - fee_per_week_exc_holiday), 2)
   end
 
   defp construction_sch_d(construction_direct_hire, daily_construction_direct_hire, daily_construction_sch_d) do

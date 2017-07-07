@@ -14,21 +14,21 @@ defmodule Karma.Offer do
     field :other_deal_provisions, :string
     field :box_rental_required?, :boolean
     field :box_rental_description, :string
-    field :box_rental_fee_per_week, :integer
-    field :box_rental_cap, :integer
+    field :box_rental_fee_per_week, :float
+    field :box_rental_cap, :float
     field :box_rental_period, :string
     field :equipment_rental_required?, :boolean
     field :equipment_rental_description, :string
-    field :equipment_rental_fee_per_week, :integer
-    field :equipment_rental_cap, :integer
+    field :equipment_rental_fee_per_week, :float
+    field :equipment_rental_cap, :float
     field :equipment_rental_period, :string
     field :vehicle_allowance_per_week, :integer, default: 0
-    field :fee_per_day_inc_holiday, :integer
-    field :fee_per_day_exc_holiday, :integer
-    field :fee_per_week_inc_holiday, :integer
-    field :fee_per_week_exc_holiday, :integer
-    field :holiday_pay_per_day, :integer
-    field :holiday_pay_per_week, :integer
+    field :fee_per_day_inc_holiday, :float
+    field :fee_per_day_exc_holiday, :float
+    field :fee_per_week_inc_holiday, :float
+    field :fee_per_week_exc_holiday, :float
+    field :holiday_pay_per_day, :float
+    field :holiday_pay_per_week, :float
     field :sixth_day_fee_inc_holiday, :float
     field :sixth_day_fee_exc_holiday, :float
     field :sixth_day_fee_multiplier, :float
@@ -137,7 +137,7 @@ defmodule Karma.Offer do
     |> validate_if_required(params, :box_rental_required?, @box_rental_fields)
     |> validate_if_required(params, :equipment_rental_required?, @equipment_rental_fields)
     |> validate_required_dropdowns()
-    |> validate_format(:target_email, ~r/@/)
+    |> validate_format(:target_email, ~r/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/)
   end
 
   def validate_required_dropdowns(changeset) do
