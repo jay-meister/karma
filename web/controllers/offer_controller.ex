@@ -141,7 +141,6 @@ defmodule Karma.OfferController do
       # run calculations and add them to the offer_params
       calculations = parse_offer_strings(offer_params) |> run_calculations(project, project_documents, daily)
       offer_params = Map.merge(offer_params, calculations)
-
       changeset = changeset_maybe_with_user(offer_params, project)
 
       case Repo.insert(changeset) do
