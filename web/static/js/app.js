@@ -75,7 +75,7 @@ function setupListeners(job_title) {
     jobTitleDropdown.innerHTML = "";
     var prompt = document.createElement('option');
     prompt.value = "";
-    prompt.innerHTML = "Pick a job title..."
+    prompt.innerHTML = "select..."
     jobTitleDropdown.appendChild(prompt)
     jobTitleValues.forEach(function (jobTitleValue) {
       var opt = document.createElement('option');
