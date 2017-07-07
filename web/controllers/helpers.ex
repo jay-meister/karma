@@ -70,7 +70,6 @@ defmodule Karma.Controllers.Helpers do
 
   def calc_fee_per_day_exc_holiday(fee_per_day_inc_holiday, project_holiday_rate) do
     divisible_rate = 1 + project_holiday_rate
-
     Float.round((fee_per_day_inc_holiday / divisible_rate), 2)
     # round(fee_per_day_inc_holiday / divisible_rate)
   end

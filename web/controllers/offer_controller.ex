@@ -415,12 +415,21 @@ defmodule Karma.OfferController do
 
   # calculations helpers
   def parse_offer_strings(offer_params) do
-    integers = ["fee_per_day_inc_holiday"]
+    # integers = ["fee_per_day_inc_holiday"]
     floats = ["working_week", "sixth_day_fee_multiplier", "seventh_day_fee_multiplier"]
-
+    fee_per_day_inc_holiday = Map.get(offer_params, "fee_per_day_inc_holiday")
+    offer_params =
+      offer_params
+      |> update_keys(floats, &String.to_float/1)
+      |> Map.put("fee_per_day_inc_holiday", make_float(fee_per_day_inc_holiday))
     offer_params
-    |> update_keys(integers, &String.to_integer/1)
-    |> update_keys(floats, &String.to_float/1)
+  end
+
+  defp make_float(number_string) do
+    case number_string =~ "." do
+      true -> String.to_float(number_string)
+      false -> String.to_integer(number_string) / 1
+    end
   end
 
   defp update_keys(params, keys, f) do
