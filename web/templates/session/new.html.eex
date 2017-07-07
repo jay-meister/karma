@@ -20,7 +20,7 @@
             atom: :password,
             type: :password,
             autofill: "on",
-            placeholder: "Must contain at least 6 characters"
+            placeholder: "Must contain at least 1 uppercase, 1 digit + 1 special character"
             %>
 
             <%= component "submit_button.html", title: "Log in" %>
