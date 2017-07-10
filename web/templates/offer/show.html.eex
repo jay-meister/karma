@@ -17,7 +17,6 @@
   <h1 class="top--header absolute fw4 mb0">Offer for <%= @project.name %></h1>
 <% end %>
 
-<% IO.inspect @changeset %>
 <%= if @is_contractor? do %>
   <%= if length(@changeset.errors) > 0 && @offer.accepted == nil do %>
     <div class="k-bg-indigo white tc pa4 br3 ma2 f2 mt3">
