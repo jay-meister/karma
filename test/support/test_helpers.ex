@@ -193,7 +193,7 @@ defmodule Karma.TestHelpers do
       sixth_day_fee_multiplier: "1.0",
       start_date: %{day: 17, month: 4, year: 2019},
       target_email: "a_new_email@gmail.com",
-      vehicle_allowance_per_week: "0",
+      vehicle_allowance_per_week: "10",
       working_week: "5.5"
     }
     Map.merge(default, attrs)

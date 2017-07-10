@@ -34,9 +34,9 @@ defmodule Karma.Controllers.Helpers do
     Document
     |> Document.get_contract(offer)
     |> Document.get_conditional_form(offer, true, "START FORM")
-    |> Document.get_conditional_form(offer, offer.box_rental_required?, "BOX RENTAL FORM")
-    |> Document.get_conditional_form(offer, offer.equipment_rental_required?, "EQUIPMENT RENTAL FORM")
-    |> Document.get_conditional_form(offer, offer.vehicle_allowance_per_week > 0, "VEHICLE ALLOWANCE FORM")
+    |> Document.get_conditional_form(offer, offer.box_rental_required?, "BOX RENTAL")
+    |> Document.get_conditional_form(offer, offer.equipment_rental_required?, "EQUIPMENT RENTAL")
+    |> Document.get_conditional_form(offer, offer.vehicle_allowance_per_week != "£ 0.00", "VEHICLE ALLOWANCE")
   end
 
   def get_email_from_hash(hash) do
