@@ -17,6 +17,17 @@ body {
     margin-top: 12rem;
   }
 
+.alert {
+  text-align: center;
+  padding: 2rem;
+}
+
+.alert-danger {
+  color: white;
+  background-color: #ff725c;
+  border-radius: 3px;
+}
+
 .top--header {
   top: -6rem;
 }

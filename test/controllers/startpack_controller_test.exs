@@ -104,6 +104,16 @@ defmodule Karma.StartpackControllerTest do
     assert html_response(conn, 200) =~ "Edit startpack"
   end
 
+  test "bring your own vehicle - offer_id exists", %{conn: conn, user: user, offer: offer} do
+    conn = post conn, startpack_path(conn, :update, user.startpacks, offer_id: offer.id), startpack: %{"vehicle_bring_own?": "true"}
+    assert html_response(conn, 200) =~ "Edit startpack"
+  end
+
+  test "bring your own vehicle - offer_id doesn't exist", %{conn: conn, user: user} do
+    conn = post conn, startpack_path(conn, :update, user.startpacks, offer_id: -1), startpack: %{"vehicle_bring_own?": "true"}
+    assert html_response(conn, 200) =~ "Edit startpack"
+  end
+
   test "offer id that doesn't exist :index", %{conn: conn} do
     conn = get conn, "/startpack?offer_id=1000"
     assert html_response(conn, 200) =~ "Edit startpack"

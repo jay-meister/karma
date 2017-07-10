@@ -1,7 +1,7 @@
 <div class="pt4">
   <%= if length(@changeset.errors) != 0 do %>
       <div class="alert alert-danger">
-        <p>Fill out the fields below to complete your startpack!</p>
+        <p>Fill out the error fields below to complete your startpack!</p>
       </div>
   <% end %>
   <%= if length(@uploaded_files) != 0 do %>

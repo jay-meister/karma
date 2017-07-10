@@ -43,6 +43,7 @@ defmodule Karma.StartpackController do
     uploaded_files = get_uploaded_files(startpack_map)
     delete_changeset = Startpack.delete_changeset(%Startpack{}, startpack_map)
     image_changeset = Startpack.upload_type_validation(%Startpack{}, startpack_params)
+    offer_id = Map.get(conn.query_params, "offer_id", "")
     case image_changeset.valid? do
       false ->
         conn
@@ -53,17 +54,27 @@ defmodule Karma.StartpackController do
         case vehicle_changeset.valid? do
           false ->
             vehicle_changeset = %{vehicle_changeset | action: :insert}
+            changeset =
+              case offer_id == "" do
+                true -> vehicle_changeset
+                false ->
+                  case Repo.get(Offer, offer_id) do
+                    nil -> vehicle_changeset
+                    offer ->
+                      mother_changeset = Startpack.mother_changeset(%Startpack{}, Map.from_struct(startpack), offer)
+                      mother_changeset = %{mother_changeset | action: :insert}
+                      mother_changeset
+                  end
+              end
             conn
             |> put_flash(:error, "Error updating startpack!")
-            |> render("index.html", changeset: vehicle_changeset, startpack: startpack, offer: %{}, user: user, delete_changeset: delete_changeset, uploaded_files: uploaded_files)
+            |> render("index.html", changeset: changeset, startpack: startpack, offer: %{}, user: user, delete_changeset: delete_changeset, uploaded_files: uploaded_files)
           true ->
             urls = Karma.S3.upload_many(startpack_params, @file_upload_keys)
 
             params = Map.merge(startpack_params, urls)
 
             changeset = Startpack.changeset(startpack, params)
-
-            offer_id = Map.get(conn.query_params, "offer_id", "")
 
             _startpack = Repo.update!(changeset)
             case offer_id == "" do
