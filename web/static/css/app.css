@@ -19,7 +19,7 @@ body {
 
 .alert {
   text-align: center;
-  padding: 2rem;
+  padding: 1.5rem;
 }
 
 .alert-danger {
@@ -353,6 +353,10 @@ select {
   height: 3.5rem;
 }
 
+.k-h6 {
+  height: 6rem;
+}
+
 .k-h10 {
   height: 10rem;
 }
@@ -393,6 +397,16 @@ select {
 .k-mt0-4 {
   margin-top: 0.4rem;
 }
+
+.k-mt1-5 {
+  margin-top: 1.5rem;
+}
+
+.k-mt9 {
+  margin-top: 9rem;
+}
+
+
 
 /* 4-5 =~ 4.5 because it's between 4 and 5 in tachyons*/
 .k-pl4-5 {
