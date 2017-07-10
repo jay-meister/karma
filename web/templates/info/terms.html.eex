@@ -3,7 +3,7 @@
   li { display: block }
   li:before { content: counters(item, ".") " "; counter-increment: item }
 </style>
-<h1 class="k-indigo top--header absolute fw4 mb0">Terms and conditions</h1>
+<h1 class="k-indigo top--header absolute fw4 mb0">Terms of use</h1>
 <div class="pt4">
   <div class="k-light-indigo lh-copy">
   <span class="fw6">Note:</span> Please read these Terms of Use carefully. If your Application is accepted

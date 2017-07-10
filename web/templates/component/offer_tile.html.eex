@@ -31,7 +31,7 @@
 %>
 
 <a href="<%= assigns[:url] %>" class="no-underline" >
-  <div class="bw1 k-b--indigo bg-white k-indigo ba br3 k-indigo relative mb3">
+  <div class="bw1 k-b--grey bg-white k-indigo ba br3 k-indigo relative mb3">
     <div class="dt w-100 k-minw-320">
       <div class="dtc pl2 pl4-l pv4">
         <div class="<%= status %> dib br-100 w3 h3 tc"><div class="f2 w3 h3 ph3 pv2 center white"><img src="/images/<%= symbol %>.svg" alt=""></div></div>
@@ -41,7 +41,7 @@
         </div>
       </div>
       <div class="dtc tr pr4-ns pr3-ns k-pr4-5 pv4">
-        <div class="pa2-ns pa0 f2-ns f3"><%= "#{currency}#{offer.fee_per_day_inc_holiday}" %>/day</div>
+        <div class="pa2-ns pa0 f2-ns f3"><%= "#{currency}#{Karma.Formatter.format_number(offer.fee_per_day_inc_holiday)}" %>/day</div>
       </div>
     </div>
   </div>
