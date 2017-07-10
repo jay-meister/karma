@@ -58,7 +58,7 @@ defmodule Karma.Startpack do
     field :student_loan_plan_1?, :boolean, default: nil
     field :student_loan_finished_before_6_april?, :boolean, default: nil
     field :schedule_d_letter_url, :string
-    field :use_loan_out_company?, :boolean, default: true, null: false
+    field :use_loan_out_company?, :boolean, default: false, null: false
     field :loan_out_company_registration_number, :string
     field :loan_out_company_address, :string
     field :loan_out_company_cert_url, :string
