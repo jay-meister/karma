@@ -1,3 +1,8 @@
+<% border =
+  case assigns[:form].errors[assigns[:atom]] != nil do
+    true -> "k-b--error"
+    false -> "k-b--input"
+  end %>
 <% class = assigns[:class] || "" %>
 <% container_id = assigns[:container_id] || "" %>
 <div class="mb4 <%= class %>" id="<%= container_id %>">
@@ -26,7 +31,7 @@
       placeholder: assigns[:placeholder],
       value: assigns[:value],
       type: assigns[:type] || "",
-      class: "border-box no-placeholder k-dark-grey pa3 br3 w-100 outline-0 lato ba k-b--input #{padding} #{bg_color}",
+      class: "border-box no-placeholder k-dark-grey pa3 br3 w-100 outline-0 lato ba #{border} #{padding} #{bg_color}",
       autocomplete: assigns[:autocomplete] || "off"
       %>
     <% else %>
@@ -36,7 +41,7 @@
       readonly: assigns[:readonly] || false,
       placeholder: assigns[:placeholder],
       type: assigns[:type] || "",
-      class: "border-box no-placeholder k-dark-grey pa3 br3 w-100 outline-0 lato ba k-b--input #{padding} #{bg_color}",
+      class: "border-box no-placeholder k-dark-grey pa3 br3 w-100 outline-0 lato ba #{border} #{padding} #{bg_color}",
       autocomplete: assigns[:autocomplete] || "off"
       %>
     <% end %>
