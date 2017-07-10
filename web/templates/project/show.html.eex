@@ -197,10 +197,10 @@
     <%= component "submit_button.html", title: "Upload" %>
   <% end %>
 </div>
-<%= component "form_divider.html", title: "Signees" %>
+<%= component "form_divider.html", title: "Approvers" %>
 <%= if length(@signees) == 0 do %>
   <div class="tc k-bg-indigo white pa4 f2 br3 mb4">
-    Add signees to this project
+    Add approvers to this project
   </div>
 <% end %>
 <%= if length(@signees) != 0 do %>
@@ -242,11 +242,11 @@
     form: f,
     atom: :approver_type,
     options: ["Signee", "Recipient"],
-    prompt: "Please Select"
+    prompt: "select..."
     %>
     <%= component "submit_button.html",
     form: f,
-    title: "Add signee"
+    title: "Add approver"
     %>
   <% end %>
 </div>

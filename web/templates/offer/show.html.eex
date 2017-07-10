@@ -25,7 +25,6 @@
   <% end %>
 
   <%= if @offer.accepted do %>
-    <div class="k-bg-indigo white tc pa4 br3 ma2 f2 mt3">Congratulations! <br /> You have accepted this offer!</div>
     <div class="h3">
       <%= if hd(@deal_documents).status != "signing" do %>
         <%= component "button.html", title: "Sign Documents", link: project_offer_altered_document_path(@conn, :sign, @offer.project_id, @offer) %>

@@ -51,7 +51,7 @@
     form: f,
     atom: :gender,
     options: ["Male": "male", "Female": "female", "Other": "other", "Prefer not to say": "n/a"],
-    prompt: "Select one"
+    prompt: "select..."
     %>
 
     <%= component "input.html",

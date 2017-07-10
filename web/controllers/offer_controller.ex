@@ -381,10 +381,10 @@ defmodule Karma.OfferController do
                     conn
                     |> put_flash(:error, msg)
                     |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
-                  {:ok, msg} ->
+                  {:ok, _msg} ->
                     # reply to user
                     conn
-                    |> put_flash(:info, "#{msg}")
+                    |> put_flash(:info, "Congratulations, you have accepted this offer!")
                     |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
                 end
             end

@@ -8,7 +8,7 @@
 <div class="ma2 k-light-indigo dib">Add signees</div>
 <div class="pt3">
   <div class="f2"><%= @project.name %></div>
-  <%= component "form_divider.html", title: "#{@document.name} Signees" %>
+  <%= component "form_divider.html", title: "#{@document.name} Approvers" %>
   <div class="mb3">
     <%= if length(@document_signees) == 0 do %>
       <div class="tc k-bg-indigo white pa4 f2 br3">
@@ -29,7 +29,7 @@
         <% end %>
       </ol>
       <div class="tc mt4 mb5">
-        <%= link "CLEAR SIGNEES", to: project_document_signee_path(@conn, :clear_signees, @project, @document), method: :delete, class: "pa3 white k-bg-light-indigo br2 no-underline k-f2-5" %>
+        <%= link "CLEAR APPROVERS", to: project_document_signee_path(@conn, :clear_signees, @project, @document), method: :delete, class: "pa3 white k-bg-light-indigo br2 no-underline k-f2-5" %>
       </div>
     <% end %>
   </div>
@@ -39,7 +39,7 @@
       options: @signees,
       form: f,
       atom: :signee_id,
-      prompt: "Select approver"
+      prompt: "select..."
       %>
 
       <%= hidden_input f, :order, value: length(@document_signees) + 2 %>

@@ -9,7 +9,7 @@
   <%= component "dropdown.html",
   form: f,
   atom: :type,
-  label: "Project type",
+  label: "select...",
   options: ["Feature Film": "feature", "Television": "television"],
   prompt: "Project type..."
   %>
@@ -69,7 +69,7 @@
   form: f,
   atom: :holiday_rate,
   options: ["10.77%": 0.1077, "12.07%": 0.1207],
-  prompt: "Select rate..."
+  prompt: "select..."
   %>
 
   <%= component "textarea.html",

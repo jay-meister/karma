@@ -257,7 +257,7 @@ defmodule Karma.OfferControllerTest do
       with_mock Karma.Merger, [merge_multiple: fn(_, _) -> {:ok, "Documents merged"} end] do
         conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: true}
         assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
-        assert Phoenix.Controller.get_flash(conn, :info) == "Documents merged"
+        assert Phoenix.Controller.get_flash(conn, :info) == "Congratulations, you have accepted this offer!"
       end
     end
   end
@@ -273,7 +273,7 @@ defmodule Karma.OfferControllerTest do
       with_mock Karma.Merger, [merge_multiple: fn(_, _) -> {:ok, "Documents merged"} end] do
         conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: true}
         assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
-        assert Phoenix.Controller.get_flash(conn, :info) == "Documents merged"
+        assert Phoenix.Controller.get_flash(conn, :info) == "Congratulations, you have accepted this offer!"
       end
     end
   end
@@ -289,7 +289,7 @@ defmodule Karma.OfferControllerTest do
       with_mock Karma.Merger, [merge_multiple: fn(_, _) -> {:ok, "Documents merged"} end] do
         conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: true}
         assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
-        assert Phoenix.Controller.get_flash(conn, :info) == "Documents merged"
+        assert Phoenix.Controller.get_flash(conn, :info) == "Congratulations, you have accepted this offer!"
       end
     end
   end

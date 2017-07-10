@@ -1,4 +1,4 @@
-<div class="ph3 ph6-ns mt6 center">
+<div class=" mt6 center">
 
   <%= link "Back", to: project_offer_path(@conn, :show, @offer.project_id, @offer), class: "ma2 k-indigo no-underline" %>
 
