@@ -1,6 +1,6 @@
 <div class="relative">
     <h1 class="k-indigo top--header absolute fw4 mb0">My dashboard</h1>
-    <div class="mr2 k-light-indigo dib">Dashboard</div>
+    <div class="mr2 k-light-indigo dib k-mt0-4">Dashboard</div>
 
       <div class="relative">
         <div class="mb3 pt5 k-light-indigo bb f2 tl k-b-light-indigo">Projects</div>
