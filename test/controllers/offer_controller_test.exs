@@ -334,6 +334,8 @@ defmodule Karma.OfferControllerTest do
 
 
   test "get relevant documents for merge", %{offer: offer, project: project} do
+    offer = %{offer | vehicle_allowance_per_week: "£ 0.00"}
+
     _contract = insert_document(project, %{name: "PAYE"})
     _box_rental_form = insert_document(project, %{name: "BOX RENTAL"})
     _equipment_rental_form = insert_document(project, %{name: "EQUIPMENT RENTAL"})
@@ -345,6 +347,6 @@ defmodule Karma.OfferControllerTest do
     document_names = docs |> Enum.map(&Map.get(&1, :name)) |> Enum.sort()
 
     # assert the correct forms are retrieved
-    assert document_names == ["BOX RENTAL", "EQUIPMENT RENTAL", "PAYE", "VEHICLE ALLOWANCE"]
+    assert document_names == ["BOX RENTAL", "EQUIPMENT RENTAL", "PAYE"]
   end
 end
