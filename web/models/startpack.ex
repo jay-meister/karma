@@ -214,6 +214,14 @@ defmodule Karma.Startpack do
     ]
   end
 
+  def vehicle_bring_own_keys do
+    [ :vehicle_make,
+      :vehicle_model,
+      :vehicle_colour,
+      :vehicle_registration
+    ]
+  end
+
   def paye_keys do
     [ :p45_url,
       :national_insurance_number,
@@ -285,7 +293,7 @@ defmodule Karma.Startpack do
   end
 
   def vehicle_allowance_changeset(changeset, startpack, offer) do
-    case offer.vehicle_allowance_per_week > 0 do
+    case offer.vehicle_allowance_per_week != "£ 0.00" do
       true ->
         changeset
         |> cast(startpack, vehicle_allowance_keys())
@@ -299,11 +307,11 @@ defmodule Karma.Startpack do
     case vehicle_bring_own? do
       "true" ->
         struct
-        |> cast(startpack_params, vehicle_allowance_keys())
-        |> validate_required(vehicle_allowance_keys())
+        |> cast(startpack_params, vehicle_bring_own_keys())
+        |> validate_required(vehicle_bring_own_keys())
       "false" ->
         struct
-        |> cast(startpack_params, vehicle_allowance_keys())
+        |> cast(startpack_params, vehicle_bring_own_keys())
     end
   end
 
