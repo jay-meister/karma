@@ -117,9 +117,13 @@ defmodule Karma.OfferController do
     offer_params = Map.put(offer_params, "target_email", String.downcase(email))
     project = Repo.get(Project, project_id) |> Repo.preload(:user) |> Repo.preload(:documents)
     project_documents = Enum.map(project.documents, fn document -> document.name end)
-    %{"department" => department, "job_title" => job_title, "daily_or_weekly" => daily_or_weekly} = offer_params
+    %{"department" => department,
+    "job_title" => job_title,
+    "daily_or_weekly" => daily_or_weekly,
+    "equipment_rental_required?" => equipment_rental_required?} = offer_params
+    equipment = equipment_rental_required? == "true"
     daily = daily_or_weekly == "daily"
-    contract_type = determine_contract_type(department, job_title, project_documents, daily)
+    contract_type = determine_contract_type(department, job_title, project_documents, daily, equipment)
     offer_params = Map.put(offer_params, "contract_type", contract_type)
     # first check the values provided by the user are valid
     validation_changeset = Offer.form_validation(%Offer{}, offer_params)
@@ -139,7 +143,7 @@ defmodule Karma.OfferController do
       job_title: job_title)
     else
       # run calculations and add them to the offer_params
-      calculations = parse_offer_strings(offer_params) |> run_calculations(project, project_documents, daily)
+      calculations = parse_offer_strings(offer_params) |> run_calculations(project, project_documents, daily, equipment)
       offer_params = Map.merge(offer_params, calculations)
       changeset = changeset_maybe_with_user(offer_params, project)
 
@@ -243,6 +247,7 @@ defmodule Karma.OfferController do
     project = Repo.get(Project, project_id) |> Repo.preload(:user) |> Repo.preload(:documents)
     project_documents = Enum.map(project.documents, fn document -> document.name end)
     daily = offer.daily_or_weekly == "daily"
+    equipment = offer.equipment_rental_required?
     job_titles = Karma.Job.titles()
     job_departments = Karma.Job.departments()
     ops = [
@@ -266,11 +271,15 @@ defmodule Karma.OfferController do
           |> render("edit.html", ops ++ [changeset: validation_changeset])
         false ->
           # run calculations and add them to the offer_params
-          calculations = parse_offer_strings(offer_params) |> run_calculations(project, project_documents, daily)
+          calculations = parse_offer_strings(offer_params) |> run_calculations(project, project_documents, daily, equipment)
           offer_params = Map.merge(offer_params, calculations)
-          %{"department" => department, "job_title" => job_title, "daily_or_weekly" => daily_or_weekly} = offer_params
+          %{"department" => department,
+          "job_title" => job_title,
+          "daily_or_weekly" => daily_or_weekly,
+          "equipment_rental_required?" => equipment_rental_required?} = offer_params
           daily = daily_or_weekly == "daily"
-          contract_type = determine_contract_type(department, job_title, project_documents, daily)
+          equipment = equipment_rental_required? == "true"
+          contract_type = determine_contract_type(department, job_title, project_documents, daily, equipment)
           offer_params = Map.put(offer_params, "contract_type", contract_type)
           changeset = Offer.changeset(offer, offer_params)
 
@@ -437,7 +446,7 @@ defmodule Karma.OfferController do
     Enum.reduce(keys, params, fn(i, acc) -> Map.update!(acc, i, f) end)
   end
 
-  def run_calculations(params, project, project_documents, daily) do
+  def run_calculations(params, project, project_documents, daily, equipment) do
     %{"fee_per_day_inc_holiday" => fee_per_day_inc_holiday,
     "working_week" => working_week,
     "job_title" => job_title,
@@ -451,7 +460,7 @@ defmodule Karma.OfferController do
     fee_per_week_inc_holiday = calc_fee_per_week_inc_holiday(fee_per_day_inc_holiday, working_week)
     fee_per_week_exc_holiday = calc_fee_per_week_exc_holiday(fee_per_week_inc_holiday, project.holiday_rate)
     holiday_pay_per_week = calc_holiday_pay_per_week(fee_per_week_inc_holiday, fee_per_week_exc_holiday)
-    contract_type = determine_contract_type(department, job_title, project_documents, daily)
+    contract_type = determine_contract_type(department, job_title, project_documents, daily, equipment)
     sixth_day_fee_inc_holiday = calc_day_fee_inc_holidays(fee_per_day_inc_holiday, sixth_day_fee_multiplier)
     sixth_day_fee_exc_holiday = calc_day_fee_exc_holidays(fee_per_day_exc_holiday, sixth_day_fee_multiplier)
     seventh_day_fee_inc_holiday = calc_day_fee_inc_holidays(fee_per_day_inc_holiday, seventh_day_fee_multiplier)
