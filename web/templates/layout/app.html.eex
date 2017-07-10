@@ -44,17 +44,18 @@
         <div class="mt0 mb4 b--black-20 bt">
           <article class="cf mt0">
             <div class="fl w-100 tl pt4-ns pt2 mb3 mb0-ns">
-              <div class="h3 dt pb3 dib fl">
+              <div class="h3 dt pb3 dib fl mr4">
                 <img src="/images/footer-icon.svg" class="k-w2-5 pv2 dib dtc" />
-                <p class="dib f4 pl3 white ma0 dtc  v-mid"><span class="k-light-grey">team</span> karma</p>
+                <p class="dib f4 pl2 white ma0 dtc  v-mid"><span class="k-light-grey">team</span> karma</p>
               </div>
               <div class="k-light-grey dib fr-l fr-m fr-ns k-mt0-1 pt3">
+                <a class="f4 dib k-light-grey dim link" href="mailto:info@teamengine.co.uk">contact</a>
+                <div class="k-w1px h1 k-bg-light-grey dib pt1 ml1 mr1"></div>
                 <a href="https://engineplans.formstack.com/forms/enginesupport" target="_blank"    title="help" class="f4 dib k-light-grey dim link">help</a>
-                <div class="k-w1px h1 k-bg-light-grey dib pt1"></div>
+                <div class="k-w1px h1 k-bg-light-grey dib pt1 ml1 mr1"></div>
                 <a href="/terms"    title="Terms" class="f4 dib k-light-grey dim link">terms</a>
-                <div class="k-w1px h1 k-bg-light-grey dib pt1"></div>
+                <div class="k-w1px h1 k-bg-light-grey dib pt1 ml1 mr1"></div>
                 <a href="/privacy"  title="Privacy" class="f4 dib k-light-grey dim link">privacy</a>
-                <a class="pl3 f4 dib mid-gray dim link white" href="mailto:info@teamengine.co.uk">info@teamengine.co.uk</a>
               </div>
             </div>
           </article>
