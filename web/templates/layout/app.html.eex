@@ -21,7 +21,7 @@
               <a href="/" class="h4 ml0-ns">
                 <div class="h3 dt pb3 dib fl mr4">
                   <img src="/images/logo-blue.png" class="w3 pv2 dib dtc" />
-                  <p class="dib f4 pl2 fw5 white ma0 dtc v-mid"><span class="k-light-grey fw3">team</span> karma</p>
+                  <p class="dib f3 pl3 fw5 white ma0 dtc v-mid">karma</p>
                 </div>
               </a>
               <img src="/images/ic_menu.svg" class="h3 w3 cover bg-center mb0 fr" id="hamburger" />
