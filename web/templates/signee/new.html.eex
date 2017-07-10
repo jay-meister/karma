@@ -6,7 +6,7 @@
   <div class="mb3">
     <%= if length(@document_signees) == 0 do %>
       <div class="tc k-bg-indigo white pa4 f2 br3">
-        Add signees to this document, in the order of approval  
+        Add approver/recipient to this document in order of receipt  
       </div>
     <% end %>
     <%= if length(@document_signees) != 0 do %>

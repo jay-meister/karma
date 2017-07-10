@@ -49,7 +49,7 @@
   form: f,
   atom: :duration,
   placeholder: "",
-  label: "Duration (number of weeks)"
+  label: "Shoot duration (number of weeks)"
   %>
 
   <%= component "input.html",

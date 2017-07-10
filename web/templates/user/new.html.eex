@@ -38,7 +38,7 @@
             form: f,
             atom: :password,
             label: "Password (for KARMA)",
-            placeholder: "Must contain at least 1 uppercase, 1 digit + 1 special character",
+            placeholder: "Minimum 6 characters, inc: 1 capital, 1 digit, 1 special",
             type: "password"
             %>
 
@@ -46,7 +46,7 @@
             form: f,
             atom: :terms_accepted,
             label: "I have read and accept the ",
-            link: "#",
+            link: "/terms",
             link_name: "terms and conditions"
             %>
 

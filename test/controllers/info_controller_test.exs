@@ -9,7 +9,7 @@ defmodule Karma.InfoControllerTest do
 
   test "/terms", %{conn: conn} do
     conn = get conn, info_path(conn, :terms)
-    assert html_response(conn, 200) =~ "Terms and conditions"
+    assert html_response(conn, 200) =~ "Terms of use"
   end
 
   test "/privacy", %{conn: conn} do

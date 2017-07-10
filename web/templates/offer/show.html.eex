@@ -41,7 +41,7 @@
   <% end %>
 
   <%= if length(@deal_documents) > 0 && @is_contractor? do %>
-  <%= component "form_divider.html", title: "Deal" %>
+  <%= component "form_divider.html", title: "Contracts" %>
     <div class="tc">
       <%= for document <- @deal_documents do %>
         <div class="tc mt3 dib ma2">
@@ -68,7 +68,7 @@
   <%= end %>
 
   <%= if length(@info_documents) > 0 && @is_contractor? do %>
-  <%= component "form_divider.html", title: "Info" %>
+  <%= component "form_divider.html", title: "Information" %>
     <div class="tc">
       <%= for document <- @info_documents do %>
         <div class="tc mt3 dib ma2">
@@ -121,7 +121,7 @@
     {:codename, nil, @project.codename},
     {:description, nil, @project.description},
     {:start_date, "Shoot start date", format_date(@project.start_date)},
-    {:duration, nil, "#{@project.duration} weeks"},
+    {:duration, "Shoot duration", "#{@project.duration} weeks"},
     {:studio_name, nil, @project.studio_name},
     {:holiday_rate, nil, format_holiday_rate(@project.holiday_rate)},
     {:locations, nil, @project.locations},
