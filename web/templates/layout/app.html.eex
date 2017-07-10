@@ -17,9 +17,12 @@
     <header>
       <nav role="navigation" class="flex k-h6 bb k-bg-dark-indigo relative">
         <%= if @current_user do %>
-          <div class="app-container w-100 h4 mt3 center">
+          <div class="app-container w-100 h4 mt2 center">
               <a href="/" class="h4 ml0-ns">
-                <img src="/images/logo-blue.png" class="w3" />
+                <div class="h3 dt pb3 dib fl mr4">
+                  <img src="/images/logo-blue.png" class="w3 pv2 dib dtc" />
+                  <p class="dib f4 pl2 fw5 white ma0 dtc v-mid"><span class="k-light-grey fw3">team</span> karma</p>
+                </div>
               </a>
               <img src="/images/ic_menu.svg" class="h3 w3 cover bg-center mb0 fr" id="hamburger" />
             <div class="white flex flex-column flex-row-ns items-center-ns justify-end-ns fr-ns k-mt1-5" id="list">
