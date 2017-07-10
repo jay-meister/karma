@@ -1,12 +1,18 @@
 <h1 class="k-indigo top--header absolute fw4 mb0">Add signees</h1>
-<%= link "Back", to: project_path(@conn, :show, @project), class: "no-underline k-indigo" %>
+<%= link "Dashboard", to: dashboard_path(@conn, :index), class: "no-underline k-indigo" %>
+<img src="/images/breadcrumb-arrow.svg" class="w1 ml3" />
+<%= link "Project", to: project_offer_path(@conn, :index, @project), class: "ma2 k-indigo no-underline" %>
+<img src="/images/breadcrumb-arrow.svg" class="w1 ml2" />
+<%= link "Project details", to: project_path(@conn, :show, @project), class: "no-underline k-indigo" %>
+<img src="/images/breadcrumb-arrow.svg" class="w1 ml2" />
+<div class="ma2 k-light-indigo dib">Add signees</div>
 <div class="pt3">
   <div class="f2"><%= @project.name %></div>
   <%= component "form_divider.html", title: "#{@document.name} Signees" %>
   <div class="mb3">
     <%= if length(@document_signees) == 0 do %>
       <div class="tc k-bg-indigo white pa4 f2 br3">
-        Add approver/recipient to this document in order of receipt  
+        Add approver/recipient to this document in order of receipt
       </div>
     <% end %>
     <%= if length(@document_signees) != 0 do %>
