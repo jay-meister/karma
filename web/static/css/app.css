@@ -390,6 +390,10 @@ select {
   margin-top: 0.1rem;
 }
 
+.k-mt0-4 {
+  margin-top: 0.4rem;
+}
+
 /* 4-5 =~ 4.5 because it's between 4 and 5 in tachyons*/
 .k-pl4-5 {
   padding-left: 3rem;
