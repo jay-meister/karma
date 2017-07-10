@@ -288,7 +288,7 @@ defmodule Karma.StartpackTest do
 
   # vehicle allowance changeset tests (conditionally required fields depending on vehicle_allowance_per_week)
   test "validating startpack with no vehicle allowance returns without adding validations" do
-    offer = %{vehicle_allowance_per_week: 0}
+    offer = %{vehicle_allowance_per_week: "£ 0.00"}
     valid = %{ @valid_attrs | vehicle_make: "" }
     changeset = Startpack.vehicle_allowance_changeset(%Startpack{}, valid, offer)
     # changeset function will not touch the startpack struct as vehicle allowance is 0
