@@ -1,5 +1,8 @@
 <style>
-  ol { counter-reset: item }
+  ol {
+    counter-reset: item;
+    padding: 0;
+  }
   li { display: block }
   li:before { content: counters(item, ".") " "; counter-increment: item }
 </style>
