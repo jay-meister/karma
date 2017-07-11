@@ -368,7 +368,7 @@ defmodule Karma.OfferController do
               true ->
                 initial_contract_type = offer.contract_type
 
-                Karma.Email.send_offer_accepted_contractor(conn, updated_offer)
+                Karma.Email.send_offer_accepted_contractor(conn, updated_offer, contractor)
                 |> Karma.Mailer.deliver_later()
 
 

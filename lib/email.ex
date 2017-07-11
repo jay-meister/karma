@@ -73,10 +73,10 @@ defmodule Karma.Email do
     send_html_email(project.user.email, subject, url, template)
   end
 
-  def send_offer_accepted_contractor(conn, offer) do
+  def send_offer_accepted_contractor(conn, offer, user) do
     template = "offer_accepted_contractor"
     url = R_Helpers.project_offer_url(conn, :show, offer.project_id, offer)
     subject = "Congratulations! You have accepted an offer"
-    send_html_email(offer.target_email, subject, url, template)
+    send_html_email(offer.target_email, subject, url, template, [first_name: user.first_name, codename: offer.project.codename])
   end
 end
