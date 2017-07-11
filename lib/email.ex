@@ -34,7 +34,7 @@ defmodule Karma.Email do
     RedisCli.query(["SET", rand_string, user.email])
     RedisCli.expire(rand_string, 60*5)
     url = url <> "?hash=#{rand_string}"
-    send_html_email(user.email, "Karma - reset your password", url, "password_reset")
+    send_html_email(user.email, "Karma - reset your password", url, "password_reset", [first_name: user.first_name])
   end
 
   def send_new_offer_email(conn, offer, project) do
@@ -66,17 +66,22 @@ defmodule Karma.Email do
     ])
   end
 
-  def send_offer_response_pm(conn, offer, project) do
+  def send_offer_response_pm(conn, offer, project, contractor) do
+    status =
+      case offer.accepted do
+        true -> "Accepted"
+        false -> "Rejected"
+      end
     template = "offer_response_pm"
     url = R_Helpers.project_offer_url(conn, :show, offer.project_id, offer)
     subject = "There has been a response to your offer!"
-    send_html_email(project.user.email, subject, url, template)
+    send_html_email(project.user.email, subject, url, template, [offer_status: status, name_contractor: "#{contractor.first_name} #{contractor.last_name}", codename: project.codename, first_name: project.user.first_name])
   end
 
-  def send_offer_accepted_contractor(conn, offer) do
+  def send_offer_accepted_contractor(conn, offer, user) do
     template = "offer_accepted_contractor"
     url = R_Helpers.project_offer_url(conn, :show, offer.project_id, offer)
     subject = "Congratulations! You have accepted an offer"
-    send_html_email(offer.target_email, subject, url, template)
+    send_html_email(offer.target_email, subject, url, template, [first_name: user.first_name, codename: offer.project.codename])
   end
 end

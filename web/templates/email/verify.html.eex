@@ -1,20 +1,61 @@
-<div>Hi <%= @first_name %>,</div>
-<br />
-<br />
-<div>An additional step to ensure your security:</div>
-<br />
-<br />
-<div>
-  Please <a href="<%= @url %>" style="color:#3f51b5;font-weight:bold;text-decoration:none;">CLICK HERE</a>
-  to verify your email address.
-</div>
-<br />
-<br />
-<div>Then start adding to your new Karma profile.</div>
-<br />
-<br />
-<div style="color:#757de8;">Happy to have you join us!</div>
-<br />
-<br />
-<br />
-<div style="color:#3f51b5;">Team Karma</div>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Verify</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/tachyons@4.7.0/css/tachyons.min.css"/>
+  </head>
+  <body style="padding-top:3rem;padding-bottom:3rem;background-color:#F5F5F5;">
+    <div style="color:#555555;">
+      <div style="background-color:#ffffff;font-family:Lato;width:95%;max-width:34rem;margin:0 auto;padding:2rem;border-top-left-radius:15px;border-top-right-radius:15px;">
+        <img src="https://s3-eu-west-1.amazonaws.com/engine-hosted/verify.jpg" style="width:25rem;" />
+        <br />
+        <br />
+        <div style="height:1px;background-color:lightgrey;"></div>
+        <br />
+        <br />
+        <div style="font-size:1.25rem;">Hi <%= @first_name %>,</div>
+        <br />
+        <br />
+        <div style="font-size:1rem;">A quick step to ensure your security:</div>
+        <br />
+        <br />
+        <div style="text-align:center;">
+          <a style="text-decoration:none;margin:0 auto;" href="<%= @url %>">
+            <div style="background-color:#757de8;display:inline-block;padding:1rem;border-radius:5px;color:#ffffff;font-size:1rem;">VERIFY MY EMAIL</div>
+          </a>
+        </div>
+        <br />
+        <br />
+        <div style="font-size:1rem;">Then start adding to your new Engine profile...</div>
+        <br />
+        <br />
+        <div style="height:1px;background-color:lightgrey;"></div>
+        <br />
+        <br />
+        <div style="font-size:1.2rem;color:#757de8;">Glad you could join us!</div>
+      </div>
+      <div style="background-color:#525252;font-family:Lato;width:95%;max-width:34rem;margin:0 auto;padding:2rem;border-bottom-left-radius:15px;border-bottom-right-radius:15px;">
+        <a style="text-decoration:none;" href="www.teamengine.co.uk">
+          <img src="https://s3-eu-west-1.amazonaws.com/engine-hosted/footer-logo.png" style="width:12rem;display:inline-block;" />
+        </a>
+        <div style="color:#9e9e9e;float:right;padding-top:0.75rem;">
+          <a href="mailto:info@teamengine.co.uk" style="color:#9e9e9e;font-size:0.8rem;text-decoration:none;">contact</a>
+          <div style="width:1px;background-color:#9e9e9e;height:10px;display:inline-block;margin-left:0.25rem;margin-right:0.25rem"></div>
+          <a href="https://engineplans.formstack.com/forms/enginesupport" target="_blank"    title="help" style="color:#9e9e9e;font-size:0.8rem;text-decoration:none;">help</a>
+          <div style="width:1px;background-color:#9e9e9e;height:10px;display:inline-block;margin-left:0.25rem;margin-right:0.25rem"></div>
+          <a href="https://karmaradio.herokuapp.com/terms"    title="Terms" style="color:#9e9e9e;font-size:0.8rem;text-decoration:none;">terms</a>
+          <div style="width:1px;background-color:#9e9e9e;height:10px;display:inline-block;margin-left:0.25rem;margin-right:0.25rem"></div>
+          <a href="https://karmaradio.herokuapp.com/privacy"  title="Privacy" style="color:#9e9e9e;font-size:0.8rem;text-decoration:none;">privacy</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
