@@ -1,7 +1,7 @@
 defmodule Karma.Email do
   use Bamboo.Phoenix, view: Karma.EmailView
 
-  alias Karma.{RedisCli, Controllers.Helpers}
+  alias Karma.{RedisCli, Controllers.Helpers, Repo, User}
   alias Karma.Router.Helpers, as: R_Helpers
 
   def send_text_email(recipient, subject, url, template, assigns \\ []) do
@@ -47,8 +47,14 @@ defmodule Karma.Email do
       _ ->
         {"new_offer_registered", R_Helpers.project_offer_url(conn, :show, offer.project_id, offer)}
     end
+    user_id = offer.user_id || -1
+    user =
+      case Repo.get(User, user_id) do
+        nil -> %{first_name: nil}
+        user -> user
+      end
     subject = "Karma - Invitation to join \"#{project.codename}\""
-    send_html_email(offer.target_email, subject, url, template, [codename: project.codename])
+    send_html_email(offer.target_email, subject, url, template, [codename: project.codename, first_name: user.first_name])
   end
 
   def send_updated_offer_email(conn, offer, project) do
