@@ -9,9 +9,9 @@
   <%= component "dropdown.html",
   form: f,
   atom: :type,
-  label: "select...",
+  label: "Project type",
   options: ["Feature Film": "feature", "Television": "television"],
-  prompt: "Project type..."
+  prompt: "select..."
   %>
 
   <%= component "dropdown.html",

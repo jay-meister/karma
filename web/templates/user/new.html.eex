@@ -54,7 +54,7 @@
 
             <div class="tc">
             <h4 class="mv2">Already have an account?</h4>
-            <%= link "Login", to: session_path(@conn, :new), class: "k-dark-indigo underline k-link mb2" %>
+            <%= link "Log in", to: session_path(@conn, :new), class: "k-dark-indigo link underline mb2" %>
             </div>
           <% end %>
         </div>
