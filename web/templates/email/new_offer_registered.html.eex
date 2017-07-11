@@ -21,29 +21,34 @@
         <div style="height:1px;background-color:lightgrey;"></div>
         <br />
         <br />
-        <div style="font-size:1.25rem;">Hey there!</div>
+        <div style="font-size:1.25rem;">Hi <%= @first_name %>,</div>
         <br />
         <br />
         <div style="font-size:1rem;">You've received an offer to work on the project, '<%= @codename %>'</div>
         <br />
         <br />
-        <div style="font-size:1rem;">To review the offer, start with your free Engine account:</div>
-        <br />
-        <br />
         <div style="text-align:center;">
           <a style="text-decoration:none;margin:0 auto;" href="<%= @url %>">
-            <div style="background-color:#757de8;display:inline-block;padding:1rem;border-radius:5px;color:#ffffff;font-size:1rem;">OPEN MY ACCOUNT</div>
+            <div style="background-color:#757de8;display:inline-block;padding:1rem;border-radius:5px;color:#ffffff;font-size:1rem;">REVIEW MY OFFER</div>
           </a>
         </div>
         <br />
         <br />
-        <div style="font-size:1rem;">To accept an offer, where applicable, you'll need:</div>
+        <div style="font-size:1rem;color:rgb(255, 114, 92);">To accept an offer, where applicable, you'll need:</div>
+        <br />
+        <ul style="list-style-type:circle;">
+          <li style="color:rgb(153, 153, 153);font-size:1rem;">Digital copies of your passport, P45, equipment list, etc</li>
+          <br />
+          <li style="color:rgb(153, 153, 153);font-size:1rem;">Your bank details, NI number and company information</li>
+        </ul>
+        <br />
+        <div style="color:rgb(153, 153, 153);font-size:1rem;padding-left:1.5rem;padding-right:1.5rem;">(If you complete the form on a mobile device, you can take photos of documents, if you don’t have scans)</div>
+        <br />
         <br />
         <br />
         <div style="height:1px;background-color:lightgrey;"></div>
         <br />
-        <br />
-        <div style="font-size:1.2rem;color:#757de8;">Keep your info in Engine, to join projects easily!</div>
+        <div style="font-size:1.2rem;color:#757de8;">Maintain your profile, so every job is just a click away!</div>
       </div>
       <div style="background-color:#525252;font-family:Lato;width:95%;max-width:34rem;margin:0 auto;padding:2rem;border-bottom-left-radius:15px;border-bottom-right-radius:15px;">
         <a style="text-decoration:none;" href="www.teamengine.co.uk">
