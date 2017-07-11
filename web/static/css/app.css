@@ -458,6 +458,10 @@ select {
   width: 1px;
 }
 
+.k-w32 {
+  width: 32rem;
+}
+
 .alert:empty {
   display: none;
 }
