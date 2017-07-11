@@ -32,7 +32,7 @@
         <br />
         <div style="text-align:center;">
           <a style="text-decoration:none;margin:0 auto;" href="<%= @url %>">
-            <div style="background-color:#757de8;display:inline-block;padding:1rem;border-radius:5px;color:#ffffff;font-size:1rem;">OPEN MY ACCOUNT</div>
+            <div style="background-color:#757de8;display:inline-block;padding:1rem;border-radius:5px;color:#ffffff;font-size:1rem;">CREATE MY ACCOUNT</div>
           </a>
         </div>
         <br />
