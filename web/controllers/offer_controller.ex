@@ -357,7 +357,7 @@ defmodule Karma.OfferController do
             |> put_flash(:error, "Error making response!")
             |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
           {:ok, offer} ->
-            Karma.Email.send_offer_response_pm(conn, offer, project)
+            Karma.Email.send_offer_response_pm(conn, offer, project, contractor)
             |> Karma.Mailer.deliver_later()
 
             case offer.accepted do

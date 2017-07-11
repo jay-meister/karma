@@ -66,11 +66,16 @@ defmodule Karma.Email do
     ])
   end
 
-  def send_offer_response_pm(conn, offer, project) do
+  def send_offer_response_pm(conn, offer, project, contractor) do
+    status =
+      case offer.accepted do
+        true -> "Accepted"
+        false -> "Rejected"
+      end
     template = "offer_response_pm"
     url = R_Helpers.project_offer_url(conn, :show, offer.project_id, offer)
     subject = "There has been a response to your offer!"
-    send_html_email(project.user.email, subject, url, template)
+    send_html_email(project.user.email, subject, url, template, [offer_status: status, name_contractor: "#{contractor.first_name} #{contractor.last_name}", codename: project.codename, first_name: project.user.first_name])
   end
 
   def send_offer_accepted_contractor(conn, offer, user) do
