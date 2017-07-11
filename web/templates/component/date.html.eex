@@ -14,7 +14,7 @@
   <div class="k-bg-input b-h3 pt3 k-date-select pl3 br3">
     <%= date_select assigns[:form],
     assigns[:atom],
-    class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3 w-100 k-bg-input bn",
+    class: "db h1 f6 dark-grey bg-white ba b--dark-grey br2 w-100 k-bg-input bn",
     value: default_date,
     year: [options: year_from..year_to],
     builder: fn b -> %>

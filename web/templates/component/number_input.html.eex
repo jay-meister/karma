@@ -16,7 +16,7 @@
       nil -> "pl3"
       _ -> "k-pl4-5"
     end %>
-    <%= number_input assigns[:form], assigns[:atom], placeholder: assigns[:placeholder], class: "k-bg-input k-dark-grey no-placeholder pa3 ba #{border} br3 w-100 outline-0 lato #{padding}" %>
+    <%= number_input assigns[:form], assigns[:atom], placeholder: assigns[:placeholder], class: "k-bg-input k-dark-grey no-placeholder pa3 ba #{border} br2 w-100 outline-0 lato #{padding}" %>
     <%= if assigns[:image_name] do %>
       <img src="/images/<%= assigns[:image_name] %>.svg" class="absolute w2 top-1 k-left-0-5"/>
     <% end %>

@@ -36,7 +36,7 @@
   <%= component "textarea.html",
   form: f,
   atom: :description,
-  placeholder: "Brief description the project"
+  placeholder: "Brief description of the project"
   %>
 
   <%= component "date.html",
