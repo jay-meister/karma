@@ -34,7 +34,7 @@ defmodule Karma.Email do
     RedisCli.query(["SET", rand_string, user.email])
     RedisCli.expire(rand_string, 60*5)
     url = url <> "?hash=#{rand_string}"
-    send_html_email(user.email, "Karma - reset your password", url, "password_reset")
+    send_html_email(user.email, "Karma - reset your password", url, "password_reset", [first_name: user.first_name])
   end
 
   def send_new_offer_email(conn, offer, project) do
