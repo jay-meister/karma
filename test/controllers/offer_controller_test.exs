@@ -150,7 +150,7 @@ defmodule Karma.OfferControllerTest do
     offer = insert_offer(project, %{target_email: "contractor@gmail.com", user_id: user.id})
     conn = get conn, project_offer_path(conn, :show, offer.project_id, offer)
 
-    msg = "You need to fill out more information within your startpack"
+    msg = "Complete your startpack to accept this offer"
     assert html_response(conn, 200) =~ offer.job_title
     assert html_response(conn, 200) =~ msg
   end

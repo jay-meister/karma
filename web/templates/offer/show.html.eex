@@ -19,7 +19,7 @@
 <%= if @is_contractor? do %>
   <%= if length(@changeset.errors) > 0 && @offer.accepted == nil do %>
     <div class="k-bg-indigo white tc pa4 br3 ma2 f2 mt3">
-      You need to fill out more information within your startpack before you can respond to this offer
+    Complete your startpack to accept this offer
     </div>
     <%= component "button.html", title: "Edit Startpack", link: "/startpack?offer_id=#{@offer.id}" %>
   <% end %>
