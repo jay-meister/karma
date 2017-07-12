@@ -18,6 +18,8 @@ defmodule Karma.Router do
     pipe_through :browser # Use the default browser stack
     resources "/users", UserController
     resources "/sessions", SessionController, only: [:new, :create, :delete]
+    get "/terms", InfoController, :terms
+    get "/privacy", InfoController, :privacy
     get "/verification/:hash", VerificationController, :verify
     get "/verification/verify/:hash", VerificationController, :verify_again
     get "/verification/resend/:hash", VerificationController, :resend
@@ -28,8 +30,6 @@ defmodule Karma.Router do
   # authed routes
   scope "/", Karma do
     pipe_through [:browser, :authenticate]
-    get "/terms", InfoController, :terms
-    get "/privacy", InfoController, :privacy
     post "/startpack/:id", StartpackController, :update
     post "/startpack/:id/delete-file", StartpackController, :delete_uploaded_files
     resources "/startpack", StartpackController, except: [:new, :create, :delete]

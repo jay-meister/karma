@@ -58,6 +58,12 @@ defmodule Karma.Email do
   end
 
   def send_updated_offer_email(conn, offer, project) do
+    user_id = offer.user_id || -1
+    user =
+      case Repo.get(User, user_id) do
+        nil -> %{first_name: nil}
+        user -> user
+      end
     template = "updated_offer"
     url = R_Helpers.project_offer_url(conn, :show, offer.project_id, offer)
     subject = "Karma - updated offer to join \"#{project.codename}\""
@@ -66,8 +72,7 @@ defmodule Karma.Email do
     url,
     template,
     [
-      first_name: project.user.first_name,
-      last_name: project.user.last_name,
+      first_name: user.first_name,
       codename: project.codename
     ])
   end
@@ -75,8 +80,8 @@ defmodule Karma.Email do
   def send_offer_response_pm(conn, offer, project, contractor) do
     status =
       case offer.accepted do
-        true -> "Accepted"
-        false -> "Rejected"
+        true -> "accepted"
+        false -> "rejected"
       end
     template = "offer_response_pm"
     url = R_Helpers.project_offer_url(conn, :show, offer.project_id, offer)

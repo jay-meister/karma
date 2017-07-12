@@ -24,7 +24,7 @@
         <div style="font-size:1.25rem;">Hey there!</div>
         <br />
         <br />
-        <div style="font-size:1rem;">You've received an offer to work on the project, '<%= @codename %>'</div>
+        <div style="font-size:1rem;">You've received an offer to work on the project, '<strong><%= @codename %></strong>'</div>
         <br />
         <br />
         <div style="font-size:1rem;">To review the offer, start with your free Engine account:</div>

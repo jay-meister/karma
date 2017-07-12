@@ -1,7 +1,7 @@
 <a href="/projects/<%= assigns[:project_id] %>/offers" class="no-underline">
   <div class="tl ba bw2 k-b--grey bg-white k-indigo br3 pt4 tc mb2 mt2 pb3">
-    <div class="dib k-mb0-5r f2"><%= assigns[:project_name] %> / "<%= assigns[:project_codename] %>"</div>
-    <div><%= assigns[:project_start_date] %></div>
+    <div class="dib k-mb0-5r f2"><%= assigns[:project_name] %> / '<%= assigns[:project_codename] %>'</div>
+    <div>Shoot start date: <%= assigns[:project_start_date] %></div>
     <div class="tc dib">
       <div class="tc dib w-32 ma1 pa3-ns pa1">
         <div class="f4 silver">PENDING</div>
