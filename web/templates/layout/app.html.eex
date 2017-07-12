@@ -55,9 +55,9 @@
                 <div class="k-w1px h1 k-bg-light-grey dib pt1 ml1 mr1"></div>
                 <a href="https://engineplans.formstack.com/forms/enginesupport" target="_blank"    title="help" class="f4 dib k-light-grey dim link">help</a>
                 <div class="k-w1px h1 k-bg-light-grey dib pt1 ml1 mr1"></div>
-                <a href="/terms"    title="Terms" class="f4 dib k-light-grey dim link">terms</a>
+                <a href="/terms"  target="_blank"   title="Terms" class="f4 dib k-light-grey dim link">terms</a>
                 <div class="k-w1px h1 k-bg-light-grey dib pt1 ml1 mr1"></div>
-                <a href="/privacy"  title="Privacy" class="f4 dib k-light-grey dim link">privacy</a>
+                <a href="/privacy"  target="_blank" title="Privacy" class="f4 dib k-light-grey dim link">privacy</a>
               </div>
             </div>
           </article>
