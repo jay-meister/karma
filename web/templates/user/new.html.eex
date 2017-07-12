@@ -47,7 +47,7 @@
             atom: :terms_accepted,
             label: "I have read and accept the ",
             link: "/terms",
-            link_name: "terms and conditions"
+            link_name: "terms of use"
             %>
 
             <%= component "submit_button.html", title: "Create" %>

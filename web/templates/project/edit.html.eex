@@ -2,7 +2,7 @@
 
   <%= link "Back", to: project_path(@conn, :show, @project), class: "ma2 k-indigo no-underline" %>
 
-  <h2>Edit project</h2>
+  <h1 class="k-indigo top--header absolute fw4 mb0">Edit project</h1>
 
   <%= render "form.html", changeset: @changeset,
                           action: project_path(@conn, :update, @project),

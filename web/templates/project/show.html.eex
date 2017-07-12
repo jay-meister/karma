@@ -62,7 +62,7 @@
 <div class="mb4">
   <%= component "form_divider.html", title: "Contracts" %>
   <%= if length(@deals) == 0 do %>
-    <div class="tc k-bg-indigo white pa4 f2 br3">You have not uploaded any deals yet</div>
+    <div class="tc k-bg-indigo white pa4 f2 br3">You have not uploaded any Contracts yet</div>
   <% end %>
   <div class="tc">
     <%= for deal <- @deals do %>
@@ -84,7 +84,7 @@
   </div>
   <%= component "form_divider.html", title: "Forms" %>
   <%= if length(@forms) == 0 do %>
-    <div class="tc k-bg-indigo white pa4 f2 br3">You have not uploaded any forms yet</div>
+    <div class="tc k-bg-indigo white pa4 f2 br3">You have not uploaded any Forms yet</div>
   <% end %>
   <div class="tc">
     <%= for form <- @forms do %>
@@ -104,7 +104,7 @@
   </div>
   <%= component "form_divider.html", title: "Information" %>
   <%= if length(@info) == 0 do %>
-    <div class="tc k-bg-indigo white pa4 f2 br3">You have not uploaded any info yet</div>
+    <div class="tc k-bg-indigo white pa4 f2 br3">You have not uploaded any Information yet</div>
   <% end %>
   <div class="tc">
     <%= for info <- @info do %>
