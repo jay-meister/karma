@@ -322,17 +322,94 @@ defmodule Karma.StartpackTest do
     valid = %{
       p45_url: "url",
       national_insurance_number: "121",
-      for_paye_only: "first since april"
+      for_paye_only: "first since april",
+      use_loan_out_company?: true
     }
     changeset = Startpack.contract_type_changeset(%Startpack{}, valid, offer)
     assert changeset.valid?
   end
+
+  test "validating startpack with contract type CONSTRUCTION PAYE with no errors" do
+    offer = %Karma.Offer{contract_type: "CONSTRUCTION PAYE"}
+    valid = %{
+      p45_url: "url",
+      national_insurance_number: "121",
+      for_paye_only: "first since april",
+      use_loan_out_company?: true
+    }
+    changeset = Startpack.contract_type_changeset(%Startpack{}, valid, offer)
+    assert changeset.valid?
+  end
+
+  test "validating startpack with contract type TRANSPORT PAYE with no errors" do
+    offer = %Karma.Offer{contract_type: "TRANSPORT PAYE"}
+    valid = %{
+      p45_url: "url",
+      national_insurance_number: "121",
+      for_paye_only: "first since april",
+      use_loan_out_company?: true
+    }
+    changeset = Startpack.contract_type_changeset(%Startpack{}, valid, offer)
+    assert changeset.valid?
+  end
+
+  test "validating startpack with contract type CONSTRUCTION PAYE with no errors loan out false" do
+    offer = %Karma.Offer{contract_type: "CONSTRUCTION PAYE"}
+    valid = %{
+      p45_url: "url",
+      national_insurance_number: "121",
+      for_paye_only: "first since april",
+      use_loan_out_company?: false
+    }
+    changeset = Startpack.contract_type_changeset(%Startpack{}, valid, offer)
+    assert changeset.valid?
+  end
+
+  test "validating startpack with contract type TRANSPORT PAYE with no errors loan out false" do
+    offer = %Karma.Offer{contract_type: "TRANSPORT PAYE"}
+    valid = %{
+      p45_url: "url",
+      national_insurance_number: "121",
+      for_paye_only: "first since april",
+      use_loan_out_company?: false
+    }
+    changeset = Startpack.contract_type_changeset(%Startpack{}, valid, offer)
+    assert changeset.valid?
+  end
+
+  test "validating startpack with contract type TRANSPORT SCHEDULE-D with no errors loan out false" do
+    offer = %Karma.Offer{contract_type: "TRANSPORT SCHEDULE-D"}
+    valid = %{
+      p45_url: "url",
+      national_insurance_number: "121",
+      for_paye_only: "first since april",
+      use_loan_out_company?: false,
+      schedule_d_letter_url: "url.com"
+    }
+    changeset = Startpack.contract_type_changeset(%Startpack{}, valid, offer)
+    assert changeset.valid?
+  end
+
+  test "validating startpack with contract type CONSTRUCTION SCHEDULE-D with no errors loan out false" do
+    offer = %Karma.Offer{contract_type: "CONSTRUCTION SCHEDULE-D", daily_or_weekly: "daily"}
+    valid = %{
+      p45_url: "url",
+      national_insurance_number: "121",
+      for_paye_only: "first since april",
+      use_loan_out_company?: false,
+      schedule_d_letter_url: "url.com"
+    }
+    changeset = Startpack.contract_type_changeset(%Startpack{}, valid, offer)
+    assert changeset.valid?
+  end
+
   test "validating startpack with contract type PAYE with errors" do
     offer = %Karma.Offer{contract_type: "PAYE"}
     invalid = %{
       p45_url: "url",
       national_insurance_number: "121",
-      for_paye_only: "not in dropdown"
+      for_paye_only: "not in dropdown",
+      use_loan_out_company?: false
     }
     changeset = Startpack.contract_type_changeset(%Startpack{}, invalid, offer)
     refute changeset.valid?
