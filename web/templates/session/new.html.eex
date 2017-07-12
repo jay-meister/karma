@@ -2,7 +2,7 @@
   <div class="dtc v-mid">
     <div class="ba b--black-10 br4 pa4 bg-white h-auto-ns h-100">
         <div class="tc pt5">
-          <img src="/images/logo-text.svg" class="k-w32 pl4"/>
+          <img src="/images/logo-text.svg" class="k-w32"/>
         </div>
         <div class="mt4">
           <%= form_for @conn, session_path(@conn, :create), [as: :session], fn f -> %>
