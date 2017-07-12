@@ -2,7 +2,7 @@
   <div class="dtc v-mid">
       <div class="ba b--black-10 br4-ns pa4 bg-white h-auto-ns h-100">
         <div class="tc pt3">
-          <img src="/images/logo-text.svg" class="k-w32 pl4"/>
+          <img src="/images/logo-text.svg" class="k-w32"/>
           <h2>Create account</h2>
         </div>
         <div class="">
