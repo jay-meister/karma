@@ -5,7 +5,7 @@
   <h1 class="k-indigo top--header absolute fw4 mb0"><%= @project.name %></h1>
   <%= link to: project_path(@conn, :show, @project.id), class: "no-underline" do %>
     <div class="tl ba bw2 k-b--grey bg-white k-indigo br3 pt4 tc mb2 mt2 pb3 relative">
-      <div class="f2"><%= "#{@project.name} / \"#{@project.codename}\"" %></div>
+      <div class="f2"><%= "#{@project.name} / \'#{@project.codename}\'" %></div>
       <div class="f3 pt2">Shoot start date: <%= format_date(@project.start_date) %></div>
       <div class="tc dib">
         <div class="tc dib w-32 ma1 pa3-ns pa">

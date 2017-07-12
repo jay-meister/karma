@@ -1,6 +1,12 @@
 <div class=" mt6 center">
 
-  <%= link "Back", to: project_path(@conn, :show, @project), class: "ma2 k-indigo no-underline" %>
+  <%= link "Dashboard", to: dashboard_path(@conn, :index), class: "no-underline k-indigo" %>
+  <img src="/images/breadcrumb-arrow.svg" class="w1 ml2" />
+  <%= link "Project", to: project_offer_path(@conn, :index, @project), class: "ma2 no-underline k-indigo" %>
+  <img src="/images/breadcrumb-arrow.svg" class="w1 ml2" />
+  <%= link "Project details", to: project_path(@conn, :show, @project), class: "ma2 no-underline k-indigo" %>
+  <img src="/images/breadcrumb-arrow.svg" class="w1 ml2" />
+  <div class="ma2 k-light-indigo dib">Edit project</div>
 
   <h1 class="k-indigo top--header absolute fw4 mb0">Edit project</h1>
 

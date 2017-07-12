@@ -80,8 +80,8 @@ defmodule Karma.Email do
   def send_offer_response_pm(conn, offer, project, contractor) do
     status =
       case offer.accepted do
-        true -> "Accepted"
-        false -> "Rejected"
+        true -> "accepted"
+        false -> "rejected"
       end
     template = "offer_response_pm"
     url = R_Helpers.project_offer_url(conn, :show, offer.project_id, offer)

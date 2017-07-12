@@ -131,8 +131,8 @@
     form: f,
     atom: :category,
     options: [
-      "Contract": "Deal",
-      "Form": "Form",
+      "Contracts": "Deal",
+      "Forms": "Form",
       "Information": "Info"
       ],
     prompt: "Pick a document category",

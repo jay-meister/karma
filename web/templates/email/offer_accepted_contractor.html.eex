@@ -24,7 +24,7 @@
         <div style="font-size:1.25rem;">Hi <%= @first_name %>,</div>
         <br />
         <br />
-        <div style="font-size:1rem;">You have accepted an offer to join <%= @codename %></div>
+        <div style="font-size:1rem;">You have accepted an offer to join '<strong><%= @codename %></strong>'</div>
         <br />
         <br />
         <div style="text-align:center;">
