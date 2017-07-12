@@ -86,7 +86,7 @@ defmodule Karma.TestHelpers do
   end
 
   def insert_approver(project, attrs \\ %{}) do
-    default_signee = %{name: "John Smith", approver_type: "Signee", email: "johnsmith@gmail.com", role: "Producer"}
+    default_signee = %{name: "John Smith", approver_type: "Approver", email: "johnsmith@gmail.com", role: "Producer"}
     changes = Map.merge(default_signee, attrs)
 
     project

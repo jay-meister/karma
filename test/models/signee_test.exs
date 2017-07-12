@@ -3,7 +3,7 @@ defmodule Karma.SigneeTest do
 
   alias Karma.Signee
 
-  @valid_attrs %{name: "First Last", email: "test@email.com", approver_type: "Signee", role: "Role", project_id: 1}
+  @valid_attrs %{name: "First Last", email: "test@email.com", approver_type: "Approver", role: "Role", project_id: 1}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

@@ -16,7 +16,7 @@ defmodule Karma.Signee do
     struct
     |> cast(params, [:name, :role, :email, :approver_type, :project_id])
     |> validate_required([:name, :role, :email, :approver_type, :project_id])
-    |> validate_inclusion(:approver_type, ["Signee", "Recipient"])
+    |> validate_inclusion(:approver_type, ["Approver", "Recipient"])
     |> validate_format(:email, ~r/@/)
     |> unique_constraint(:unique_project_signees, name: :unique_project_signees)
   end
