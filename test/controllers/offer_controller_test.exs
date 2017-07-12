@@ -102,7 +102,7 @@ defmodule Karma.OfferControllerTest do
 
   test "does not create offer and renders error if target_email is not given", %{conn: conn, project: project} do
     conn = post conn, project_offer_path(conn, :create, project), offer: default_offer(%{target_email: ""})
-    assert html_response(conn, 200) =~ "can&#39;t be blank"
+    assert html_response(conn, 200) =~ "Response required"
   end
 
   test "does not create resource and renders errors when data is invalid", %{conn: conn, project: project} do
