@@ -4,6 +4,6 @@ Your offer to join "<%= @codename %>" has been updated.
 
 Please follow the link <%= @url %> to view your latest offer.
 
-The more information you add to Karma, the easier connecting to projects becomes.
+The more information you add to Engine, the easier connecting to projects becomes.
 
-Team Karma
+Team Engine

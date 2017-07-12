@@ -37,7 +37,7 @@
             <%= component "input.html",
             form: f,
             atom: :password,
-            label: "Password (for KARMA)",
+            label: "Password (for Engine)",
             placeholder: "Minimum 6 characters, inc: 1 capital, 1 digit, 1 special",
             type: "password"
             %>

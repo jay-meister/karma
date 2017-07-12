@@ -5,7 +5,7 @@ You have received an offer to work on the project, "<%= @codename %>"
 To review your offer please visit this link:
 <%= @url %>
 
-With Karma, save all your start information, to make joining future projects,
+With Engine, save all your start information, to make joining future projects,
 easy for you.
 
-Team Karma
+Team Engine
