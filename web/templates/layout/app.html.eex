@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Hello Karma!</title>
+    <title>e n g i n e</title>
     <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/tachyons@4.7.0/css/tachyons.min.css"/>
@@ -55,9 +55,9 @@
                 <div class="k-w1px h1 k-bg-light-grey dib pt1 ml1 mr1"></div>
                 <a href="https://engineplans.formstack.com/forms/enginesupport" target="_blank"    title="help" class="f4 dib k-light-grey dim link">help</a>
                 <div class="k-w1px h1 k-bg-light-grey dib pt1 ml1 mr1"></div>
-                <a href="/terms"    title="Terms" class="f4 dib k-light-grey dim link">terms</a>
+                <a href="/terms"  target="_blank"   title="Terms" class="f4 dib k-light-grey dim link">terms</a>
                 <div class="k-w1px h1 k-bg-light-grey dib pt1 ml1 mr1"></div>
-                <a href="/privacy"  title="Privacy" class="f4 dib k-light-grey dim link">privacy</a>
+                <a href="/privacy"  target="_blank" title="Privacy" class="f4 dib k-light-grey dim link">privacy</a>
               </div>
             </div>
           </article>

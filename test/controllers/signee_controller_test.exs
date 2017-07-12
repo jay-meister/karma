@@ -3,7 +3,7 @@ defmodule Karma.SigneeControllerTest do
 
   alias Karma.{Signee, DocumentSignee}
 
-  @valid_attrs %{name: "First Last", email: "test@email.com", role: "Tester", approver_type: "Signee"}
+  @valid_attrs %{name: "First Last", email: "test@email.com", role: "Tester", approver_type: "Approver"}
   @invalid_attrs %{name: "", email: "", role: ""}
 
 
@@ -18,21 +18,21 @@ defmodule Karma.SigneeControllerTest do
 
   test "create new signee", %{conn: conn, project: project} do
     conn = post conn, project_signee_path(conn, :create, project), signee: @valid_attrs
-    assert Phoenix.Controller.get_flash(conn, :info) == "First Last added as a signee to #{project.name}"
+    assert Phoenix.Controller.get_flash(conn, :info) == "First Last added as an approver to #{project.name}"
     assert redirected_to(conn, 302) == "/projects/#{project.id}"
     refute Repo.get_by(Signee, email: "test@email.com") == nil
   end
 
   test "create new signee fail", %{conn: conn, project: project} do
     conn = post conn, project_signee_path(conn, :create, project), signee: @invalid_attrs
-    assert Phoenix.Controller.get_flash(conn, :error) =~ "Failed to add signee!"
+    assert Phoenix.Controller.get_flash(conn, :error) =~ "Failed to add approver!"
     assert redirected_to(conn, 302) == "/projects/#{project.id}"
   end
 
   test "delete a signee", %{conn: conn, project: project} do
     signee = insert_approver(project)
     conn = delete conn, project_signee_path(conn, :delete, project, signee)
-    assert Phoenix.Controller.get_flash(conn, :info) == "Signee deleted successfully."
+    assert Phoenix.Controller.get_flash(conn, :info) == "Approver deleted successfully."
     assert redirected_to(conn, 302) == "/projects/#{project.id}"
     assert Repo.get_by(Signee, email: signee.email) == nil
   end
@@ -58,7 +58,7 @@ defmodule Karma.SigneeControllerTest do
     signee = insert_approver(project)
     document_signee = %{document_id: document.id, signee_id: signee.id, order: 2}
     conn = post conn, project_document_signee_path(conn, :add_signee, project, document), document_signee: document_signee
-    assert Phoenix.Controller.get_flash(conn, :info) == "Signee #{signee.name} added to document approval chain!"
+    assert Phoenix.Controller.get_flash(conn, :info) == "Approver #{signee.name} added to document approval chain!"
     assert redirected_to(conn, 302) == "/projects/#{project.id}/documents/#{document.id}/signees/new"
     refute Repo.get_by(DocumentSignee, document_id: document.id, signee_id: signee.id) == nil
   end
@@ -67,7 +67,7 @@ defmodule Karma.SigneeControllerTest do
     signee = insert_approver(project)
     document_signee = %{document_id: "", signee_id: "", order: ""}
     conn = post conn, project_document_signee_path(conn, :add_signee, project, document), document_signee: document_signee
-    assert Phoenix.Controller.get_flash(conn, :error) == "You must select a signee"
+    assert Phoenix.Controller.get_flash(conn, :error) == "You must select an approver"
     assert redirected_to(conn, 302) == "/projects/#{project.id}/documents/#{document.id}/signees/new"
     assert Repo.get_by(DocumentSignee, document_id: document.id, signee_id: signee.id) == nil
   end
@@ -80,7 +80,7 @@ defmodule Karma.SigneeControllerTest do
     insert_document_approver(document, signee_2)
     insert_document_approver(document, signee_3)
     conn = delete conn, project_document_signee_path(conn, :clear_signees, project, document)
-    assert Phoenix.Controller.get_flash(conn, :info) == "3 Signees cleared successfully!"
+    assert Phoenix.Controller.get_flash(conn, :info) == "3 Approvers cleared successfully!"
     assert redirected_to(conn, 302) == "/projects/#{project.id}/documents/#{document.id}/signees/new"
   end
 end

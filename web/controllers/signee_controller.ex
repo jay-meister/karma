@@ -13,11 +13,11 @@ defmodule Karma.SigneeController do
     case Repo.insert(changeset) do
       {:ok, signee} ->
         conn
-        |> put_flash(:info, "#{signee.name} added as a signee to #{project.name}")
+        |> put_flash(:info, "#{signee.name} added as an approver to #{project.name}")
         |> redirect(to: project_path(conn, :show, project_id))
       {:error, _changeset} ->
         conn
-        |> put_flash(:error, "Failed to add signee! Make sure you have filled out all fields and email is in the correct format")
+        |> put_flash(:error, "Failed to add approver! Make sure you have filled out all fields and email is in the correct format")
         |> redirect(to: project_path(conn, :show, project_id))
     end
   end
@@ -27,7 +27,7 @@ defmodule Karma.SigneeController do
     signee = Repo.get!(Signee, id)
     Repo.delete!(signee)
     conn
-    |> put_flash(:info, "Signee deleted successfully.")
+    |> put_flash(:info, "Approver deleted successfully.")
     |> redirect(to: project_path(conn, :show, project))
   end
 
@@ -71,11 +71,11 @@ defmodule Karma.SigneeController do
       {:ok, document_signee} ->
         loaded_signee = document_signee |> Repo.preload(:signee)
         conn
-        |> put_flash(:info, "Signee #{loaded_signee.signee.name} added to document approval chain!")
+        |> put_flash(:info, "Approver #{loaded_signee.signee.name} added to document approval chain!")
         |> redirect(to: project_document_signee_path(conn, :add, project, document))
       {:error, _changeset} ->
         conn
-        |> put_flash(:error, "You must select a signee")
+        |> put_flash(:error, "You must select an approver")
         |> redirect(to: project_document_signee_path(conn, :add, project, document))
     end
   end
@@ -87,7 +87,7 @@ defmodule Karma.SigneeController do
     case Repo.delete_all(document_signees) do
       {num, _result} ->
         conn
-        |> put_flash(:info, "#{num} Signees cleared successfully!")
+        |> put_flash(:info, "#{num} Approvers cleared successfully!")
         |> redirect(to: project_document_signee_path(conn, :add, project, document))
     end
   end

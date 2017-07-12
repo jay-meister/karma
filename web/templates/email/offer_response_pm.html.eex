@@ -140,6 +140,11 @@ a[x-apple-data-detectors=true] {
     </style>
 </head>
 <body class="clean-body" style="margin: 0;padding: 0;-webkit-text-size-adjust: 100%;background-color: #F5F5F5">
+  <%= response_colour =
+        case @offer_status do
+          "accepted" -> "#9eebcf"
+          "rejected" -> "#ff725c"
+        end %>
 
   <!--[if IE]><div class="ie-browser"><![endif]-->
   <!--[if mso]><div class="mso-container"><![endif]-->
@@ -239,7 +244,7 @@ a[x-apple-data-detectors=true] {
 
                     <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 30px; padding-left: 30px; padding-top: 10px; padding-bottom: 10px;"><![endif]-->
 <div style="font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;color:#555555;line-height:180%; padding-right: 30px; padding-left: 30px; padding-top: 10px; padding-bottom: 10px;">
-	<div style="font-size:12px;line-height:22px;color:#555555;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;text-align:left;"><p style="margin: 0;font-size: 12px;line-height: 22px"><span style="font-size: 14px; line-height: 25px; color: rgb(112, 112, 112);"><%= @name_contractor %> has <%= @offer_status %> your offer to join <strong>'<%= @codename %>'</strong></span></p></div>
+	<div style="font-size:12px;line-height:22px;color:#555555;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;text-align:left;"><p style="margin: 0;font-size: 12px;line-height: 22px"><span style="font-size: 14px; line-height: 25px; color: rgb(112, 112, 112);"><%= @name_contractor %> has <span style="color:<%= response_colour %>"><%= @offer_status %></span> your offer to join <strong>'<%= @codename %>'</strong></span></p></div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
 
@@ -318,7 +323,7 @@ We'll get back to you soon!
 
 Thanks.
 
-(if you need help, please click the 'help' link in and complete the form)">contact</a> </span> | &#160;<span style="color: rgb(207, 207, 207); font-size: 11px; line-height: 22px;"><a style="color:#757de8;text-decoration: none; color: rgb(207, 207, 207);" href="https://engineplans.formstack.com/forms/enginesupport" target="_blank" rel="noopener noreferrer">help &#160;</a>| <a style="color:#757de8;text-decoration: none; color: rgb(207, 207, 207);" href="http://www.teamengine.co.uk/terms" target="_blank" rel="noopener noreferrer">terms &#160;</a></span>| <span style="color: rgb(207, 207, 207); font-size: 11px; line-height: 22px;"><a style="color:#757de8;text-decoration: none; color: rgb(207, 207, 207);" href="http://www.teamengine.co.uk/privacy" target="_blank" rel="noopener noreferrer">privacy&#160;</a></span></span><br></p></div>
+(if you need help, please click the 'help' link in and complete the form)">contact</a> </span> | &#160;<span style="color: rgb(207, 207, 207); font-size: 11px; line-height: 22px;"><a style="color:#757de8;text-decoration: none; color: rgb(207, 207, 207);" href="https://engineplans.formstack.com/forms/enginesupport" target="_blank" rel="noopener noreferrer">help &#160;</a>| <a style="color:#757de8;text-decoration: none; color: rgb(207, 207, 207);" href="https://karmaradio.herokuapp.com/terms" target="_blank" rel="noopener noreferrer">terms &#160;</a></span>| <span style="color: rgb(207, 207, 207); font-size: 11px; line-height: 22px;"><a style="color:#757de8;text-decoration: none; color: rgb(207, 207, 207);" href="https://karmaradio.herokuapp.com/privacy" target="_blank" rel="noopener noreferrer">privacy&#160;</a></span></span><br></p></div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
 

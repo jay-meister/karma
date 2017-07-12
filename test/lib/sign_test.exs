@@ -24,7 +24,7 @@ defmodule Karma.SignTest do
   test "get approval chain function", %{document: document, offer: offer} do
     alt_doc = insert_merged_document(document, offer)
 
-    chain = Sign.get_approval_chain(alt_doc, "Signee")
+    chain = Sign.get_approval_chain(alt_doc, "Approver")
 
     # assert order is correct
     assert [
@@ -37,7 +37,7 @@ defmodule Karma.SignTest do
   test "format approval chain function", %{document: document, offer: offer, signee3: signee3} do
     formatted =
       insert_merged_document(document, offer)
-      |> Sign.get_approval_chain("Signee")
+      |> Sign.get_approval_chain("Approver")
       |> Sign.format_approval_chain()
 
     assert hd(formatted) == %{email: "signee3@gmail.com", name: "John Smith", id: signee3.id}

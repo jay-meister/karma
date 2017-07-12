@@ -82,7 +82,7 @@ defmodule Karma.Sign do
 
   # approval chain related
   def get_and_prepare_approval_chain(merged, contractor) do
-    get_approval_chain(merged, "Signee")
+    get_approval_chain(merged, "Approver")
     |> format_approval_chain()
     |> add_contractor_to_chain(contractor)
     |> add_index_to_chain(merged)

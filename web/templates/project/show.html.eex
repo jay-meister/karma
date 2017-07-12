@@ -241,7 +241,7 @@
     <%= component "dropdown.html",
     form: f,
     atom: :approver_type,
-    options: ["Signee", "Recipient"],
+    options: ["Approver", "Recipient"],
     prompt: "select..."
     %>
     <%= component "submit_button.html",

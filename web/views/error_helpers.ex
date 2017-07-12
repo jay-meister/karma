@@ -10,7 +10,7 @@ defmodule Karma.ErrorHelpers do
   """
   def error_tag(form, field) do
     if error = form.errors[field] do
-      content_tag :span, "! #{translate_error(error)}", class: "ttc light-red"
+      content_tag :span, format_error(translate_error(error)), class: "ttc light-red"
     end
   end
 
@@ -35,6 +35,13 @@ defmodule Karma.ErrorHelpers do
       Gettext.dngettext(Karma.Gettext, "errors", msg, msg, count, opts)
     else
       Gettext.dgettext(Karma.Gettext, "errors", msg, opts)
+    end
+  end
+
+  defp format_error(msg) do
+    case msg do
+      "can't be blank" -> "Response required"
+      _ -> msg
     end
   end
 end

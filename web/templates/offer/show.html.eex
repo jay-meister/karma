@@ -19,7 +19,7 @@
 <%= if @is_contractor? do %>
   <%= if length(@changeset.errors) > 0 && @offer.accepted == nil do %>
     <div class="k-bg-indigo white tc pa4 br3 ma2 f2 mt3">
-      You need to fill out more information within your startpack before you can respond to this offer
+    Complete your startpack to accept this offer
     </div>
     <%= component "button.html", title: "Edit Startpack", link: "/startpack?offer_id=#{@offer.id}" %>
   <% end %>
@@ -44,7 +44,7 @@
       <%= for document <- @deal_documents do %>
         <div class="tc mt3 dib ma2">
           <img src="/images/file.png" class="w5" />
-          <div class="mt2 mb2">Merged <%= document.document.name %> Document</div>
+          <div class="mt2 mb2">Merged <%= document.document.name %></div>
           <%= component "button.html", title: "Download", link: document.merged_url %>
 
         </div>
@@ -58,7 +58,7 @@
       <%= for document <- @form_documents do %>
         <div class="tc mt3 dib ma2">
           <img src="/images/file.png" class="w5" />
-          <div class="mt2 mb2">Merged <%= document.document.name %> Document</div>
+          <div class="mt2 mb2">Merged <%= document.document.name %></div>
           <%= component "button.html", title: "Download", link: document.merged_url %>
         </div>
       <% end %>
@@ -71,7 +71,7 @@
       <%= for document <- @info_documents do %>
         <div class="tc mt3 dib ma2">
           <img src="/images/file.png" class="w5" />
-          <div class="mt2 mb2"><%= document.name %> Document</div>
+          <div class="mt2 mb2"><%= document.name %></div>
           <%= component "button.html", title: "Download", link: document.url %>
           <div class="h3">
           </div>
