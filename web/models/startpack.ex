@@ -248,6 +248,7 @@ defmodule Karma.Startpack do
     |> agent_requirement_changeset(startpack)
     |> base_requirement_changeset(startpack)
     |> vehicle_allowance_changeset(startpack, offer)
+    |> vehicle_bring_own_changeset(startpack)
     |> student_loan_changeset(startpack)
     |> contract_type_changeset(startpack, offer)
     |> loan_out_changeset(startpack)
@@ -303,15 +304,14 @@ defmodule Karma.Startpack do
     end
   end
 
-  def vehicle_bring_own_changeset(struct, %{"vehicle_bring_own?" => vehicle_bring_own?} = startpack_params) do
-    case vehicle_bring_own? do
-      "true" ->
-        struct
-        |> cast(startpack_params, vehicle_bring_own_keys())
+  def vehicle_bring_own_changeset(changeset, startpack) do
+    case startpack.vehicle_bring_own? do
+      true ->
+        changeset
+        |> cast(startpack, vehicle_bring_own_keys())
         |> validate_required(vehicle_bring_own_keys())
-      "false" ->
-        struct
-        |> cast(startpack_params, vehicle_bring_own_keys())
+      false ->
+        changeset
     end
   end
 

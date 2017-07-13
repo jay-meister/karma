@@ -105,7 +105,6 @@ defmodule Karma.StartpackTest do
       passport_expiry_date: %{day: 17, month: 4, year: 2010},
       country_of_legal_nationality: "some content",
       mobile_tel: "some content",
-      vehicle_colour: "some content",
       emergency_contact_name: "some content",
       emergency_contact_tel: "some content",
       bank_account_number: "some content",
@@ -124,6 +123,12 @@ defmodule Karma.StartpackTest do
       agent_name: "some content",
       box_rental_value: 42,
       vat_number: "some content",
+      vehicle_bring_own?: false,
+      vehicle_insurance_url: "some content",
+      vehicle_license_url: "some content",
+      vehicle_model: "some content",
+      vehicle_make: "some content",
+      vehicle_colour: "some content",
       vehicle_registration: "some content",
       agent_bank_account_iban: "some content",
       loan_out_company_cert_url: "some content",
@@ -134,7 +139,6 @@ defmodule Karma.StartpackTest do
       schedule_d_letter_url: "some content",
       p45_url: "some content",
       agent_bank_sort_code: "some content",
-      vehicle_make: "some content",
       bank_address: "some content",
       national_insurance_number: "some content",
       passport_issuing_country: "some content",
@@ -143,12 +147,9 @@ defmodule Karma.StartpackTest do
       agent_deal?: true,
       student_loan_repay_direct?: true,
       bank_swift_code: "some content",
-      vehicle_model: "some content",
       primary_address_country: "some content",
       passport_full_name: "some content",
       agent_tel: "some content",
-      vehicle_insurance_url: "some content",
-      vehicle_license_url: "some content",
       student_loan_finished_before_6_april?: true,
       agent_company: "some content",
       primary_address_2: "some content",
@@ -264,7 +265,6 @@ defmodule Karma.StartpackTest do
     changeset = Startpack.base_requirement_changeset(%Startpack{}, @valid_attrs)
     assert changeset.valid?
   end
-
 
   # agent changeset tests (conditionally required fields depending on agent deal?)
   test "validating startpack with agent_deal? false and missing required data" do

@@ -50,44 +50,23 @@ defmodule Karma.StartpackController do
         |> put_flash(:error, "Error updating startpack!")
         |> render("index.html", changeset: image_changeset, startpack: startpack, offer: %{}, user: user, delete_changeset: delete_changeset, uploaded_files: uploaded_files)
       true ->
-        vehicle_changeset = Startpack.vehicle_bring_own_changeset(startpack, startpack_params)
-        case vehicle_changeset.valid? do
-          false ->
-            vehicle_changeset = %{vehicle_changeset | action: :insert}
-            changeset =
-              case offer_id == "" do
-                true -> vehicle_changeset
-                false ->
-                  case Repo.get(Offer, offer_id) do
-                    nil -> vehicle_changeset
-                    offer ->
-                      mother_changeset = Startpack.mother_changeset(%Startpack{}, Map.from_struct(startpack), offer)
-                      mother_changeset = %{mother_changeset | action: :insert}
-                      mother_changeset
-                  end
-              end
-            conn
-            |> put_flash(:error, "Error updating startpack!")
-            |> render("index.html", changeset: changeset, startpack: startpack, offer: %{}, user: user, delete_changeset: delete_changeset, uploaded_files: uploaded_files)
+        urls = Karma.S3.upload_many(startpack_params, @file_upload_keys)
+
+        params = Map.merge(startpack_params, urls)
+
+        changeset = Startpack.changeset(startpack, params)
+
+        _startpack = Repo.update!(changeset)
+        case offer_id == "" do
           true ->
-            urls = Karma.S3.upload_many(startpack_params, @file_upload_keys)
-
-            params = Map.merge(startpack_params, urls)
-
-            changeset = Startpack.changeset(startpack, params)
-
-            _startpack = Repo.update!(changeset)
-            case offer_id == "" do
-              true ->
-                conn
-                |> put_flash(:info, "Startpack updated successfully!")
-                |> redirect(to: startpack_path(conn, :index))
-              false ->
-                conn
-                |> put_flash(:info, "Startpack updated successfully!")
-                |> redirect(to: startpack_path(conn, :index, offer_id: offer_id))
-            end
-        end
+            conn
+            |> put_flash(:info, "Startpack updated successfully!")
+            |> redirect(to: startpack_path(conn, :index))
+          false ->
+            conn
+            |> put_flash(:info, "Startpack updated successfully!")
+            |> redirect(to: startpack_path(conn, :index, offer_id: offer_id))
+      end
     end
   end
 
