@@ -42,11 +42,8 @@ defmodule Karma.OfferController do
   def add_offer_to_conn(conn, _) do
     %{"id" => offer_id} = conn.params
     # offer
-    offer =
-      case Repo.get_by(Offer, id: offer_id) do
-        nil -> nil
-        offer -> Formatter.format_offer_data(offer)
-      end
+    offer = Repo.get_by(Offer, id: offer_id)
+
     conn = assign(conn, :offer, offer)
     case conn.assigns.offer do
       nil ->
@@ -206,6 +203,7 @@ defmodule Karma.OfferController do
         changeset: changeset,
         contract: nil,
         contractor: contractor,
+        formatted_offer: Formatter.format_offer_data(offer),
         supporting_documents: supporting_documents)
       _ ->
         edit_changeset = Offer.changeset(offer)
@@ -221,6 +219,7 @@ defmodule Karma.OfferController do
         deal_documents: deal_documents,
         form_documents: form_documents,
         contractor: contractor,
+        formatted_offer: Formatter.format_offer_data(offer),
         supporting_documents: supporting_documents
         )
     end

@@ -81,7 +81,8 @@ defmodule Karma.Formatter do
       "sixth_day_fee_exc_holiday": "#{currency_symbol} #{format_number(offer_data.sixth_day_fee_exc_holiday)}",
       "seventh_day_fee_inc_holiday": "#{currency_symbol} #{format_number(offer_data.seventh_day_fee_inc_holiday)}",
       "seventh_day_fee_exc_holiday": "#{currency_symbol} #{format_number(offer_data.seventh_day_fee_exc_holiday)}",
-      "start_date": ViewHelpers.format_date(offer_data.start_date)
+      "start_date": ViewHelpers.format_date(offer_data.start_date),
+      "currency": String.upcase(offer_data.currency)
     }
     offer_data =
       case offer_data.box_rental_required? do

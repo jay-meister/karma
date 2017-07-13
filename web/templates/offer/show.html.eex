@@ -138,7 +138,7 @@
     {:contractor_details_accepted, nil, nil}
   ] do %>
     <%= component "data.html",
-    data: formatted || Map.get(@offer, atom),
+    data: formatted || Map.get(@formatted_offer, atom),
     label: label || format_label(atom)
     %>
   <% end %>
@@ -159,7 +159,7 @@
       <% else %>
       <div>
         <%= for {atom, label, formatted} <- [
-          {:recipient_fullname, "Recipient fullname", "#{@offer.recipient_fullname}"}
+          {:recipient_fullname, "Recipient fullname", "#{@formatted_offer.recipient_fullname}"}
         ] do %>
           <%= component "data.html",
           data: formatted || Map.get(@contractor, atom),
@@ -173,7 +173,7 @@
         {:target_email, "Recipient email", nil}
       ] do %>
         <%= component "data.html",
-        data: formatted || Map.get(@offer, atom),
+        data: formatted || Map.get(@formatted_offer, atom),
         label: label || format_label(atom)
         %>
       <% end %>
@@ -185,20 +185,20 @@
       {:job_title, nil, nil}
     ] do %>
       <%= component "data.html",
-      data: formatted || Map.get(@offer, atom),
+      data: formatted || Map.get(@formatted_offer, atom),
       label: label || format_label(atom)
       %>
     <% end %>
   </div>
   <div class="mt4">
     <%= for {atom, label, formatted} <- [
-      {:start_date, "Start date", @offer.start_date},
-      {:contract_type, nil, check_loan_out(@offer.contract_type, @offer.user_id)},
+      {:start_date, "Start date", @formatted_offer.start_date},
+      {:contract_type, nil, check_loan_out(@formatted_offer.contract_type, @offer.user_id)},
       {:daily_or_weekly, nil, nil},
       {:working_week, nil, nil}
     ] do %>
       <%= component "data.html",
-      data: formatted || Map.get(@offer, atom),
+      data: formatted || Map.get(@formatted_offer, atom),
       label: label || format_label(atom)
       %>
     <% end %>
@@ -208,7 +208,7 @@
       {:additional_notes, nil, nil}
     ] do %>
       <%= component "data.html",
-      data: formatted || Map.get(@offer, atom),
+      data: formatted || Map.get(@formatted_offer, atom),
       label: label || format_label(atom)
       %>
     <% end %>
@@ -220,7 +220,7 @@
       {:currency, nil, nil}
     ] do %>
       <%= component "data.html",
-      data: formatted || Map.get(@offer, atom),
+      data: formatted || Map.get(@formatted_offer, atom),
       label: label || format_label(atom)
       %>
     <% end %>
@@ -232,7 +232,7 @@
       {:holiday_pay_per_day, nil, nil}
     ] do %>
       <%= component "data.html",
-      data: formatted || Map.get(@offer, atom),
+      data: formatted || Map.get(@formatted_offer, atom),
       label: label || format_label(atom)
       %>
     <% end %>
@@ -245,7 +245,7 @@
       {:holiday_pay_per_week, nil, nil}
     ] do %>
       <%= component "data.html",
-      data: formatted || Map.get(@offer, atom),
+      data: formatted || Map.get(@formatted_offer, atom),
       label: label || format_label(atom)
       %>
     <% end %>
@@ -258,7 +258,7 @@
       {:sixth_day_fee_exc_holiday, nil, nil}
     ] do %>
       <%= component "data.html",
-      data: formatted || Map.get(@offer, atom),
+      data: formatted || Map.get(@formatted_offer, atom),
       label: label || format_label(atom)
       %>
     <% end %>
@@ -271,7 +271,7 @@
       {:seventh_day_fee_exc_holiday, nil, nil}
     ] do %>
       <%= component "data.html",
-      data: formatted || Map.get(@offer, atom),
+      data: formatted || Map.get(@formatted_offer, atom),
       label: label || format_label(atom)
       %>
     <% end %>
@@ -289,7 +289,7 @@
         {:other_deal_provisions, nil, nil}
       ] do %>
         <%= component "data.html",
-        data: formatted || Map.get(@offer, atom),
+        data: formatted || Map.get(@formatted_offer, atom),
         label: label || format_label(atom)
         %>
       <% end %>
@@ -304,7 +304,7 @@
         {:box_rental_period, nil, nil}
       ] do %>
         <%= component "data.html",
-        data: formatted || Map.get(@offer, atom),
+        data: formatted || Map.get(@formatted_offer, atom),
         label: label || format_label(atom)
         %>
       <% end %>
@@ -319,7 +319,7 @@
         {:equipment_rental_period, nil, nil}
       ] do %>
         <%= component "data.html",
-        data: formatted || Map.get(@offer, atom),
+        data: formatted || Map.get(@formatted_offer, atom),
         label: label || format_label(atom)
         %>
       <% end %>
@@ -331,7 +331,7 @@
       {:vehicle_allowance_per_week, nil, nil}
     ] do %>
       <%= component "data.html",
-      data: formatted || Map.get(@offer, atom),
+      data: formatted || Map.get(@formatted_offer, atom),
       label: label || format_label(atom)
       %>
     <% end %>
