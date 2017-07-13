@@ -28,7 +28,7 @@
           <% end %>
         </div>
         <div class="pa4 tc">
-          <%= link "Forgot your password?", to: password_path(@conn, :new), class: "k-dark-indigo underline" %>
+          <%= link "forgot/reset password", to: password_path(@conn, :new), class: "k-dark-indigo underline" %>
           <%= component "divider.html" %>
           <h4 class="mt4 mb2">New to Karma?</h4>
           <%= link "Create an account", to: user_path(@conn, :new), class: "k-dark-indigo underline" %>
