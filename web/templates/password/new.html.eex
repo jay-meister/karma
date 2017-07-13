@@ -2,7 +2,7 @@
   <div class="dtc v-mid">
     <div class="ba b--black-10 br4 pa4 bg-white h-auto-ns h-100">
       <div class="tc pt5">
-        <img src="/images/logo-blue.png" class="k-w4-5"/>
+        <img src="/images/engine-logo-front.jpg" class="k-w32"/>
       </div>
       <div class="mt4 mb6">
         <%= form_for @changeset, password_path(@conn, :create), fn f -> %>
@@ -20,8 +20,9 @@
 
           <%= component "submit_button.html", title: "Send reset email" %>
         <% end %>
-
-        <%= link "Back to log in", to: session_path(@conn, :new) %>
+        <div class="tc k-indigo">
+          <%= link "Back to log in", to: session_path(@conn, :new), class: "k-dark-indigo" %>
+        </div>
       </div>
     </div>
   </div>
