@@ -1,11 +1,31 @@
 <div class=" mt6 center">
+  <h1 class="k-indigo top--header absolute fw4 mb0">Edit profile</h1>
 
-  <%= link "Back", to: startpack_path(@conn, :index) %>
+  <%= link "Dashboard", to: dashboard_path(@conn, :index), class: "link k-indigo no-underline" %>
+  <img src="/images/breadcrumb-arrow.svg" class="w1 ml2" />
+  <%= link "Startpack", to: startpack_path(@conn, :index), class: "link k-indigo no-underline ml2" %>
+  <img src="/images/breadcrumb-arrow.svg" class="w1 ml2" />
+  <div class="ma2 k-light-indigo dib">Edit profile</div>
 
-  <h1 class="f1 mv4 fw5">Edit user</h1>
+  <%= form_for @changeset, user_path(@conn, :update, @user), fn f -> %>
+  <%= if @changeset.action do %>
+  <div class="alert pa4 br2 mb4 white bg-light-red b--red tc mt3">
+    Oops, something went wrong! Please check the errors below.
+  </div>
+  <% end %>
+  <%= component "form_divider.html", title: "Names" %>
+    <%= component "input.html",
+    form: f,
+    atom: :first_name,
+    placeholder: "Brad"
+    %>
 
-  <%= render "form.html", changeset: @changeset,
-                          action: user_path(@conn, :update, @user),
-                          button_text: "Update Details"
-                          %>
+    <%= component "input.html",
+    form: f,
+    atom: :last_name,
+    placeholder: "Pitt"
+    %>
+
+    <%= component "submit_button.html", title: "Update Details" %>
+  <% end %>
 </div>
