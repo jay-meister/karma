@@ -73,4 +73,24 @@ defmodule Karma.ViewHelpersTest do
     contract = ViewHelpers.check_loan_out("PAYE", offer.user_id)
     assert contract == "LOAN OUT"
   end
+
+  test "sort_offers" do
+    offer_1 = %{updated_at: 4}
+    offer_2 = %{updated_at: 5}
+    offers = [offer_1, offer_2]
+
+    sorted_offers = ViewHelpers.sort_offers(offers)
+    assert sorted_offers == [offer_2, offer_1]
+  end
+
+  test "format_working_days" do
+    formatted_working_week_1 = ViewHelpers.format_working_days(5.0)
+    formatted_working_week_2 = ViewHelpers.format_working_days(5.5)
+    formatted_working_week_3 = ViewHelpers.format_working_days(6.0)
+
+    assert formatted_working_week_1 == "5 days"
+    assert formatted_working_week_2 == "5.5 days"
+    assert formatted_working_week_3 == "6 days"
+
+  end
 end

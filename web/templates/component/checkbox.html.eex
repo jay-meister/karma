@@ -5,7 +5,7 @@
    _ -> label assigns[:form], assigns[:atom], assigns[:label], class: "mr2 lh-copy"
    end %>
   <%= if assigns[:link] do %>
-    <%= link assigns[:link_name], to: assigns[:link] %>
+    <a href="<%= assigns[:link] %>" target="_blank"><%= assigns[:link_name] %></a>
   <% end %>
   <%= error_tag assigns[:form], assigns[:atom] %>
 </div>
