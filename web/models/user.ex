@@ -23,7 +23,7 @@ defmodule Karma.User do
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:email, :first_name, :last_name, :password, :verified])
-    |> validate_required([:email, :first_name, :last_name, :password])
+    |> validate_required([:email, :first_name, :last_name])
     |> email_changeset(params)
     |> unique_constraint(:email)
   end
@@ -51,7 +51,6 @@ defmodule Karma.User do
   end
 
   def registration_changeset(struct, params \\ %{}) do
-
     struct
     |> changeset(params)
     |> cast_assoc(:startpacks, required: true)
@@ -71,6 +70,7 @@ defmodule Karma.User do
 
   defp validate_password(changeset) do
     changeset
+    |> validate_required([:password])
     |> validate_length(:password, min: 6, max: 100)
     |> validate_format(:password, ~r/^(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/)
   end

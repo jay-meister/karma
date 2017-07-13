@@ -68,10 +68,10 @@ defmodule Karma.UserController do
     changeset = User.changeset(user, user_params)
 
     case Repo.update(changeset) do
-      {:ok, user} ->
+      {:ok, _user} ->
         conn
         |> put_flash(:info, "User updated successfully.")
-        |> redirect(to: user_path(conn, :show, user))
+        |> redirect(to: startpack_path(conn, :index))
       {:error, changeset} ->
         render(conn, "edit.html", user: user, changeset: changeset)
     end

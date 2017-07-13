@@ -113,7 +113,7 @@ defmodule Karma.UserControllerTest do
       conn
       |> login_user(user)
       |> get(user_path(conn, :edit, user))
-    assert html_response(conn, 200) =~ "Edit user"
+    assert html_response(conn, 200) =~ "Edit profile"
   end
 
   test "updates chosen resource and redirects when data is valid", %{conn: conn} do
@@ -122,7 +122,7 @@ defmodule Karma.UserControllerTest do
       conn
       |> login_user(user)
       |> put(user_path(conn, :update, user), user: @valid_attrs)
-    assert redirected_to(conn) == user_path(conn, :show, user)
+    assert redirected_to(conn) == startpack_path(conn, :index)
     assert Repo.get_by(User, @user_attrs)
   end
 
@@ -132,7 +132,7 @@ defmodule Karma.UserControllerTest do
       conn
       |> login_user(user)
       |> put(user_path(conn, :update, user), user: @invalid_attrs)
-    assert html_response(conn, 200) =~ "Edit user"
+    assert html_response(conn, 200) =~ "Edit profile"
   end
 
   test "deletes chosen resource", %{conn: conn} do
