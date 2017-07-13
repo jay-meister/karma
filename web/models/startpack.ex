@@ -293,7 +293,7 @@ defmodule Karma.Startpack do
   end
 
   def vehicle_allowance_changeset(changeset, startpack, offer) do
-    case offer.vehicle_allowance_per_week != "£ 0.00" do
+    case offer.vehicle_allowance_per_week != 0 do
       true ->
         changeset
         |> cast(startpack, vehicle_allowance_keys())
