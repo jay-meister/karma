@@ -73,4 +73,13 @@ defmodule Karma.ViewHelpersTest do
     contract = ViewHelpers.check_loan_out("PAYE", offer.user_id)
     assert contract == "LOAN OUT"
   end
+
+  test "sort_offers" do
+    offer_1 = %{updated_at: 4}
+    offer_2 = %{updated_at: 5}
+    offers = [offer_1, offer_2]
+
+    sorted_offers = ViewHelpers.sort_offers(offers)
+    assert sorted_offers == [offer_2, offer_1]
+  end
 end

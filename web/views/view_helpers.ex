@@ -85,4 +85,10 @@ defmodule Karma.ViewHelpers do
     end
   end
 
+  def sort_offers(offers) do
+    offers
+    |> Enum.sort(&(&1.updated_at >= &2.updated_at))
+    
+  end
+
 end
