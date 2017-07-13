@@ -82,4 +82,15 @@ defmodule Karma.ViewHelpersTest do
     sorted_offers = ViewHelpers.sort_offers(offers)
     assert sorted_offers == [offer_2, offer_1]
   end
+
+  test "format_working_days" do
+    formatted_working_week_1 = ViewHelpers.format_working_days(5.0)
+    formatted_working_week_2 = ViewHelpers.format_working_days(5.5)
+    formatted_working_week_3 = ViewHelpers.format_working_days(6.0)
+
+    assert formatted_working_week_1 == "5 days"
+    assert formatted_working_week_2 == "5.5 days"
+    assert formatted_working_week_3 == "6 days"
+
+  end
 end
