@@ -140,7 +140,7 @@ a[x-apple-data-detectors=true] {
     </style>
 </head>
 <body class="clean-body" style="margin: 0;padding: 0;-webkit-text-size-adjust: 100%;background-color: #F5F5F5">
-  <%= response_colour =
+  <% response_colour =
         case @offer_status do
           "accepted" -> "#9eebcf"
           "rejected" -> "#ff725c"
