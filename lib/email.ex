@@ -1,7 +1,7 @@
 defmodule Karma.Email do
   use Bamboo.Phoenix, view: Karma.EmailView
 
-  alias Karma.{RedisCli, Controllers.Helpers, Repo, User}
+  alias Karma.{RedisCli, Controllers.Helpers, Repo, User, Project}
   alias Karma.Router.Helpers, as: R_Helpers
 
   def send_text_email(recipient, subject, url, template, assigns \\ []) do
@@ -24,7 +24,7 @@ defmodule Karma.Email do
     rand_string = Helpers.gen_rand_string(30)
     RedisCli.query(["SET", rand_string, user.email])
     url = "#{Helpers.get_base_url()}/verification/#{rand_string}"
-    subject = "Karma - please verify your new account"
+    subject = "e n g i n e - verify your email"
     send_html_email(user.email, subject, url, "verify", [first_name: user.first_name])
   end
 
@@ -34,18 +34,18 @@ defmodule Karma.Email do
     RedisCli.query(["SET", rand_string, user.email])
     RedisCli.expire(rand_string, 60*5)
     url = url <> "?hash=#{rand_string}"
-    send_html_email(user.email, "Karma - reset your password", url, "password_reset", [first_name: user.first_name])
+    send_html_email(user.email, "e n g i n e - reset your password", url, "password_reset", [first_name: user.first_name])
   end
 
   def send_new_offer_email(conn, offer, project) do
-    {template, url} = case offer.user_id do
+    {template, url, subject} = case offer.user_id do
       nil ->
         hash_string = Helpers.gen_rand_string(30)
         RedisCli.query(["SET", hash_string, offer.target_email])
         RedisCli.query(["PERSIST", hash_string])
-        {"new_offer_unregistered", R_Helpers.user_url(conn, :new, te: hash_string)} # user is not yet registered
+        {"new_offer_unregistered", R_Helpers.user_url(conn, :new, te: hash_string), "e n g i n e - create account to join \'#{project.codename}\'"} # user is not yet registered
       _ ->
-        {"new_offer_registered", R_Helpers.project_offer_url(conn, :show, offer.project_id, offer)}
+        {"new_offer_registered", R_Helpers.project_offer_url(conn, :show, offer.project_id, offer), "e n g i n e - invitation to join \'#{project.codename}\'"}
     end
     user_id = offer.user_id || -1
     user =
@@ -53,7 +53,6 @@ defmodule Karma.Email do
         nil -> %{first_name: nil}
         user -> user
       end
-    subject = "Karma - Invitation to join \"#{project.codename}\""
     send_html_email(offer.target_email, subject, url, template, [codename: project.codename, first_name: user.first_name])
   end
 
@@ -66,7 +65,7 @@ defmodule Karma.Email do
       end
     template = "updated_offer"
     url = R_Helpers.project_offer_url(conn, :show, offer.project_id, offer)
-    subject = "Karma - updated offer to join \"#{project.codename}\""
+    subject = "e n g i n e - revised offer from \'#{project.codename}\'"
     send_html_email(offer.target_email,
     subject,
     url,
@@ -85,14 +84,15 @@ defmodule Karma.Email do
       end
     template = "offer_response_pm"
     url = R_Helpers.project_offer_url(conn, :show, offer.project_id, offer)
-    subject = "There has been a response to your offer!"
+    subject = "e n g i n e - #{contractor.first_name} #{contractor.last_name} has #{status} your offer"
     send_html_email(project.user.email, subject, url, template, [offer_status: status, name_contractor: "#{contractor.first_name} #{contractor.last_name}", codename: project.codename, first_name: project.user.first_name])
   end
 
   def send_offer_accepted_contractor(conn, offer, user) do
+    project = Repo.get(Project, offer.project_id)
     template = "offer_accepted_contractor"
     url = R_Helpers.project_offer_url(conn, :show, offer.project_id, offer)
-    subject = "Congratulations! You have accepted an offer"
+    subject = "e n g i n e - you have joined \'#{project.codename}\'"
     send_html_email(offer.target_email, subject, url, template, [first_name: user.first_name, codename: offer.project.codename])
   end
 end
