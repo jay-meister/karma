@@ -70,10 +70,10 @@ defmodule Karma.Sign do
   end
 
   def prepare_document(merged, user, offer) do
-    # 'User_first_name User_last_name, Offer_job_title (Offer_department) - Offer_daily_or_weekly, Offer_contract_type, start: offer_start_date'
+    # 'User_first_name User_last_name, Offer_job_title (Offer_department) - Offer_daily_or_weekly, Offer_contract_type'
     original = Repo.get(Karma.Document, merged.document_id)
     %{"documentId": merged.id,
-       "name": "#{String.upcase(user.first_name)} #{String.upcase(user.last_name)}, #{offer.job_title} (#{offer.department}) - #{String.upcase(offer.daily_or_weekly)}, #{original.name}, start: #{offer.start_date}.pdf",
+       "name": "#{String.upcase(user.first_name)} #{String.upcase(user.last_name)}, #{offer.job_title} (#{offer.department}) - #{String.upcase(offer.daily_or_weekly)}, #{original.name}.pdf",
        "documentBase64": merged.encoded_file,
        "transformPdfFields": "true"
     }
@@ -163,7 +163,7 @@ defmodule Karma.Sign do
 
   # api related
   def login(headers) do
-    url = Application.get_env(:karma, :docusign_login_url)
+    url = Application.get_env(:karma, Karma.Sign)[:url]
     case HTTPoison.get(url, headers, []) do
       {:ok, %{status_code: 200} = res} ->
         res = Poison.decode!(Map.from_struct(res).body)
@@ -184,9 +184,9 @@ defmodule Karma.Sign do
 
   def headers do
     auth = Poison.encode!(
-      %{Username: System.get_env("DOCUSIGN_USERNAME"),
-        Password: System.get_env("DOCUSIGN_PASSWORD"),
-        IntegratorKey: System.get_env("DOCUSIGN_INTEGRATOR_KEY")
+      %{Username: Application.get_env(:karma, Karma.Sign)[:username],
+        Password: Application.get_env(:karma, Karma.Sign)[:password],
+        IntegratorKey: Application.get_env(:karma, Karma.Sign)[:integrator_key]
       })
 
     ["X-DocuSign-Authentication": auth,
@@ -207,10 +207,9 @@ defmodule Karma.Sign do
   def get_email_blurb_and_subject(user, offer) do
     # Project_codename - agreement: User_first_name User_last_name, Offer_job_title (Offer_department)
     sub = "#{offer.project.codename} - agreement: #{user.first_name} #{user.last_name}, #{offer.job_title} (#{offer.department})"
-    blurb = "Dear #{user.first_name} #{user.last_name},\n\nPlease click 'REVIEW DOCUMENTS' above, to Docusign:"
 
     %{"emailSubject": sub,
-      "emailBlurb": blurb
+      "emailBlurb": "\n\n" <> sub
     }
   end
 end

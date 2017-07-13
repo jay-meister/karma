@@ -30,9 +30,11 @@ config :karma, Karma.Repo,
   ssl: true
 
 
-# Add docusign url CHANGE TO PRODUCTION WHEN WE HAVE IT
-config :karma, :docusign_url,
-  "https://demo.docusign.net/restapi/v2/login_information"
+config :karma, Karma.Sign,
+  username: System.get_env("SANDBOX_DOCUSIGN_USERNAME"),
+  password: System.get_env("SANDBOX_DOCUSIGN_PASSWORD"),
+  integrator_key: System.get_env("DOCUSIGN_INTEGRATOR_KEY"),
+  url: "https://demo.docusign.net/restapi/v2/login_information"
 
 # ## SSL Support
 #
