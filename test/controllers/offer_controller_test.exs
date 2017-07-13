@@ -3,7 +3,7 @@ defmodule Karma.OfferControllerTest do
 
   import Mock
   alias Karma.Offer
-  @invalid_attrs default_offer(%{daily_or_weekly: "monthly"})
+  @invalid_attrs default_offer(%{daily_or_weekly: "monthly", fee_per_day_inc_holiday: ""})
 
 
   setup do
@@ -233,7 +233,7 @@ defmodule Karma.OfferControllerTest do
 
   test "cannot update offer and renders errors when data used in calculation is invalid", %{conn: conn, offer: offer, project: project} do
     conn = put conn, project_offer_path(conn, :update, project, offer), offer: @invalid_attrs
-    assert html_response(conn, 200) =~ "Fee per day including holiday"
+    assert html_response(conn, 200) =~ "Fee PER DAY including holiday"
   end
 
   test "deletes chosen resource", %{conn: conn, offer: offer} do
