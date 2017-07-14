@@ -47,7 +47,7 @@ defmodule Karma.SignTest do
     merged = %{id: 333}
     chain = [%{name: "jack", id: 0}, %{name: "brad", id: 2}]
     indexed = Sign.add_index_to_chain(chain, merged)
-    assert hd(indexed) == %{name: "jack", recipientId: 2, routingOrder: 2, tabs: %{signHereTabs: [%{documentId: 333, tabLabel: "signature_1\\*"}]}}
+    assert hd(indexed) == %{name: "jack", recipientId: 2, routingOrder: 2, tabs: %{signHereTabs: [%{documentId: 333, tabLabel: "signature_1\\*"}], dateSignedTabs: [%{documentId: 333, tabLabel: "date_signed_1DocuSignDateSigned\\*"}]}}
   end
 
   test "add agent to chain when not an agent deal" do
