@@ -120,10 +120,20 @@ function hamburgerAnimate() {
     }
 }
 
+function reverseScientificNotation() {
+  var numberInputs = document.querySelectorAll('input[type="number"]')
+  numberInputs.forEach(function (input) {
+    var num = +input.value
+    input.value = num.toFixed(2)
+  })
+}
+
+
 export var App = {
   addFileUploadNames: addFileUploadNames,
   setupListeners: setupListeners,
   studentLoanRadios: studentLoanRadios,
   hamburgerAnimate: hamburgerAnimate,
   document_upload_listeners: document_upload_listeners,
+  reverseScientificNotation: reverseScientificNotation
 }

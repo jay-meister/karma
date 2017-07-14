@@ -69,5 +69,6 @@
     </footer>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
     <script>require("web/static/js/app").App.hamburgerAnimate()</script>
+    <script>require("web/static/js/app").App.reverseScientificNotation()</script>
   </body>
 </html>
