@@ -352,7 +352,7 @@ defmodule Karma.OfferControllerTest do
 
 
   test "get relevant documents for merge", %{offer: offer, project: project} do
-    offer = %{offer | vehicle_allowance_per_week: "£ 0.00"}
+    offer = %{offer | vehicle_allowance_per_week: 0}
 
     _contract = insert_document(project, %{name: "PAYE"})
     _box_rental_form = insert_document(project, %{name: "BOX RENTAL"})
