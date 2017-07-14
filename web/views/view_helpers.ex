@@ -85,4 +85,16 @@ defmodule Karma.ViewHelpers do
     end
   end
 
+  def sort_offers(offers) do
+    offers
+    |> Enum.sort(&(&1.updated_at >= &2.updated_at))
+  end
+
+  def format_working_days(days) do
+    case days do
+      5.0 -> "5 days"
+      5.5 -> "5.5 days"
+      6.0 -> "6 days"
+    end
+  end
 end

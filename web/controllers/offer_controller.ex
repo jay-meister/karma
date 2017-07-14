@@ -92,6 +92,7 @@ defmodule Karma.OfferController do
       |> Offer.projects_offers(project)
       |> Repo.all()
       |> Repo.preload(:user)
+      |> Enum.sort(&(&1.updated_at >= &2.updated_at))
 
     ops = [offers: offers, project: project]
     render conn, "index.html", ops

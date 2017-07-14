@@ -195,7 +195,7 @@
       {:start_date, "Start date", @formatted_offer.start_date},
       {:contract_type, nil, check_loan_out(@formatted_offer.contract_type, @offer.user_id)},
       {:daily_or_weekly, nil, nil},
-      {:working_week, nil, nil}
+      {:working_week, nil, format_working_days(@formatted_offer.working_week)}
     ] do %>
       <%= component "data.html",
       data: formatted || Map.get(@formatted_offer, atom),

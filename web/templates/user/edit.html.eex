@@ -28,4 +28,6 @@
 
     <%= component "submit_button.html", title: "Update Details" %>
   <% end %>
+
+  <%= link "Change account password", to: password_path(@conn, :new), class: "k-dark-indigo underline" %>
 </div>
