@@ -37,7 +37,7 @@
 <% end %>
 <%= if length(@offers) != 0 do %>
   <div class="br3 pv3 mb3">
-    <%= for offer <- @offers do %>
+    <%= for offer <- sort_offers(@offers) do %>
       <%= component "offer_tile.html",
       offer: offer,
       url: project_offer_path(@conn, :show, offer.project_id, offer.id),
