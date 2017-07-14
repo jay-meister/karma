@@ -126,7 +126,7 @@ defmodule Karma.Sign do
             %{documentId: merged.id, "tabLabel": "signature_#{signing_index}\\*"}
           ],
           "dateSignedTabs": [
-            %{documentId: merged.id, "tabLabel": "date_signed_#{signing_index}\\*"}
+            %{documentId: merged.id, "tabLabel": "date_signed_#{signing_index}DocuSignDateSigned\\*"}
           ]
         }
         additional = %{"recipientId": signee.id + @default_increment, "routingOrder": routing_index, "tabs": tabs}
