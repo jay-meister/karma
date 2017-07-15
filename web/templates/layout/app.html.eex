@@ -16,20 +16,20 @@
   <body class="k-bg-lighter-grey k-indigo mb0">
     <header>
       <nav role="navigation" class="flex k-h6 bb k-bg-dark-indigo relative">
-        <%= if @current_user do %>
           <div class="app-container w-100 h4 mt2 center">
               <a href="/" class="h4 ml0-ns">
                 <div class="h3 dt pb3 dib fl mr4">
                   <img src="/images/logo-blue.png" class="w3 pv2 dib dtc" />
-                  <p class="dib f3 pl3 fw3 white ma0 dtc v-mid">engine</p>
+                  <p class="dib f3 pl2 fw4 white ma0 dtc v-mid">engine</p>
                 </div>
               </a>
+              <%= if @current_user do %>
             <div class="white fr k-mt3-5 fw4">
               <%= link "Startpack", to: startpack_path(@conn, :index), class: "back-button link hover-purple white ml3 mv4 mb0-ns outline-0" %>
               <%= link "Log out", to: session_path(@conn, :delete, @current_user), method: "delete", class: "back-button hover-purple link white ml4-ns ml3 mv4 mb0-ns outline-0" %>
             </div>
+            <% end %>
           </div>
-        <% end %>
       </nav>
     </header>
     <p class="absolute w-100 tc alert pa4 br2 mt0 dark-grey bg-light-green b--dark-green" role="alert"><%= get_flash(@conn, :info) %></p>
