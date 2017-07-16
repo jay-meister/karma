@@ -38,9 +38,9 @@ defmodule Karma.Startpack do
     field :agent_bank_account_name, :string
     field :agent_bank_account_swift_code, :string
     field :agent_bank_account_iban, :string
-    field :box_rental_value, :integer
+    field :box_rental_value, :float
     field :box_rental_url, :string
-    field :equipment_rental_value, :integer
+    field :equipment_rental_value, :float
     field :equipment_rental_url, :string
     field :vehicle_make, :string
     field :vehicle_model, :string
