@@ -124,7 +124,9 @@ function reverseScientificNotation() {
   var numberInputs = document.querySelectorAll('input[type="number"]')
   numberInputs.forEach(function (input) {
     var num = +input.value
-    input.value = num.toFixed(2)
+    if (input.id !== 'project_duration') {
+      input.value = num.toFixed(2)
+    }
   })
 }
 
