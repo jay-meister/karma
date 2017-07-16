@@ -22,7 +22,7 @@ defmodule Karma.Offer do
     field :equipment_rental_fee_per_week, :float
     field :equipment_rental_cap, :float
     field :equipment_rental_period, :string
-    field :vehicle_allowance_per_week, :integer, default: 0
+    field :vehicle_allowance_per_week, :float, default: 0
     field :fee_per_day_inc_holiday, :float
     field :fee_per_day_exc_holiday, :float
     field :fee_per_week_inc_holiday, :float
@@ -118,7 +118,15 @@ defmodule Karma.Offer do
       :seventh_day_fee_multiplier,
       :additional_notes,
       :box_rental_required?,
-      :equipment_rental_required?
+      :box_rental_description,
+      :box_rental_fee_per_week,
+      :box_rental_cap,
+      :box_rental_period,
+      :equipment_rental_required?,
+      :equipment_rental_description,
+      :equipment_rental_fee_per_week,
+      :equipment_rental_cap,
+      :equipment_rental_period
       ])
     |> validate_required([
       :recipient_fullname,
