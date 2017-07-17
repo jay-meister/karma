@@ -185,8 +185,8 @@
     <%= component "form_divider.html", title: "Deal info" %>
 
     <div conditional class="mb5">
+      <%= checkbox f, :agent_deal?, class: "dib mr2" %>
       <%= label f, "Check the box if your deal will be done through your agent", class: "dib mw-100 mb2 fw4" %>
-      <%= checkbox f, :agent_deal?, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
       <%= error_tag f, :agent_deal? %>
 
       <div conditional_child class="mt4">
@@ -376,7 +376,7 @@
 
     <div conditional class="mb5">
       <%= label f, :student_loan_not_repayed?, "Check the box if you have a student loan which is not fully repaid", class: "dib mw-100 mb2 fw4" %>
-      <%= checkbox f, :student_loan_not_repayed?, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
+      <%= checkbox f, :student_loan_not_repayed?, class: "dib mr2" %>
       <%= error_tag f, :student_loan_not_repayed? %>
 
       <div conditional_child class="mt4">
@@ -427,8 +427,8 @@
     %>
 
     <div conditional class="mb5">
+      <%= checkbox f, :use_loan_out_company?, class: "dib mr2" %>
       <%= label f, :use_loan_out_company?, "Check the box if you deal through a loan out company", class: "dib mw-100 mb2 fw4" %>
-      <%= checkbox f, :use_loan_out_company?, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
       <%= error_tag f, :use_loan_out_company? %>
 
       <div conditional_child class="mt4">
