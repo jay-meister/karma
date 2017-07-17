@@ -22,9 +22,6 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
-# Import environment specific config. This must remain at the bottom
-# of this file so it overrides the configuration defined above.
-import_config "#{Mix.env}.exs"
 
 # Configure mailing
 config :karma, Karma.Mailer,
@@ -55,3 +52,11 @@ config :karma, Karma.Sign,
   password: System.get_env("SANDBOX_DOCUSIGN_PASSWORD"),
   integrator_key: System.get_env("DOCUSIGN_INTEGRATOR_KEY"),
   url: "https://demo.docusign.net/restapi/v2/login_information"
+
+
+
+
+
+  # Import environment specific config. This must remain at the bottom
+  # of this file so it overrides the configuration defined above.
+  import_config "#{Mix.env}.exs"
