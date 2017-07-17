@@ -163,14 +163,21 @@
 
   <br>
   <br>
+
   <%= component "textarea.html",
   form: f,
   atom: :additional_notes,
   placeholder: "comments sent to recipient, e.g: as discussed, we'll review mobile phone reimbursement, if required."
   %>
 
+  <%= component "submit_link_with_warning.html",
+  form: f,
+  title: "#{@button_text} Offer",
+  method: @method,
+  path: @action,
+  warning_message: "Ensure email address is correct and job title is appropriate to the contract type expected."
+  %>
 
-  <%= component "submit_button.html", title: "#{@button_text} Offer" %>
 <% end %>
 
 
