@@ -370,7 +370,10 @@
     %>
 
     </br>
-    </br>
+
+
+
+    <%= component "form_divider.html", title: "", colour: "k-b--grey" %>
 
     <div conditional class="mb5">
       <%= label f, :student_loan_not_repayed?, "Check the box if you have a student loan which is not fully repaid", class: "dib mw-100 mb2 fw4" %>
