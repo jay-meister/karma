@@ -177,7 +177,7 @@ defmodule Karma.Controllers.Helpers do
     end
   end
 
-  defp paye(direct_hire, daily_direct_hire, daily_paye, equipment) do
+  defp paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title) do
     case direct_hire do
       true ->
         case daily_direct_hire do
@@ -188,18 +188,8 @@ defmodule Karma.Controllers.Helpers do
         case daily_direct_hire do
           true -> "DAILY DIRECT HIRE"
           false ->
-            case daily_paye do
-              true ->
-                case equipment do
-                  true -> "DAILY SCHEDULE-D"
-                  false -> "DAILY PAYE"
-                end
-              false ->
-                case equipment do
-                  true -> "SCHEDULE-D"
-                  false -> "PAYE"
-                end
-            end
+            provision_of_equipment(department, job_title, equipment)
+            |> prepend_with_daily(daily_paye)
         end
     end
   end
@@ -208,6 +198,38 @@ defmodule Karma.Controllers.Helpers do
     case equipment do
       true -> "SCHEDULE-D"
       false -> "PAYE"
+    end
+  end
+
+  defp prepend_with_daily(current, daily) do
+    if daily, do: "DAILY " <> current, else: current
+  end
+
+  defp provision_of_equipment(department, job_title, equipment) do
+    # all of these department & job title combinations should be made from PAYE
+    # to SCHEDULE D if equipment allowance in offer
+    replace_with_sched_d =
+      %{"Armoury": ["Armoury Model Maker", "Senior Model Maker"],
+      "Art":  ["Model Maker"],
+      "Camera": ["Camera Operator"],
+      "Costume": ["Assistant Costume Designer", "Costume Supervisor", "Head Milliner"],
+      "DIT": ["Array DIT", "DIT"],
+      "Drapes": ["Drapes Master"],
+      "Electrical": ["Balloon Technician"],
+      "Grip": ["Best Boy Grip", "Dolly Grip", "Grip", "Key Grip"],
+      "Photography": ["Photographer"],
+      "Props": ["Chargehand Dressing Prop", "Chargehand Prop", "Drapesmaster", "Prophand", "Propman", "Senior Prop Hand", "Supervising Prop Hand"],
+      "Stunts": ["Wire Rigger"]
+    }
+
+    # if job title isn't in the list, set it to false so it will always return PAYE
+    job_titles = Map.get(replace_with_sched_d, department) || false
+
+    case equipment && job_titles && Enum.member?(job_titles, job_title) do
+      true ->
+        "SCHEDULE-D"
+      false ->
+        "PAYE"
     end
   end
 
@@ -229,19 +251,19 @@ defmodule Karma.Controllers.Helpers do
       "Accounts" ->
           case job_title == "Financial Controller" || job_title == "Production Accountant" do
             true -> sch_d(direct_hire, daily_direct_hire, daily_sch_d)
-            false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment)
+            false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
           end
-      "Action Vehicles" -> paye(direct_hire, daily_direct_hire, daily_paye, equipment)
+      "Action Vehicles" -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
       "Assistant Director" ->
           case job_title == "1st Assistant Director" do
             true -> sch_d(direct_hire, daily_direct_hire, daily_sch_d)
-            false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment)
+            false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
           end
       "Aerial" -> sch_d(direct_hire, daily_direct_hire, daily_sch_d)
       "Animals" ->
           case job_title == "Animal Wrangler" || job_title == "Horse Master" do
             true -> sch_d(direct_hire, daily_direct_hire, daily_sch_d)
-            false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment)
+            false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
           end
       "Armoury" ->
           case Enum.member?(["Archery Instructor",
@@ -256,7 +278,7 @@ defmodule Karma.Controllers.Helpers do
                 case Enum.member?(["Armoury Model Maker",
                 "Senior Model Maker"], job_title) do
                   true -> conditional(equipment)
-                  false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment)
+                  false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
                 end
           end
       "Art" ->
@@ -275,7 +297,7 @@ defmodule Karma.Controllers.Helpers do
                 "Researcher/Consultancy",
                 "Scenic Painter"], job_title) do
                   true -> conditional(equipment)
-                  false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment)
+                  false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
                 end
           end
       "Camera" ->
@@ -287,7 +309,7 @@ defmodule Karma.Controllers.Helpers do
             false ->
                 case job_title == "Camera Operator" do
                   true -> conditional(equipment)
-                  false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment)
+                  false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
                 end
           end
       "Cast" ->
@@ -297,7 +319,7 @@ defmodule Karma.Controllers.Helpers do
           "Casting Assistant",
           "Casting Associate",
           "Stand In"], job_title) do
-            true -> paye(direct_hire, daily_direct_hire, daily_paye, equipment)
+            true -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
             false ->
                 case job_title == "Unit Driver" do
                   true -> conditional(equipment)
@@ -320,7 +342,7 @@ defmodule Karma.Controllers.Helpers do
       "Continuity" ->
          case job_title == "Script Supervisor" do
           true -> sch_d(direct_hire, daily_direct_hire, daily_sch_d)
-          false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment)
+          false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
         end
       "Costume" ->
           case Enum.member?(["Buyer",
@@ -340,18 +362,18 @@ defmodule Karma.Controllers.Helpers do
                 "Principal Seamstress",
                 "Seamstress"], job_title) do
                   true -> conditional(equipment)
-                  false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment)
+                  false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
                 end
           end
       "DIT" ->
           case job_title == "Array DIT" || job_title == "DIT" do
             true -> conditional(equipment)
-            false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment)
+            false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
           end
       "Drapes" ->
           case job_title == "Drapes Master" do
             true -> conditional(equipment)
-            false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment)
+            false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
           end
       "Editorial" ->
           case Enum.member?(["Assembly Editor",
@@ -359,7 +381,7 @@ defmodule Karma.Controllers.Helpers do
           "Editor",
           "VFX Editor"], job_title) do
              true -> sch_d(direct_hire, daily_direct_hire, daily_sch_d)
-             false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment)
+             false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
           end
       "Electrical" ->
           case Enum.member?(["Gaffer",
@@ -372,15 +394,15 @@ defmodule Karma.Controllers.Helpers do
             false ->
                 case job_title == "Balloon Technician" do
                   true -> conditional(equipment)
-                  false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment)
+                  false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
                 end
           end
-      "Greens" -> paye(direct_hire, daily_direct_hire, daily_paye, equipment)
+      "Greens" -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
       "Grip" ->
           case Enum.member?(["Assistant Grip",
           "Grip Rigger",
           "Grip Trainee"], job_title) do
-            true -> paye(direct_hire, daily_direct_hire, daily_paye, equipment)
+            true -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
             false ->
               case Enum.member?(["Best Boy Grip",
               "Dolly Grip",
@@ -400,21 +422,21 @@ defmodule Karma.Controllers.Helpers do
           "Hair & Makeup Designer",
           "Hair Designer"], job_title) do
             true -> sch_d(direct_hire, daily_direct_hire, daily_sch_d)
-            false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment)
+            false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
           end
-      "IT" -> paye(direct_hire, daily_direct_hire, daily_paye, equipment)
+      "IT" -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
       "Locations" ->
           case Enum.member?(["Location Manager",
           "Supervising Location Manager"], job_title) do
             true -> sch_d(direct_hire, daily_direct_hire, daily_sch_d)
-            false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment)
+            false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
           end
       "Medical" -> sch_d(direct_hire, daily_direct_hire, daily_sch_d)
       "Military" -> sch_d(direct_hire, daily_direct_hire, daily_sch_d)
       "Photography" -> conditional(equipment)
       "Post Production" ->
           case job_title == "Coordinator" do
-            true -> paye(direct_hire, daily_direct_hire, daily_paye, equipment)
+            true -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
             false -> sch_d(direct_hire, daily_direct_hire, daily_sch_d)
           end
       "Production" ->
@@ -427,7 +449,7 @@ defmodule Karma.Controllers.Helpers do
           "Script Supervisor",
           "Unit Production Manager"], job_title) do
             true -> sch_d(direct_hire, daily_direct_hire, daily_sch_d)
-            false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment)
+            false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
           end
       "Props" ->
           case Enum.member?(["3D Modeller",
@@ -452,16 +474,16 @@ defmodule Karma.Controllers.Helpers do
                 "Senior Prop Hand",
                 "Supervising Prop Hand"], job_title) do
                   true -> conditional(equipment)
-                  false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment)
+                  false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
                 end
           end
       "Publicity" -> sch_d(direct_hire, daily_direct_hire, daily_sch_d)
       "Rigging" ->
           case job_title == "HOD Rigger" do
             true -> sch_d(direct_hire, daily_direct_hire, daily_sch_d)
-            false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment)
+            false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
           end
-      "Security" -> paye(direct_hire, daily_direct_hire, daily_paye, equipment)
+      "Security" -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
       "Set Dec" ->
           case Enum.member?(["Art Director",
           "Graphic Designer",
@@ -472,7 +494,7 @@ defmodule Karma.Controllers.Helpers do
              false ->
                  case job_title == "Scenic Textile Artist" do
                    true -> conditional(equipment)
-                   false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment)
+                   false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
                  end
           end
       "SFX" ->
@@ -487,22 +509,22 @@ defmodule Karma.Controllers.Helpers do
           "SFX Supervisor",
           "Workshop Supervisor"], job_title) do
              true -> sch_d(direct_hire, daily_direct_hire, daily_sch_d)
-             false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment)
+             false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
           end
       "Sound" ->
           case Enum.member?(["Production Sound Mixer",
           "Sound Maintenance",
           "Sound Mixer"], job_title) do
              true -> sch_d(direct_hire, daily_direct_hire, daily_sch_d)
-             false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment)
+             false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
           end
-      "Standby" -> paye(direct_hire, daily_direct_hire, daily_paye, equipment)
-      "Studio Unit" -> paye(direct_hire, daily_direct_hire, daily_paye, equipment)
+      "Standby" -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
+      "Studio Unit" -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
       "Stunts" ->
           case Enum.member?(["Rigger",
           "Stunt Department Coordinator",
           "Stunt Department Supervisor"], job_title) do
-             true -> paye(direct_hire, daily_direct_hire, daily_paye, equipment)
+             true -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
              false ->
                  case job_title == "Wire Rigger" do
                    true -> conditional(equipment)
@@ -519,7 +541,7 @@ defmodule Karma.Controllers.Helpers do
                   true -> transport_conditional()
                   false ->
                     case job_title == "Transport Coordinator" do
-                      true -> paye(direct_hire, daily_direct_hire, daily_paye, equipment)
+                      true -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
                       false -> transport_paye(transport_direct_hire, daily_transport_direct_hire, daily_transport_paye)
                     end
                 end
@@ -528,9 +550,9 @@ defmodule Karma.Controllers.Helpers do
       "VFX" ->
           case job_title == "VFX Producer" do
             true -> sch_d(direct_hire, daily_direct_hire, daily_sch_d)
-            false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment)
+            false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
           end
-      "Video" -> paye(direct_hire, daily_direct_hire, daily_paye, equipment)
+      "Video" -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
       "Voice" -> sch_d(direct_hire, daily_direct_hire, daily_sch_d)
     end
   end
