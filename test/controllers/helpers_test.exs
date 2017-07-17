@@ -423,7 +423,7 @@ defmodule Karma.Controllers.HelpersTest do
     paye_equipment_schedule_d_contract = Helpers.determine_contract_type("Video", "Video Assistant", [], false, true)
     daily_paye_equipment_schedule_d_contract = Helpers.determine_contract_type("Video", "Video Assistant", ["DAILY PAYE", "DAILY SCHEDULE-D"], true, true)
 
-    assert paye_equipment_schedule_d_contract == "SCHEDULE-D"
-    assert daily_paye_equipment_schedule_d_contract == "DAILY SCHEDULE-D"
+    assert paye_equipment_schedule_d_contract == "PAYE"
+    assert daily_paye_equipment_schedule_d_contract == "DAILY PAYE"
   end
 end
