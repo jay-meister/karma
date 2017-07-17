@@ -85,13 +85,19 @@
       <div class="dib ma1">
         <%= form_for @edit_changeset, project_offer_path(@conn, :response, @offer.project_id, @offer), fn f -> %>
             <%= hidden_input f, :accepted, value: "true" %>
-            <%= component "submit_button.html", title: "ACCEPT" %>
+          <%= link "ACCEPT", to: project_offer_path(@conn, :response, @offer.project_id, @offer),  method: :put,
+            class: "ttu k-bg-light-indigo bn pa3 pl4 pr4 k-f2-5 br2 white w-100 lato mt3 no-underline",
+            data: [confirm: "Ensure all details are accurate, all documents are valid and you agree contract type, before proceeding"]
+          %>
         <% end %>
       </div>
       <div class="dib ma1">
         <%= form_for @edit_changeset, project_offer_path(@conn, :response, @offer.project_id, @offer), fn f -> %>
           <%= hidden_input f, :accepted, value: "false" %>
-          <%= component "submit_button.html", title: "REJECT" %>
+          <%= link "REJECT", to: project_offer_path(@conn, :response, @offer.project_id, @offer),  method: :put,
+            class: "ttu k-bg-light-indigo bn pa3 pl4 pr4 k-f2-5 br2 white w-100 lato mt3 no-underline",
+            data: [confirm: "To amend an offer, speak with the project.  A rejected offer cannot be reversed"]
+          %>
         <% end %>
       </div>
     <% end %>
