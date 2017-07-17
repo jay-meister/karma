@@ -1,8 +1,10 @@
-<div class="mb4 mt5 k-f2-5 k-light-indigo bb k-b-light-indigo">
+<% colour = assigns[:colour] ||  "k-b-light-indigo" %>
+<div class="mb4 mt5 k-f2-5 k-light-indigo bb <%= colour %>">
   <%= assigns[:title] %>
 </div>
 
 <!--
 assigns:
 title
+colour (optional - must be a border-color class eg. "k-b--grey")
 -->

@@ -185,7 +185,7 @@
 
     <%= component "form_divider.html", title: "Deal info" %>
 
-    <div conditional class="mb4">
+    <div conditional class="mb5">
       <%= label f, "Check the box if your deal will be done through your agent", class: "dib mw-100 mb2 fw4" %>
       <%= checkbox f, :agent_deal?, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
       <%= error_tag f, :agent_deal? %>
@@ -294,9 +294,12 @@
     %>
 
     <div class="mb3 f3">Your vehicle details for site access and parking:</div>
-    <%= label f, :vehicle_bring_own?, "Check the box if you bring your own vehicle", class: "dib mw-100 mb2 fw4" %>
-    <%= checkbox f, :vehicle_bring_own?, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
-    <%= error_tag f, :vehicle_bring_own? %>
+    <%= component "checkbox.html",
+    form: f,
+    atom: :vehicle_bring_own?,
+    label: "Check the box if you bring your own vehicle"
+    %>
+
     <br />
     <%= component "input.html",
     form: f,
@@ -347,11 +350,6 @@
     atom: :national_insurance_number
     %>
 
-    <%= component "input.html",
-    form: f,
-    atom: :vat_number,
-    label: "VAT number"
-    %>
 
     <%= component "file_upload.html",
     form: f,
@@ -371,7 +369,13 @@
     radios: Karma.StartpackView.for_paye_only()
     %>
 
-    <div conditional class="mb4">
+    </br>
+
+
+
+    <%= component "form_divider.html", title: "", colour: "k-b--grey" %>
+
+    <div conditional class="mb5">
       <%= label f, :student_loan_not_repayed?, "Check the box if you have a student loan which is not fully repaid", class: "dib mw-100 mb2 fw4" %>
       <%= checkbox f, :student_loan_not_repayed?, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
       <%= error_tag f, :student_loan_not_repayed? %>
@@ -402,6 +406,8 @@
       </div>
     </div>
 
+    <%= component "form_divider.html", title: "", colour: "k-b--grey" %>
+
     <%= component "file_upload.html",
     form: f,
     atom: :schedule_d_letter_image,
@@ -414,7 +420,14 @@
     conn: @conn
     %>
 
-    <div conditional class="mb4">
+
+    <%= component "input.html",
+    form: f,
+    atom: :vat_number,
+    label: "VAT number"
+    %>
+
+    <div conditional class="mb5">
       <%= label f, :use_loan_out_company?, "Check the box if you deal through a loan out company", class: "dib mw-100 mb2 fw4" %>
       <%= checkbox f, :use_loan_out_company?, class: "db h1 f6 dark-grey bg-white ba b--dark-grey br3" %>
       <%= error_tag f, :use_loan_out_company? %>
@@ -443,6 +456,8 @@
         %>
       </div>
     </div>
+
+    <%= component "form_divider.html", title: "", colour: "k-b--grey" %>
 
     <%= component "input.html",
     form: f,
