@@ -31,8 +31,8 @@ config :karma, Karma.Repo,
 
 
 config :karma, Karma.Sign,
-  username: System.get_env("SANDBOX_DOCUSIGN_USERNAME"),
-  password: System.get_env("SANDBOX_DOCUSIGN_PASSWORD"),
+  username: System.get_env("DOCUSIGN_USERNAME"),
+  password: System.get_env("DOCUSIGN_PASSWORD"),
   integrator_key: System.get_env("DOCUSIGN_INTEGRATOR_KEY"),
   url: "https://www.docusign.net/restapi/v2/login_information"
 
