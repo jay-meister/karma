@@ -14,7 +14,7 @@
   <% end %>
 <% end %>
 <%= if !@is_pm? do %>
-  <h1 class="top--header absolute fw4 mb0">Offer for <%= @project.name %></h1>
+  <h1 class="top--header absolute fw4 mb0">Offer for <%= @project.codename %></h1>
 <% end %>
 <%= if @is_contractor? do %>
   <%= if length(@changeset.errors) > 0 && @offer.accepted == nil do %>

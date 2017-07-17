@@ -6,7 +6,7 @@
 
 <%= link "Edit project", to: project_path(@conn, :edit, @project), class: "ma1 k-indigo no-underline fr"%>
 
-<h1 class="k-indigo top--header absolute fw4 mb0"><%= @project.name %></h1>
+<h1 class="k-indigo top--header absolute fw4 mb0"><%= @project.codename %></h1>
 
 <ul class="list pl0">
   <%= component "form_divider.html", title: "Project details" %>
