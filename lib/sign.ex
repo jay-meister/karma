@@ -73,7 +73,7 @@ defmodule Engine.Sign do
     # 'User_first_name User_last_name, Offer_job_title (Offer_department) - Offer_daily_or_weekly, Offer_contract_type'
     original = Repo.get(Engine.Document, merged.document_id)
     %{"documentId": merged.id,
-       "name": "#{String.upcase(user.first_name)} #{String.upcase(user.last_name)}, #{offer.job_title} (#{offer.department}) - #{String.upcase(offer.daily_or_weekly)}, #{original.name}.pdf",
+       "name": "#{String.upcase(user.first_name)} #{String.upcase(user.last_name)}, #{offer.job_title} (#{offer.department}) - #{original.name}.pdf",
        "documentBase64": merged.encoded_file,
        "transformPdfFields": "true"
     }
