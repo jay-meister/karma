@@ -1,3 +1,3 @@
-defmodule Karma.SessionView do
-  use Karma.Web, :view
+defmodule Engine.SessionView do
+  use Engine.Web, :view
 end

@@ -1,5 +1,5 @@
-defmodule Karma.User do
-  use Karma.Web, :model
+defmodule Engine.User do
+  use Engine.Web, :model
   alias Comeonin.Bcrypt
 
   schema "users" do
@@ -10,9 +10,9 @@ defmodule Karma.User do
     field :password, :string, virtual: true
     field :verified, :boolean
     field :terms_accepted, :boolean
-    has_many :projects, Karma.Project
-    has_many :offers, Karma.Offer
-    has_one :startpacks, Karma.Startpack
+    has_many :projects, Engine.Project
+    has_many :offers, Engine.Offer
+    has_one :startpacks, Engine.Startpack
 
     timestamps()
   end

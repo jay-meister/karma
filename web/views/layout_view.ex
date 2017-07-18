@@ -1,3 +1,3 @@
-defmodule Karma.LayoutView do
-  use Karma.Web, :view
+defmodule Engine.LayoutView do
+  use Engine.Web, :view
 end

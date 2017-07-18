@@ -1,7 +1,7 @@
-defmodule Karma.SessionControllerTest do
-  use Karma.ConnCase, async: false
+defmodule Engine.SessionControllerTest do
+  use Engine.ConnCase, async: false
 
-  alias Karma.{User, RedisCli}
+  alias Engine.{User, RedisCli}
 
   describe "session routes that don't need authentication" do
     test "Get /sessions/new", %{conn: conn} do

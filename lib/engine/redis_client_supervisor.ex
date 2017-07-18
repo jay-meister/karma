@@ -1,7 +1,7 @@
-defmodule Karma.RedisClientSupervisor do
+defmodule Engine.RedisClientSupervisor do
   use Supervisor
 
-  alias Karma.RedisCli
+  alias Engine.RedisCli
 
   def start_link do
     Supervisor.start_link(__MODULE__, [])

@@ -1,8 +1,8 @@
-defmodule Karma.S3Test do
-  use Karma.ConnCase
+defmodule Engine.S3Test do
+  use Engine.ConnCase
 
   import Mock
-  alias Karma.S3
+  alias Engine.S3
 
   @bucket System.get_env("BUCKET_NAME")
   @image_params %{filename: "unique.png", path: "./maybe/mocked"}

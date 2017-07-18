@@ -1,7 +1,7 @@
-defmodule Karma.SigneeControllerTest do
-  use Karma.ConnCase
+defmodule Engine.SigneeControllerTest do
+  use Engine.ConnCase
 
-  alias Karma.{Signee, DocumentSignee}
+  alias Engine.{Signee, DocumentSignee}
 
   @valid_attrs %{name: "First Last", email: "test@email.com", role: "Tester", approver_type: "Approver"}
   @invalid_attrs %{name: "", email: "", role: ""}

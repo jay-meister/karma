@@ -1,9 +1,9 @@
-defmodule Karma.OfferController do
-  use Karma.Web, :controller
+defmodule Engine.OfferController do
+  use Engine.Web, :controller
 
-  alias Karma.{User, Offer, Project, Startpack, AlteredDocument, Merger, Formatter}
+  alias Engine.{User, Offer, Project, Startpack, AlteredDocument, Merger, Formatter}
 
-  import Karma.ProjectController, only: [add_project_to_conn: 2, block_if_not_project_manager: 2]
+  import Engine.ProjectController, only: [add_project_to_conn: 2, block_if_not_project_manager: 2]
 
   # add project to conn
   plug :add_project_to_conn when action in [:index, :new, :create, :show, :edit, :update, :delete, :response]
@@ -49,7 +49,7 @@ defmodule Karma.OfferController do
       nil ->
         conn
         |> put_flash(:error, "Offer could not be found")
-        |> render(Karma.ErrorView, "404.html")
+        |> render(Engine.ErrorView, "404.html")
         |> halt()
       _ ->
         # assign is_contractor?
@@ -100,8 +100,8 @@ defmodule Karma.OfferController do
 
   def new(conn, %{"project_id" => project_id}) do
     changeset = Offer.changeset(%Offer{})
-    job_titles = Karma.Job.titles()
-    job_departments = Karma.Job.departments()
+    job_titles = Engine.Job.titles()
+    job_departments = Engine.Job.departments()
     render(conn,
     "new.html",
     changeset: changeset,
@@ -128,8 +128,8 @@ defmodule Karma.OfferController do
     # if not valid, return to user with errors
     if !validation_changeset.valid? do
       changeset = %{validation_changeset | action: :insert} # manually set the action so errors are shown
-      job_titles = Karma.Job.titles()
-      job_departments = Karma.Job.departments()
+      job_titles = Engine.Job.titles()
+      job_departments = Engine.Job.departments()
       job_title = Map.get(changeset.changes, :job_title, "")
 
       render(conn,
@@ -148,14 +148,14 @@ defmodule Karma.OfferController do
       case Repo.insert(changeset) do
         {:ok, offer} ->
           # email function decides whether this is a registered user
-          Karma.Email.send_new_offer_email(conn, offer, project)
-          |> Karma.Mailer.deliver_later()
+          Engine.Email.send_new_offer_email(conn, offer, project)
+          |> Engine.Mailer.deliver_later()
           conn
           |> put_flash(:info, "Offer sent to #{offer.target_email}")
           |> redirect(to: project_offer_path(conn, :index, project_id))
         {:error, changeset} ->
-          job_titles = Karma.Job.titles()
-          job_departments = Karma.Job.departments()
+          job_titles = Engine.Job.titles()
+          job_departments = Engine.Job.departments()
           job_title = Map.get(changeset.changes, :job_title, "")
           render(conn, "new.html", changeset: changeset, project_id: project_id, job_titles: job_titles, job_departments: job_departments, job_title: job_title)
       end
@@ -229,8 +229,8 @@ defmodule Karma.OfferController do
   def edit(conn, %{"project_id" => project_id, "id" => id}) do
     offer = Repo.get!(Offer, id)
     changeset = Offer.changeset(offer)
-    job_titles = Karma.Job.titles()
-    job_departments = Karma.Job.departments()
+    job_titles = Engine.Job.titles()
+    job_departments = Engine.Job.departments()
 
     ops = [offer: offer, changeset: changeset, project_id: project_id, job_titles: job_titles, job_departments: job_departments]
     render(conn, "edit.html", ops)
@@ -248,8 +248,8 @@ defmodule Karma.OfferController do
     project_documents = Enum.map(project.documents, fn document -> document.name end)
     daily = offer.daily_or_weekly == "daily"
     equipment = offer.equipment_rental_required?
-    job_titles = Karma.Job.titles()
-    job_departments = Karma.Job.departments()
+    job_titles = Engine.Job.titles()
+    job_departments = Engine.Job.departments()
     ops = [
       offer: offer,
       project_id: project_id,
@@ -285,8 +285,8 @@ defmodule Karma.OfferController do
 
           {:ok, offer} = Repo.update(changeset)
           # email function decides whether this is a registered user
-          Karma.Email.send_updated_offer_email(conn, offer, project)
-          |> Karma.Mailer.deliver_later()
+          Engine.Email.send_updated_offer_email(conn, offer, project)
+          |> Engine.Mailer.deliver_later()
 
           conn
           |> put_flash(:info, "Offer updated successfully, and re-emailed to recipient.")
@@ -336,7 +336,7 @@ defmodule Karma.OfferController do
     updated_offer = Repo.update!(Ecto.Changeset.change(offer, %{contract_type: contract_type}))
 
     # get the relevant original forms for merging
-    form_query = Karma.Controllers.Helpers.get_forms_for_merging(updated_offer)
+    form_query = Engine.Controllers.Helpers.get_forms_for_merging(updated_offer)
     contract_documents = Repo.all(form_query)
     form_documents =
       Repo.all(project_documents(project))
@@ -357,8 +357,8 @@ defmodule Karma.OfferController do
             |> put_flash(:error, "Error making response!")
             |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
           {:ok, offer} ->
-            Karma.Email.send_offer_response_pm(conn, offer, project, contractor)
-            |> Karma.Mailer.deliver_later()
+            Engine.Email.send_offer_response_pm(conn, offer, project, contractor)
+            |> Engine.Mailer.deliver_later()
 
             case offer.accepted do
               false ->
@@ -368,8 +368,8 @@ defmodule Karma.OfferController do
               true ->
                 initial_contract_type = offer.contract_type
 
-                Karma.Email.send_offer_accepted_contractor(conn, updated_offer, contractor)
-                |> Karma.Mailer.deliver_later()
+                Engine.Email.send_offer_accepted_contractor(conn, updated_offer, contractor)
+                |> Engine.Mailer.deliver_later()
 
 
                 # now merge data

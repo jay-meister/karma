@@ -1,4 +1,4 @@
-defmodule Karma.Repo.Migrations.AddNewSixthSeventhToOffers do
+defmodule Engine.Repo.Migrations.AddNewSixthSeventhToOffers do
   use Ecto.Migration
 
   def change do

@@ -1,4 +1,4 @@
-/*Karmaradio elements*/
+/*engine elements*/
 
 html {
 font-size: 10px;
@@ -150,7 +150,7 @@ nav {
   }
 }
 
-/*Karmaradio Colours*/
+/*engine Colours*/
 
 /*backgrounds*/
 .k-bg-indigo {
@@ -303,13 +303,13 @@ select {
   color: #757de8;
 }
 
-/*karma layout/custom components*/
+/*engine layout/custom components*/
 
 .hover-purple:hover {
     color: #757de8;
  }
 
-.karma-input::after {
+.engine-input::after {
   content : "";
   position: absolute;
   left    : 0;

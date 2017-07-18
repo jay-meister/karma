@@ -1,4 +1,4 @@
-defmodule Karma.S3 do
+defmodule Engine.S3 do
   def upload_many(params, keys) do
     ops = [max_concurrency: System.schedulers_online() * 3, timeout: 20000]
     keys

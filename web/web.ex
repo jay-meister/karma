@@ -1,12 +1,12 @@
-defmodule Karma.Web do
+defmodule Engine.Web do
   @moduledoc """
   A module that keeps using definitions for controllers,
   views and so on.
 
   This can be used in your application as:
 
-      use Karma.Web, :controller
-      use Karma.Web, :view
+      use Engine.Web, :controller
+      use Engine.Web, :view
 
   The definitions below will be executed for every view,
   controller, etc, so keep them short and clean, focused
@@ -30,14 +30,14 @@ defmodule Karma.Web do
     quote do
       use Phoenix.Controller
 
-      alias Karma.Repo
+      alias Engine.Repo
       import Ecto
       import Ecto.Query
 
-      import Karma.Router.Helpers
-      import Karma.Gettext
-      import Karma.Controllers.Helpers
-      import Karma.Auth, only: [authenticate: 2]
+      import Engine.Router.Helpers
+      import Engine.Gettext
+      import Engine.Controllers.Helpers
+      import Engine.Auth, only: [authenticate: 2]
     end
   end
 
@@ -51,11 +51,11 @@ defmodule Karma.Web do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
-      import Karma.Router.Helpers
-      import Karma.ErrorHelpers
-      import Karma.Gettext
-      import Karma.ComponentHelpers
-      import Karma.ViewHelpers
+      import Engine.Router.Helpers
+      import Engine.ErrorHelpers
+      import Engine.Gettext
+      import Engine.ComponentHelpers
+      import Engine.ViewHelpers
     end
   end
 
@@ -63,7 +63,7 @@ defmodule Karma.Web do
     quote do
       use Phoenix.Router
       # Authenticate entire controllers from the router
-      import Karma.Auth, only: [authenticate: 2]
+      import Engine.Auth, only: [authenticate: 2]
     end
   end
 
@@ -71,10 +71,10 @@ defmodule Karma.Web do
     quote do
       use Phoenix.Channel
 
-      alias Karma.Repo
+      alias Engine.Repo
       import Ecto
       import Ecto.Query
-      import Karma.Gettext
+      import Engine.Gettext
 
     end
   end

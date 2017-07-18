@@ -1,7 +1,7 @@
-defmodule Karma.OfferTest do
-  use Karma.ModelCase
+defmodule Engine.OfferTest do
+  use Engine.ModelCase
 
-  alias Karma.Offer
+  alias Engine.Offer
 
   @invalid_attrs default_offer(%{daily_or_weekly: "monthly"})
 

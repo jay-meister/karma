@@ -1,3 +1,3 @@
-defmodule Karma.OfferView do
-  use Karma.Web, :view
+defmodule Engine.OfferView do
+  use Engine.Web, :view
 end

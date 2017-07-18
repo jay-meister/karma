@@ -1,7 +1,7 @@
-defmodule Karma.VerificationController do
-  use Karma.Web, :controller
+defmodule Engine.VerificationController do
+  use Engine.Web, :controller
 
-  alias Karma.{User, Auth}
+  alias Engine.{User, Auth}
 
   def verify(conn, %{"hash" => hash}) do
     case get_email_from_hash(hash) do
@@ -41,8 +41,8 @@ defmodule Karma.VerificationController do
     {:ok, email} = get_email_from_hash(hash)
     user = Repo.get_by(User, email: email)
 
-    Karma.Email.send_verification_email(user)
-    |> Karma.Mailer.deliver_later()
+    Engine.Email.send_verification_email(user)
+    |> Engine.Mailer.deliver_later()
     conn
     |> put_flash(:info, "A new verification email has been sent to #{user.email}")
     |> redirect(to: session_path(conn, :new))

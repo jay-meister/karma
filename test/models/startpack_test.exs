@@ -1,7 +1,7 @@
-defmodule Karma.StartpackTest do
-  use Karma.ModelCase
+defmodule Engine.StartpackTest do
+  use Engine.ModelCase
 
-  alias Karma.Startpack
+  alias Engine.Startpack
 
   @valid_attrs %{
     passport_expiry_date: %{day: 17, month: 4, year: 2010},
@@ -318,7 +318,7 @@ defmodule Karma.StartpackTest do
 
   # contract type validations
   test "validating startpack with contract type PAYE with no errors" do
-    offer = %Karma.Offer{contract_type: "PAYE"}
+    offer = %Engine.Offer{contract_type: "PAYE"}
     valid = %{
       p45_url: "url",
       national_insurance_number: "121",
@@ -330,7 +330,7 @@ defmodule Karma.StartpackTest do
   end
 
   test "validating startpack with contract type CONSTRUCTION PAYE with no errors" do
-    offer = %Karma.Offer{contract_type: "CONSTRUCTION PAYE"}
+    offer = %Engine.Offer{contract_type: "CONSTRUCTION PAYE"}
     valid = %{
       p45_url: "url",
       national_insurance_number: "121",
@@ -342,7 +342,7 @@ defmodule Karma.StartpackTest do
   end
 
   test "validating startpack with contract type TRANSPORT PAYE with no errors" do
-    offer = %Karma.Offer{contract_type: "TRANSPORT PAYE"}
+    offer = %Engine.Offer{contract_type: "TRANSPORT PAYE"}
     valid = %{
       p45_url: "url",
       national_insurance_number: "121",
@@ -354,7 +354,7 @@ defmodule Karma.StartpackTest do
   end
 
   test "validating startpack with contract type CONSTRUCTION PAYE with no errors loan out false" do
-    offer = %Karma.Offer{contract_type: "CONSTRUCTION PAYE"}
+    offer = %Engine.Offer{contract_type: "CONSTRUCTION PAYE"}
     valid = %{
       p45_url: "url",
       national_insurance_number: "121",
@@ -366,7 +366,7 @@ defmodule Karma.StartpackTest do
   end
 
   test "validating startpack with contract type TRANSPORT PAYE with no errors loan out false" do
-    offer = %Karma.Offer{contract_type: "TRANSPORT PAYE"}
+    offer = %Engine.Offer{contract_type: "TRANSPORT PAYE"}
     valid = %{
       p45_url: "url",
       national_insurance_number: "121",
@@ -378,7 +378,7 @@ defmodule Karma.StartpackTest do
   end
 
   test "validating startpack with contract type TRANSPORT SCHEDULE-D with no errors loan out false" do
-    offer = %Karma.Offer{contract_type: "TRANSPORT SCHEDULE-D"}
+    offer = %Engine.Offer{contract_type: "TRANSPORT SCHEDULE-D"}
     valid = %{
       p45_url: "url",
       national_insurance_number: "121",
@@ -391,7 +391,7 @@ defmodule Karma.StartpackTest do
   end
 
   test "validating startpack with contract type CONSTRUCTION SCHEDULE-D with no errors loan out false" do
-    offer = %Karma.Offer{contract_type: "CONSTRUCTION SCHEDULE-D", daily_or_weekly: "daily"}
+    offer = %Engine.Offer{contract_type: "CONSTRUCTION SCHEDULE-D", daily_or_weekly: "daily"}
     valid = %{
       p45_url: "url",
       national_insurance_number: "121",
@@ -404,7 +404,7 @@ defmodule Karma.StartpackTest do
   end
 
   test "validating startpack with contract type PAYE with errors" do
-    offer = %Karma.Offer{contract_type: "PAYE"}
+    offer = %Engine.Offer{contract_type: "PAYE"}
     invalid = %{
       p45_url: "url",
       national_insurance_number: "121",
@@ -415,19 +415,19 @@ defmodule Karma.StartpackTest do
     refute changeset.valid?
   end
   test "validating startpack with contract type SCHEDULE-D with errors" do
-    offer = %Karma.Offer{contract_type: "SCHEDULE-D", daily_or_weekly: "daily"}
+    offer = %Engine.Offer{contract_type: "SCHEDULE-D", daily_or_weekly: "daily"}
     invalid = %{ schedule_d_letter_url: "" }
     changeset = Startpack.contract_type_changeset(%Startpack{}, invalid, offer)
     refute changeset.valid?
   end
   test "validating startpack with contract type SCHEDULE-D with no errors" do
-    offer = %Karma.Offer{contract_type: "SCHEDULE-D", daily_or_weekly: "daily"}
+    offer = %Engine.Offer{contract_type: "SCHEDULE-D", daily_or_weekly: "daily"}
     valid = %{ schedule_d_letter_url: "url" }
     changeset = Startpack.contract_type_changeset(%Startpack{}, valid, offer)
     assert changeset.valid?
   end
   test "validating startpack adds no validation with contract type SCHEDULE-D but weekly" do
-    offer = %Karma.Offer{contract_type: "SCHEDULE-D", daily_or_weekly: "weekly"}
+    offer = %Engine.Offer{contract_type: "SCHEDULE-D", daily_or_weekly: "weekly"}
     valid = %{}
     changeset = Startpack.contract_type_changeset(%Startpack{}, valid, offer)
     assert changeset == %Startpack{}

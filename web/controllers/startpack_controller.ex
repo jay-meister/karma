@@ -1,7 +1,7 @@
-defmodule Karma.StartpackController do
-  use Karma.Web, :controller
+defmodule Engine.StartpackController do
+  use Engine.Web, :controller
 
-  alias Karma.{Startpack, Offer, Controllers.Helpers}
+  alias Engine.{Startpack, Offer, Controllers.Helpers}
   # possible solution for multiple fields
    @file_upload_keys [
      {"passport_image", "passport_url"},
@@ -50,7 +50,7 @@ defmodule Karma.StartpackController do
         |> put_flash(:error, "Error updating startpack!")
         |> render("index.html", changeset: image_changeset, startpack: startpack, offer: %{}, user: user, delete_changeset: delete_changeset, uploaded_files: uploaded_files)
       true ->
-        urls = Karma.S3.upload_many(startpack_params, @file_upload_keys)
+        urls = Engine.S3.upload_many(startpack_params, @file_upload_keys)
 
         params = Map.merge(startpack_params, urls)
 

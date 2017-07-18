@@ -1,5 +1,5 @@
-defmodule Karma.ErrorView do
-  use Karma.Web, :view
+defmodule Engine.ErrorView do
+  use Engine.Web, :view
 
   def render("404.html", _assigns) do
     "Page not found"

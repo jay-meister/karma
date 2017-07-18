@@ -1,4 +1,4 @@
-defmodule Karma.Repo.Migrations.ChangeIntegersToFloats do
+defmodule Engine.Repo.Migrations.ChangeIntegersToFloats do
   use Ecto.Migration
 
   def change do

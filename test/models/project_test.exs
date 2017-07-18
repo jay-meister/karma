@@ -1,7 +1,7 @@
-defmodule Karma.ProjectTest do
-  use Karma.ModelCase
+defmodule Engine.ProjectTest do
+  use Engine.ModelCase
 
-  alias Karma.Project
+  alias Engine.Project
 
   @invalid_attrs %{}
 

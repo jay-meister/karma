@@ -1,4 +1,4 @@
-defmodule Karma.Repo.Migrations.CreateProject do
+defmodule Engine.Repo.Migrations.CreateProject do
   use Ecto.Migration
 
   def change do

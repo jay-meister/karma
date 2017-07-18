@@ -1,7 +1,7 @@
-defmodule Karma.UserTest do
-  use Karma.ModelCase
+defmodule Engine.UserTest do
+  use Engine.ModelCase
 
-  alias Karma.User
+  alias Engine.User
 
   @invalid_attrs %{}
   @valid_account_creation %{email: "test@test.com", first_name: "Joe", last_name: "Blogs", password: "Password123!", terms_accepted: true, startpacks: %{}}
@@ -36,7 +36,7 @@ defmodule Karma.UserTest do
   test "changeset is invalid if email is used already" do
     changeset = User.registration_changeset(%User{}, @valid_account_creation)
     # insert a user
-    Karma.Repo.insert!(changeset)
+    Engine.Repo.insert!(changeset)
     # attempt to insert a user with same email
     assert {:error, changeset} = Repo.insert(changeset)
     assert {"has already been taken", _} = changeset.errors[:email]

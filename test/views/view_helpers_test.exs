@@ -1,7 +1,7 @@
-defmodule Karma.ViewHelpersTest do
-  use Karma.ConnCase, async: true
+defmodule Engine.ViewHelpersTest do
+  use Engine.ConnCase, async: true
 
-  alias Karma.{ViewHelpers}
+  alias Engine.{ViewHelpers}
 
   test "format_date" do
     {:ok, date} = Date.new(2000, 1, 1)

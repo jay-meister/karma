@@ -1,4 +1,4 @@
-defmodule Karma.Repo.Migrations.RentalAllowanceFloat do
+defmodule Engine.Repo.Migrations.RentalAllowanceFloat do
   use Ecto.Migration
 
   def change do

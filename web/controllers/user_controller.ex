@@ -1,9 +1,9 @@
-defmodule Karma.UserController do
-  use Karma.Web, :controller
+defmodule Engine.UserController do
+  use Engine.Web, :controller
 
   plug :authenticate when action in [:index, :show, :edit, :update, :delete]
 
-  alias Karma.{User, LayoutView, RedisCli}
+  alias Engine.{User, LayoutView, RedisCli}
 
   def index(conn, _params) do
     users = Repo.all(User)
@@ -29,16 +29,16 @@ defmodule Karma.UserController do
     changeset = User.registration_changeset(%User{}, user_params)
     case Repo.insert(changeset) do
       {:ok, user} ->
-        Karma.Email.send_verification_email(user)
-        |> Karma.Mailer.deliver_later()
+        Engine.Email.send_verification_email(user)
+        |> Engine.Mailer.deliver_later()
 
         # update offers user_id to all offers for this user
-        from(o in Karma.Offer, where: o.target_email == ^user.email)
+        from(o in Engine.Offer, where: o.target_email == ^user.email)
         |> Repo.update_all(set: [user_id: user.id])
 
         conn
         |> put_flash(:info, "A verification email has been sent to #{user.email}.
-        Click the link in the email to gain full access to Karma.")
+        Click the link in the email to gain full access to engine.")
         |> redirect(to: session_path(conn, :new))
       {:error, changeset} ->
         case Map.has_key?(conn.query_params, "te") do

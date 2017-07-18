@@ -1,7 +1,7 @@
-defmodule Karma.AlteredDocumentTest do
-  use Karma.ModelCase
+defmodule Engine.AlteredDocumentTest do
+  use Engine.ModelCase
 
-  alias Karma.AlteredDocument
+  alias Engine.AlteredDocument
 
   @valid_attrs %{offer_id: 1, document_id: 1, merged_url: "www.aws.com", status: "merged"}
   @invalid_attrs %{}

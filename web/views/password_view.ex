@@ -1,3 +1,3 @@
-defmodule Karma.PasswordView do
-  use Karma.Web, :view
+defmodule Engine.PasswordView do
+  use Engine.Web, :view
 end

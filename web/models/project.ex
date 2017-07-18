@@ -1,5 +1,5 @@
-defmodule Karma.Project do
-  use Karma.Web, :model
+defmodule Engine.Project do
+  use Engine.Web, :model
 
   schema "projects" do
     field :type, :string
@@ -25,10 +25,10 @@ defmodule Karma.Project do
     field :holiday_rate, :float
     field :additional_notes, :string
     field :active, :boolean, default: true
-    belongs_to :user, Karma.User
-    has_many :offers, Karma.Offer
-    has_many :documents, Karma.Document
-    has_many :signees, Karma.Signee
+    belongs_to :user, Engine.User
+    has_many :offers, Engine.Offer
+    has_many :documents, Engine.Document
+    has_many :signees, Engine.Signee
 
     timestamps()
   end

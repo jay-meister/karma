@@ -1,13 +1,13 @@
-defmodule Karma.Document do
-  use Karma.Web, :model
+defmodule Engine.Document do
+  use Engine.Web, :model
 
   schema "documents" do
     field :url, :string
     field :category, :string
     field :name, :string
-    belongs_to :project, Karma.Project
-    many_to_many :signees, Karma.Signee, join_through: "documents_signees"
-    has_many :altered_documents, Karma.AlteredDocument
+    belongs_to :project, Engine.Project
+    many_to_many :signees, Engine.Signee, join_through: "documents_signees"
+    has_many :altered_documents, Engine.AlteredDocument
     timestamps()
   end
 

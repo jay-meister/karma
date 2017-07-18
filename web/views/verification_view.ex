@@ -1,3 +1,3 @@
-defmodule Karma.VerificationView do
-  use Karma.Web, :view
+defmodule Engine.VerificationView do
+  use Engine.Web, :view
 end

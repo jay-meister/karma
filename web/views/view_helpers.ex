@@ -1,6 +1,6 @@
-defmodule Karma.ViewHelpers do
+defmodule Engine.ViewHelpers do
 
-  alias Karma.{User, Repo}
+  alias Engine.{User, Repo}
 
   def check_loan_out(contract, user_id) do
     case user_id == nil do

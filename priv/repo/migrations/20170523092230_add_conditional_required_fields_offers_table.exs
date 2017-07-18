@@ -1,4 +1,4 @@
-defmodule Karma.Repo.Migrations.AddConditionalRequiredFieldsOffersTable do
+defmodule Engine.Repo.Migrations.AddConditionalRequiredFieldsOffersTable do
   use Ecto.Migration
 
   def change do

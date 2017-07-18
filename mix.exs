@@ -1,8 +1,8 @@
-defmodule Karma.Mixfile do
+defmodule Engine.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :karma,
+    [app: :engine,
      version: "0.0.1",
      elixir: "~> 1.2",
      elixirc_paths: elixirc_paths(Mix.env),
@@ -22,7 +22,7 @@ defmodule Karma.Mixfile do
   #
   # Type `mix help compile.app` for more information.
   def application do
-    [mod: {Karma, []},
+    [mod: {Engine, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
                     :phoenix_ecto, :postgrex, :comeonin, :bamboo, :redix, :ex_aws, :hackney, :poison, :httpoison]]
   end
