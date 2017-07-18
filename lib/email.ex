@@ -51,7 +51,7 @@ defmodule Engine.Email do
     user =
       case Repo.get(User, user_id) do
         nil -> %{first_name: nil, last_name: nil, full_name: offer.recipient_fullname}
-        user -> %{ Map.from_struct(user) | full_name: "#{user.first_name} #{user.last_name}" }
+        user -> Map.from_struct(user) |> Map.put(:full_name, "#{user.first_name} #{user.last_name}")
       end
     send_html_email(offer.target_email, subject, url, template, [codename: project.codename, first_name: user.first_name, last_name: user.last_name, full_name: user.full_name])
   end
