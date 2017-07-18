@@ -16,19 +16,19 @@
             <%= component "input.html",
             form: f,
             atom: :first_name,
-            placeholder: "Brad"
+            placeholder: ""
             %>
 
             <%= component "input.html",
             form: f,
             atom: :last_name,
-            placeholder: "Pitt"
+            placeholder: ""
             %>
 
             <%= component "input.html",
             form: f,
             atom: :email,
-            placeholder: "example@email.com",
+            placeholder: "",
             class: "mt5",
             readonly: (@target_email != nil),
             value: @target_email

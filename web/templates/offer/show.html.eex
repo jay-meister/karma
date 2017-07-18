@@ -14,7 +14,7 @@
   <% end %>
 <% end %>
 <%= if !@is_pm? do %>
-  <h1 class="top--header absolute fw4 mb0">Offer for <%= @project.name %></h1>
+  <h1 class="top--header absolute fw4 mb0">Offer for <%= @project.codename %></h1>
 <% end %>
 <%= if @is_contractor? do %>
   <%= if length(@changeset.errors) > 0 && @offer.accepted == nil do %>
@@ -85,13 +85,23 @@
       <div class="dib ma1">
         <%= form_for @edit_changeset, project_offer_path(@conn, :response, @offer.project_id, @offer), fn f -> %>
             <%= hidden_input f, :accepted, value: "true" %>
-            <%= component "submit_button.html", title: "ACCEPT" %>
+            <%= component "submit_link_with_warning.html",
+              title: "ACCEPT",
+              path: project_offer_path(@conn, :response, @offer.project_id, @offer),
+              method: :put,
+              warning_message: "Ensure all details are accurate and documents correct, before proceeding."
+            %>
         <% end %>
       </div>
       <div class="dib ma1">
         <%= form_for @edit_changeset, project_offer_path(@conn, :response, @offer.project_id, @offer), fn f -> %>
           <%= hidden_input f, :accepted, value: "false" %>
-          <%= component "submit_button.html", title: "REJECT" %>
+          <%= component "submit_link_with_warning.html",
+            title: "REJECT",
+            path: project_offer_path(@conn, :response, @offer.project_id, @offer),
+            method: :put,
+            warning_message: "Speak with the project to amend an offer. A rejected offer cannot be reversed."
+          %>
         <% end %>
       </div>
     <% end %>

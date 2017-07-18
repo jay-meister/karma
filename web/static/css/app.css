@@ -386,6 +386,10 @@ select {
   margin-bottom: 0.5rem;
 }
 
+.k-minw-10 {
+  min-width: 10rem;
+}
+
 .k-minw-20 {
   min-width: 20rem;
 }

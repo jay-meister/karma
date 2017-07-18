@@ -1,0 +1,10 @@
+<div class="tc">
+  <div class="mb4">
+    <%= link assigns[:title],
+      to: assigns[:path],
+      method: assigns[:method],
+      class: "ttu k-bg-light-indigo bn pa3 pl4 pr4 k-f2-5 br2 white w-100 lato mt3 no-underline",
+      data: [confirm: assigns[:warning_message]]
+    %>
+  </div>
+</div>
