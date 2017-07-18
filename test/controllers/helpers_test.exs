@@ -1,7 +1,7 @@
-defmodule Karma.Controllers.HelpersTest do
-  use Karma.ConnCase
+defmodule Engine.Controllers.HelpersTest do
+  use Engine.ConnCase
 
-  alias Karma.Controllers.Helpers
+  alias Engine.Controllers.Helpers
 
   test "calc_day_fee_inc_holidays(fee_per_day_inc_holiday, day_fee_multiplier)" do
     day_fee_inc_holidays =  Helpers.calc_day_fee_inc_holidays(2, 1)

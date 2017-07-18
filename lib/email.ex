@@ -1,22 +1,22 @@
-defmodule Karma.Email do
-  use Bamboo.Phoenix, view: Karma.EmailView
+defmodule Engine.Email do
+  use Bamboo.Phoenix, view: Engine.EmailView
 
-  alias Karma.{RedisCli, Controllers.Helpers, Repo, User, Project}
-  alias Karma.Router.Helpers, as: R_Helpers
+  alias Engine.{RedisCli, Controllers.Helpers, Repo, User, Project}
+  alias Engine.Router.Helpers, as: R_Helpers
 
   def send_text_email(recipient, subject, url, template, assigns \\ []) do
     new_email()
     |> to(recipient) # also needs to be a validated email
     |> from(System.get_env("ADMIN_EMAIL"))
     |> subject(subject)
-    |> put_text_layout({Karma.LayoutView, "email.text"})
+    |> put_text_layout({Engine.LayoutView, "email.text"})
     |> render("#{template}.text", [url: url] ++ assigns)
   end
 
   def send_html_email(recipient, subject, url, template, assigns \\ []) do
     recipient
     |> send_text_email(subject, url, template, assigns)
-    |> put_html_layout({Karma.LayoutView, "email.html"})
+    |> put_html_layout({Engine.LayoutView, "email.html"})
     |> render("#{template}.html", [url: url] ++ assigns)
   end
 

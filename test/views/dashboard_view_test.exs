@@ -1,7 +1,7 @@
-defmodule Karma.DashboardViewTest do
-  use Karma.ConnCase, async: true
+defmodule Engine.DashboardViewTest do
+  use Engine.ConnCase, async: true
 
-  alias Karma.ViewHelpers
+  alias Engine.ViewHelpers
 
   test "get_offers(project, eval)" do
     project = %{

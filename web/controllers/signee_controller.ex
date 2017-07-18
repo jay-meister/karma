@@ -1,7 +1,7 @@
-defmodule Karma.SigneeController do
-  use Karma.Web, :controller
+defmodule Engine.SigneeController do
+  use Engine.Web, :controller
 
-  alias Karma.{Signee, Project, DocumentSignee, Document}
+  alias Engine.{Signee, Project, DocumentSignee, Document}
 
   def create(conn, %{"project_id" => project_id, "signee" => signee_params}, user) do
     project = Repo.get(user_projects(user), project_id)
@@ -36,7 +36,7 @@ defmodule Karma.SigneeController do
       nil ->
         conn
         |> put_flash(:error, "Project doesn't exist")
-        |> render(Karma.ErrorView, "404.html")
+        |> render(Engine.ErrorView, "404.html")
         |> halt()
       project ->
         case Repo.get(project_documents(project), document_id) do

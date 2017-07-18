@@ -1,3 +1,3 @@
-defmodule Karma.LayoutViewTest do
-  use Karma.ConnCase, async: true
+defmodule Engine.LayoutViewTest do
+  use Engine.ConnCase, async: true
 end

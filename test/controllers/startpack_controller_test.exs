@@ -1,7 +1,7 @@
-defmodule Karma.StartpackControllerTest do
-  use Karma.ConnCase
+defmodule Engine.StartpackControllerTest do
+  use Engine.ConnCase
 
-  alias Karma.Startpack
+  alias Engine.Startpack
   import Mock
   @valid_attrs %{
     passport_expiry_date: %{day: 17, month: 4, year: 2010},

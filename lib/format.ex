@@ -1,5 +1,5 @@
-defmodule Karma.Formatter do
-  alias Karma.ViewHelpers
+defmodule Engine.Formatter do
+  alias Engine.ViewHelpers
 
   def format_data(data) do
     offer_data = data.offer

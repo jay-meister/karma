@@ -1,4 +1,4 @@
 ExUnit.start
 
-Ecto.Adapters.SQL.Sandbox.mode(Karma.Repo, :manual)
+Ecto.Adapters.SQL.Sandbox.mode(Engine.Repo, :manual)
 

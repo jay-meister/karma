@@ -1,11 +1,11 @@
-defmodule Karma.DocumentSignee do
-  use Karma.Web, :model
+defmodule Engine.DocumentSignee do
+  use Engine.Web, :model
 
   @primary_key false
   schema "documents_signees" do
     field :order, :integer
-    belongs_to :document, Karma.Document
-    belongs_to :signee, Karma.Signee
+    belongs_to :document, Engine.Document
+    belongs_to :signee, Engine.Signee
   end
 
   def changeset(struct, params \\ :invalid) do

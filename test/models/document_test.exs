@@ -1,7 +1,7 @@
-defmodule Karma.DocumentTest do
-  use Karma.ModelCase
+defmodule Engine.DocumentTest do
+  use Engine.ModelCase
 
-  alias Karma.Document
+  alias Engine.Document
 
   @valid_attrs %{category: "some content", url: "some content", name: "some content"}
   @invalid_attrs %{}

@@ -1,7 +1,7 @@
-defmodule Karma.DocumentController do
-  use Karma.Web, :controller
+defmodule Engine.DocumentController do
+  use Engine.Web, :controller
 
-  alias Karma.{Document, Project, S3}
+  alias Engine.{Document, Project, S3}
 
   # stop upload functionality if documents are submitted with existing type
   plug :file_type_exists? when action in [:create]

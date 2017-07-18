@@ -1,4 +1,4 @@
-defmodule :"Elixir.Karma.Repo.Migrations.Add-signee-project-unique-index" do
+defmodule :"Elixir.Engine.Repo.Migrations.Add-signee-project-unique-index" do
   use Ecto.Migration
 
   def change do

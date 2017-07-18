@@ -1,4 +1,4 @@
-defmodule Karma.ChannelCase do
+defmodule Engine.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -20,22 +20,22 @@ defmodule Karma.ChannelCase do
       # Import conveniences for testing with channels
       use Phoenix.ChannelTest
 
-      alias Karma.Repo
+      alias Engine.Repo
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
 
 
       # The default endpoint for testing
-      @endpoint Karma.Endpoint
+      @endpoint Engine.Endpoint
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Karma.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Engine.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Karma.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Engine.Repo, {:shared, self()})
     end
 
     :ok

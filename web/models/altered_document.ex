@@ -1,9 +1,9 @@
-defmodule Karma.AlteredDocument do
-  use Karma.Web, :model
+defmodule Engine.AlteredDocument do
+  use Engine.Web, :model
 
   schema "altered_documents" do
-    belongs_to :offer, Karma.Offer
-    belongs_to :document, Karma.Document
+    belongs_to :offer, Engine.Offer
+    belongs_to :document, Engine.Document
     field :status, :string
     field :merged_url, :string
     field :signed_url, :string
@@ -29,7 +29,7 @@ defmodule Karma.AlteredDocument do
   end
 
   def set_documents_to_signing(offer_id, envelope_id) do
-    from ad in Karma.AlteredDocument,
+    from ad in Engine.AlteredDocument,
     where: ad.offer_id == ^offer_id,
     update: [set: [status: "signing"]],
     update: [set: [envelope_id: ^envelope_id]]

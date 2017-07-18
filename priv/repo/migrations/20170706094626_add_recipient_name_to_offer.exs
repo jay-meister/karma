@@ -1,4 +1,4 @@
-defmodule Karma.Repo.Migrations.AddRecipientNameToOffer do
+defmodule Engine.Repo.Migrations.AddRecipientNameToOffer do
   use Ecto.Migration
 
   def change do

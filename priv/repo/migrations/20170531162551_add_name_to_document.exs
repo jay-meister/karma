@@ -1,4 +1,4 @@
-defmodule Karma.Repo.Migrations.AddNameToDocument do
+defmodule Engine.Repo.Migrations.AddNameToDocument do
   use Ecto.Migration
 
   def change do

@@ -1,6 +1,6 @@
-defmodule Karma.SessionController do
-  use Karma.Web, :controller
-  alias Karma.{User, RedisCli, LayoutView}
+defmodule Engine.SessionController do
+  use Engine.Web, :controller
+  alias Engine.{User, RedisCli, LayoutView}
 
   def new(conn, _params) do
     case conn.assigns.current_user do
@@ -16,7 +16,7 @@ defmodule Karma.SessionController do
   end
 
   def create(conn, %{"session" => %{"email" => email, "password" => password}}) do
-    case Karma.Auth.login_by_email_and_pass(conn, email, password, repo: Repo) do
+    case Engine.Auth.login_by_email_and_pass(conn, email, password, repo: Repo) do
       {:ok, conn} ->
         conn
         |> put_flash(:info, "Welcome back!")
@@ -37,7 +37,7 @@ defmodule Karma.SessionController do
 
   def delete(conn, _) do
     conn
-    |> Karma.Auth.logout()
+    |> Engine.Auth.logout()
     |> redirect(to: session_path(conn, :new))
   end
 end

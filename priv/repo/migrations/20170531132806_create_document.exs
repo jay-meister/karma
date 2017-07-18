@@ -1,4 +1,4 @@
-defmodule Karma.Repo.Migrations.CreateDocument do
+defmodule Engine.Repo.Migrations.CreateDocument do
   use Ecto.Migration
 
   def change do

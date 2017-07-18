@@ -1,5 +1,5 @@
-defmodule Karma.TestHelpers do
-  alias Karma.{Repo, User, Project, Offer, Startpack,
+defmodule Engine.TestHelpers do
+  alias Engine.{Repo, User, Project, Offer, Startpack,
     Document, Signee, DocumentSignee, AlteredDocument}
 
   def mother_setup() do

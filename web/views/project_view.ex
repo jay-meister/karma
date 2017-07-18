@@ -1,3 +1,3 @@
-defmodule Karma.ProjectView do
-  use Karma.Web, :view
+defmodule Engine.ProjectView do
+  use Engine.Web, :view
 end

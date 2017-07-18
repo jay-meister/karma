@@ -1,3 +1,3 @@
-defmodule Karma.Repo do
-  use Ecto.Repo, otp_app: :karma
+defmodule Engine.Repo do
+  use Ecto.Repo, otp_app: :engine
 end

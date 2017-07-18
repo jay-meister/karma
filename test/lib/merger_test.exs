@@ -1,6 +1,6 @@
-defmodule Karma.MergerTest do
-  use Karma.ConnCase
-  alias Karma.Merger
+defmodule Engine.MergerTest do
+  use Engine.ConnCase
+  alias Engine.Merger
 
   import Mock
 
@@ -42,7 +42,7 @@ defmodule Karma.MergerTest do
   end
 
   test "merge document script success" do
-    with_mock Karma.ScriptRunner, [run_merge_script: fn(_) -> {"destination.pdf", 0} end] do
+    with_mock Engine.ScriptRunner, [run_merge_script: fn(_) -> {"destination.pdf", 0} end] do
       doc_path = System.cwd() <> "/test/fixtures/fillable.pdf"
 
       res = Merger.wrap_merge_script(Poison.encode!(@data), doc_path, "destination.pdf")
@@ -51,7 +51,7 @@ defmodule Karma.MergerTest do
   end
 
   test "merge document script - no file" do
-    with_mock Karma.ScriptRunner, [run_merge_script: fn(_) -> {"some error", 1} end] do
+    with_mock Engine.ScriptRunner, [run_merge_script: fn(_) -> {"some error", 1} end] do
       doc_path = System.cwd() <> "/x/no-file.pdf"
       error_res = Merger.wrap_merge_script(Poison.encode!(@data), doc_path, "destination.pdf")
       assert {:error, _} = error_res
@@ -60,7 +60,7 @@ defmodule Karma.MergerTest do
 
 
   test "merge function error: S3 download" do
-    with_mock Karma.S3, [download: fn(_, _) -> {:error, "some error"} end] do
+    with_mock Engine.S3, [download: fn(_, _) -> {:error, "some error"} end] do
       assert {:error, "There was an error retrieving the document"} =
         Merger.merge(%{}, %{url: "www.a_url.com"})
     end
@@ -74,8 +74,8 @@ defmodule Karma.MergerTest do
     offer = insert_offer(project, %{user_id: contractor.id})
     document = insert_document(project, %{name: offer.contract_type, url: "www.image_url.pdf"})
 
-    with_mock Karma.S3, [download: fn(_, _) -> {:ok, "www.aws.someurl.pdf"} end] do
-      with_mock Karma.ScriptRunner, [run_merge_script: fn(_) -> {"some error", 1} end] do
+    with_mock Engine.S3, [download: fn(_, _) -> {:ok, "www.aws.someurl.pdf"} end] do
+      with_mock Engine.ScriptRunner, [run_merge_script: fn(_) -> {"some error", 1} end] do
         assert {:error, "There was an error creating the document"} =
           Merger.merge(offer, document)
       end
@@ -91,10 +91,10 @@ defmodule Karma.MergerTest do
     document = insert_document(project, %{name: offer.contract_type, url: "www.image_url.pdf"})
 
     with_mocks([
-      {Karma.S3, [],
+      {Engine.S3, [],
        [download: fn(_, _) -> {:ok, "www.aws.someurl.pdf"} end,
         upload: fn(_) -> {:error, :_, :_} end]},
-      {Karma.ScriptRunner, [],
+      {Engine.ScriptRunner, [],
        [run_merge_script: fn(_) -> {"destination.pdf", 0} end]}
     ]) do
       assert {:error, "There was an error saving the document"} = Merger.merge(offer, document)
@@ -110,10 +110,10 @@ defmodule Karma.MergerTest do
     document = insert_document(project, %{name: offer.contract_type, url: "www.image_url.pdf"})
 
     with_mocks([
-      {Karma.S3, [],
+      {Engine.S3, [],
        [download: fn(_, _) -> {:ok, "www.aws.someurl.pdf"} end,
         upload: fn(_) -> {:ok, :url, "www.aws.another.pdf"} end]},
-      {Karma.ScriptRunner, [],
+      {Engine.ScriptRunner, [],
        [run_merge_script: fn(_) -> {"destination.pdf", 0} end]}
     ]) do
       assert {:ok, "www.aws.another.pdf"} = Merger.merge(offer, document)
@@ -129,10 +129,10 @@ defmodule Karma.MergerTest do
     document = insert_document(project, %{name: offer.contract_type, url: "www.image_url.pdf"})
 
     with_mocks([
-      {Karma.S3, [],
+      {Engine.S3, [],
        [download: fn(_, _) -> {:ok, "www.aws.someurl.pdf"} end,
         upload: fn(_) -> {:ok, :url, "www.aws.another.pdf"} end]},
-      {Karma.ScriptRunner, [],
+      {Engine.ScriptRunner, [],
        [run_merge_script: fn(_) -> {"destination.pdf", 0} end]}
     ]) do
       assert {:ok, "www.aws.another.pdf"} = Merger.merge(offer, document)
@@ -149,10 +149,10 @@ defmodule Karma.MergerTest do
     document_2 = insert_document(project, %{name: offer.contract_type, url: "www.image_url.pdf"})
     documents = [document_1, document_2]
     with_mocks([
-      {Karma.S3, [],
+      {Engine.S3, [],
        [download: fn(_, _) -> {:ok, "www.aws.someurl.pdf"} end,
         upload: fn(_) -> {:ok, :url, "www.aws.another.pdf"} end]},
-      {Karma.ScriptRunner, [],
+      {Engine.ScriptRunner, [],
        [run_merge_script: fn(_) -> {"destination.pdf", 0} end]}
     ]) do
       assert {:ok, "Documents merged"} = Merger.merge_multiple(offer, documents)

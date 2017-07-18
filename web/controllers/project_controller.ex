@@ -1,7 +1,7 @@
-defmodule Karma.ProjectController do
-  use Karma.Web, :controller
+defmodule Engine.ProjectController do
+  use Engine.Web, :controller
 
-  alias Karma.{Project, Document, Signee}
+  alias Engine.{Project, Document, Signee}
 
 
   plug :add_project_to_conn when action in [:show, :edit, :update, :delete]
@@ -22,7 +22,7 @@ defmodule Karma.ProjectController do
       nil ->
         conn
         |> put_flash(:error, "Project could not be found")
-        |> render(Karma.ErrorView, "404.html")
+        |> render(Engine.ErrorView, "404.html")
         |> halt()
       _ ->
         is_pm? = conn.assigns.project.user_id == conn.assigns.current_user.id

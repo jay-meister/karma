@@ -1,7 +1,7 @@
-defmodule Karma.AlteredDocumentControllerTest do
-  use Karma.ConnCase
+defmodule Engine.AlteredDocumentControllerTest do
+  use Engine.ConnCase
 
-  alias Karma.{Sign}
+  alias Engine.{Sign}
 
   import Mock
 

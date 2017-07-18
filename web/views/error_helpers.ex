@@ -1,4 +1,4 @@
-defmodule Karma.ErrorHelpers do
+defmodule Engine.ErrorHelpers do
   @moduledoc """
   Conveniences for translating and building error messages.
   """
@@ -32,9 +32,9 @@ defmodule Karma.ErrorHelpers do
     #     dgettext "errors", "is invalid"
     #
     if count = opts[:count] do
-      Gettext.dngettext(Karma.Gettext, "errors", msg, msg, count, opts)
+      Gettext.dngettext(Engine.Gettext, "errors", msg, msg, count, opts)
     else
-      Gettext.dgettext(Karma.Gettext, "errors", msg, opts)
+      Gettext.dgettext(Engine.Gettext, "errors", msg, opts)
     end
   end
 

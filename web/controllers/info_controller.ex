@@ -1,5 +1,5 @@
-defmodule Karma.InfoController do
-  use Karma.Web, :controller
+defmodule Engine.InfoController do
+  use Engine.Web, :controller
 
   def terms(conn, _params) do
     render conn, "terms.html"

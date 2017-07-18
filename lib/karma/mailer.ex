@@ -1,3 +1,3 @@
-defmodule Karma.Mailer do
-  use Bamboo.Mailer, otp_app: :karma
+defmodule Engine.Mailer do
+  use Bamboo.Mailer, otp_app: :engine
 end

@@ -1,3 +1,3 @@
-defmodule Karma.EmailView do
-  use Karma.Web, :view
+defmodule Engine.EmailView do
+  use Engine.Web, :view
 end

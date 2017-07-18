@@ -1,4 +1,4 @@
-defmodule Karma.Repo.Migrations.CreateDocumentsSigneesJoinTable do
+defmodule Engine.Repo.Migrations.CreateDocumentsSigneesJoinTable do
   use Ecto.Migration
 
   def change do

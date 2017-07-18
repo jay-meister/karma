@@ -1,4 +1,4 @@
-defmodule Karma.Repo.Migrations.RemoveBusinessInsuranceFromStartpack do
+defmodule Engine.Repo.Migrations.RemoveBusinessInsuranceFromStartpack do
   use Ecto.Migration
 
   def change do

@@ -1,5 +1,5 @@
-defmodule Karma.Merger do
-  alias Karma.{Repo, Formatter}
+defmodule Engine.Merger do
+  alias Engine.{Repo, Formatter}
 
   def merge_multiple(_offer, []) do
     {:ok, "Documents merged"}
@@ -11,7 +11,7 @@ defmodule Karma.Merger do
       {:ok, url} ->
 
         Ecto.build_assoc(offer, :altered_documents, document_id: document.id)
-        |> Karma.AlteredDocument.merged_changeset(%{merged_url: url})
+        |> Engine.AlteredDocument.merged_changeset(%{merged_url: url})
         |> Repo.insert()
 
         merge_multiple(offer, tail)
@@ -23,7 +23,7 @@ defmodule Karma.Merger do
     # download document
 
     file_name = get_file_name(document.url)
-    case Karma.S3.download(document.url, System.cwd() <> "/tmp/" <> file_name) do
+    case Engine.S3.download(document.url, System.cwd() <> "/tmp/" <> file_name) do
       {:error, _error} ->
         {:error, "There was an error retrieving the document"}
       {:ok, doc_path} ->
@@ -43,7 +43,7 @@ defmodule Karma.Merger do
             # save to S3
             # get file name from merged path
             image_params = %{path: merged_path, filename: get_file_name(merged_path)}
-            case Karma.S3.upload({:url, image_params}) do
+            case Engine.S3.upload({:url, image_params}) do
               {:error, _url, _error} ->
                 {:error, "There was an error saving the document"}
               {:ok, :url, url} ->
@@ -67,7 +67,7 @@ defmodule Karma.Merger do
   end
 
   def wrap_merge_script(json, doc_path, merged_path) do
-    res = Karma.ScriptRunner.run_merge_script(["merge.js", json, doc_path, merged_path])
+    res = Engine.ScriptRunner.run_merge_script(["merge.js", json, doc_path, merged_path])
 
     case res do
       {path, 0} -> {:ok, path}
@@ -76,10 +76,10 @@ defmodule Karma.Merger do
   end
 
   def get_data_for_merge(offer) do
-    %{user: Map.take(Map.from_struct(Repo.get(Karma.User, offer.user_id)), user()),
-      project: Map.take(Map.from_struct(Repo.get(Karma.Project, offer.project_id)), project()),
-      offer: Map.take(Map.from_struct(Repo.get(Karma.Offer, offer.id)), offer()),
-      startpack: Map.take(Map.from_struct(Repo.get_by(Karma.Startpack, user_id: offer.user_id)), startpack())
+    %{user: Map.take(Map.from_struct(Repo.get(Engine.User, offer.user_id)), user()),
+      project: Map.take(Map.from_struct(Repo.get(Engine.Project, offer.project_id)), project()),
+      offer: Map.take(Map.from_struct(Repo.get(Engine.Offer, offer.id)), offer()),
+      startpack: Map.take(Map.from_struct(Repo.get_by(Engine.Startpack, user_id: offer.user_id)), startpack())
     }
   end
 

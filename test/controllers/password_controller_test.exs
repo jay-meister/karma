@@ -1,9 +1,9 @@
-defmodule Karma.PasswordControllerTest do
-  use Karma.ConnCase
+defmodule Engine.PasswordControllerTest do
+  use Engine.ConnCase
 
   import Mock
 
-  alias Karma.{Email, RedisCli}
+  alias Engine.{Email, RedisCli}
 
   setup do
     RedisCli.flushdb()
@@ -28,7 +28,7 @@ defmodule Karma.PasswordControllerTest do
   end
 
   test "password :create with recognised email address", %{conn: conn} do
-    with_mock Karma.Mailer, [deliver_later: fn(_) -> nil end] do
+    with_mock Engine.Mailer, [deliver_later: fn(_) -> nil end] do
       user = insert_user()
       conn = post(conn, password_path(conn, :create), user: @valid_attrs)
       # test response

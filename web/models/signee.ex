@@ -1,13 +1,13 @@
-defmodule Karma.Signee do
-  use Karma.Web, :model
+defmodule Engine.Signee do
+  use Engine.Web, :model
 
   schema "signees" do
     field :name, :string
     field :role, :string
     field :email, :string
     field :approver_type, :string
-    belongs_to :project, Karma.Project
-    many_to_many :documents, Karma.Document, join_through: "documents_signees"
+    belongs_to :project, Engine.Project
+    many_to_many :documents, Engine.Document, join_through: "documents_signees"
 
     timestamps()
   end
