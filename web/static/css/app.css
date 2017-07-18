@@ -442,6 +442,10 @@ select {
   top: 0.5rem;
 }
 
+.k-w1-5 {
+  width: 1.5rem;
+}
+
 .k-w2-5 {
   width: 3rem;
 }
@@ -486,6 +490,13 @@ select {
   top: 50%;
   margin-top: -8px;
 }
+
+
+.k-inline-checkbox-label {
+  margin-left: 2rem;
+  transform: translateY(23px);
+}
+
 /* conditional checkbox in form */
 [conditional]  input[type=checkbox]:checked  + [conditional_child] {
   display: block;
