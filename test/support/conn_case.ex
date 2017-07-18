@@ -1,4 +1,4 @@
-defmodule Karma.ConnCase do
+defmodule Engine.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -20,24 +20,24 @@ defmodule Karma.ConnCase do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
 
-      alias Karma.Repo
+      alias Engine.Repo
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
-      import Karma.TestHelpers
+      import Engine.TestHelpers
 
-      import Karma.Router.Helpers
+      import Engine.Router.Helpers
 
       # The default endpoint for testing
-      @endpoint Karma.Endpoint
+      @endpoint Engine.Endpoint
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Karma.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Engine.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Karma.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Engine.Repo, {:shared, self()})
     end
 
     {:ok, conn: Phoenix.ConnTest.build_conn()}

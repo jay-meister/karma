@@ -1,3 +1,3 @@
-defmodule Karma.DocumentView do
-  use Karma.Web, :view
+defmodule Engine.DocumentView do
+  use Engine.Web, :view
 end

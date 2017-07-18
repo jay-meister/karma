@@ -1,9 +1,9 @@
-defmodule Karma.DocumentControllerTest do
-  use Karma.ConnCase
+defmodule Engine.DocumentControllerTest do
+  use Engine.ConnCase
 
   import Mock
 
-  alias Karma.Document
+  alias Engine.Document
   @valid_attrs %{url: "some content", name: "NDA", contract_name: "", category: "Deal"}
   @invalid_attrs %{}
 

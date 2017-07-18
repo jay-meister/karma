@@ -1,4 +1,4 @@
-defmodule Karma.Repo.Migrations.AddTermsAndConditions do
+defmodule Engine.Repo.Migrations.AddTermsAndConditions do
   use Ecto.Migration
 
   def change do

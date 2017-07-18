@@ -1,6 +1,6 @@
-defmodule Karma.Controllers.Helpers do
+defmodule Engine.Controllers.Helpers do
   import Ecto.Query
-  alias Karma.{Document, RedisCli}
+  alias Engine.{Document, RedisCli}
 
 
   def user_startpack(user) do
@@ -20,7 +20,7 @@ defmodule Karma.Controllers.Helpers do
   end
 
   def project_signees(project) do
-    from s in Karma.Signee,
+    from s in Engine.Signee,
     where: s.project_id == ^project.id,
     order_by: s.approver_type,
     order_by: s.name

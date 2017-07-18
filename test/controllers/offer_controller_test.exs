@@ -1,8 +1,8 @@
-defmodule Karma.OfferControllerTest do
-  use Karma.ConnCase
+defmodule Engine.OfferControllerTest do
+  use Engine.ConnCase
 
   import Mock
-  alias Karma.Offer
+  alias Engine.Offer
   @invalid_attrs default_offer(%{daily_or_weekly: "monthly", fee_per_day_inc_holiday: ""})
 
 
@@ -39,7 +39,7 @@ defmodule Karma.OfferControllerTest do
   test "creates offer to an unregistered user and redirects them", %{conn: conn, project: project} do
     new_offer = default_offer(%{target_email: "different@test.com"})
 
-    with_mock Karma.Mailer, [deliver_later: fn(email) ->
+    with_mock Engine.Mailer, [deliver_later: fn(email) ->
       assert email.html_body =~ "You've received an offer to work on the project"
       assert email.html_body =~ "To review the offer"
       assert email.to == new_offer.target_email
@@ -55,17 +55,17 @@ defmodule Karma.OfferControllerTest do
       assert Repo.get_by(Offer, target_email: new_offer.target_email)
 
       # ensure email was sentt
-      assert called Karma.Mailer.deliver_later(:_)
+      assert called Engine.Mailer.deliver_later(:_)
     end
   end
 
 
   test "offer to unregistered user gets attached to user when they create an account", %{conn: conn} do
     # offer has been made, create an account with said user
-    with_mock Karma.Mailer, [deliver_later: fn(_) -> nil end] do
+    with_mock Engine.Mailer, [deliver_later: fn(_) -> nil end] do
       conn = post conn, user_path(conn, :create), user: default_user(%{email: "a_new_email@gmail.com"})
       assert redirected_to(conn) == session_path(conn, :new)
-      user = Repo.get_by(Karma.User, email: "a_new_email@gmail.com")
+      user = Repo.get_by(Engine.User, email: "a_new_email@gmail.com")
       # ensure offer is attached to user
       offer = Repo.get_by(Offer, user_id: user.id)
       assert offer
@@ -76,9 +76,9 @@ defmodule Karma.OfferControllerTest do
   test "creates creates offer to a registered user", %{conn: conn, project: project} do
 
     contractor = insert_user(%{first_name: "Dave", last_name: "Seaman", email: "contractor@gmail.com"})
-    new_offer = default_offer(%{target_email: "contractor@gmail.com", fee_per_day_inc_holiday: "200"})
+    new_offer = default_offer(%{target_email: "contractor@gmail.com", fee_per_day_inc_holiday: "200", recipient_fullname: "David Seamon"})
 
-    with_mock Karma.Mailer, [deliver_later: fn(email) ->
+    with_mock Engine.Mailer, [deliver_later: fn(email) ->
       assert email.html_body =~ "You've received an offer to work on the project"
       assert email.to == new_offer.target_email
      end] do
@@ -96,7 +96,7 @@ defmodule Karma.OfferControllerTest do
       assert offer.user_id == contractor.id
 
       # ensure email was sent
-      assert called Karma.Mailer.deliver_later(:_)
+      assert called Engine.Mailer.deliver_later(:_)
     end
   end
 
@@ -183,13 +183,13 @@ defmodule Karma.OfferControllerTest do
   test "does not update offer or send email when data is valid but unchanged", %{conn: conn, offer: offer} do
     unchanged = default_offer()
 
-    with_mock Karma.Mailer, [deliver_later: fn(_) -> nil end] do
+    with_mock Engine.Mailer, [deliver_later: fn(_) -> nil end] do
 
       conn = put conn, project_offer_path(conn, :update, offer.project_id, offer), offer: unchanged
       assert Phoenix.Controller.get_flash(conn, :error) == "Nothing to update"
 
       # ensure email wasnt sent
-      refute called Karma.Mailer.deliver_later(:_)
+      refute called Engine.Mailer.deliver_later(:_)
     end
   end
 
@@ -197,7 +197,7 @@ defmodule Karma.OfferControllerTest do
   test "updates offer and redirects when data is valid", %{conn: conn, offer: offer, user: user} do
     updated = default_offer(%{additional_notes: "Sneaky peaky", user_id: user.id})
 
-    with_mock Karma.Mailer, [deliver_later: fn(email) ->
+    with_mock Engine.Mailer, [deliver_later: fn(email) ->
       assert email.html_body =~ "Your offer to join"
       assert email.html_body =~ "The more you add to Engine, the easier"
       assert email.to == updated.target_email
@@ -208,14 +208,14 @@ defmodule Karma.OfferControllerTest do
       assert Repo.get_by(Offer, additional_notes: "Sneaky peaky")
 
       # ensure email was sent
-      assert called Karma.Mailer.deliver_later(:_)
+      assert called Engine.Mailer.deliver_later(:_)
     end
   end
 
   test "updates offer and redirects when data is valid - nonexistent user", %{conn: conn, offer: offer} do
     updated = default_offer(%{additional_notes: "Sneaky peaky"})
 
-    with_mock Karma.Mailer, [deliver_later: fn(email) ->
+    with_mock Engine.Mailer, [deliver_later: fn(email) ->
       assert email.html_body =~ "Your offer to join"
       assert email.html_body =~ "The more you add to Engine, the easier"
       assert email.to == updated.target_email
@@ -226,7 +226,7 @@ defmodule Karma.OfferControllerTest do
       assert Repo.get_by(Offer, additional_notes: "Sneaky peaky")
 
       # ensure email was sent
-      assert called Karma.Mailer.deliver_later(:_)
+      assert called Engine.Mailer.deliver_later(:_)
     end
   end
 
@@ -254,12 +254,12 @@ defmodule Karma.OfferControllerTest do
     insert_document(project, %{name: offer.contract_type, url: "www.image_url"})
     insert_document(project, %{name: "LOAN OUT", url: "www.image_url"})
     conn = login_user(build_conn(), contractor)
-    with_mock Karma.Mailer, [deliver_later: fn(string) -> string end] do
+    with_mock Engine.Mailer, [deliver_later: fn(string) -> string end] do
       conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: false}
       assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
       assert Phoenix.Controller.get_flash(conn, :info) == "Offer rejected!"
       # ensure the offer is now rejected in DB
-      assert Repo.get(Karma.Offer, offer.id).accepted == false
+      assert Repo.get(Engine.Offer, offer.id).accepted == false
     end
   end
 
@@ -271,8 +271,8 @@ defmodule Karma.OfferControllerTest do
     insert_document(project, %{name: offer.contract_type, url: "www.image_url"})
     insert_document(project, %{name: "LOAN OUT", url: "www.image_url"})
     conn = login_user(build_conn(), contractor)
-    with_mock Karma.Mailer, [deliver_later: fn(string) -> string end] do
-      with_mock Karma.Merger, [merge_multiple: fn(_, _) -> {:ok, "Documents merged"} end] do
+    with_mock Engine.Mailer, [deliver_later: fn(string) -> string end] do
+      with_mock Engine.Merger, [merge_multiple: fn(_, _) -> {:ok, "Documents merged"} end] do
         conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: true}
         assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
         assert Phoenix.Controller.get_flash(conn, :info) == "Congratulations, you have accepted this offer!"
@@ -287,8 +287,8 @@ defmodule Karma.OfferControllerTest do
     insert_document(project, %{name: offer.contract_type, url: "www.image_url"})
     insert_document(project, %{name: "DAILY CONSTRUCTION LOAN OUT", url: "www.image_url"})
     conn = login_user(build_conn(), contractor)
-    with_mock Karma.Mailer, [deliver_later: fn(string) -> string end] do
-      with_mock Karma.Merger, [merge_multiple: fn(_, _) -> {:ok, "Documents merged"} end] do
+    with_mock Engine.Mailer, [deliver_later: fn(string) -> string end] do
+      with_mock Engine.Merger, [merge_multiple: fn(_, _) -> {:ok, "Documents merged"} end] do
         conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: true}
         assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
         assert Phoenix.Controller.get_flash(conn, :info) == "Congratulations, you have accepted this offer!"
@@ -303,8 +303,8 @@ defmodule Karma.OfferControllerTest do
     insert_document(project, %{name: offer.contract_type, url: "www.image_url"})
     insert_document(project, %{name: "DAILY TRANSPORT LOAN OUT", url: "www.image_url"})
     conn = login_user(build_conn(), contractor)
-    with_mock Karma.Mailer, [deliver_later: fn(string) -> string end] do
-      with_mock Karma.Merger, [merge_multiple: fn(_, _) -> {:ok, "Documents merged"} end] do
+    with_mock Engine.Mailer, [deliver_later: fn(string) -> string end] do
+      with_mock Engine.Merger, [merge_multiple: fn(_, _) -> {:ok, "Documents merged"} end] do
         conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: true}
         assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
         assert Phoenix.Controller.get_flash(conn, :info) == "Congratulations, you have accepted this offer!"
@@ -318,8 +318,8 @@ defmodule Karma.OfferControllerTest do
     update_startpack(contractor)
     insert_document(project, %{name: offer.contract_type, url: "www.image_url"})
     conn = login_user(build_conn(), contractor)
-    with_mock Karma.Mailer, [deliver_later: fn(string) -> string end] do
-      with_mock Karma.Merger, [merge_multiple: fn(_, _) -> {:error, "some flash message"} end] do
+    with_mock Engine.Mailer, [deliver_later: fn(string) -> string end] do
+      with_mock Engine.Merger, [merge_multiple: fn(_, _) -> {:error, "some flash message"} end] do
         conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: true}
         assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
         # ensure offer is still not accepted
@@ -359,7 +359,7 @@ defmodule Karma.OfferControllerTest do
     _equipment_rental_form = insert_document(project, %{name: "EQUIPMENT RENTAL"})
     _vehicle_allowance_form = insert_document(project, %{name: "VEHICLE ALLOWANCE"})
 
-    query = Karma.Controllers.Helpers.get_forms_for_merging(offer)
+    query = Engine.Controllers.Helpers.get_forms_for_merging(offer)
     docs = Repo.all(query)
 
     document_names = docs |> Enum.map(&Map.get(&1, :name)) |> Enum.sort()

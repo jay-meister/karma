@@ -1,7 +1,7 @@
-defmodule Karma.VerificationControllerTest do
-  use Karma.ConnCase, async: false
+defmodule Engine.VerificationControllerTest do
+  use Engine.ConnCase, async: false
 
-  alias Karma.{RedisCli}
+  alias Engine.{RedisCli}
 
   import Mock
 
@@ -40,7 +40,7 @@ defmodule Karma.VerificationControllerTest do
   end
 
   test "/verification/resend/:hash", %{conn: conn} do
-    with_mock Karma.Mailer, [deliver_later: fn(_) -> nil end] do
+    with_mock Engine.Mailer, [deliver_later: fn(_) -> nil end] do
       user = insert_user()
       RedisCli.set("RAND0M5TR1NG", user.email)
       conn = get conn, verification_path(conn, :resend, "RAND0M5TR1NG")

@@ -1,7 +1,7 @@
-defmodule Karma.AuthTest do
-  use Karma.ConnCase, async: false
+defmodule Engine.AuthTest do
+  use Engine.ConnCase, async: false
 
-  alias Karma.{Auth, Router, User}
+  alias Engine.{Auth, Router, User}
 
   describe "auth controller" do
     setup %{conn: conn} do

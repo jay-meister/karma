@@ -1,5 +1,5 @@
-defmodule Karma.InfoControllerTest do
-  use Karma.ConnCase
+defmodule Engine.InfoControllerTest do
+  use Engine.ConnCase
 
   setup do
     user = insert_user() # This represents the user that created the project (PM)

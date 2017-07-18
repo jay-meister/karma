@@ -1,3 +1,3 @@
-defmodule Karma.InfoView do
-  use Karma.Web, :view
+defmodule Engine.InfoView do
+  use Engine.Web, :view
 end

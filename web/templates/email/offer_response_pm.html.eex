@@ -164,7 +164,7 @@ a[x-apple-data-detectors=true] {
 
                     <div align="center" class="img-container center fullwidth" style="padding-right: 0px;  padding-left: 0px;">
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 0px; padding-left: 0px;" align="center"><![endif]-->
-<div style="line-height:30px;font-size:1px">&#160;</div>  <img class="center fullwidth" align="center" border="0" src="https://s3-eu-west-1.amazonaws.com/engine-hosted/rounder-up.png" alt="Image" title="Image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: 0;height: auto;float: none;width: 100%;max-width: 540px" width="540">
+<div style="line-height:30px;font-size:1px">&#160;</div>  <img class="center fullwidth" align="center" border="0" src="https://s3-eu-west-1.amazonaws.com/engine-hosted/rounder-up.png" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: 0;height: auto;float: none;width: 100%;max-width: 540px" width="540">
 <!--[if mso]></td></tr></table><![endif]-->
 </div>
 
@@ -188,9 +188,7 @@ a[x-apple-data-detectors=true] {
 
                     <div align="left" class="img-container left fullwidth" style="padding-right: 30px;  padding-left: 25px;">
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 30px; padding-left: 25px;" align="left"><![endif]-->
-<a href="#">
-  <img class="left fullwidth" align="left" border="0" src="https://s3-eu-west-1.amazonaws.com/engine-hosted/offer-response.jpg" alt="Image" title="Image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: 0;height: auto;float: none;width: 100%;max-width: 485px" width="485">
-</a>
+<img class="left fullwidth" align="left" border="0" src="https://s3-eu-west-1.amazonaws.com/engine-hosted/offer-response.jpg" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: 0;height: auto;float: none;width: 100%;max-width: 485px" width="485">
 <!--[if mso]></td></tr></table><![endif]-->
 </div>
 
@@ -246,7 +244,7 @@ a[x-apple-data-detectors=true] {
 
                     <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 30px; padding-left: 30px; padding-top: 10px; padding-bottom: 10px;"><![endif]-->
 <div style="font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;color:#555555;line-height:180%; padding-right: 30px; padding-left: 30px; padding-top: 10px; padding-bottom: 10px;">
-	<div style="font-size:12px;line-height:22px;color:#555555;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;text-align:left;"><p style="margin: 0;font-size: 12px;line-height: 22px"><span style="font-size: 14px; line-height: 25px; color: rgb(112, 112, 112);"><%= @name_contractor %> has <span style="color:<%= response_colour %>"><%= @offer_status %></span> your offer to join <strong>'<%= @codename %>'</strong></span></p></div>
+	<div style="font-size:12px;line-height:22px;color:#555555;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;text-align:left;"><p style="margin: 0;font-size: 12px;line-height: 22px"><span style="font-size: 14px; line-height: 25px; color: rgb(112, 112, 112);"><%= @name_contractor %> has <span style="color:<%= response_colour %>"><strong><%= @offer_status %></strong></span> your offer to join <strong>'<%= @codename %>'</strong></span></p></div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
 
@@ -254,7 +252,7 @@ a[x-apple-data-detectors=true] {
 
 
 <div align="center" class="button-container center" style="padding-right: 5px; padding-left: 5px; padding-top:25px; padding-bottom:30px;">
-  <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-spacing: 0; border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;"><tr><td style="padding-right: 5px; padding-left: 5px; padding-top:25px; padding-bottom:30px;" align="center"><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://karmaradio.herokuapp.com/users/new" style="height:49px; v-text-anchor:middle; width:250px;" arcsize="13%" strokecolor="#757de8" fillcolor="#757de8"><w:anchorlock/><center style="color:#ffffff; font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif; font-size:16px;"><![endif]-->
+  <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-spacing: 0; border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;"><tr><td style="padding-right: 5px; padding-left: 5px; padding-top:25px; padding-bottom:30px;" align="center"><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://app.teamengine.co.uk/users/new" style="height:49px; v-text-anchor:middle; width:250px;" arcsize="13%" strokecolor="#757de8" fillcolor="#757de8"><w:anchorlock/><center style="color:#ffffff; font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif; font-size:16px;"><![endif]-->
     <a href="<%= @url %>" target="_blank" style="display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #ffffff; background-color: #757de8; border-radius: 6px; -webkit-border-radius: 6px; -moz-border-radius: 6px; max-width: 230px; width: 200px; width: auto; border-top: 0px solid transparent; border-right: 0px solid transparent; border-bottom: 0px solid transparent; border-left: 0px solid transparent; padding-top: 15px; padding-right: 15px; padding-bottom: 15px; padding-left: 15px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif;mso-border-alt: none">
       <span style="font-size:16px;line-height:19px;"><span style="font-size: 16px; line-height: 19px;" data-mce-style="font-size: 16px; line-height: 16px;"><span style="line-height: 19px; font-size: 16px;" data-mce-style="line-height: 16px;">&#160;VIEW OFFER RESPONSE&#160;</span></span></span>
     </a>
@@ -284,91 +282,15 @@ a[x-apple-data-detectors=true] {
           <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
         </div>
       </div>
-    </div>    <div style="background-color:transparent;">
-      <div style="Margin: 0 auto;min-width: 320px;max-width: 540px;width: 540px;width: calc(23000% - 128260px);overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #525252;" class="block-grid two-up">
-        <div style="border-collapse: collapse;display: table;width: 100%;">
-          <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="background-color:transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width: 540px;"><tr class="layout-full-width" style="background-color:#525252;"><![endif]-->
+    </div>
 
-              <!--[if (mso)|(IE)]><td align="center" width="270" style=" width:270px; padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" valign="top"><![endif]-->
-            <div class="col num6" style="Float: left;max-width: 320px;min-width: 270px;width: 270px;width: calc(27270px - 5000%);background-color: #525252;">
-              <div style="background-color: transparent; width: 100% !important;">
-              <!--[if (!mso)&(!IE)]><!--><div style="border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;"><!--<![endif]-->
-
-
-                    <div align="center" class="img-container center fullwidth" style="padding-right: 10px;  padding-left: 5px;">
-<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 5px;" align="center"><![endif]-->
-<div style="line-height:5px;font-size:1px">&#160;</div>  <a href="https://engine-plans.squarespace.com/" target="_blank">
-    <img class="center fullwidth" align="center" border="0" src="https://s3-eu-west-1.amazonaws.com/engine-hosted/footer-logo.png" alt="Image" title="Image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;width: 100%;max-width: 255px;padding-left:3rem;" width="255">
-  </a>
-<!--[if mso]></td></tr></table><![endif]-->
-</div>
-
-
-              <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-              </div>
-            </div>
-              <!--[if (mso)|(IE)]></td><td align="center" width="270" style=" width:270px; padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" valign="top"><![endif]-->
-            <div class="col num6" style="Float: left;max-width: 320px;min-width: 270px;width: 270px;width: calc(27270px - 5000%);background-color: #525252;">
-              <div style="background-color: transparent; width: 100% !important;">
-              <!--[if (!mso)&(!IE)]><!--><div style="border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;"><!--<![endif]-->
-
-
-                    <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 0px; padding-left: 0px; padding-top: 25px; padding-bottom: 10px;"><![endif]-->
-<div style="font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;color:#cfcfcf;line-height:200%; padding-right: 0px; padding-left: 0px; padding-top: 25px; padding-bottom: 10px;">
-	<div style="font-size:12px;line-height:24px;color:#cfcfcf;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;text-align:left;"><p style="margin: 0;font-size: 11px;line-height: 24px;text-align: center"><span style="font-size: 11px; line-height: 22px;"><span style="color: rgb(207, 207, 207); font-size: 11px; line-height: 22px;"><a style="color:#757de8;text-decoration: none; color: rgb(207, 207, 207);" title="info@teamengine.co.uk" href="mailto:info@teamengine.co.uk?subject=Team Engine&amp;body=Dear Team Engine,
-
-INSERT YOUR ENQUIRY
-
-INCLUDE YOUR NAME &amp; CONTACTS
-
-We'll get back to you soon!
-
-Thanks.
-
-(if you need help, please click the 'help' link in and complete the form)">contact</a> </span> | &#160;<span style="color: rgb(207, 207, 207); font-size: 11px; line-height: 22px;"><a style="color:#757de8;text-decoration: none; color: rgb(207, 207, 207);" href="https://engineplans.formstack.com/forms/enginesupport" target="_blank" rel="noopener noreferrer">help &#160;</a>| <a style="color:#757de8;text-decoration: none; color: rgb(207, 207, 207);" href="https://karmaradio.herokuapp.com/terms" target="_blank" rel="noopener noreferrer">terms &#160;</a></span>| <span style="color: rgb(207, 207, 207); font-size: 11px; line-height: 22px;"><a style="color:#757de8;text-decoration: none; color: rgb(207, 207, 207);" href="https://karmaradio.herokuapp.com/privacy" target="_blank" rel="noopener noreferrer">privacy&#160;</a></span></span><br></p></div>
-</div>
-<!--[if mso]></td></tr></table><![endif]-->
-
-
-              <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-              </div>
-            </div>
-          <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
-        </div>
-      </div>
-    </div>    <div style="background-color:transparent;">
-      <div style="Margin: 0 auto;min-width: 320px;max-width: 540px;width: 540px;width: calc(23000% - 128260px);overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;" class="block-grid ">
-        <div style="border-collapse: collapse;display: table;width: 100%;">
-          <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="background-color:transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width: 540px;"><tr class="layout-full-width" style="background-color:transparent;"><![endif]-->
-
-              <!--[if (mso)|(IE)]><td align="center" width="540" style=" width:540px; padding-right: 0px; padding-left: 0px; padding-top:0px; padding-bottom:5px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" valign="top"><![endif]-->
-            <div class="col num12" style="min-width: 320px;max-width: 540px;width: 540px;width: calc(22000% - 118260px);background-color: transparent;">
-              <div style="background-color: transparent; width: 100% !important;">
-              <!--[if (!mso)&(!IE)]><!--><div style="border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent; padding-top:0px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;"><!--<![endif]-->
-
-
-                    <div align="center" class="img-container center fullwidth" style="padding-right: 0px;  padding-left: 0px;">
-<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 0px; padding-left: 0px;" align="center"><![endif]-->
-  <img class="center fullwidth" align="center" border="0" src="https://s3-eu-west-1.amazonaws.com/engine-hosted/rounder-dwn.png" alt="Image" title="Image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: 0;height: auto;float: none;width: 100%;max-width: 540px" width="540">
-<!--[if mso]></td></tr></table><![endif]-->
-</div>
+    <%= component "email_footer.html",
+    full_name: "#{@first_name} #{@last_name}"
+    %>
 
 
 
-                    <div style="padding-right: 30px; padding-left: 30px; padding-top: 30px; padding-bottom: 30px;">
-  <!--[if (mso)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 30px;padding-left: 30px; padding-top: 30px; padding-bottom: 30px;"><table width="100%" align="center" cellpadding="0" cellspacing="0" border="0"><tr><td><![endif]-->
-  <div align="center"><div style="border-top: 0px solid transparent; width:100%; line-height:0px; height:0px; font-size:0px;">&#160;</div></div>
-  <!--[if (mso)]></td></tr></table></td></tr></table><![endif]-->
-</div>
-
-
-              <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-              </div>
-            </div>
-          <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
-        </div>
-      </div>
-    </div>   <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
+    <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
   </div>
   <!--[if (mso)|(IE)]></div><![endif]-->
 

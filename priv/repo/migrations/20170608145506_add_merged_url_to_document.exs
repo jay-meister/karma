@@ -1,4 +1,4 @@
-defmodule Karma.Repo.Migrations.AddMergedUrlToDocument do
+defmodule Engine.Repo.Migrations.AddMergedUrlToDocument do
   use Ecto.Migration
 
   def change do

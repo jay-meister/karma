@@ -1,7 +1,7 @@
-defmodule Karma.Sign do
+defmodule Engine.Sign do
   import Ecto.Query
 
-  alias Karma.{AlteredDocument, Repo, S3}
+  alias Engine.{AlteredDocument, Repo, S3}
 
   @default_increment 2
   # when creating an approval chain, we 'inject' the agent if necessary
@@ -71,9 +71,9 @@ defmodule Karma.Sign do
 
   def prepare_document(merged, user, offer) do
     # 'User_first_name User_last_name, Offer_job_title (Offer_department) - Offer_daily_or_weekly, Offer_contract_type'
-    original = Repo.get(Karma.Document, merged.document_id)
+    original = Repo.get(Engine.Document, merged.document_id)
     %{"documentId": merged.id,
-       "name": "#{String.upcase(user.first_name)} #{String.upcase(user.last_name)}, #{offer.job_title} (#{offer.department}) - #{String.upcase(offer.daily_or_weekly)}, #{original.name}.pdf",
+       "name": "#{String.upcase(user.first_name)} #{String.upcase(user.last_name)}, #{offer.job_title} (#{offer.department}) - #{original.name}.pdf",
        "documentBase64": merged.encoded_file,
        "transformPdfFields": "true"
     }
@@ -90,8 +90,8 @@ defmodule Karma.Sign do
   end
 
   def get_approval_chain(original, approver_type) do
-    query = from s in Karma.Signee,
-      join: ds in Karma.DocumentSignee,
+    query = from s in Engine.Signee,
+      join: ds in Engine.DocumentSignee,
       on: s.id == ds.signee_id,
       where: ds.document_id == ^original.document_id
       and s.approver_type == ^approver_type,
@@ -166,7 +166,7 @@ defmodule Karma.Sign do
 
   # api related
   def login(headers) do
-    url = Application.get_env(:karma, Karma.Sign)[:url]
+    url = Application.get_env(:engine, Engine.Sign)[:url]
     case HTTPoison.get(url, headers, []) do
       {:ok, %{status_code: 200} = res} ->
         res = Poison.decode!(Map.from_struct(res).body)
@@ -187,9 +187,9 @@ defmodule Karma.Sign do
 
   def headers do
     auth = Poison.encode!(
-      %{Username: Application.get_env(:karma, Karma.Sign)[:username],
-        Password: Application.get_env(:karma, Karma.Sign)[:password],
-        IntegratorKey: Application.get_env(:karma, Karma.Sign)[:integrator_key]
+      %{Username: Application.get_env(:engine, Engine.Sign)[:username],
+        Password: Application.get_env(:engine, Engine.Sign)[:password],
+        IntegratorKey: Application.get_env(:engine, Engine.Sign)[:integrator_key]
       })
 
     ["X-DocuSign-Authentication": auth,

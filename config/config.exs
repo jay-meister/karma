@@ -6,15 +6,15 @@
 use Mix.Config
 
 # General application configuration
-config :karma,
-  ecto_repos: [Karma.Repo]
+config :engine,
+  ecto_repos: [Engine.Repo]
 
 # Configures the endpoint
-config :karma, Karma.Endpoint,
+config :engine, Engine.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "e2zATUprjODTRMHBZcDBvMbqEVcb27M+druByWILVfglZPIBoZvtNFPq5BMAT3As",
-  render_errors: [view: Karma.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Karma.PubSub,
+  render_errors: [view: Engine.ErrorView, accepts: ~w(html json)],
+  pubsub: [name: Engine.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger
@@ -24,7 +24,7 @@ config :logger, :console,
 
 
 # Configure mailing
-config :karma, Karma.Mailer,
+config :engine, Engine.Mailer,
   adapter: Bamboo.SMTPAdapter,
   server: System.get_env("SES_SERVER"),
   port: System.get_env("SES_PORT"),
@@ -47,7 +47,7 @@ config :ex_aws,
   ]
 
 # docusign
-config :karma, Karma.Sign,
+config :engine, Engine.Sign,
   username: System.get_env("SANDBOX_DOCUSIGN_USERNAME"),
   password: System.get_env("SANDBOX_DOCUSIGN_PASSWORD"),
   integrator_key: System.get_env("DOCUSIGN_INTEGRATOR_KEY"),

@@ -1,9 +1,9 @@
-defmodule Karma.Auth do
+defmodule Engine.Auth do
   import Plug.Conn
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
   import Phoenix.Controller
 
-  alias Karma.{User, Router.Helpers}
+  alias Engine.{User, Router.Helpers}
 
   def init(opts) do
     Keyword.fetch!(opts, :repo)

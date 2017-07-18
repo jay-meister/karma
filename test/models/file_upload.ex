@@ -1,4 +1,4 @@
-defmodule Karma.FileUpload do
-  use Karma.Web, :controller
+defmodule Engine.FileUpload do
+  use Engine.Web, :controller
 
 end

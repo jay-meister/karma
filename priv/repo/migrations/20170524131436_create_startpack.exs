@@ -1,4 +1,4 @@
-defmodule Karma.Repo.Migrations.CreateStartpack do
+defmodule Engine.Repo.Migrations.CreateStartpack do
   use Ecto.Migration
 
   def change do

@@ -1,4 +1,4 @@
-defmodule Karma.Repo.Migrations.CreateSignee do
+defmodule Engine.Repo.Migrations.CreateSignee do
   use Ecto.Migration
 
   def change do

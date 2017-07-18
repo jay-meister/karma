@@ -365,7 +365,7 @@
     form: f,
     atom: :for_paye_only,
     label: "For PAYE contracts only (select one)",
-    radios: Karma.StartpackView.for_paye_only()
+    radios: Engine.StartpackView.for_paye_only()
     %>
 
     </br>

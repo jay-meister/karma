@@ -1,9 +1,9 @@
-defmodule Karma.PasswordControllerTest do
-  use Karma.ConnCase
+defmodule Engine.PasswordControllerTest do
+  use Engine.ConnCase
 
   import Mock
 
-  alias Karma.{Email, RedisCli}
+  alias Engine.{Email, RedisCli}
 
   setup do
     RedisCli.flushdb()
@@ -16,7 +16,7 @@ defmodule Karma.PasswordControllerTest do
 
 
   test "structure of password reset email is ok" do
-    email = Email.send_html_email("test@email.com", "Password reset", "www.example.com/reset_password", "password_reset", [first_name: "First"])
+    email = Email.send_html_email("test@email.com", "Password reset", "www.example.com/reset_password", "password_reset", [first_name: "First", last_name: "Last"])
     assert email.to == "test@email.com"
     assert email.subject == "Password reset"
     assert email.text_body =~ "www.example.com/reset_password"
@@ -28,7 +28,7 @@ defmodule Karma.PasswordControllerTest do
   end
 
   test "password :create with recognised email address", %{conn: conn} do
-    with_mock Karma.Mailer, [deliver_later: fn(_) -> nil end] do
+    with_mock Engine.Mailer, [deliver_later: fn(_) -> nil end] do
       user = insert_user()
       conn = post(conn, password_path(conn, :create), user: @valid_attrs)
       # test response

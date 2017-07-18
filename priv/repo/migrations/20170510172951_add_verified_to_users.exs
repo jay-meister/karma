@@ -1,4 +1,4 @@
-defmodule Karma.Repo.Migrations.AddVerifiedToUsers do
+defmodule Engine.Repo.Migrations.AddVerifiedToUsers do
   use Ecto.Migration
 
   def change do

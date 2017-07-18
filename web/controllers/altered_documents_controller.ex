@@ -1,6 +1,6 @@
-defmodule Karma.AlteredDocumentController do
-  use Karma.Web, :controller
-  alias Karma.{AlteredDocument, Sign, Offer}
+defmodule Engine.AlteredDocumentController do
+  use Engine.Web, :controller
+  alias Engine.{AlteredDocument, Sign, Offer}
 
   def sign(conn, %{"project_id" => p_id, "offer_id" => o_id}) do
     # get documents

@@ -1,5 +1,5 @@
-defmodule Karma.Offer do
-  use Karma.Web, :model
+defmodule Engine.Offer do
+  use Engine.Web, :model
 
   schema "offers" do
     field :recipient_fullname, :string
@@ -39,9 +39,9 @@ defmodule Karma.Offer do
     field :accepted, :boolean, default: nil
     field :active, :boolean, default: true
     field :contractor_details_accepted, :boolean, default: nil
-    belongs_to :user, Karma.User
-    belongs_to :project, Karma.Project
-    has_many :altered_documents, Karma.AlteredDocument
+    belongs_to :user, Engine.User
+    belongs_to :project, Engine.Project
+    has_many :altered_documents, Engine.AlteredDocument
 
     timestamps()
   end

@@ -1,4 +1,4 @@
-defmodule Karma.Repo.Migrations.AddInsuranceAndLicenseToStartpack do
+defmodule Engine.Repo.Migrations.AddInsuranceAndLicenseToStartpack do
   use Ecto.Migration
 
   def change do

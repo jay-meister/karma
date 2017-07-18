@@ -1,5 +1,5 @@
-defmodule Karma.DashboardControllerTest do
-  use Karma.ConnCase
+defmodule Engine.DashboardControllerTest do
+  use Engine.ConnCase
 
   test "dashboard requires user authentication", %{conn: conn} do
     conn = get(conn, dashboard_path(conn, :index))

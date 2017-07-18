@@ -41,7 +41,7 @@
         </div>
       </div>
       <div class="dtc tr pr4-ns pr3-ns k-pr4-5 pv4">
-        <div class="pa2-ns pa0 f2-ns f3"><%= "#{currency}#{Karma.Formatter.format_number(offer.fee_per_day_inc_holiday)}" %>/day</div>
+        <div class="pa2-ns pa0 f2-ns f3"><%= "#{currency}#{Engine.Formatter.format_number(offer.fee_per_day_inc_holiday)}" %>/day</div>
       </div>
     </div>
   </div>

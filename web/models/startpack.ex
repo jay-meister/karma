@@ -1,5 +1,5 @@
-defmodule Karma.Startpack do
-  use Karma.Web, :model
+defmodule Engine.Startpack do
+  use Engine.Web, :model
 
   schema "startpacks" do
     field :gender, :string
@@ -79,7 +79,7 @@ defmodule Karma.Startpack do
     field :schedule_d_letter_image, :any, virtual: true
     field :loan_out_company_cert_image, :any, virtual: true
 
-    belongs_to :user, Karma.User
+    belongs_to :user, Engine.User
     timestamps()
   end
 
@@ -317,7 +317,7 @@ defmodule Karma.Startpack do
 
   def contract_type_changeset(changeset, startpack, offer) do
     case offer do
-      %Karma.Offer{contract_type: "PAYE"} ->
+      %Engine.Offer{contract_type: "PAYE"} ->
         case startpack.use_loan_out_company? do
           true ->
             changeset
@@ -328,7 +328,7 @@ defmodule Karma.Startpack do
             |> validate_required(paye_keys())
             |> validate_inclusion(:for_paye_only, for_paye_only())
         end
-      %Karma.Offer{contract_type: "CONSTRUCTION PAYE"} ->
+      %Engine.Offer{contract_type: "CONSTRUCTION PAYE"} ->
         case startpack.use_loan_out_company? do
           true ->
             changeset
@@ -339,7 +339,7 @@ defmodule Karma.Startpack do
             |> validate_required(paye_keys())
             |> validate_inclusion(:for_paye_only, for_paye_only())
         end
-      %Karma.Offer{contract_type: "TRANSPORT PAYE"} ->
+      %Engine.Offer{contract_type: "TRANSPORT PAYE"} ->
         case startpack.use_loan_out_company? do
           true ->
             changeset
@@ -350,15 +350,15 @@ defmodule Karma.Startpack do
             |> validate_required(paye_keys())
             |> validate_inclusion(:for_paye_only, for_paye_only())
         end
-      %Karma.Offer{contract_type: "SCHEDULE-D", daily_or_weekly: "daily"} ->
+      %Engine.Offer{contract_type: "SCHEDULE-D", daily_or_weekly: "daily"} ->
         changeset
         |> cast(startpack, [ :schedule_d_letter_url ])
         |> validate_required([ :schedule_d_letter_url ])
-      %Karma.Offer{contract_type: "CONSTRUCTION SCHEDULE-D", daily_or_weekly: "daily"} ->
+      %Engine.Offer{contract_type: "CONSTRUCTION SCHEDULE-D", daily_or_weekly: "daily"} ->
         changeset
         |> cast(startpack, [ :schedule_d_letter_url ])
         |> validate_required([ :schedule_d_letter_url ])
-      %Karma.Offer{contract_type: "TRANSPORT SCHEDULE-D"} ->
+      %Engine.Offer{contract_type: "TRANSPORT SCHEDULE-D"} ->
         changeset
         |> cast(startpack, [ :schedule_d_letter_url ])
         |> validate_required([ :schedule_d_letter_url ])

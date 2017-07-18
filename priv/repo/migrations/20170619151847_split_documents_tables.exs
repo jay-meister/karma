@@ -1,4 +1,4 @@
-defmodule Karma.Repo.Migrations.SplitDocumentsTables do
+defmodule Engine.Repo.Migrations.SplitDocumentsTables do
   use Ecto.Migration
 
   def change do

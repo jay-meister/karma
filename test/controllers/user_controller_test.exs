@@ -1,9 +1,9 @@
-defmodule Karma.UserControllerTest do
-  use Karma.ConnCase
+defmodule Engine.UserControllerTest do
+  use Engine.ConnCase
 
   import Mock
 
-  alias Karma.{User, Email, RedisCli, Controllers.Helpers}
+  alias Engine.{User, Email, RedisCli, Controllers.Helpers}
 
   @user_attrs %{email: "test@test.com"}
   @valid_attrs %{email: "test@test.com", first_name: "Joe", last_name: "Blogs", password: "Password123!", terms_accepted: true}
@@ -48,7 +48,7 @@ defmodule Karma.UserControllerTest do
   end
 
   test "creates resource and redirects when data is valid DEV", %{conn: conn} do
-    with_mock Karma.Mailer, [deliver_later: fn(_) -> nil end] do
+    with_mock Engine.Mailer, [deliver_later: fn(_) -> nil end] do
       Mix.env(:dev)
       conn = post conn, user_path(conn, :create), user: @valid_attrs
       assert redirected_to(conn) == session_path(conn, :new)
@@ -57,21 +57,21 @@ defmodule Karma.UserControllerTest do
   end
 
   test "creates resource and redirects when data is valid not DEV", %{conn: conn} do
-    with_mock Karma.Mailer, [deliver_later: fn(_) -> nil end] do
+    with_mock Engine.Mailer, [deliver_later: fn(_) -> nil end] do
       Mix.env(:prod)
       conn = post conn, user_path(conn, :create), user: @valid_attrs
       assert redirected_to(conn) == session_path(conn, :new)
       assert Repo.get_by(User, @user_attrs)
-      assert called Karma.Mailer.deliver_later(:_)
+      assert called Engine.Mailer.deliver_later(:_)
     end
   end
 
   test "creates resource and redirects with pre-filled email", %{conn: conn} do
-    with_mock Karma.Mailer, [deliver_later: fn(_) -> nil end] do
+    with_mock Engine.Mailer, [deliver_later: fn(_) -> nil end] do
       conn = post conn, user_path(conn, :create), user: @valid_attrs
       assert redirected_to(conn) == session_path(conn, :new)
       assert Repo.get_by(User, @user_attrs)
-      assert called Karma.Mailer.deliver_later(:_)
+      assert called Engine.Mailer.deliver_later(:_)
     end
   end
 
@@ -154,7 +154,7 @@ defmodule Karma.UserControllerTest do
   end
 
   test "structure of verification email is ok" do
-    email = Email.send_html_email("test@email.com", "Welcome", "Hello!", "verify", [first_name: "Test"])
+    email = Email.send_html_email("test@email.com", "Welcome", "Hello!", "verify", [first_name: "Test", last_name: "Monies"])
     assert email.to == "test@email.com"
     assert email.subject == "Welcome"
     assert email.text_body =~ "Hello!"

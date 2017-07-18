@@ -1,7 +1,7 @@
-defmodule Karma.SigneeTest do
-  use Karma.ModelCase
+defmodule Engine.SigneeTest do
+  use Engine.ModelCase
 
-  alias Karma.Signee
+  alias Engine.Signee
 
   @valid_attrs %{name: "First Last", email: "test@email.com", approver_type: "Approver", role: "Role", project_id: 1}
   @invalid_attrs %{}

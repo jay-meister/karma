@@ -1,7 +1,7 @@
-defmodule Karma.DocumentSigneeTest do
-  use Karma.ModelCase
+defmodule Engine.DocumentSigneeTest do
+  use Engine.ModelCase
 
-  alias Karma.DocumentSignee
+  alias Engine.DocumentSignee
 
   @valid_attrs %{document_id: 1, signee_id: 1, order: 1}
   @invalid_attrs %{}

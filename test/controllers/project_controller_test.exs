@@ -1,7 +1,7 @@
-defmodule Karma.ProjectControllerTest do
-  use Karma.ConnCase
+defmodule Engine.ProjectControllerTest do
+  use Engine.ConnCase
 
-  alias Karma.Project
+  alias Engine.Project
 
   @invalid_attrs %{}
 
@@ -66,7 +66,7 @@ defmodule Karma.ProjectControllerTest do
 
   test "/project/:id shows specific project", %{conn: conn, project: project} do
     conn = get conn, project_path(conn, :show, project)
-    assert html_response(conn, 200) =~ project.name
+    assert html_response(conn, 200) =~ project.codename
   end
 
   test "renders page not found when id is nonexistent", %{conn: conn} do

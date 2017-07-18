@@ -1,4 +1,4 @@
-defmodule Karma.Repo.Migrations.RemoveOvertimeFromOffers do
+defmodule Engine.Repo.Migrations.RemoveOvertimeFromOffers do
   use Ecto.Migration
 
   def change do

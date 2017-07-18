@@ -1,3 +1,3 @@
-defmodule Karma.DocumentSigneeView do
-  use Karma.Web, :view
+defmodule Engine.DocumentSigneeView do
+  use Engine.Web, :view
 end

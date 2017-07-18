@@ -1,4 +1,4 @@
-defmodule Karma.Job do
+defmodule Engine.Job do
 
   def departments() do
     [

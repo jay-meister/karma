@@ -1,7 +1,7 @@
-defmodule Karma.DashboardController do
-  use Karma.Web, :controller
+defmodule Engine.DashboardController do
+  use Engine.Web, :controller
 
-  alias Karma.Controllers.Helpers
+  alias Engine.Controllers.Helpers
 
   def index(conn, _params, user) do
     case user == nil do

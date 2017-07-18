@@ -1,7 +1,7 @@
-defmodule Karma.PasswordController do
-  use Karma.Web, :controller
+defmodule Engine.PasswordController do
+  use Engine.Web, :controller
 
-  alias Karma.{User, LayoutView}
+  alias Engine.{User, LayoutView}
 
   def new(conn, _params) do
     # render form allowing user to enter email address
@@ -22,8 +22,8 @@ defmodule Karma.PasswordController do
         # if email is found, send reset email
         # need to hash the user id!
         url = password_url(conn, :edit, user.id)
-        Karma.Email.send_reset_password_email(user, url)
-        |> Karma.Mailer.deliver_later()
+        Engine.Email.send_reset_password_email(user, url)
+        |> Engine.Mailer.deliver_later()
         conn
         |> put_flash(:info, "A password reset email has been sent to #{user.email}, it will expire in 5 minutes")
         |> redirect(to: password_path(conn, :new))
@@ -56,7 +56,7 @@ defmodule Karma.PasswordController do
         case Repo.update(changeset) do
           {:ok, user} ->
             conn
-            |> Karma.Auth.login(user)
+            |> Engine.Auth.login(user)
             |> put_flash(:info, "Password updated successfully")
             |> redirect(to: dashboard_path(conn, :index))
           {:error, changeset} ->

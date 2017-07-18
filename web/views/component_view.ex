@@ -1,3 +1,3 @@
-defmodule Karma.ComponentView do
-  use Karma.Web, :view
+defmodule Engine.ComponentView do
+  use Engine.Web, :view
 end

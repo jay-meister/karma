@@ -1,3 +1,3 @@
-defmodule Karma.DashboardView do
-  use Karma.Web, :view
+defmodule Engine.DashboardView do
+  use Engine.Web, :view
 end

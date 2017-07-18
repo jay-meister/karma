@@ -1,4 +1,4 @@
-defmodule Karma.Repo.Migrations.CreateOffer do
+defmodule Engine.Repo.Migrations.CreateOffer do
   use Ecto.Migration
 
   def change do
