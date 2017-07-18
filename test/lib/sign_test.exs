@@ -100,7 +100,7 @@ defmodule Engine.SignTest do
     offer = Repo.preload(offer, :project)
 
     formatted_doc = Sign.prepare_document(alt_doc, contractor, offer)
-    assert "JOE BLOGS, Cashier (Accounts) - WEEKLY, PAYE.pdf" == formatted_doc.name
+    assert "JOE BLOGS, Cashier (Accounts) - PAYE.pdf" == formatted_doc.name
   end
 
   test "build_envelope_body" do
