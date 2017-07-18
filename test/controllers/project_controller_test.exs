@@ -66,7 +66,7 @@ defmodule Engine.ProjectControllerTest do
 
   test "/project/:id shows specific project", %{conn: conn, project: project} do
     conn = get conn, project_path(conn, :show, project)
-    assert html_response(conn, 200) =~ project.name
+    assert html_response(conn, 200) =~ project.codename
   end
 
   test "renders page not found when id is nonexistent", %{conn: conn} do
