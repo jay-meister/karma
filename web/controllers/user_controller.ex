@@ -38,7 +38,7 @@ defmodule Engine.UserController do
 
         conn
         |> put_flash(:info, "A verification email has been sent to #{user.email}.
-        Click the link in the email to gain full access to Engine.")
+        Click the link in the email to gain full access to engine.")
         |> redirect(to: session_path(conn, :new))
       {:error, changeset} ->
         case Map.has_key?(conn.query_params, "te") do
