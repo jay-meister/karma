@@ -288,6 +288,7 @@ defmodule Engine.Startpack do
         changeset
         |> cast(startpack, agent_requirements())
         |> validate_required(agent_requirements())
+        |> validate_format(:agent_email_address, ~r/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/)
       false ->
         changeset
     end
