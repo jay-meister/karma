@@ -14,6 +14,7 @@ use Mix.Config
 config :engine, Engine.Endpoint,
   http: [port: {:system, "PORT"}],
   url: [host: "karmaradio.herokuapp.com", port: 443],
+  url: [host: "app.teamengine.co.uk", port: 443],
   force_ssl: [rewrite_on: [:x_forwarded_proto]],
   cache_static_manifest: "priv/static/manifest.json",
   secret_key_base: System.get_env("SECRET_KEY_BASE")
