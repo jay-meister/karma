@@ -100,7 +100,6 @@ defmodule Engine.Offer do
     |> validate_required_dropdowns()
   end
 
-
   def form_validation(struct, params \\ %{}) do
     struct
     |> cast(params, [
@@ -148,6 +147,33 @@ defmodule Engine.Offer do
     |> validate_if_required(params, :equipment_rental_required?, @equipment_rental_fields)
     |> validate_required_dropdowns()
     |> validate_format(:target_email, ~r/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/)
+    |> validate_end_date(params)
+  end
+
+  def validate_end_date(changeset, params) do
+    IO.inspect changeset
+    IO.inspect params
+    end_date = date_from_map(Map.get(params, "end_date"))
+    start_date = date_from_map(Map.get(params, "start_date"))
+
+    case end_date do ->
+      # if nil return changeset
+      # if startdate is nil, return changeset (ecto should deal with invalid startdate)
+      # else compare end and startdates using Date.compare
+
+    changeset
+  end
+
+  # Create helper function that takes a map and returns nil or a date
+  def date_from_map(map) do
+
+    d = String.to_integer(Map.get(map, "day"))
+    m = Map.get(map, "month")
+    y = Map.get(map, "year")
+
+    Date.new(y, m, d)
+
+
   end
 
   def validate_required_dropdowns(changeset) do
