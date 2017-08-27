@@ -1,9 +1,13 @@
 <div class="mb4">
-  <% default_date = case assigns[:dob] do
-    true ->
-      {:ok, date} = Date.new(Date.utc_today().year - 16, Date.utc_today().month, Date.utc_today().day)
-      date
-    _false -> Date.utc_today()
+<% default_date = case assigns[:with_default?] do
+    false -> nil
+    _not_false ->
+      case assigns[:dob] do
+        true ->
+          {:ok, date} = Date.new(Date.utc_today().year - 16, Date.utc_today().month, Date.utc_today().day)
+          date
+          _false -> Date.utc_today()
+      end
   end%>
   <%= case assigns[:label] do
    nil -> label assigns[:form], assigns[:atom], class: "dib mw-100 mb2 fw4"
@@ -18,7 +22,9 @@
     value: default_date,
     year: [options: year_from..year_to],
     builder: fn b -> %>
-      <%= b.(:day, []) %> / <%= b.(:month, []) %> / <%= b.(:year, []) %>
+      <%= b.(:day, [prompt: "Select"]) %> /
+      <%= b.(:month, [prompt: "Select"]) %> /
+      <%= b.(:year, [prompt: "Select"]) %>
     <% end %>
   </div>
   <%= error_tag assigns[:form], assigns[:atom] %>

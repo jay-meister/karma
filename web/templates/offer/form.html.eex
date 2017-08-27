@@ -44,6 +44,12 @@
   atom: :start_date
   %>
 
+  <%= component "date.html",
+  form: f,
+  atom: :end_date,
+  with_default?: false,
+  label: "End date (optional)"
+  %>
 
   <%= component "dropdown.html",
   form: f,
