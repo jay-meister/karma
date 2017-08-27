@@ -59,6 +59,7 @@ defmodule Engine.Startpack do
     field :student_loan_finished_before_6_april?, :boolean, default: nil
     field :schedule_d_letter_url, :string
     field :use_loan_out_company?, :boolean, default: false, null: false
+    field :loan_out_company_name, :string, default: nil
     field :loan_out_company_registration_number, :string
     field :loan_out_company_address, :string
     field :loan_out_company_cert_url, :string
@@ -146,6 +147,7 @@ defmodule Engine.Startpack do
       :student_loan_plan_1?,
       :student_loan_finished_before_6_april?,
       :schedule_d_letter_url,
+      :loan_out_company_name,
       :loan_out_company_registration_number,
       :loan_out_company_address,
       :loan_out_company_cert_url,
@@ -239,6 +241,15 @@ defmodule Engine.Startpack do
        :student_loan_plan_1?,
        :student_loan_finished_before_6_april?
      ]
+  end
+
+  def loan_out_compnay_keys do
+    [ :use_loan_out_company?,
+      :loan_out_company_name,
+      :loan_out_company_registration_number,
+      :loan_out_company_address,
+      :loan_out_company_cert_url
+    ]
   end
 
   def mother_changeset(struct, startpack, offer) do
@@ -427,8 +438,8 @@ defmodule Engine.Startpack do
     case startpack.use_loan_out_company? do
       true ->
         struct
-        |> cast(startpack, [:use_loan_out_company?, :loan_out_company_registration_number, :loan_out_company_address, :loan_out_company_cert_url])
-        |> validate_required([:use_loan_out_company?, :loan_out_company_registration_number, :loan_out_company_address, :loan_out_company_cert_url])
+        |> cast(startpack, loan_out_compnay_keys())
+        |> validate_required(loan_out_compnay_keys())
       false ->
         struct
     end

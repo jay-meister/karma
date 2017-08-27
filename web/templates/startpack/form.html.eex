@@ -435,6 +435,11 @@
 
         <%= component "input.html",
         form: f,
+        atom: :loan_out_company_name
+        %>
+
+        <%= component "input.html",
+        form: f,
         atom: :loan_out_company_registration_number
         %>
 

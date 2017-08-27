@@ -128,6 +128,7 @@
 - student_loan_plan_1?- **boolean**, default: nil
 - student_loan_finished_before_6_april?- **boolean**, default: nil
 - schedule_d_letter_url - **string**
+- loan_out_company_name - **string**
 - loan_out_company_registration_number - **string**
 - loan_out_company_address - **text**
 - loan_out_company_cert_url - **string**
