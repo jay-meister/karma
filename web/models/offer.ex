@@ -8,6 +8,7 @@ defmodule Engine.Offer do
     field :job_title, :string
     field :contract_type, :string
     field :start_date, Ecto.Date
+    field :end_date, Ecto.Date
     field :daily_or_weekly, :string
     field :working_week, :float
     field :currency, :string
@@ -108,6 +109,7 @@ defmodule Engine.Offer do
       :department,
       :job_title,
       :start_date,
+      :end_date,
       :daily_or_weekly,
       :working_week,
       :currency,

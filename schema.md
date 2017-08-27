@@ -35,6 +35,7 @@
 - job_title - **string**
 - contract_type - ["SCHEDULE-D", "PAYE"] **string**
 - start_date - **date**
+- end_date - **date**
 - daily_or_weekly - **string**
 - working_week - **float**
 - currency - **string**

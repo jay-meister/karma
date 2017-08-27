@@ -172,6 +172,7 @@ defmodule Engine.TestHelpers do
       currency: "gbp",
       daily_or_weekly: "weekly",
       department: "Accounts",
+      end_date:  %{day: 17, month: 5, year: 2019},
       equipment_rental_required?: true,
       equipment_rental_cap: 0,
       equipment_rental_description: "n/a",

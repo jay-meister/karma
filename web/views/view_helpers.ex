@@ -23,11 +23,15 @@ defmodule Engine.ViewHelpers do
   end
 
   def format_date(date) do
-    day = Integer.to_string(date.day)
-    month = Integer.to_string(date.month)
-    year = Integer.to_string(date.year)
+    case date do
+      nil -> "n/a"
+      _ ->
+        day = Integer.to_string(date.day)
+        month = Integer.to_string(date.month)
+        year = Integer.to_string(date.year)
 
-    day <> "/" <> month <> "/" <> year
+        day <> "/" <> month <> "/" <> year
+    end
   end
 
   def format_holiday_rate(float) do

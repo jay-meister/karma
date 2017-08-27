@@ -39,6 +39,11 @@ defmodule Engine.OfferTest do
     refute changeset.valid?
   end
 
+  test "changeset with no end_date selected" do
+    changeset = Offer.changeset(%Offer{}, default_offer(%{project_id: 1, end_date: nil}))
+    assert changeset.valid?
+  end
+
   test "changeset with valid attributes" do
     changeset = Offer.changeset(%Offer{}, default_offer(%{project_id: 1}))
     assert changeset.valid?
