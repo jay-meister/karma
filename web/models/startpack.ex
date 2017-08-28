@@ -62,6 +62,7 @@ defmodule Engine.Startpack do
     field :loan_out_company_name, :string, default: nil
     field :loan_out_company_registration_number, :string
     field :loan_out_company_address, :string
+    field :loan_out_company_email, :string
     field :loan_out_company_cert_url, :string
     field :bank_name, :string
     field :bank_address, :string
@@ -150,6 +151,7 @@ defmodule Engine.Startpack do
       :loan_out_company_name,
       :loan_out_company_registration_number,
       :loan_out_company_address,
+      :loan_out_company_email,
       :loan_out_company_cert_url,
       :bank_name,
       :bank_address,
@@ -243,11 +245,12 @@ defmodule Engine.Startpack do
      ]
   end
 
-  def loan_out_compnay_keys do
+  def loan_out_company_keys do
     [ :use_loan_out_company?,
       :loan_out_company_name,
       :loan_out_company_registration_number,
       :loan_out_company_address,
+      :loan_out_company_email,
       :loan_out_company_cert_url
     ]
   end
@@ -438,8 +441,10 @@ defmodule Engine.Startpack do
     case startpack.use_loan_out_company? do
       true ->
         struct
-        |> cast(startpack, loan_out_compnay_keys())
-        |> validate_required(loan_out_compnay_keys())
+        |> cast(startpack, loan_out_company_keys())
+        |> validate_required(loan_out_company_keys())
+        |> validate_format(:loan_out_company_email, ~r/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/)
+        |> IO.inspect
       false ->
         struct
     end

@@ -448,6 +448,12 @@
         atom: :loan_out_company_address
         %>
 
+
+        <%= component "input.html",
+        form: f,
+        atom: :loan_out_company_email
+        %>
+
         <%= component "file_upload.html",
         form: f,
         atom: :loan_out_company_cert_image,

@@ -239,6 +239,7 @@ defmodule Engine.Merger do
     :loan_out_company_name,
     :loan_out_company_registration_number,
     :loan_out_company_address,
+    :loan_out_company_email,
     :loan_out_company_cert_url,
     :bank_name,
     :bank_address,
