@@ -444,7 +444,6 @@ defmodule Engine.Startpack do
         |> cast(startpack, loan_out_company_keys())
         |> validate_required(loan_out_company_keys())
         |> validate_format(:loan_out_company_email, ~r/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/)
-        |> IO.inspect
       false ->
         struct
     end
