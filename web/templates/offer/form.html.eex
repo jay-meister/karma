@@ -47,7 +47,6 @@
   <%= component "date.html",
   form: f,
   atom: :end_date,
-  with_default?: false,
   label: "End date (optional)"
   %>
 
