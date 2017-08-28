@@ -96,7 +96,7 @@
     form: f,
     atom: :date_of_birth,
     year_from: 1930,
-    year_to: Date.utc_today().year - 16
+    year_to: Date.utc_today().year
     %>
 
     <%= component "input.html",
@@ -124,7 +124,8 @@
 
     <%= component "date.html",
     form: f,
-    atom: :passport_expiry_date
+    atom: :passport_expiry_date,
+    year_to: Date.utc_today().year + 50
     %>
 
     <%= component "input.html",
