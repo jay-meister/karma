@@ -89,7 +89,7 @@
               title: "ACCEPT",
               path: project_offer_path(@conn, :response, @offer.project_id, @offer),
               method: :put,
-              warning_message: "Ensure all details are accurate and documents correct, before proceeding."
+              warning_message: "Ensure all details are accurate and documents correct, before proceeding\n\nClick cancel to go back and check\n\nClick OK, if you are happy to proceed"
             %>
         <% end %>
       </div>
@@ -100,7 +100,7 @@
             title: "REJECT",
             path: project_offer_path(@conn, :response, @offer.project_id, @offer),
             method: :put,
-            warning_message: "Speak with the project to amend an offer. A rejected offer cannot be reversed."
+            warning_message: "Speak with the project to amend an offer.\n\nA rejected offer cannot be reversed\n\nOnly click OK if you are 100% sure you won't work on this project"
           %>
         <% end %>
       </div>
