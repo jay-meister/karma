@@ -131,6 +131,7 @@
 - loan_out_company_name - **string**
 - loan_out_company_registration_number - **string**
 - loan_out_company_address - **text**
+- loan_out_company_email - **string**
 - loan_out_company_cert_url - **string**
 - bank_name - **string**
 - bank_address - **text**

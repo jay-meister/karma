@@ -110,6 +110,7 @@ defmodule Engine.StartpackTest do
       bank_sort_code: "some content",
       loan_out_company_name: "J.J.J.",
       loan_out_company_address: "some content",
+      loan_out_company_email: "aaa@gmail.com",
       agent_bank_name: "some content",
       gender: "some content",
       student_loan_not_repayed?: true,
