@@ -96,8 +96,7 @@
     form: f,
     atom: :date_of_birth,
     year_from: 1930,
-    year_to: Date.utc_today().year - 16,
-    dob: true
+    year_to: Date.utc_today().year - 16
     %>
 
     <%= component "input.html",

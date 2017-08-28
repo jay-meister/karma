@@ -1,11 +1,6 @@
 <div class="mb4">
 <% default_date = case assigns[:with_default?] do
     false -> nil
-    _not_false ->
-      case assigns[:dob] do
-        true ->
-          {:ok, date} = Date.new(Date.utc_today().year - 16, Date.utc_today().month, Date.utc_today().day)
-          date
           _false -> Date.utc_today()
       end
   end%>
@@ -36,6 +31,5 @@ atom,
 form,
 year_from (optional),
 year_to (optional),
-dob (optional),
 label (optional)
  -->
