@@ -27,7 +27,8 @@ defmodule Engine.Formatter do
     # format startpack data
     startpack_data = %{
       startpack_data |
-      "date_of_birth": ViewHelpers.format_date(startpack_data.date_of_birth)
+      "date_of_birth": ViewHelpers.format_date(startpack_data.date_of_birth),
+      "passport_expiry_date": ViewHelpers.format_date(startpack_data.passport_expiry_date)
     }
     startpack_data =
       case offer_data.box_rental_required? do
@@ -81,6 +82,7 @@ defmodule Engine.Formatter do
       "sixth_day_fee_exc_holiday": "#{currency_symbol} #{format_number(offer_data.sixth_day_fee_exc_holiday)}",
       "seventh_day_fee_inc_holiday": "#{currency_symbol} #{format_number(offer_data.seventh_day_fee_inc_holiday)}",
       "seventh_day_fee_exc_holiday": "#{currency_symbol} #{format_number(offer_data.seventh_day_fee_exc_holiday)}",
+      "end_date": ViewHelpers.format_date(offer_data.end_date),
       "start_date": ViewHelpers.format_date(offer_data.start_date),
       "currency": String.upcase(offer_data.currency),
       "daily_or_weekly": String.capitalize(offer_data.daily_or_weekly)
