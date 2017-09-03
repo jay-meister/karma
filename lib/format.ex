@@ -85,8 +85,10 @@ defmodule Engine.Formatter do
       "end_date": ViewHelpers.format_date(offer_data.end_date),
       "start_date": ViewHelpers.format_date(offer_data.start_date),
       "currency": String.upcase(offer_data.currency),
-      "daily_or_weekly": String.capitalize(offer_data.daily_or_weekly)
+      "daily_or_weekly": String.capitalize(offer_data.daily_or_weekly),
+      "updated_at": ViewHelpers.format_date(offer_data.updated_at)
     }
+
     offer_data =
       case offer_data.box_rental_required? do
         true ->
