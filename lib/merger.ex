@@ -171,7 +171,8 @@ defmodule Engine.Merger do
       :additional_notes,
       :accepted,
       :active,
-      :contractor_details_accepted
+      :contractor_details_accepted,
+      :updated_at
     ]
   end
   def user do
