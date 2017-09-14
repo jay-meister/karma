@@ -1,7 +1,7 @@
 defmodule Engine.PasswordController do
   use Engine.Web, :controller
 
-  alias Engine.{User, LayoutView}
+  alias Engine.{User, LayoutView, Controllers.Helpers}
 
   def new(conn, _params) do
     # render form allowing user to enter email address
@@ -21,7 +21,7 @@ defmodule Engine.PasswordController do
       %User{} ->
         # if email is found, send reset email
         # need to hash the user id!
-        url = password_url(conn, :edit, user.id)
+        url = Helpers.get_base_url() <> password_path(conn, :edit, user.id)
         Engine.Email.send_reset_password_email(user, url)
         |> Engine.Mailer.deliver_later()
         conn
