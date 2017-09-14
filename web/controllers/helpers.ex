@@ -307,7 +307,7 @@ defmodule Engine.Controllers.Helpers do
           "Stills Photographer"], job_title) do
             true -> sch_d(direct_hire, daily_direct_hire, daily_sch_d)
             false ->
-                case job_title == "Camera Operator" do
+                case Enum.member?(["Camera Operator", "Camera Operator - B Camera", "Camera Operator - A Camera"], job_title) do
                   true -> conditional(equipment)
                   false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
                 end
