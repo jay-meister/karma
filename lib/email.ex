@@ -43,9 +43,11 @@ defmodule Engine.Email do
         hash_string = Helpers.gen_rand_string(30)
         RedisCli.query(["SET", hash_string, offer.target_email])
         RedisCli.query(["PERSIST", hash_string])
-        {"new_offer_unregistered", R_Helpers.user_url(conn, :new, te: hash_string), "e n g i n e - create account to join \'#{project.codename}\'"} # user is not yet registered
+        url = Helpers.get_base_url() <> R_Helpers.user_path(conn, :new, te: hash_string)
+        {"new_offer_unregistered", url, "e n g i n e - create account to join \'#{project.codename}\'"} # user is not yet registered
       _ ->
-        {"new_offer_registered", R_Helpers.project_offer_url(conn, :show, offer.project_id, offer), "e n g i n e - invitation to join \'#{project.codename}\'"}
+        url = Helpers.get_base_url() <> R_Helpers.project_offer_path(conn, :show, offer.project_id, offer)
+        {"new_offer_registered", url, "e n g i n e - invitation to join \'#{project.codename}\'"}
     end
     user_id = offer.user_id || -1
     user =
@@ -57,6 +59,7 @@ defmodule Engine.Email do
   end
 
   def send_updated_offer_email(conn, offer, project) do
+    url = Helpers.get_base_url() <> R_Helpers.project_offer_path(conn, :show, offer.project_id, offer)
     user_id = offer.user_id || -1
     user =
       case Repo.get(User, user_id) do
@@ -64,17 +67,17 @@ defmodule Engine.Email do
         user -> user
       end
     template = "updated_offer"
-    url = R_Helpers.project_offer_url(conn, :show, offer.project_id, offer)
     subject = "e n g i n e - revised offer from \'#{project.codename}\'"
     send_html_email(offer.target_email,
-    subject,
-    url,
-    template,
-    [
-      first_name: user.first_name,
-      last_name: user.last_name,
-      codename: project.codename
-    ])
+      subject,
+      url,
+      template,
+      [
+        first_name: user.first_name,
+        last_name: user.last_name,
+        codename: project.codename
+      ]
+    )
   end
 
   def send_offer_response_pm(conn, offer, project, contractor) do
@@ -84,7 +87,7 @@ defmodule Engine.Email do
         false -> "rejected"
       end
     template = "offer_response_pm"
-    url = R_Helpers.project_offer_url(conn, :show, offer.project_id, offer)
+    url = Helpers.get_base_url() <> R_Helpers.project_offer_path(conn, :show, offer.project_id, offer)
     subject = "e n g i n e - #{contractor.first_name} #{contractor.last_name} has #{status} your offer"
     send_html_email(project.user.email, subject, url, template, [offer_status: status, name_contractor: "#{contractor.first_name} #{contractor.last_name}", codename: project.codename, first_name: project.user.first_name, last_name: project.user.last_name])
   end
@@ -92,7 +95,7 @@ defmodule Engine.Email do
   def send_offer_accepted_contractor(conn, offer, user) do
     project = Repo.get(Project, offer.project_id)
     template = "offer_accepted_contractor"
-    url = R_Helpers.project_offer_url(conn, :show, offer.project_id, offer)
+    url = Helpers.get_base_url() <> R_Helpers.project_offer_path(conn, :show, offer.project_id, offer)
     subject = "e n g i n e - you have joined \'#{project.codename}\'"
     send_html_email(offer.target_email, subject, url, template, [first_name: user.first_name, last_name: user.last_name, codename: offer.project.codename])
   end
