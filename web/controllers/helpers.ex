@@ -420,6 +420,7 @@ defmodule Engine.Controllers.Helpers do
           "Makeup Designer",
           "Key Hair And Make Up Artist",
           "Hair & Makeup Designer",
+          "Hair & Makeup Supervisor",
           "Hair Designer"], job_title) do
             true -> sch_d(direct_hire, daily_direct_hire, daily_sch_d)
             false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
@@ -512,9 +513,7 @@ defmodule Engine.Controllers.Helpers do
              false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
           end
       "Sound" ->
-          case Enum.member?(["Production Sound Mixer",
-          "Sound Maintenance",
-          "Sound Mixer"], job_title) do
+          case Enum.member?(["Production Sound Mixer", "Sound Maintenance", "Sound Mixer", "Sound Recordist"], job_title) do
              true -> sch_d(direct_hire, daily_direct_hire, daily_sch_d)
              false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
           end

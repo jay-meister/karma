@@ -382,6 +382,7 @@ var departments_with_jobs = {
     "Hair & Makeup Co-Ordinator",
     "Hair & Makeup Designer",
     "Hair & Makeup Junior",
+    "Hair & Makeup Supervisor",
     "Hair & Makeup Trainee",
     "Hair Designer",
     "Hairdresser",
@@ -577,6 +578,7 @@ var departments_with_jobs = {
     "Key 1st Assistant Sound",
     "Production Sound Mixer",
     "Sound Maintenance",
+    "Sound Recordist",
     "Sound Mixer",
     "Trainee"
     ],
