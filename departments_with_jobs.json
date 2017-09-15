@@ -1,6 +1,7 @@
 {
   "Accounts": [
     "1st Assistant Accountant",
+    "Accountant",
     "Accounts Assistant",
     "Accounts Clerk",
     "AP Assistant",
@@ -275,6 +276,7 @@
     "Junior Armour Fabricator",
     "Junior Breakdown Assistant",
     "Junior Costume Assistant",
+    "Junior Costume Designer",
     "Junior Costume Maker",
     "Junior Jewellery Assistant",
     "Junior Leather Worker",
@@ -447,6 +449,8 @@
     "Environmental Steward",
     "Executive Producer",
     "Franchise Production Supervisor",
+    "Junior Production Coordinator",
+    "Junior Production Manager",
     "PA",
     "Line Producer",
     "Producer",
@@ -583,6 +587,7 @@
     "Cable Person",
     "Key 1st Assistant Sound",
     "Production Sound Mixer",
+    "Sound Assistant",
     "Sound Maintenance",
     "Sound Mixer",
     "Sound Recordist",

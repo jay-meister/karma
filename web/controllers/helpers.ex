@@ -249,7 +249,7 @@ defmodule Engine.Controllers.Helpers do
     case department do
       "" -> ""
       "Accounts" ->
-          case job_title == "Financial Controller" || job_title == "Production Accountant" do
+          case job_title == "Financial Controller" || job_title == "Production Accountant" || job_title == "Accountant" do
             true -> sch_d(direct_hire, daily_direct_hire, daily_sch_d)
             false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
           end
