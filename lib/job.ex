@@ -50,6 +50,7 @@ defmodule Engine.Job do
   def titles() do
     [
       "1st Assistant Accountant",
+      "Accountant",
       "Accounts Assistant",
       "Accounts Clerk",
       "AP Assistant",
@@ -302,6 +303,7 @@ defmodule Engine.Job do
       "Junior Armour Fabricator",
       "Junior Breakdown Assistant",
       "Junior Costume Assistant",
+      "Junior Costume Designer",
       "Junior Costume Maker",
       "Junior Jewellery Assistant",
       "Junior Leather Worker",
@@ -448,6 +450,8 @@ defmodule Engine.Job do
       "Environmental Steward",
       "Executive Producer",
       "Franchise Production Supervisor",
+      "Junior Production Coordinator",
+      "Junior Production Manager",
       "PA",
       "Line Producer",
       "Producer",
@@ -570,6 +574,7 @@ defmodule Engine.Job do
       "Cable Person",
       "Key 1st Assistant Sound",
       "Production Sound Mixer",
+      "Sound Assistant",
       "Sound Maintenance",
       "Sound Mixer",
       "Sound Recordist",
