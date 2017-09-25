@@ -43,6 +43,8 @@ a[x-apple-data-detectors=true] {
   float: none !important;
   vertical-align: top; }
 
+img.g-img + div {display: none;}
+
 .ie-browser .num12, .ie-browser .block-grid, [owa] .num12, [owa] .block-grid {
   width: 540px !important; }
 
@@ -183,7 +185,7 @@ a[x-apple-data-detectors=true] {
 
                     <div align="left" class="img-container left fullwidth" style="padding-right: 30px;  padding-left: 25px;">
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 30px; padding-left: 25px;" align="left"><![endif]-->
-<img class="left fullwidth" align="left" border="0" src="https://s3-eu-west-1.amazonaws.com/engine-hosted/offer-revised.jpg" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: 0;height: auto;float: none;width: 100%;max-width: 485px" width="485">
+<img class="left fullwidth g-img" align="left" border="0" src="https://s3-eu-west-1.amazonaws.com/engine-hosted/offer-revised.jpg" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: 0;height: auto;float: none;width: 100%;max-width: 485px" width="485">
 <!--[if mso]></td></tr></table><![endif]-->
 </div>
 
