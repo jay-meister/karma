@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/tachyons@4.7.0/css/tachyons.min.css"/>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
-    
+
     <link rel="icon" href="/images/favicon-16.png" sizes="16x16" type="image/png">
     <link rel="icon" href="/images/favicon-32.png" sizes="32x32" type="image/png">
     <link rel="icon" href="/images/favicon-64.png" sizes="64x64" type="image/png">
@@ -21,7 +21,7 @@
   </head>
   <body class="k-bg-lighter-grey k-indigo mb0">
     <header>
-      <nav role="navigation" class="flex k-h6 bb k-bg-dark-indigo relative">
+      <nav role="navigation" class="flex k-h6 bb k-bg-dark-indigo relative bn">
           <div class="app-container w-100 h4 mt2 center">
               <a href="/" class="h4 ml0-ns">
                 <div class="h3 dt pb3 dib fl mr4">
