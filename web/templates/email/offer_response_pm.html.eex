@@ -241,7 +241,7 @@ img.g-img + div {display: none;}
 
                     <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 30px; padding-top: 10px; padding-bottom: 10px;"><![endif]-->
 <div style="font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;color:#555555;line-height:180%; padding-right: 10px; padding-left: 30px; padding-top: 10px; padding-bottom: 10px;">
-	<div style="font-size:12px;line-height:22px;color:#555555;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 25px;text-align: left"><span style="font-size: 18px; line-height: 32px; color: rgb(85, 85, 85);"><span style="line-height: 32px; font-size: 18px;"><span style="line-height: 32px; font-size: 18px;"><span style="line-height: 32px; font-size: 18px;">﻿Hi <%= @first_name %></span></span></span></span><br><span style="font-size: 20px; line-height: 36px;"></span></p></div>
+	<div style="font-size:12px;line-height:22px;color:#555555;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 25px;text-align: left"><span style="font-size: 18px; line-height: 32px; color: #707070;"><span style="line-height: 32px; font-size: 18px;"><span style="line-height: 32px; font-size: 18px;"><span style="line-height: 32px; font-size: 18px;">﻿Hi <%= @first_name %></span></span></span></span><br><span style="font-size: 20px; line-height: 36px;"></span></p></div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
 
