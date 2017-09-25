@@ -1,5 +1,5 @@
 <div class="mb4 flex items-center">
-    <%= checkbox assigns[:form], assigns[:atom], class: "mr2 h2 k-w1-5" %>
+    <%= checkbox assigns[:form], assigns[:atom], class: "mr2 h2 k-w1-5 no-outline-focus" %>
   <%= case assigns[:label] do
    nil -> label assigns[:form], assigns[:atom], class: "mr2 lh-copy"
    _ -> label assigns[:form], assigns[:atom], assigns[:label], class: "mr2 lh-copy"

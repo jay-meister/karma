@@ -486,6 +486,10 @@ select {
   color: #757de8;
 }
 
+.no-outline-focus:focus {
+  outline: 0;
+}
+
 .radio {
   top: 50%;
   margin-top: -8px;

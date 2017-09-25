@@ -17,7 +17,7 @@
     {:description, nil, nil},
     {:start_date, "Shoot start date", format_date(@project.start_date)},
     {:duration, "Shoot duration", format_duration(@project.duration)},
-    {:studio_name, "Studio/Production Company", nil},
+    {:studio_name, "Studio/Production company", nil},
     {:holiday_rate, nil, format_holiday_rate(@project.holiday_rate)},
     {:locations, nil, nil},
     {:additional_notes, nil, nil}

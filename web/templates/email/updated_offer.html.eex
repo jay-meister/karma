@@ -43,6 +43,8 @@ a[x-apple-data-detectors=true] {
   float: none !important;
   vertical-align: top; }
 
+img.g-img + div {display: none;}
+
 .ie-browser .num12, .ie-browser .block-grid, [owa] .num12, [owa] .block-grid {
   width: 540px !important; }
 
@@ -183,7 +185,10 @@ a[x-apple-data-detectors=true] {
 
                     <div align="left" class="img-container left fullwidth" style="padding-right: 30px;  padding-left: 25px;">
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 30px; padding-left: 25px;" align="left"><![endif]-->
-<img class="left fullwidth" align="left" border="0" src="https://s3-eu-west-1.amazonaws.com/engine-hosted/offer-revised.jpg" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: 0;height: auto;float: none;width: 100%;max-width: 485px" width="485">
+<a href="<%= @url %>">
+  <img class="left fullwidth g-img" align="left" border="0" src="https://s3-eu-west-1.amazonaws.com/engine-hosted/offer-revised.jpg" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: 0;height: auto;float: none;width: 100%;max-width: 485px" width="485">
+  <div></div>
+</a>
 <!--[if mso]></td></tr></table><![endif]-->
 </div>
 
@@ -231,7 +236,7 @@ a[x-apple-data-detectors=true] {
 
                     <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 30px; padding-top: 10px; padding-bottom: 10px;"><![endif]-->
 <div style="font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;color:#555555;line-height:180%; padding-right: 10px; padding-left: 30px; padding-top: 10px; padding-bottom: 10px;">
-	<div style="font-size:12px;line-height:22px;color:#555555;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 25px;text-align: left"><span style="font-size: 18px; line-height: 32px; color: rgb(85, 85, 85);"><span style="line-height: 32px; font-size: 18px;"><span style="line-height: 32px; font-size: 18px;"><span style="line-height: 32px; font-size: 18px;">﻿Hi <%= @first_name %></span></span></span></span><br><span style="font-size: 20px; line-height: 36px;"></span></p></div>
+	<div style="font-size:12px;line-height:22px;color:#555555;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 25px;text-align: left"><span style="font-size: 18px; line-height: 32px; color: #707070;"><span style="line-height: 32px; font-size: 18px;"><span style="line-height: 32px; font-size: 18px;"><span style="line-height: 32px; font-size: 18px;">﻿Hi <%= @first_name %>,</span></span></span></span><br><span style="font-size: 20px; line-height: 36px;"></span></p></div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
 

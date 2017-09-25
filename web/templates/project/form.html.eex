@@ -56,7 +56,7 @@
   form: f,
   atom: :studio_name,
   placeholder: "",
-  label: "Studio/Production Company"
+  label: "Studio/Production company"
   %>
 
   <%= component "input.html",
