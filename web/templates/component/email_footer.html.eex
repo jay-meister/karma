@@ -1,4 +1,7 @@
-
+<%
+  full_name = @full_name || ""
+  email = @email || ""
+%>
     <div style="background-color:transparent;">
       <div style="Margin: 0 auto;min-width: 320px;max-width: 540px;width: 540px;width: calc(23000% - 128260px);overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #525252;" class="block-grid two-up">
         <div style="border-collapse: collapse;display: table;width: 100%;">
@@ -31,7 +34,7 @@
 
                     <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 0px; padding-left: 0px; padding-top: 25px; padding-bottom: 10px;"><![endif]-->
                 <div style="line-height:200%;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;color:#cfcfcf; padding-right: 0px; padding-left: 0px; padding-top: 25px; padding-bottom: 10px;">
-                	<div style="font-size:12px;line-height:24px;color:#cfcfcf;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;text-align:left;"><p style="margin: 0;font-size: 11px;line-height: 24px;text-align: center"><span style="font-size: 11px; line-height: 22px;"><span style="color: rgb(207, 207, 207); font-size: 11px; line-height: 22px;"><a style="color:#757de8;text-decoration: none; color: rgb(207, 207, 207);margin-right:0.3rem;" title="info@teamengine.co.uk" href="mailto:info@teamengine.co.uk?subject=e+n+g+i+n+e+-+enquiry+from+User_first_name+User_last_name&body=Dear+Team+Engine,+%0D%0A%0D%0AINSERT+YOUR+ENQUIRY+%0D%0A%0D%0AYour+contacts:+User_first_name+User_last_name,+user_email,+startpack_mobile_tel+%0D%0A%0D%0AWe'll+get+back+to+you+on+the+above,+soon!%0D%0A%0D%0A%0D%0AThanks.%0D%0A%0D%0A(if+you+need+help,+please+click+the+'help'+link+in+the+footer+and+complete+the+form)">
+                	<div style="font-size:12px;line-height:24px;color:#cfcfcf;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;text-align:left;"><p style="margin: 0;font-size: 11px;line-height: 24px;text-align: center"><span style="font-size: 11px; line-height: 22px;"><span style="color: rgb(207, 207, 207); font-size: 11px; line-height: 22px;"><a style="color:#757de8;text-decoration: none; color: rgb(207, 207, 207);margin-right:0.3rem;" title="info@teamengine.co.uk" href='mailto:info@teamengine.co.uk?subject=e+n+g+i+n+e+-+enquiry+from+<%= full_name %>&body=Dear+Team+Engine,+%0D%0A%0D%0AINSERT+YOUR+ENQUIRY+%0D%0A%0D%0AYour+contacts:+<%= full_name <> ",+" <> email %>+%0D%0A%0D%0AWe+will+get+back+to+you+on+the+above,+soon!%0D%0A%0D%0A%0D%0AThanks.%0D%0A%0D%0A(if+you+need+help,+please+click+the+"help"+link+in+the+footer+and+complete+the+form)'>
                     contact</a> </span> | &#160;<span style="color: rgb(207, 207, 207); font-size: 11px; line-height: 22px;">
                       <a style="color:#757de8;text-decoration: none; color: rgb(207, 207, 207);margin-right:0.1rem;" href="https://engineplans.formstack.com/forms/enginesupport" target="_blank" rel="noopener noreferrer">help &#160;</a>|
                       <a style="color:#757de8;text-decoration: none; color: rgb(207, 207, 207);margin-left:0.3rem;margin-right:0.2rem;" href="https://app.teamengine.co.uk/terms" target="_blank" rel="noopener noreferrer">terms &#160;</a></span>|
