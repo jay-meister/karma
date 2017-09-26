@@ -138,7 +138,7 @@
     atom: :passport_image,
     url_atom: :passport_url,
     helper_text: "Upload a file of your passport",
-    file_types: "pdf, jpeg, png",
+    file_types: "pdf, jpg, png",
     image_url: @startpack.passport_url,
     hide_label: true,
     conn: @conn
@@ -268,7 +268,7 @@
     atom: :box_rental_image,
     url_atom: :box_rental_url,
     helper_text: "Upload your box inventory list with insurance values",
-    file_types: "pdf, jpeg, png",
+    file_types: "pdf, jpg, png",
     image_url: @startpack.box_rental_url,
     hide_label: true,
     conn: @conn
@@ -286,7 +286,7 @@
     atom: :equipment_rental_image,
     url_atom: :equipment_rental_url,
     helper_text: "Upload your equipment inventory list with insurance values",
-    file_types: "pdf, jpeg, png",
+    file_types: "pdf, jpg, png",
     image_url: @startpack.equipment_rental_url,
     hide_label: true,
     conn: @conn
@@ -325,7 +325,7 @@
     atom: :vehicle_insurance_image,
     url_atom: :vehicle_insurance_url,
     helper_text: "Upload a file of proof of vehicle insurance for business use",
-    file_types: "pdf, jpeg, png",
+    file_types: "pdf, jpg, png",
     image_url: @startpack.vehicle_insurance_url,
     hide_label: true,
     conn: @conn
@@ -336,7 +336,7 @@
     atom: :vehicle_license_image,
     url_atom: :vehicle_license_url,
     helper_text: "Upload a file of your driving licence",
-    file_types: "pdf, jpeg, png",
+    file_types: "pdf, jpg, png",
     image_url: @startpack.vehicle_license_url,
     hide_label: true,
     conn: @conn
@@ -355,7 +355,7 @@
     atom: :p45_image,
     url_atom: :p45_url,
     helper_text: "Upload a file of your P45",
-    file_types: "pdf, jpeg, png",
+    file_types: "pdf, jpg, png",
     image_url: @startpack.p45_url,
     hide_label: true,
     conn: @conn
@@ -413,7 +413,7 @@
     label: "Schedule D letter file",
     url_atom: :schedule_d_letter_url,
     helper_text: "Upload a file of your Schedule D letter",
-    file_types: "pdf, jpeg, png",
+    file_types: "pdf, jpg, png",
     image_url: @startpack.schedule_d_letter_url,
     hide_label: true,
     conn: @conn
@@ -459,7 +459,7 @@
         atom: :loan_out_company_cert_image,
         url_atom: :loan_out_company_cert_url,
         helper_text: "Upload a file of your loan out company certificate",
-        file_types: "pdf, jpeg, png",
+        file_types: "pdf, jpg, png",
         image_url: @startpack.loan_out_company_cert_url,
         hide_label: true,
         conn: @conn

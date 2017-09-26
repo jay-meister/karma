@@ -303,7 +303,8 @@ a[x-apple-data-detectors=true] {
 
 
         <%= component "email_footer.html",
-        full_name: "#{@full_name}"
+        full_name: "#{@full_name}",
+        email: @email
         %>
 
 

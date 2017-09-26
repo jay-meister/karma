@@ -16,7 +16,7 @@ defmodule Engine.PasswordControllerTest do
 
 
   test "structure of password reset email is ok" do
-    email = Email.send_html_email("test@email.com", "Password reset", "www.example.com/reset_password", "password_reset", [first_name: "First", last_name: "Last"])
+    email = Email.send_html_email("test@email.com", "Password reset", "www.example.com/reset_password", "password_reset", [first_name: "First", last_name: "Last", email: "test@email.com"])
     assert email.to == "test@email.com"
     assert email.subject == "Password reset"
     assert email.text_body =~ "www.example.com/reset_password"

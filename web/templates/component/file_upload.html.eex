@@ -13,7 +13,7 @@
     </a>
     <% end %>
     <div id="file-upload-container-<%= assigns[:atom] %>">
-      <div class="relative white k-bg-indigo dib pa3 br2 pointer:hover">
+      <div class="relative white k-bg-indigo dib pa3 br2 pointer:hover k-b--indigo ba button-active">
         <span class="pointer:hover">Choose file</span>
         <%= file_input assigns[:form], assigns[:atom], class: "db h1 f6 dark-grey bg-white ba b--dark-grey br2 w-100 k-bg-input bn pt3 pb3 k-hide-file-upload pointer:hover", id: "file-upload-#{assigns[:atom]}" %>
       </div>

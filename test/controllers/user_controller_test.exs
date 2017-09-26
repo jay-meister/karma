@@ -154,7 +154,7 @@ defmodule Engine.UserControllerTest do
   end
 
   test "structure of verification email is ok" do
-    email = Email.send_html_email("test@email.com", "Welcome", "Hello!", "verify", [first_name: "Test", last_name: "Monies"])
+    email = Email.send_html_email("test@email.com", "Welcome", "Hello!", "verify", [first_name: "Test", last_name: "Monies", email: "test@email.com"])
     assert email.to == "test@email.com"
     assert email.subject == "Welcome"
     assert email.text_body =~ "Hello!"

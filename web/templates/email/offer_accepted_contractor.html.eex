@@ -287,7 +287,8 @@ img.g-img + div {display: none;}
     </div>
 
     <%= component "email_footer.html",
-    full_name: "#{@first_name} #{@last_name}"
+    full_name: "#{@first_name} #{@last_name}",
+    email: @email
     %>
 
 

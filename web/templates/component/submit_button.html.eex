@@ -1,5 +1,5 @@
 <div class="tc">
   <div class="mb4">
-    <%= submit assigns[:title], class: "ttu k-bg-light-indigo bn pa3 pl4 pr4 k-f2-5 br2 white w-100 lato mt3 no-outline-focus" %>
+    <%= submit assigns[:title], class: "ttu k-bg-light-indigo ba k-b--light-indigo pa3 pl4 pr4 k-f2-5 br2 white w-100 lato mt3 no-outline-focus button-active" %>
   </div>
 </div>

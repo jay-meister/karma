@@ -58,8 +58,25 @@
                   <p class="dib f4 pl2 fw5 white ma0 dtc v-mid"><span class="k-light-grey fw3">team</span> engine</p>
                 </div>
               </a>
+              <%=
+                first_name =
+                  case @current_user != nil do
+                    true -> @current_user.first_name
+                    false -> ""
+                  end
+                last_name =
+                  case @current_user != nil do
+                    true -> @current_user.last_name
+                    false -> ""
+                  end
+                email =
+                  case @current_user != nil do
+                    true -> @current_user.email
+                    false -> ""
+                  end
+              %>
               <div class="k-light-grey dib fr-l fr-m fr-ns k-mt0-1 pt3">
-                <a class="f4 dib k-light-grey dim link" href="mailto:info@teamengine.co.uk">contact</a>
+                <a class="f4 dib k-light-grey dim link" href='mailto:info@teamengine.co.uk?subject=e+n+g+i+n+e+-+enquiry+from+<%= first_name <> "+" <> last_name %>&body=Dear+Team+Engine,+%0D%0A%0D%0AINSERT+YOUR+ENQUIRY+%0D%0A%0D%0AYour+contacts:+<%= first_name <> "+" <> last_name <> ",+" <> email %>+%0D%0A%0D%0AWe+will+get+back+to+you+on+the+above,+soon!%0D%0A%0D%0A%0D%0AThanks.%0D%0A%0D%0A(if+you+need+help,+please+click+the+"help"+link+in+the+footer+and+complete+the+form)'>contact</a>
                 <div class="k-w1px h1 k-bg-light-grey dib pt1 ml1 mr1"></div>
                 <a href="https://engineplans.formstack.com/forms/enginesupport" target="_blank"    title="help" class="f4 dib k-light-grey dim link">help</a>
                 <div class="k-w1px h1 k-bg-light-grey dib pt1 ml1 mr1"></div>
