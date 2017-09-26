@@ -58,7 +58,7 @@
                   <p class="dib f4 pl2 fw5 white ma0 dtc v-mid"><span class="k-light-grey fw3">team</span> engine</p>
                 </div>
               </a>
-              <%=
+              <%
                 first_name =
                   case @current_user != nil do
                     true -> @current_user.first_name
