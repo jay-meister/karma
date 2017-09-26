@@ -27,7 +27,7 @@
   <div>ICO Registration Number: ZA263742</div>
   <br />
   <div>If you have any questions about this Privacy Policy, our practices,
-    or your dealings with Team Engine, you can contact us on info@teamengine.co.uk</div>
+    or your dealings with Team Engine, you can contact us on <a class="link k-light-indigo" href="mailto:info@teamengine.co.uk">info@teamengine.co.uk</a></div>
   <br />
   <div class="k-grey fw3">
     <div>
@@ -77,7 +77,7 @@
       </tr>
       <tr>
         <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Website</span>”</td>
-        <td class="ba k-b--grey pa3 fw3">Team Engine’s proprietary web portal that may be accessed at www.teamengine.co.uk </td>
+        <td class="ba k-b--grey pa3 fw3">Team Engine’s proprietary web portal that may be accessed at <a class="link k-light-indigo" href="www.teamengine.co.uk">www.teamengine.co.uk</a> </td>
       </tr>
     </table>
     <br />
@@ -95,7 +95,7 @@
       you close your browser.  A persistent cookie remains on the hard drive
       of your Device for an extended period of time. You can remove persistent
       cookies via your browser’s “clear cookies” function.  Please see
-      www.allaboutcookies.org for more information about blocking cookies on
+      <a class="link k-light-indigo" href="www.allaboutcookies.org">www.allaboutcookies.org</a> for more information about blocking cookies on
       your particular web browser.</div>
     <br />
     <div>Unless you have adjusted your browser setting so that it will refuse
@@ -250,7 +250,7 @@
     Hampshire RG29 1LA <br />
     United Kingdom <br />
     <br />
-    or by email at info@teamengine.co.uk
+    or by email at <a class="link k-light-indigo" href="mailto:info@teamengine.co.uk">info@teamengine.co.uk</a>
     <br />
     <div>If you exercise any of the above rights, then we will action your
       request as soon as reasonably practical and, in any event, within one month.</div>
