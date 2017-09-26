@@ -85,6 +85,18 @@ opacity: 0;
   padding-right: 1rem;
 }
 
+.button-active {
+  border-width: 3px; 
+}
+
+.button-active:focus {
+  border: 3px solid #757de8;
+}
+
+.button-active:active {
+  border: 3px solid #757de8;
+}
+
 @media screen and (min-width: 30em) and (max-width: 60em){
   .app-container {
     padding-left: 3rem;
