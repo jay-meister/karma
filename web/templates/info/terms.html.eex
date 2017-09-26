@@ -34,7 +34,7 @@
               <tr>
                 <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Basic Profile</span>”</td>
                 <td class="ba k-b--grey pa3 fw3">means an Engine Platform user profile that an Engine User
-                  can create on a free of charge basis and which includes the features set out at www.teamengine.co.uk</td>
+                  can create on a free of charge basis and which includes the features set out at <a class="link k-light-indigo" href="www.teamengine.co.uk">www.teamengine.co.uk</a></td>
               </tr>
               <tr>
                 <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Basic Project</span>”</td>
@@ -121,11 +121,11 @@
               <tr>
                 <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Premium Profile</span>”</td>
                 <td class="ba k-b--grey pa3 fw3">means a chargeable Engine Platform user profile which, in addition
-                  to the features included in a Standard Profile, includes the features set out at www.teamengine.co.uk</td>
+                  to the features included in a Standard Profile, includes the features set out at <a class="link k-light-indigo" href="www.teamengine.co.uk">www.teamengine.co.uk</a></td>
               </tr>
               <tr>
                 <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Premium Project</span>”</td>
-                <td class="ba k-b--grey pa3 fw3">means a chargeable Project that has the features described at www.teamengine.co.uk</td>
+                <td class="ba k-b--grey pa3 fw3">means a chargeable Project that has the features described at <a class="link k-light-indigo" href="www.teamengine.co.uk">www.teamengine.co.uk</a></td>
               </tr>
               <tr>
                 <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Profile Charges</span>”</td>
@@ -159,11 +159,11 @@
               <tr>
                 <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Standard Profile</span>”</td>
                 <td class="ba k-b--grey pa3 fw3">means a chargeable Engine Platform user profile which, in addition
-                  to the features included in a Basic Profile, includes the features set out at www.teamengine.co.uk</td>
+                  to the features included in a Basic Profile, includes the features set out at <a class="link k-light-indigo" href="www.teamengine.co.uk">www.teamengine.co.uk</a></td>
               </tr>
               <tr>
                 <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Standard Project</span>”</td>
-                <td class="ba k-b--grey pa3 fw3">means a chargeable Project that has the features described at www.teamengine.co.uk</td>
+                <td class="ba k-b--grey pa3 fw3">means a chargeable Project that has the features described at <a class="link k-light-indigo" href="www.teamengine.co.uk">www.teamengine.co.uk</a></td>
               </tr>
               <tr>
                 <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Team Engine</span>”</td>
@@ -608,7 +608,7 @@
         <li class="k-grey mt4 fw3"> Team Engine may give notices to the Engine User under the Agreement by: <br />
         (a) posting a banner notice on the Engine Platform; or <br />
         (b) sending an email to the Engine User using the email address provided by the Engine User in their Application.</li>
-        <li class="k-grey mt4 fw3">The Engine User may give notices to Team Engine by sending an email to info@teamengine.co.uk</li>
+        <li class="k-grey mt4 fw3">The Engine User may give notices to Team Engine by sending an email to <a class="link k-light-indigo" href="info@teamengine.co.uk">info@teamengine.co.uk</a></li>
 
       </ol>
     </li>
