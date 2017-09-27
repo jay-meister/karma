@@ -11,7 +11,8 @@
   form: f,
   atom: :recipient_fullname,
   placeholder: " in full, eg, James not Jim, Smith",
-  label: "Recipient fullname"
+  label: "Recipient fullname",
+  value: @full_name || ""
   %>
 
   <%= component "input.html",

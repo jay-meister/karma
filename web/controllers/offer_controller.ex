@@ -108,11 +108,13 @@ defmodule Engine.OfferController do
     project_id: project_id,
     job_titles: job_titles,
     job_departments: job_departments,
-    job_title: "")
+    job_title: "",
+    full_name: "")
   end
 
   def create(conn, %{"offer" => %{"target_email" => email} = offer_params, "project_id" => project_id}) do
     offer_params = Map.put(offer_params, "target_email", String.downcase(email))
+    %{"recipient_fullname" => recipient_fullname} = offer_params
     project = Repo.get(Project, project_id) |> Repo.preload(:user) |> Repo.preload(:documents)
     project_documents = Enum.map(project.documents, fn document -> document.name end)
     %{"department" => department,
@@ -138,7 +140,8 @@ defmodule Engine.OfferController do
       project_id: project_id,
       job_titles: job_titles,
       job_departments: job_departments,
-      job_title: job_title)
+      job_title: job_title,
+      full_name: recipient_fullname)
     else
       # run calculations and add them to the offer_params
       calculations = parse_offer_strings(offer_params) |> run_calculations(project, project_documents, daily, equipment)
@@ -231,8 +234,12 @@ defmodule Engine.OfferController do
     changeset = Offer.changeset(offer)
     job_titles = Engine.Job.titles()
     job_departments = Engine.Job.departments()
-
-    ops = [offer: offer, changeset: changeset, project_id: project_id, job_titles: job_titles, job_departments: job_departments]
+    full_name =
+      case Repo.get_by(User, email: offer.target_email) do
+        nil -> offer.recipient_fullname
+        user -> "#{user.first_name} #{user.last_name}"
+      end
+    ops = [offer: offer, changeset: changeset, project_id: project_id, job_titles: job_titles, job_departments: job_departments, full_name: full_name]
     render(conn, "edit.html", ops)
   end
 
@@ -255,7 +262,8 @@ defmodule Engine.OfferController do
       project_id: project_id,
       job_titles: job_titles,
       job_departments: job_departments,
-      job_title: offer.job_title
+      job_title: offer.job_title,
+      full_name: offer.recipient_fullname
     ]
     # first check the values provided by the user are valid
     validation_changeset = Offer.form_validation(offer, offer_params)
