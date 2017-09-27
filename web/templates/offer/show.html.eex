@@ -17,7 +17,6 @@
   <h1 class="top--header absolute fw4 mb0">Offer for <%= @project.codename %></h1>
 <% end %>
 <%= if @is_contractor? do %>
-<% IO.inspect @project.user %>
   <%= if length(@changeset.errors) > 0 && @offer.accepted == nil do %>
     <div class="k-bg-indigo white tc pa4 br3 ma2 f2 mt3">
     Complete your startpack to accept this offer
