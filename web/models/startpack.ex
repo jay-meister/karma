@@ -340,7 +340,7 @@ defmodule Engine.Startpack do
           false ->
             changeset
             |> cast(startpack, paye_keys())
-            |> validate_required(paye_keys())
+            |> validate_required([:national_insurance_number, :for_paye_only])
             |> validate_inclusion(:for_paye_only, for_paye_only())
         end
       %Engine.Offer{contract_type: "CONSTRUCTION PAYE"} ->
@@ -351,7 +351,7 @@ defmodule Engine.Startpack do
           false ->
             changeset
             |> cast(startpack, paye_keys())
-            |> validate_required(paye_keys())
+            |> validate_required([:national_insurance_number, :for_paye_only])
             |> validate_inclusion(:for_paye_only, for_paye_only())
         end
       %Engine.Offer{contract_type: "TRANSPORT PAYE"} ->
@@ -362,7 +362,7 @@ defmodule Engine.Startpack do
           false ->
             changeset
             |> cast(startpack, paye_keys())
-            |> validate_required(paye_keys())
+            |> validate_required([:national_insurance_number, :for_paye_only])
             |> validate_inclusion(:for_paye_only, for_paye_only())
         end
       %Engine.Offer{contract_type: "SCHEDULE-D", daily_or_weekly: "daily"} ->

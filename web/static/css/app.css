@@ -86,15 +86,19 @@ opacity: 0;
 }
 
 .button-active {
-  border-width: 3px; 
+  border-width: 2px;
 }
 
 .button-active:focus {
-  border: 3px solid #757de8;
+  border: 2px solid #eeeeee;
 }
 
 .button-active:active {
-  border: 3px solid #757de8;
+  border: 2px solid #eeeeee;
+}
+
+.button-active:hover {
+  cursor: pointer;
 }
 
 @media screen and (min-width: 30em) and (max-width: 60em){
