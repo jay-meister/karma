@@ -37,7 +37,33 @@
   <%= if @offer.accepted == false do %>
     <div class="k-bg-indigo white tc pa4 br3 ma2 f2 mt3">You have rejected this offer!</div>
   <% end %>
-
+  <div class="tc mt2">
+    <%= if length(@changeset.errors) == 0 && @offer.accepted == nil do %>
+      <div class="dib ma1">
+        <%= form_for @edit_changeset, project_offer_path(@conn, :response, @offer.project_id, @offer), fn f -> %>
+            <%= hidden_input f, :accepted, value: "true" %>
+            <%= component "submit_link_with_warning.html",
+              title: "ACCEPT",
+              path: project_offer_path(@conn, :response, @offer.project_id, @offer),
+              method: :put,
+              warning_message: "Ensure all details are accurate and documents correct, before proceeding\n\nClick cancel to go back and check\n\nClick OK, if you are happy to proceed"
+            %>
+        <% end %>
+      </div>
+      <div class="dib ma1">
+        <%= form_for @edit_changeset, project_offer_path(@conn, :response, @offer.project_id, @offer), fn f -> %>
+          <%= hidden_input f, :accepted, value: "false" %>
+          <%= component "submit_link_with_warning.html",
+            title: "REJECT",
+            path: project_offer_path(@conn, :response, @offer.project_id, @offer),
+            method: :put,
+            warning_message: "Speak with the project to amend an offer.\n\nA rejected offer cannot be reversed\n\nOnly click OK if you are 100% sure you won't work on this project"
+          %>
+        <% end %>
+      </div>
+      <div class="tc k-light-indigo">You're startpack is now complete - click Accept or Reject to continue</div>
+    <% end %>
+  </div>
   <%= if length(@deal_documents) > 0 && @is_contractor? do %>
   <%= component "form_divider.html", title: "Contracts" %>
     <div class="tc">
@@ -80,32 +106,7 @@
     </div>
   <%= end %>
 
-  <div class="tc mt2">
-    <%= if length(@changeset.errors) == 0 && @offer.accepted == nil do %>
-      <div class="dib ma1">
-        <%= form_for @edit_changeset, project_offer_path(@conn, :response, @offer.project_id, @offer), fn f -> %>
-            <%= hidden_input f, :accepted, value: "true" %>
-            <%= component "submit_link_with_warning.html",
-              title: "ACCEPT",
-              path: project_offer_path(@conn, :response, @offer.project_id, @offer),
-              method: :put,
-              warning_message: "Ensure all details are accurate and documents correct, before proceeding\n\nClick cancel to go back and check\n\nClick OK, if you are happy to proceed"
-            %>
-        <% end %>
-      </div>
-      <div class="dib ma1">
-        <%= form_for @edit_changeset, project_offer_path(@conn, :response, @offer.project_id, @offer), fn f -> %>
-          <%= hidden_input f, :accepted, value: "false" %>
-          <%= component "submit_link_with_warning.html",
-            title: "REJECT",
-            path: project_offer_path(@conn, :response, @offer.project_id, @offer),
-            method: :put,
-            warning_message: "Speak with the project to amend an offer.\n\nA rejected offer cannot be reversed\n\nOnly click OK if you are 100% sure you won't work on this project"
-          %>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
+
 <% end %>
 <%= if @is_pm? && @offer.accepted do %>
 <%= component "form_divider.html", title: "Contractor supporting documents" %>
