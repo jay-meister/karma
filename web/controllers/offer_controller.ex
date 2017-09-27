@@ -188,7 +188,8 @@ defmodule Engine.OfferController do
           []
       end
     user = conn.assigns.current_user
-    project = Repo.get(Project, project_id) |> Repo.preload(:documents)
+    project = Repo.get(Project, project_id) |> Repo.preload(:documents) |> Repo.preload(:user)
+    pm_email = project.user.email
     info_documents =
       Repo.all(project_documents(project))
       |> Enum.filter(fn doc -> doc.category == "Info" end)
@@ -208,7 +209,8 @@ defmodule Engine.OfferController do
         contract: nil,
         contractor: contractor,
         formatted_offer: Formatter.format_offer_data(offer),
-        supporting_documents: supporting_documents)
+        supporting_documents: supporting_documents,
+        pm_email: pm_email)
       _ ->
         edit_changeset = Offer.changeset(offer)
         startpack = Repo.get_by(Startpack, user_id: user.id)
@@ -224,7 +226,8 @@ defmodule Engine.OfferController do
         form_documents: form_documents,
         contractor: contractor,
         formatted_offer: Formatter.format_offer_data(offer),
-        supporting_documents: supporting_documents
+        supporting_documents: supporting_documents,
+        pm_email: pm_email
         )
     end
   end
