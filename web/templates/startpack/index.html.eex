@@ -1,16 +1,21 @@
 <div class=" mt6 center">
 
-  <%= if Map.has_key?(@offer, :project_id) && Map.has_key?(@offer, :id) do %>
-    <div class="pt4">
-      <%= component "button.html", title: "Back to offer", link: project_offer_path(@conn, :show, @offer.project_id, @offer.id) %>
-    </div>
+
+  <h1 class="k-indigo top--header absolute fw4 mb0">Edit startpack</h1>
+  <%= link "Dashboard", to: dashboard_path(@conn, :index), class: "no-underline k-indigo" %>
+  <img src="/images/breadcrumb-arrow.svg" class="w1 ml3" />
+  <div class="ma2 k-light-indigo dib">Startpack</div>
+
+  <%= if length(@changeset.errors) != 0 do %>
+  <div class="alert alert-danger">
+    <p>Fill out the error fields below to complete your startpack!</p>
+  </div>
   <% end %>
-
-<h1 class="k-indigo top--header absolute fw4 mb0">Edit startpack</h1>
-<%= link "Dashboard", to: dashboard_path(@conn, :index), class: "no-underline k-indigo" %>
-<img src="/images/breadcrumb-arrow.svg" class="w1 ml3" />
-<div class="ma2 k-light-indigo dib">Startpack</div>
-
+  <%= if Map.has_key?(@offer, :project_id) && Map.has_key?(@offer, :id) do %>
+  <div class="pt4">
+    <%= component "button.html", title: "Back to offer", link: project_offer_path(@conn, :show, @offer.project_id, @offer.id) %>
+  </div>
+  <% end %>
   <% offer_id = case Map.has_key?(@conn.query_params, "offer_id") do
       true ->
         %{"offer_id" => offer_id} = @conn.query_params
