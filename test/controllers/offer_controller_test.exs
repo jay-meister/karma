@@ -180,6 +180,13 @@ defmodule Engine.OfferControllerTest do
     assert html_response(conn, 200) =~ "Edit offer"
   end
 
+  test "replaces recipient_fullname with real name of contractor", %{conn: conn, project: project} do
+    insert_user(%{email: "contractor@email.com"})
+    offer = insert_offer(project, %{target_email: "contractor@email.com"})
+    conn = get conn, project_offer_path(conn, :edit, offer.project_id, offer)
+    assert html_response(conn, 200) =~ "Edit offer"
+  end
+
   test "does not update offer or send email when data is valid but unchanged", %{conn: conn, offer: offer} do
     unchanged = default_offer()
 
