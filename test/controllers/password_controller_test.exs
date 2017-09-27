@@ -46,7 +46,7 @@ defmodule Engine.PasswordControllerTest do
   test "password :create with fake email address", %{conn: conn} do
     conn = post(conn, password_path(conn, :create), user: @invalid_attrs)
     assert redirected_to(conn) == password_path(conn, :new)
-    assert Phoenix.Controller.get_flash(conn, :error) =~ "Something went wrong, please try again later"
+    assert Phoenix.Controller.get_flash(conn, :error) =~ "No user found with that email, check you have entered the one you signed up with"
   end
 
   test "password :edit with good email", %{conn: conn} do
