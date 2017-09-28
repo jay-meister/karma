@@ -8,7 +8,7 @@
 
   <%= if length(@changeset.errors) != 0 do %>
   <div class="alert alert-danger tc br3 pa4 ma2 mb3 f2 mt3">
-    <div>Fill out the fields in red to complete your startpack!</div>
+    <div>Fill the boxes below required for this offer</div>
   </div>
   <% end %>
   <%= if Map.has_key?(@offer, :project_id) && Map.has_key?(@offer, :id) do %>
