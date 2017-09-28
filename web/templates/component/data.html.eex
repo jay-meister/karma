@@ -1,7 +1,13 @@
+<% divider =
+    case assigns[:group] == true do
+      true -> ""
+      false -> ":"
+    end
+%>
 <li class="pt2 f4">
   <table>
     <td class="k-minw-20">
-      <strong><%= assigns[:label] %>:</strong>
+      <strong><%= assigns[:label] %><%= divider %></strong>
     </td>
     <td>
       <%= assigns[:data] %>

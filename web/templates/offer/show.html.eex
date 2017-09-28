@@ -135,9 +135,7 @@
     {:studio_name, nil, @project.studio_name},
     {:holiday_rate, nil, format_holiday_rate(@project.holiday_rate)},
     {:locations, nil, @project.locations},
-    {:additional_notes, nil, @project.additional_notes},
-    {:operating_base_tel, nil, @project.operating_base_tel},
-    {:operating_base_email, nil, @project.operating_base_email}
+    {:additional_notes, nil, @project.additional_notes}
   ] do %>
     <%= component "data.html",
     data: formatted || Map.get(@offer, atom),
@@ -352,5 +350,21 @@
     <% end %>
   </div>
   <% end %>
+<% end %>
+<%= component "form_divider.html", title: "Project contacts" %>
+<%= for {atom, label, formatted, group} <- [
+  {:operating_base_address, nil, @project.operating_base_address_1, false},
+  {:operating_base_address_2, "", @project.operating_base_address_2, true},
+  {:operating_base_address_city, "", @project.operating_base_address_city, true},
+  {:operating_base_address_postcode, "", @project.operating_base_address_postcode, true},
+  {:operating_base_address_country, "", @project.operating_base_address_country, true},
+  {:operating_base_tel, nil, @project.operating_base_tel, true},
+  {:operating_base_email, nil, @project.operating_base_email, true}
+] do %>
+  <%= component "data.html",
+  data: formatted || Map.get(@formatted_offer, atom),
+  label: label || format_label(atom),
+  group: group
+  %>
 <% end %>
 </ul>
