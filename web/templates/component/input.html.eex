@@ -31,7 +31,7 @@
       placeholder: assigns[:placeholder],
       value: assigns[:value],
       type: assigns[:type] || "",
-      class: "border-box no-placeholder k-dark-grey pa3 br2 w-100 outline-0 lato ba #{border} #{padding} #{bg_color}",
+      class: "border-box k-dark-grey pa3 br2 w-100 outline-0 lato ba #{border} #{padding} #{bg_color}",
       autocomplete: assigns[:autocomplete] || "on"
       %>
     <% else %>
@@ -41,7 +41,7 @@
       readonly: assigns[:readonly] || false,
       placeholder: assigns[:placeholder],
       type: assigns[:type] || "",
-      class: "border-box no-placeholder k-dark-grey pa3 br2 w-100 outline-0 lato ba #{border} #{padding} #{bg_color}",
+      class: "border-box k-dark-grey pa3 br2 w-100 outline-0 lato ba #{border} #{padding} #{bg_color}",
       autocomplete: assigns[:autocomplete] || "on"
       %>
     <% end %>
