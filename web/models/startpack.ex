@@ -280,6 +280,7 @@ defmodule Engine.Startpack do
         struct
         |> cast(startpack, [:box_rental_value, :box_rental_url])
         |> validate_required([:box_rental_url, :box_rental_value])
+        |> validate_number(:box_rental_value, greater_than: 0)
       false ->
         struct
     end
@@ -291,6 +292,7 @@ defmodule Engine.Startpack do
         struct
         |> cast(startpack, [:equipment_rental_value, :equipment_rental_url])
         |> validate_required([:equipment_rental_url, :equipment_rental_value])
+        |> validate_number(:equipment_rental_value, greater_than: 0)
       false ->
         struct
     end
