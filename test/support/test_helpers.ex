@@ -150,6 +150,8 @@ defmodule Engine.TestHelpers do
       operating_base_address_city: "London",
       operating_base_address_postcode: "N7 4TB",
       operating_base_address_country: "UK",
+      operating_base_tel: "0987655433",
+      operating_base_email: "operating@base.com",
       start_date: %{"day" => 1, "month" => 1, "year" => 2018},
       studio_name: "Warner",
       type: "feature"

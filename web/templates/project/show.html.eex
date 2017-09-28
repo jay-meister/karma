@@ -49,7 +49,9 @@
     {:operating_base_address_2, nil},
     {:operating_base_address_city, nil},
     {:operating_base_address_postcode, nil},
-    {:operating_base_address_country, nil}
+    {:operating_base_address_country, nil},
+    {:operating_base_tel, nil},
+    {:operating_base_email, nil}
   ] do %>
     <%= component "data.html",
     data: Map.get(@project, atom),

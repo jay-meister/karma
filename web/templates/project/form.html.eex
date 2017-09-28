@@ -148,6 +148,18 @@
   placeholder: ""
   %>
 
+  <%= component "input.html",
+  form: f,
+  atom: :operating_base_tel,
+  placeholder: ""
+  %>
+
+  <%= component "input.html",
+  form: f,
+  atom: :operating_base_email,
+  placeholder: ""
+  %>
+
   <%= component "submit_button.html", title: "#{@button_text} Project" %>
 
 <% end %>

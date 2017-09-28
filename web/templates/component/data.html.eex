@@ -1,13 +1,32 @@
-<li class="pt2 f4">
-  <table>
-    <td class="k-minw-20">
-      <strong><%= assigns[:label] %>:</strong>
-    </td>
-    <td>
-      <%= assigns[:data] %>
-    </td>
-  </table>
-</li>
+<% divider =
+    case assigns[:group] == true do
+      true -> ""
+      false -> ":"
+    end
+%>
+<%= if assigns[:email] != true do %>
+  <li class="pt2 f4">
+    <table>
+      <td class="k-minw-20">
+        <strong><%= assigns[:label] %><%= divider %></strong>
+      </td>
+      <td>
+        <%= assigns[:data] %>
+      </td>
+    </table>
+  </li>
+<% else %>
+  <li class="pt2 f4">
+    <table>
+      <td class="k-minw-20">
+        <strong><%= assigns[:label] %><%= divider %></strong>
+      </td>
+      <td>
+        <a class="link k-indigo" href="mailto:<%= assigns[:data] %>"><%= assigns[:data] %></a>
+      </td>
+    </table>
+  </li>
+<% end %>
 
 <!--
 assigns:

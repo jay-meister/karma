@@ -18,7 +18,7 @@
 <% end %>
 <%= if @is_contractor? do %>
   <%= if length(@changeset.errors) > 0 && @offer.accepted == nil do %>
-    <div class="k-bg-indigo white tc pa4 br3 ma2 f2 mt3 mb3">
+    <div class="k-bg-indigo white tc pa4 br2 ma2 f2 mt3 mb3">
     Complete your startpack to accept this offer
     </div>
     <%= component "button.html", title: "Edit Startpack", link: "/startpack?offer_id=#{@offer.id}" %>
@@ -350,5 +350,22 @@
     <% end %>
   </div>
   <% end %>
+<% end %>
+<%= component "form_divider.html", title: "Project contacts" %>
+<%= for {atom, label, formatted, group, email} <- [
+  {:operating_base_address, nil, @project.operating_base_address_1, false, false},
+  {:operating_base_address_2, "", @project.operating_base_address_2, true, false},
+  {:operating_base_address_city, "", @project.operating_base_address_city, true, false},
+  {:operating_base_address_postcode, "", @project.operating_base_address_postcode, true, false},
+  {:operating_base_address_country, "", @project.operating_base_address_country, true, false},
+  {:operating_base_tel, nil, @project.operating_base_tel, true, false},
+  {:operating_base_email, nil, @project.operating_base_email, true, true}
+] do %>
+  <%= component "data.html",
+  data: formatted || Map.get(@formatted_offer, atom),
+  label: label || format_label(atom),
+  group: group,
+  email: email
+  %>
 <% end %>
 </ul>
