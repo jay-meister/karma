@@ -44,7 +44,7 @@
     <%= component "dropdown.html",
     form: f,
     atom: :gender,
-    options: ["Male": "male", "Female": "female", "Other": "other", "Prefer not to say": "prefer not to say"],
+    options: ["Male", "Female", "Other", "Prefer not to say"],
     prompt: "select..."
     %>
 
