@@ -135,7 +135,9 @@
     {:studio_name, nil, @project.studio_name},
     {:holiday_rate, nil, format_holiday_rate(@project.holiday_rate)},
     {:locations, nil, @project.locations},
-    {:additional_notes, nil, @project.additional_notes}
+    {:additional_notes, nil, @project.additional_notes},
+    {:operating_base_tel, nil, @project.operating_base_tel},
+    {:operating_base_email, nil, @project.operating_base_email}
   ] do %>
     <%= component "data.html",
     data: formatted || Map.get(@offer, atom),
