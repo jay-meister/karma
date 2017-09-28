@@ -110,6 +110,11 @@
     atom: :country_of_permanent_residence
     %>
 
+    <%= component "input.html",
+    form: f,
+    atom: :passport_full_name,
+    placeholder: "Your full name as it appears on your passport (inc. middle name(s))"
+    %>
 
     <%= component "input.html",
     form: f,
@@ -139,11 +144,6 @@
     conn: @conn
     %>
 
-    <%= component "input.html",
-    form: f,
-    atom: :passport_full_name,
-    placeholder: "Your full name as it appears on your passport (inc. middle name(s))"
-    %>
 
     <%= component "form_divider.html", title: "Contact info" %>
 
