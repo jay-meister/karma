@@ -38,8 +38,8 @@
           </div>
       </nav>
     </header>
-    <p class="absolute w-100 tc alert pa4 br2 mt0 dark-grey bg-light-green b--dark-green" role="alert"><%= get_flash(@conn, :info) %></p>
-    <p class="absolute w-100 tc alert pa4 br2 mt0 mb4 white bg-light-red b--red" role="alert"><%= get_flash(@conn, :error) %></p>
+    <p class="absolute w-100 tc alert pa3 br2 mt0 dark-grey bg-light-green b--dark-green" role="alert"><%= get_flash(@conn, :info) %></p>
+    <p class="absolute w-100 tc alert pa3 br2 mt0 mb4 white bg-light-red b--red" role="alert"><%= get_flash(@conn, :error) %></p>
     <article class="k-mt9 center h-100 bg-white relative-ns pb7-ns pb6 min-vh-100-ns relative">
       <main role="main" class="h-100 bg-white app-container center relative">
         <%= render @view_module, @view_template, assigns %>
