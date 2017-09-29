@@ -85,6 +85,8 @@ defmodule Engine.Project do
       :active,
       :user_id])
     |> validate_format(:operating_base_email, ~r/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/)
+    |> validate_length(:description, max: 300)
+    |> validate_length(:additional_notes, max: 300)
     |> validate_dropdowns
   end
 

@@ -148,6 +148,10 @@ defmodule Engine.Offer do
     |> validate_if_required(params, :equipment_rental_required?, @equipment_rental_fields)
     |> validate_required_dropdowns()
     |> validate_format(:target_email, ~r/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/)
+    |> validate_length(:other_deal_provisions, max: 300)
+    |> validate_length(:additional_notes, max: 300)
+    |> validate_length(:equipment_rental_description, max: 300)
+    |> validate_length(:box_rental_description, max: 300)
   end
 
   def validate_required_dropdowns(changeset) do

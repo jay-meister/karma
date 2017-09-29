@@ -37,6 +37,12 @@ defmodule Engine.StartpackController do
   end
 
   def update(conn, %{"id" => id, "startpack" => startpack_params}, user) do
+    %{"loan_out_company_address" => loca} = startpack_params
+    single_line_address = Regex.replace(~r/\r\n/, loca, " ")
+    startpack_params =
+      startpack_params
+      |> Map.delete("loan_out_company_address")
+      |> Map.put_new("loan_out_company_address", single_line_address)
     startpack = Repo.get!(Startpack, id)
     startpack_map = Map.from_struct(startpack)
 

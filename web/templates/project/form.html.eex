@@ -33,7 +33,7 @@
   placeholder: "Project codename"
   %>
 
-  <%= component "textarea.html",
+  <%= component "input.html",
   form: f,
   atom: :description,
   placeholder: "Brief description of the project"

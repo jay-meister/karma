@@ -5,7 +5,7 @@
 <%= link "Edit offer", to: project_offer_path(@conn, :edit, @offer.project_id, @offer), class: "ma1 no-underline k-indigo fr" %>
 <% end %>
 <img src="/images/breadcrumb-arrow.svg" class="w1 ml2" />
-<div class="ma2 k-light-indigo dib mb3">Offer details</div>
+<div class="ma2 k-light-indigo dib mb4">Offer details</div>
 <%= if @is_pm? do %>
   <%= if Map.has_key?(@contractor, :first_name) do %>
     <h1 class="top--header absolute fw4 mb0">Offer for <%= "#{@contractor.first_name} #{@contractor.last_name} " %></h1>

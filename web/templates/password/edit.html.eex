@@ -2,7 +2,7 @@
   <div class="dtc v-mid">
       <div class="ba b--black-10 br4-ns pa4 bg-white h-auto-ns h-100">
         <div class="tc pt5">
-          <img src="/images/engine-logo-front.jpg" class="k-w4-5"/>
+          <img src="/images/engine-logo-front.jpg" class="k-w32"/>
         </div>
         <div class="">
           <%= form_for @changeset, password_path(@conn, :update, 1, hash: @hash), [method: "put"] , fn f -> %>

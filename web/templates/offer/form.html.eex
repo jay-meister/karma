@@ -105,7 +105,7 @@
   label: "Box rental required?"
   %>
 
-  <%= component "textarea.html",
+  <%= component "input.html",
   form: f,
   atom: :box_rental_description,
   placeholder: ""
