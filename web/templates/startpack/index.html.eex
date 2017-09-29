@@ -4,7 +4,7 @@
   <h1 class="k-indigo top--header absolute fw4 mb0">Edit startpack</h1>
   <%= link "Dashboard", to: dashboard_path(@conn, :index), class: "no-underline k-indigo" %>
   <img src="/images/breadcrumb-arrow.svg" class="w1 ml3" />
-  <div class="ma2 k-light-indigo dib mb3">Startpack</div>
+  <div class="ma2 k-light-indigo dib mb4">Startpack</div>
 
   <%= if length(@changeset.errors) != 0 do %>
   <div class="alert alert-danger tc br3 pa4 ma2 mb3 f2 mt3">
