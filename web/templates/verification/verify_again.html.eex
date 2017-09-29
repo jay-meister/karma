@@ -1,4 +1,4 @@
-<h1 class="k-indigo top--header absolute fw4 mb0">Click the button to be sent another verification email</h1>
+<h1 class="k-indigo top--header absolute fw4 mb0">Verification email</h1>
 
 <div class="pt2">
   <%= link "Resend email", to: verification_path(@conn, :resend, @hash), class: "back-button link" %>

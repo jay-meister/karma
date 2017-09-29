@@ -264,7 +264,7 @@ defmodule Engine.OfferControllerTest do
     with_mock Engine.Mailer, [deliver_later: fn(string) -> string end] do
       conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: false}
       assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
-      assert Phoenix.Controller.get_flash(conn, :info) == "Offer rejected!"
+      assert Phoenix.Controller.get_flash(conn, :info) == "Offer rejected"
       # ensure the offer is now rejected in DB
       assert Repo.get(Engine.Offer, offer.id).accepted == false
     end
@@ -282,7 +282,7 @@ defmodule Engine.OfferControllerTest do
       with_mock Engine.Merger, [merge_multiple: fn(_, _) -> {:ok, "Documents merged"} end] do
         conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: true}
         assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
-        assert Phoenix.Controller.get_flash(conn, :info) == "Congratulations, you have accepted this offer!"
+        assert Phoenix.Controller.get_flash(conn, :info) == "Congratulations, you have accepted this offer"
       end
     end
   end
@@ -298,7 +298,7 @@ defmodule Engine.OfferControllerTest do
       with_mock Engine.Merger, [merge_multiple: fn(_, _) -> {:ok, "Documents merged"} end] do
         conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: true}
         assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
-        assert Phoenix.Controller.get_flash(conn, :info) == "Congratulations, you have accepted this offer!"
+        assert Phoenix.Controller.get_flash(conn, :info) == "Congratulations, you have accepted this offer"
       end
     end
   end
@@ -314,7 +314,7 @@ defmodule Engine.OfferControllerTest do
       with_mock Engine.Merger, [merge_multiple: fn(_, _) -> {:ok, "Documents merged"} end] do
         conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: true}
         assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
-        assert Phoenix.Controller.get_flash(conn, :info) == "Congratulations, you have accepted this offer!"
+        assert Phoenix.Controller.get_flash(conn, :info) == "Congratulations, you have accepted this offer"
       end
     end
   end
@@ -354,7 +354,7 @@ defmodule Engine.OfferControllerTest do
     conn = login_user(build_conn(), contractor)
     conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: :invalid}
     assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
-    assert Phoenix.Controller.get_flash(conn, :error) == "Error making response!"
+    assert Phoenix.Controller.get_flash(conn, :error) == "Error making response"
   end
 
 

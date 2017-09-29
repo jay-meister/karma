@@ -25,14 +25,14 @@ defmodule Engine.SigneeControllerTest do
 
   test "create new signee fail", %{conn: conn, project: project} do
     conn = post conn, project_signee_path(conn, :create, project), signee: @invalid_attrs
-    assert Phoenix.Controller.get_flash(conn, :error) =~ "Failed to add approver!"
+    assert Phoenix.Controller.get_flash(conn, :error) =~ "Failed to add approver"
     assert redirected_to(conn, 302) == "/projects/#{project.id}"
   end
 
   test "delete a signee", %{conn: conn, project: project} do
     signee = insert_approver(project)
     conn = delete conn, project_signee_path(conn, :delete, project, signee)
-    assert Phoenix.Controller.get_flash(conn, :info) == "Approver deleted successfully."
+    assert Phoenix.Controller.get_flash(conn, :info) == "Approver deleted successfully"
     assert redirected_to(conn, 302) == "/projects/#{project.id}"
     assert Repo.get_by(Signee, email: signee.email) == nil
   end
@@ -58,7 +58,7 @@ defmodule Engine.SigneeControllerTest do
     signee = insert_approver(project)
     document_signee = %{document_id: document.id, signee_id: signee.id, order: 2}
     conn = post conn, project_document_signee_path(conn, :add_signee, project, document), document_signee: document_signee
-    assert Phoenix.Controller.get_flash(conn, :info) == "Approver #{signee.name} added to document approval chain!"
+    assert Phoenix.Controller.get_flash(conn, :info) == "Approver #{signee.name} added to document approval chain"
     assert redirected_to(conn, 302) == "/projects/#{project.id}/documents/#{document.id}/signees/new"
     refute Repo.get_by(DocumentSignee, document_id: document.id, signee_id: signee.id) == nil
   end
@@ -80,7 +80,7 @@ defmodule Engine.SigneeControllerTest do
     insert_document_approver(document, signee_2)
     insert_document_approver(document, signee_3)
     conn = delete conn, project_document_signee_path(conn, :clear_signees, project, document)
-    assert Phoenix.Controller.get_flash(conn, :info) == "3 Approvers cleared successfully!"
+    assert Phoenix.Controller.get_flash(conn, :info) == "3 Approvers cleared successfully"
     assert redirected_to(conn, 302) == "/projects/#{project.id}/documents/#{document.id}/signees/new"
   end
 end

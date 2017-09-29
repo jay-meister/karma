@@ -27,7 +27,7 @@ defmodule Engine.SigneeController do
     signee = Repo.get!(Signee, id)
     Repo.delete!(signee)
     conn
-    |> put_flash(:info, "Approver deleted successfully.")
+    |> put_flash(:info, "Approver deleted successfully")
     |> redirect(to: project_path(conn, :show, project))
   end
 
@@ -71,7 +71,7 @@ defmodule Engine.SigneeController do
       {:ok, document_signee} ->
         loaded_signee = document_signee |> Repo.preload(:signee)
         conn
-        |> put_flash(:info, "Approver #{loaded_signee.signee.name} added to document approval chain!")
+        |> put_flash(:info, "Approver #{loaded_signee.signee.name} added to document approval chain")
         |> redirect(to: project_document_signee_path(conn, :add, project, document))
       {:error, _changeset} ->
         conn
@@ -87,7 +87,7 @@ defmodule Engine.SigneeController do
     case Repo.delete_all(document_signees) do
       {num, _result} ->
         conn
-        |> put_flash(:info, "#{num} Approvers cleared successfully!")
+        |> put_flash(:info, "#{num} Approvers cleared successfully")
         |> redirect(to: project_document_signee_path(conn, :add, project, document))
     end
   end

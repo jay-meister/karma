@@ -52,7 +52,7 @@ defmodule Engine.PasswordControllerTest do
   test "password :edit with good email", %{conn: conn} do
     RedisCli.set("RAND0M5TR1NG", "test@test.com")
     conn = get conn, password_path(conn, :edit, 1, hash: "RAND0M5TR1NG")
-    assert html_response(conn, 200) =~ "Reset your password"
+    assert html_response(conn, 200) =~ "Reset password"
   end
 
   test "password :edit with bad email or expired link", %{conn: conn} do
