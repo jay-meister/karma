@@ -38,7 +38,7 @@ defmodule Engine.UserController do
 
         conn
         |> put_flash(:info, "A verification email has been sent to #{user.email}.
-        Click the link in the email to gain full access to engine.")
+        Click the link in the email to gain full access to engine")
         |> redirect(to: session_path(conn, :new))
       {:error, changeset} ->
         case Map.has_key?(conn.query_params, "te") do
@@ -70,7 +70,7 @@ defmodule Engine.UserController do
     case Repo.update(changeset) do
       {:ok, _user} ->
         conn
-        |> put_flash(:info, "User updated successfully.")
+        |> put_flash(:info, "User updated successfully")
         |> redirect(to: startpack_path(conn, :index))
       {:error, changeset} ->
         render(conn, "edit.html", user: user, changeset: changeset)
@@ -85,7 +85,7 @@ defmodule Engine.UserController do
     Repo.delete!(user)
 
     conn
-    |> put_flash(:info, "User deleted successfully.")
+    |> put_flash(:info, "User deleted successfully")
     |> redirect(to: user_path(conn, :index))
   end
 

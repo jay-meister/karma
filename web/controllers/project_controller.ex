@@ -58,7 +58,7 @@ defmodule Engine.ProjectController do
     case Repo.insert(changeset) do
       {:ok, _project} ->
         conn
-        |> put_flash(:info, "Project created successfully.")
+        |> put_flash(:info, "Project created successfully")
         |> redirect(to: dashboard_path(conn, :index))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -99,7 +99,7 @@ defmodule Engine.ProjectController do
     case Repo.update(changeset) do
       {:ok, project} ->
         conn
-        |> put_flash(:info, "Project updated successfully.")
+        |> put_flash(:info, "Project updated successfully")
         |> redirect(to: project_path(conn, :show, project))
       {:error, changeset} ->
         render(conn, "edit.html", project: project, changeset: changeset)
@@ -112,7 +112,7 @@ defmodule Engine.ProjectController do
     Repo.delete!(project)
 
     conn
-    |> put_flash(:info, "Project deleted successfully.")
+    |> put_flash(:info, "Project deleted successfully")
     |> redirect(to: project_path(conn, :index))
   end
 end

@@ -208,7 +208,7 @@ defmodule Engine.StartpackControllerTest do
     startpack = Repo.get_by(Startpack, user_id: user.id)
     conn = post conn, startpack_path(conn, :delete_uploaded_files, startpack), startpack: %{p45_url: nil}
     assert redirected_to(conn, 302) == "/startpack"
-    assert Phoenix.Controller.get_flash(conn, :info) == "File deleted successfully!"
+    assert Phoenix.Controller.get_flash(conn, :info) == "File deleted successfully"
     updated_startpack = Repo.get(Startpack, startpack.id)
     assert updated_startpack.p45_url == nil
   end

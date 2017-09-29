@@ -300,7 +300,7 @@ defmodule Engine.OfferController do
           |> Engine.Mailer.deliver_later()
 
           conn
-          |> put_flash(:info, "Offer updated successfully, and re-emailed to recipient.")
+          |> put_flash(:info, "Offer updated successfully, and re-emailed to recipient")
           |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
       end
     end
@@ -365,7 +365,7 @@ defmodule Engine.OfferController do
         case Repo.update(changeset) do
           {:error, _changeset} ->
             conn
-            |> put_flash(:error, "Error making response!")
+            |> put_flash(:error, "Error making response")
             |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
           {:ok, offer} ->
             Engine.Email.send_offer_response_pm(conn, offer, project, contractor)
@@ -374,7 +374,7 @@ defmodule Engine.OfferController do
             case offer.accepted do
               false ->
                 conn
-                |> put_flash(:info, "Offer rejected!")
+                |> put_flash(:info, "Offer rejected")
                 |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
               true ->
                 initial_contract_type = offer.contract_type
@@ -395,7 +395,7 @@ defmodule Engine.OfferController do
                   {:ok, _msg} ->
                     # reply to user
                     conn
-                    |> put_flash(:info, "Congratulations, you have accepted this offer!")
+                    |> put_flash(:info, "Congratulations, you have accepted this offer")
                     |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
                 end
             end
@@ -411,7 +411,7 @@ defmodule Engine.OfferController do
     Repo.delete!(offer)
 
     conn
-    |> put_flash(:info, "Offer deleted successfully.")
+    |> put_flash(:info, "Offer deleted successfully")
     |> redirect(to: project_offer_path(conn, :index, offer.project_id))
   end
 

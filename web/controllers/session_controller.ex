@@ -30,7 +30,7 @@ defmodule Engine.SessionController do
         RedisCli.query(["SET", rand_string, email])
         RedisCli.query(["SET", email, rand_string])
         conn
-        |> put_flash(:error, "Your email address is yet to be verified.")
+        |> put_flash(:error, "Your email address is yet to be verified")
         |> redirect(to: verification_path(conn, :verify_again, rand_string))
     end
   end

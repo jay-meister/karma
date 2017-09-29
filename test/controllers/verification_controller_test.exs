@@ -36,7 +36,7 @@ defmodule Engine.VerificationControllerTest do
 
   test "/verification/verify/:hash", %{conn: conn} do
     conn = get conn, verification_path(conn, :verify_again, "RAND0M5TR1NG")
-    assert html_response(conn, 200) =~ "verification email"
+    assert html_response(conn, 200) =~ "Verification email"
   end
 
   test "/verification/resend/:hash", %{conn: conn} do
