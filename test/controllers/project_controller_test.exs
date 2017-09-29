@@ -3,8 +3,6 @@ defmodule Engine.ProjectControllerTest do
 
   alias Engine.Project
 
-  @invalid_attrs %{}
-
   setup do
     user = insert_user()
     project = insert_project(user)
@@ -60,7 +58,7 @@ defmodule Engine.ProjectControllerTest do
   end
 
   test "/project/:id does not create project and renders errors when data is invalid", %{conn: conn} do
-    conn = post conn, project_path(conn, :create), project: @invalid_attrs
+    conn = post conn, project_path(conn, :create), project: %{additional_notes: ""}
     assert html_response(conn, 200) =~ "Create project"
   end
 

@@ -438,7 +438,7 @@
         atom: :loan_out_company_registration_number
         %>
 
-        <%= component "input.html",
+        <%= component "textarea.html",
         form: f,
         atom: :loan_out_company_address
         %>

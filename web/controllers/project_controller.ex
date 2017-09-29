@@ -50,6 +50,12 @@ defmodule Engine.ProjectController do
   end
 
   def create(conn, %{"project" => project_params}) do
+    %{"additional_notes" => notes} = project_params
+    single_line_notes = Regex.replace(~r/\r\n/, notes, " ")
+    project_params =
+      project_params
+      |> Map.delete("additional_notes")
+      |> Map.put_new("additional_notes", single_line_notes)
     user = conn.assigns.current_user
     changeset =
       user
@@ -93,6 +99,12 @@ defmodule Engine.ProjectController do
   end
 
   def update(conn, %{"id" => id, "project" => project_params}) do
+    %{"additional_notes" => notes} = project_params
+    single_line_notes = Regex.replace(~r/\r\n/, notes, " ")
+    project_params =
+      project_params
+      |> Map.delete("additional_notes")
+      |> Map.put_new("additional_notes", single_line_notes)
     project = Repo.get!(Project, id)
     changeset = Project.changeset(project, project_params)
 
