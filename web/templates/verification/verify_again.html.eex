@@ -1,5 +1,5 @@
 <h1 class="k-indigo top--header absolute fw4 mb0">Verification email</h1>
 
-<div class="pt2">
-  <%= link "Resend email", to: verification_path(@conn, :resend, @hash), class: "back-button link" %>
-</div>
+<%= component "button.html",
+link: verification_path(@conn, :resend, @hash),
+title: "Resend email" %>
