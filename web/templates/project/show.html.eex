@@ -170,8 +170,8 @@
       "DAILY TRANSPORT PAYE",
       "DAILY TRANSPORT SCHEDULE-D",
       "DAILY TRANSPORT LOAN OUT",
-      "BOX RENTAL",
-      "EQUIPMENT RENTAL",
+      "BOX INVENTORY",
+      "EQUIPMENT INVENTORY",
       "VEHICLE ALLOWANCE"
       ],
     prompt: "Pick a contract type",
