@@ -362,8 +362,8 @@ defmodule Engine.OfferControllerTest do
     offer = %{offer | vehicle_allowance_per_week: 0}
 
     _contract = insert_document(project, %{name: "PAYE"})
-    _box_rental_form = insert_document(project, %{name: "BOX RENTAL"})
-    _equipment_rental_form = insert_document(project, %{name: "EQUIPMENT RENTAL"})
+    _box_rental_form = insert_document(project, %{name: "BOX INVENTORY"})
+    _equipment_rental_form = insert_document(project, %{name: "EQUIPMENT INVENTORY"})
     _vehicle_allowance_form = insert_document(project, %{name: "VEHICLE ALLOWANCE"})
 
     query = Engine.Controllers.Helpers.get_forms_for_merging(offer)
@@ -372,6 +372,6 @@ defmodule Engine.OfferControllerTest do
     document_names = docs |> Enum.map(&Map.get(&1, :name)) |> Enum.sort()
 
     # assert the correct forms are retrieved
-    assert document_names == ["BOX RENTAL", "EQUIPMENT RENTAL", "PAYE"]
+    assert document_names == ["BOX INVENTORY", "EQUIPMENT INVENTORY", "PAYE"]
   end
 end

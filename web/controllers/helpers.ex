@@ -34,8 +34,8 @@ defmodule Engine.Controllers.Helpers do
     Document
     |> Document.get_contract(offer)
     |> Document.get_conditional_form(offer, true, "START FORM")
-    |> Document.get_conditional_form(offer, offer.box_rental_required?, "BOX RENTAL")
-    |> Document.get_conditional_form(offer, offer.equipment_rental_required?, "EQUIPMENT RENTAL")
+    |> Document.get_conditional_form(offer, offer.box_rental_required?, "BOX INVENTORY")
+    |> Document.get_conditional_form(offer, offer.equipment_rental_required?, "EQUIPMENT INVENTORY")
     |> Document.get_conditional_form(offer, offer.vehicle_allowance_per_week != 0, "VEHICLE ALLOWANCE")
   end
 
