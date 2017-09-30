@@ -422,6 +422,7 @@ defmodule Engine.Job do
       "Assistant Unit Manager",
       "Location Assistant",
       "Location Manager",
+      "Location Manager (PAYE)",
       "Location Marshall",
       "Locations Assistant",
       "PA",
