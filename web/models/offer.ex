@@ -43,6 +43,7 @@ defmodule Engine.Offer do
     belongs_to :user, Engine.User
     belongs_to :project, Engine.Project
     has_many :altered_documents, Engine.AlteredDocument
+    has_many :custom_fields, Engine.CustomField
 
     timestamps()
   end

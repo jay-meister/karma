@@ -26,6 +26,10 @@ defmodule Engine.Controllers.Helpers do
     order_by: s.name
   end
 
+  def project_custom_fields(project) do
+    Ecto.assoc(project, :custom_fields)
+  end
+
   def document_signees(document) do
     Ecto.assoc(document, :signees)
   end

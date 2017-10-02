@@ -60,6 +60,63 @@
   <% end %>
 </ul>
 
+<%= component "form_divider.html", title: "Custom fields" %>
+<%= if length(@custom_fields) == 0 do %>
+  <div class="tc k-bg-indigo white pa4 f2 br3 mb4">
+    Add custom fields to this project
+  </div>
+<% end %>
+<%= if length(@custom_fields) != 0 do %>
+  <div class="mb4">
+    <%= for custom_field <- @custom_fields do %>
+      <%
+        value =
+          case custom_field.value do
+            nil -> "(edit value in offer)"
+            value -> value
+          end
+      %>
+      <div class="ba k-b--indigo br3 pa3 pr5 mb2 k-bg-input relative">
+        <div class="dib ml3">Field type: <%= custom_field.type %></div>
+        <div class="dib ml3"><%= custom_field.name %>:</div>
+        <div class="dib ml3"><%= value %></div>
+
+        <%= link to: project_custom_field_path(@conn, :delete, @project, custom_field),
+          method: :delete,
+          data: [confirm: "Are you sure?"] do %>
+          <img class="absolute k-w2-5 k-top-center right-1" src="/images/delete.svg" />
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+<div class="pa3 ba k-b-indigo br3 w-50-l k-m-auto">
+  <%= form_for @custom_field_changeset, project_custom_field_path(@conn, :create, @project), fn f -> %>
+    <%= component "dropdown.html",
+    form: f,
+    atom: :type,
+    options: ["Project", "Offer"],
+    id: "custom_field_dropdown",
+    container_id: "custom_field_dropdown_container"
+    %>
+    <%= component "input.html",
+    form: f,
+    atom: :name,
+    placeholder: "Shoot day duration"
+    %>
+    <%= component "input.html",
+    form: f,
+    atom: :value,
+    placeholder: "10 hours",
+    container_id: "custom_field_value_container"
+    %>
+    <%= component "submit_button.html",
+    form: f,
+    title: "Add custom field"
+    %>
+  <% end %>
+</div>
+
 
 <div class="mb4">
   <%= component "form_divider.html", title: "Contracts" %>
@@ -254,3 +311,4 @@
 </div>
 <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
 <script>require("web/static/js/app").App.document_upload_listeners()</script>
+<script>require("web/static/js/app").App.custom_field_listeners()</script>

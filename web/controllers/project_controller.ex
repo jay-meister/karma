@@ -1,7 +1,7 @@
 defmodule Engine.ProjectController do
   use Engine.Web, :controller
 
-  alias Engine.{Project, Document, Signee}
+  alias Engine.{Project, Document, Signee, CustomField}
 
 
   plug :add_project_to_conn when action in [:show, :edit, :update, :delete]
@@ -81,11 +81,15 @@ defmodule Engine.ProjectController do
     signees = Repo.all(project_signees(project))
     document_changeset = Document.changeset(%Document{})
     signee_changeset = Signee.changeset(%Signee{})
+    custom_field_changeset = CustomField.changeset(%CustomField{})
+    custom_fields = Repo.all(project_custom_fields(project))
     render(conn,
     "show.html",
     project: conn.assigns.project,
     document_changeset: document_changeset,
     signee_changeset: signee_changeset,
+    custom_field_changeset: custom_field_changeset,
+    custom_fields: custom_fields,
     forms: forms,
     deals: deals,
     signees: signees,
