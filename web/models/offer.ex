@@ -101,6 +101,10 @@ defmodule Engine.Offer do
     |> validate_required_dropdowns()
   end
 
+  def send_offer_changeset(struct, params \\ %{}) do
+    struct
+    |> cast(params, [])
+  end
 
   def form_validation(struct, params \\ %{}) do
     struct

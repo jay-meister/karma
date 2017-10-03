@@ -20,6 +20,7 @@
                           offer: %{job_title: ""},
                           job_title: @job_title,
                           class: "mv4",
-                          full_name: "" %>
+                          full_name: "",
+                          num_custom_offer_fields: @num_custom_offer_fields || 0 %>
 
 </div>

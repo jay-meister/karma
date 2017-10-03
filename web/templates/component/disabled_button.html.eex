@@ -1,0 +1,3 @@
+<div class="tc pt3 pointer_not-allowed">
+  <div class="ttu k-bg-input ba k-b--grey pa3 pl4 pr4 k-f2-5 br2 k-grey w-100 mt4 outline-0 k-m-auto lato"><%= assigns[:title] %></div>
+</div>

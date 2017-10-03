@@ -33,6 +33,7 @@ defmodule Engine.Router do
     post "/startpack/:id", StartpackController, :update
     post "/startpack/:id/delete-file", StartpackController, :delete_uploaded_files
     resources "/startpack", StartpackController, except: [:new, :create, :delete]
+    # post "/projects/:project_id/offers/:offer_id/send_offer", OfferController, :send_offer
     resources "/projects", ProjectController do
       resources "/custom_fields", CustomFieldController, only: [:create, :delete]
       resources "/documents", DocumentController do
@@ -41,10 +42,13 @@ defmodule Engine.Router do
         delete "/signees", SigneeController, :clear_signees
       end
       resources "/signees", SigneeController, only: [:create, :delete]
+      post "/offers/:offer_id/send_offer", OfferController, :send_offer
       resources "/offers", OfferController do
         # project_offer_altered_document_path(conn, project, offer)
         # /projects/:project_id/offers/:offer_id/altered_documents/sign
+
         get "/custom_fields/add", CustomFieldController, :add
+        post "/custom_fields/:id/save", CustomFieldController, :save
         get "/altered_documents/sign", AlteredDocumentController, :sign
       end
       put "/offers/:id/response", OfferController, :response
