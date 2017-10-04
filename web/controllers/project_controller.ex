@@ -50,6 +50,12 @@ defmodule Engine.ProjectController do
   end
 
   def create(conn, %{"project" => project_params}) do
+    %{"additional_notes" => notes} = project_params
+    single_line_notes = Regex.replace(~r/\r\n/, notes, " ")
+    project_params =
+      project_params
+      |> Map.delete("additional_notes")
+      |> Map.put_new("additional_notes", single_line_notes)
     user = conn.assigns.current_user
     changeset =
       user
@@ -58,7 +64,7 @@ defmodule Engine.ProjectController do
     case Repo.insert(changeset) do
       {:ok, _project} ->
         conn
-        |> put_flash(:info, "Project created successfully.")
+        |> put_flash(:info, "Project created successfully")
         |> redirect(to: dashboard_path(conn, :index))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -93,13 +99,19 @@ defmodule Engine.ProjectController do
   end
 
   def update(conn, %{"id" => id, "project" => project_params}) do
+    %{"additional_notes" => notes} = project_params
+    single_line_notes = Regex.replace(~r/\r\n/, notes, " ")
+    project_params =
+      project_params
+      |> Map.delete("additional_notes")
+      |> Map.put_new("additional_notes", single_line_notes)
     project = Repo.get!(Project, id)
     changeset = Project.changeset(project, project_params)
 
     case Repo.update(changeset) do
       {:ok, project} ->
         conn
-        |> put_flash(:info, "Project updated successfully.")
+        |> put_flash(:info, "Project updated successfully")
         |> redirect(to: project_path(conn, :show, project))
       {:error, changeset} ->
         render(conn, "edit.html", project: project, changeset: changeset)
@@ -112,7 +124,7 @@ defmodule Engine.ProjectController do
     Repo.delete!(project)
 
     conn
-    |> put_flash(:info, "Project deleted successfully.")
+    |> put_flash(:info, "Project deleted successfully")
     |> redirect(to: project_path(conn, :index))
   end
 end

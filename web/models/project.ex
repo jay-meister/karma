@@ -21,6 +21,8 @@ defmodule Engine.Project do
     field :operating_base_address_city, :string
     field :operating_base_address_postcode, :string
     field :operating_base_address_country, :string
+    field :operating_base_tel, :string
+    field :operating_base_email, :string
     field :locations, :string
     field :holiday_rate, :float
     field :additional_notes, :string
@@ -58,6 +60,8 @@ defmodule Engine.Project do
       :operating_base_address_city,
       :operating_base_address_postcode,
       :operating_base_address_country,
+      :operating_base_tel,
+      :operating_base_email,
       :locations,
       :holiday_rate,
       :additional_notes,
@@ -80,6 +84,9 @@ defmodule Engine.Project do
       :holiday_rate,
       :active,
       :user_id])
+    |> validate_format(:operating_base_email, ~r/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/)
+    |> validate_length(:description, max: 300)
+    |> validate_length(:additional_notes, max: 300)
     |> validate_dropdowns
   end
 

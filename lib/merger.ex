@@ -76,7 +76,10 @@ defmodule Engine.Merger do
   end
 
   def get_data_for_merge(offer) do
-    %{user: Map.take(Map.from_struct(Repo.get(Engine.User, offer.user_id)), user()),
+    first_name = Map.take(Map.from_struct(Repo.get(Engine.User, offer.user_id)), [:first_name])
+    last_name = Map.take(Map.from_struct(Repo.get(Engine.User, offer.user_id)), [:last_name])
+    full_name = "#{first_name.first_name} #{last_name.last_name}"
+    %{user: Map.merge(Map.take(Map.from_struct(Repo.get(Engine.User, offer.user_id)), user()), %{full_name: full_name}),
       project: Map.take(Map.from_struct(Repo.get(Engine.Project, offer.project_id)), project()),
       offer: Map.take(Map.from_struct(Repo.get(Engine.Offer, offer.id)), offer()),
       startpack: Map.take(Map.from_struct(Repo.get_by(Engine.Startpack, user_id: offer.user_id)), startpack())

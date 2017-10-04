@@ -46,13 +46,13 @@ defmodule Engine.PasswordControllerTest do
   test "password :create with fake email address", %{conn: conn} do
     conn = post(conn, password_path(conn, :create), user: @invalid_attrs)
     assert redirected_to(conn) == password_path(conn, :new)
-    assert Phoenix.Controller.get_flash(conn, :error) =~ "Something went wrong, please try again later"
+    assert Phoenix.Controller.get_flash(conn, :error) =~ "No user found with that email, check you have entered the one you signed up with"
   end
 
   test "password :edit with good email", %{conn: conn} do
     RedisCli.set("RAND0M5TR1NG", "test@test.com")
     conn = get conn, password_path(conn, :edit, 1, hash: "RAND0M5TR1NG")
-    assert html_response(conn, 200) =~ "Reset your password"
+    assert html_response(conn, 200) =~ "Reset password"
   end
 
   test "password :edit with bad email or expired link", %{conn: conn} do

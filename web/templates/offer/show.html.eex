@@ -1,11 +1,11 @@
 <%= link "Dashboard", to: dashboard_path(@conn, :index), class: "mr2 no-underline k-indigo" %>
 <%= if @is_pm? do %>
-  <img src="/images/breadcrumb-arrow.svg" class="w1 ml1" />
-  <%= link "Project", to: project_offer_path(@conn, :index, @offer.project_id), class: "ma2 no-underline k-indigo" %>
-  <%= link "Edit offer", to: project_offer_path(@conn, :edit, @offer.project_id, @offer), class: "ma1 no-underline k-indigo fr" %>
+<img src="/images/breadcrumb-arrow.svg" class="w1 ml1" />
+<%= link "Project", to: project_offer_path(@conn, :index, @offer.project_id), class: "ma2 no-underline k-indigo" %>
+<%= link "Edit offer", to: project_offer_path(@conn, :edit, @offer.project_id, @offer), class: "ma1 no-underline k-indigo fr" %>
 <% end %>
 <img src="/images/breadcrumb-arrow.svg" class="w1 ml2" />
-<div class="ma2 k-light-indigo dib">Offer details</div>
+<div class="ma2 k-light-indigo dib mb4">Offer details</div>
 <%= if @is_pm? do %>
   <%= if Map.has_key?(@contractor, :first_name) do %>
     <h1 class="top--header absolute fw4 mb0">Offer for <%= "#{@contractor.first_name} #{@contractor.last_name} " %></h1>
@@ -18,7 +18,7 @@
 <% end %>
 <%= if @is_contractor? do %>
   <%= if length(@changeset.errors) > 0 && @offer.accepted == nil do %>
-    <div class="k-bg-indigo white tc pa4 br3 ma2 f2 mt3">
+    <div class="k-bg-indigo white tc pa4 br2 ma2 f2 mt3 mb3">
     Complete your startpack to accept this offer
     </div>
     <%= component "button.html", title: "Edit Startpack", link: "/startpack?offer_id=#{@offer.id}" %>
@@ -28,16 +28,43 @@
     <div class="h3">
       <%= if length(@deal_documents) > 0 && hd(@deal_documents).status != "signing" || length(@form_documents) > 0 && hd(@form_documents).status != "signing" do %>
         <%= component "button.html", title: "Sign Documents", link: project_offer_altered_document_path(@conn, :sign, @offer.project_id, @offer) %>
-        <div class="tc">This process may take up to 30 seconds - please don't navigate away</div>
+        <div class="tc mb3">This process may take up to 30 seconds - please don't navigate away</div>
       <% else %>
-        <div class="tc">Documents sent</div>
+        <div class="tc mb3">Documents sent</div>
       <% end %>
     </div>
   <% end %>
   <%= if @offer.accepted == false do %>
     <div class="k-bg-indigo white tc pa4 br3 ma2 f2 mt3">You have rejected this offer!</div>
   <% end %>
-
+  <div class="tc mt2">
+    <%= if length(@changeset.errors) == 0 && @offer.accepted == nil do %>
+      <div class="dib ma1">
+        <%= form_for @edit_changeset, project_offer_path(@conn, :response, @offer.project_id, @offer), fn f -> %>
+            <%= hidden_input f, :accepted, value: "true" %>
+            <%= component "submit_link_with_warning.html",
+              title: "ACCEPT",
+              path: project_offer_path(@conn, :response, @offer.project_id, @offer),
+              method: :put,
+              warning_message: "Ensure all details are accurate and documents correct, before proceeding\n\nClick cancel to go back and check\n\nClick OK, if you are happy to proceed"
+            %>
+        <% end %>
+      </div>
+      <div class="dib ma1">
+        <%= form_for @edit_changeset, project_offer_path(@conn, :response, @offer.project_id, @offer), fn f -> %>
+          <%= hidden_input f, :accepted, value: "false" %>
+          <%= component "submit_link_with_warning.html",
+            title: "REJECT",
+            path: project_offer_path(@conn, :response, @offer.project_id, @offer),
+            method: :put,
+            warning_message: "Speak with the project to amend an offer.\n\nA rejected offer cannot be reversed\n\nOnly click OK if you are 100% sure you won't work on this project"
+          %>
+        <% end %>
+      </div>
+      <div class="tc k-light-indigo mb2">Now click Accept or Reject to continue</div>
+      <div class="tc k-light-indigo pt2">(or <a class="link k-indigo underline" href="mailto:<%= @pm_email %>">email the project</a> to amend the offer)</div>
+    <% end %>
+  </div>
   <%= if length(@deal_documents) > 0 && @is_contractor? do %>
   <%= component "form_divider.html", title: "Contracts" %>
     <div class="tc">
@@ -80,32 +107,7 @@
     </div>
   <%= end %>
 
-  <div class="tc mt2">
-    <%= if length(@changeset.errors) == 0 && @offer.accepted == nil do %>
-      <div class="dib ma1">
-        <%= form_for @edit_changeset, project_offer_path(@conn, :response, @offer.project_id, @offer), fn f -> %>
-            <%= hidden_input f, :accepted, value: "true" %>
-            <%= component "submit_link_with_warning.html",
-              title: "ACCEPT",
-              path: project_offer_path(@conn, :response, @offer.project_id, @offer),
-              method: :put,
-              warning_message: "Ensure all details are accurate and documents correct, before proceeding\n\nClick cancel to go back and check\n\nClick OK, if you are happy to proceed"
-            %>
-        <% end %>
-      </div>
-      <div class="dib ma1">
-        <%= form_for @edit_changeset, project_offer_path(@conn, :response, @offer.project_id, @offer), fn f -> %>
-          <%= hidden_input f, :accepted, value: "false" %>
-          <%= component "submit_link_with_warning.html",
-            title: "REJECT",
-            path: project_offer_path(@conn, :response, @offer.project_id, @offer),
-            method: :put,
-            warning_message: "Speak with the project to amend an offer.\n\nA rejected offer cannot be reversed\n\nOnly click OK if you are 100% sure you won't work on this project"
-          %>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
+
 <% end %>
 <%= if @is_pm? && @offer.accepted do %>
 <%= component "form_divider.html", title: "Contractor supporting documents" %>
@@ -348,5 +350,22 @@
     <% end %>
   </div>
   <% end %>
+<% end %>
+<%= component "form_divider.html", title: "Project contacts" %>
+<%= for {atom, label, formatted, group, email} <- [
+  {:operating_base_address, nil, @project.operating_base_address_1, false, false},
+  {:operating_base_address_2, "", @project.operating_base_address_2, true, false},
+  {:operating_base_address_city, "", @project.operating_base_address_city, true, false},
+  {:operating_base_address_postcode, "", @project.operating_base_address_postcode, true, false},
+  {:operating_base_address_country, "", @project.operating_base_address_country, true, false},
+  {:operating_base_tel, nil, @project.operating_base_tel, false, false},
+  {:operating_base_email, nil, @project.operating_base_email, false, true}
+] do %>
+  <%= component "data.html",
+  data: formatted || Map.get(@formatted_offer, atom),
+  label: label || format_label(atom),
+  group: group,
+  email: email
+  %>
 <% end %>
 </ul>

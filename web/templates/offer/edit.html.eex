@@ -16,6 +16,7 @@
                           job_titles: @job_titles,
                           job_departments: @job_departments,
                           conn: @conn,
-                          job_title: @offer.job_title %>
+                          job_title: @offer.job_title,
+                          full_name: @full_name %>
 
 </div>

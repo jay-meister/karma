@@ -37,6 +37,12 @@ defmodule Engine.StartpackController do
   end
 
   def update(conn, %{"id" => id, "startpack" => startpack_params}, user) do
+    %{"loan_out_company_address" => loca} = startpack_params
+    single_line_address = Regex.replace(~r/\r\n/, loca, " ")
+    startpack_params =
+      startpack_params
+      |> Map.delete("loan_out_company_address")
+      |> Map.put_new("loan_out_company_address", single_line_address)
     startpack = Repo.get!(Startpack, id)
     startpack_map = Map.from_struct(startpack)
 
@@ -47,7 +53,7 @@ defmodule Engine.StartpackController do
     case image_changeset.valid? do
       false ->
         conn
-        |> put_flash(:error, "Error updating startpack!")
+        |> put_flash(:error, "Error updating startpack")
         |> render("index.html", changeset: image_changeset, startpack: startpack, offer: %{}, user: user, delete_changeset: delete_changeset, uploaded_files: uploaded_files)
       true ->
         urls = Engine.S3.upload_many(startpack_params, @file_upload_keys)
@@ -60,11 +66,11 @@ defmodule Engine.StartpackController do
         case offer_id == "" do
           true ->
             conn
-            |> put_flash(:info, "Startpack updated successfully!")
+            |> put_flash(:info, "Startpack updated successfully")
             |> redirect(to: startpack_path(conn, :index))
           false ->
             conn
-            |> put_flash(:info, "Startpack updated successfully!")
+            |> put_flash(:info, "Startpack updated successfully")
             |> redirect(to: startpack_path(conn, :index, offer_id: offer_id))
       end
     end
@@ -75,7 +81,7 @@ defmodule Engine.StartpackController do
     changeset = Startpack.delete_changeset(startpack, startpack_params)
     Repo.update!(changeset)
     conn
-    |> put_flash(:info, "File deleted successfully!")
+    |> put_flash(:info, "File deleted successfully")
     |> redirect(to: startpack_path(conn, :index))
   end
 

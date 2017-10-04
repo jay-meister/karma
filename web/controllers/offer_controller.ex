@@ -108,11 +108,13 @@ defmodule Engine.OfferController do
     project_id: project_id,
     job_titles: job_titles,
     job_departments: job_departments,
-    job_title: "")
+    job_title: "",
+    full_name: "")
   end
 
   def create(conn, %{"offer" => %{"target_email" => email} = offer_params, "project_id" => project_id}) do
     offer_params = Map.put(offer_params, "target_email", String.downcase(email))
+    %{"recipient_fullname" => recipient_fullname} = offer_params
     project = Repo.get(Project, project_id) |> Repo.preload(:user) |> Repo.preload(:documents)
     project_documents = Enum.map(project.documents, fn document -> document.name end)
     %{"department" => department,
@@ -138,7 +140,8 @@ defmodule Engine.OfferController do
       project_id: project_id,
       job_titles: job_titles,
       job_departments: job_departments,
-      job_title: job_title)
+      job_title: job_title,
+      full_name: recipient_fullname)
     else
       # run calculations and add them to the offer_params
       calculations = parse_offer_strings(offer_params) |> run_calculations(project, project_documents, daily, equipment)
@@ -185,7 +188,8 @@ defmodule Engine.OfferController do
           []
       end
     user = conn.assigns.current_user
-    project = Repo.get(Project, project_id) |> Repo.preload(:documents)
+    project = Repo.get(Project, project_id) |> Repo.preload(:documents) |> Repo.preload(:user)
+    pm_email = project.user.email
     info_documents =
       Repo.all(project_documents(project))
       |> Enum.filter(fn doc -> doc.category == "Info" end)
@@ -205,7 +209,8 @@ defmodule Engine.OfferController do
         contract: nil,
         contractor: contractor,
         formatted_offer: Formatter.format_offer_data(offer),
-        supporting_documents: supporting_documents)
+        supporting_documents: supporting_documents,
+        pm_email: pm_email)
       _ ->
         edit_changeset = Offer.changeset(offer)
         startpack = Repo.get_by(Startpack, user_id: user.id)
@@ -221,7 +226,8 @@ defmodule Engine.OfferController do
         form_documents: form_documents,
         contractor: contractor,
         formatted_offer: Formatter.format_offer_data(offer),
-        supporting_documents: supporting_documents
+        supporting_documents: supporting_documents,
+        pm_email: pm_email
         )
     end
   end
@@ -231,8 +237,12 @@ defmodule Engine.OfferController do
     changeset = Offer.changeset(offer)
     job_titles = Engine.Job.titles()
     job_departments = Engine.Job.departments()
-
-    ops = [offer: offer, changeset: changeset, project_id: project_id, job_titles: job_titles, job_departments: job_departments]
+    full_name =
+      case Repo.get_by(User, email: offer.target_email) do
+        nil -> offer.recipient_fullname
+        user -> "#{user.first_name} #{user.last_name}"
+      end
+    ops = [offer: offer, changeset: changeset, project_id: project_id, job_titles: job_titles, job_departments: job_departments, full_name: full_name]
     render(conn, "edit.html", ops)
   end
 
@@ -255,7 +265,8 @@ defmodule Engine.OfferController do
       project_id: project_id,
       job_titles: job_titles,
       job_departments: job_departments,
-      job_title: offer.job_title
+      job_title: offer.job_title,
+      full_name: offer.recipient_fullname
     ]
     # first check the values provided by the user are valid
     validation_changeset = Offer.form_validation(offer, offer_params)
@@ -289,7 +300,7 @@ defmodule Engine.OfferController do
           |> Engine.Mailer.deliver_later()
 
           conn
-          |> put_flash(:info, "Offer updated successfully, and re-emailed to recipient.")
+          |> put_flash(:info, "Offer updated successfully, and re-emailed to recipient")
           |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
       end
     end
@@ -354,7 +365,7 @@ defmodule Engine.OfferController do
         case Repo.update(changeset) do
           {:error, _changeset} ->
             conn
-            |> put_flash(:error, "Error making response!")
+            |> put_flash(:error, "Error making response")
             |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
           {:ok, offer} ->
             Engine.Email.send_offer_response_pm(conn, offer, project, contractor)
@@ -363,7 +374,7 @@ defmodule Engine.OfferController do
             case offer.accepted do
               false ->
                 conn
-                |> put_flash(:info, "Offer rejected!")
+                |> put_flash(:info, "Offer rejected")
                 |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
               true ->
                 initial_contract_type = offer.contract_type
@@ -384,7 +395,7 @@ defmodule Engine.OfferController do
                   {:ok, _msg} ->
                     # reply to user
                     conn
-                    |> put_flash(:info, "Congratulations, you have accepted this offer!")
+                    |> put_flash(:info, "Congratulations, you have accepted this offer")
                     |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
                 end
             end
@@ -400,7 +411,7 @@ defmodule Engine.OfferController do
     Repo.delete!(offer)
 
     conn
-    |> put_flash(:info, "Offer deleted successfully.")
+    |> put_flash(:info, "Offer deleted successfully")
     |> redirect(to: project_offer_path(conn, :index, offer.project_id))
   end
 

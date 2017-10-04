@@ -33,7 +33,7 @@
   placeholder: "Project codename"
   %>
 
-  <%= component "textarea.html",
+  <%= component "input.html",
   form: f,
   atom: :description,
   placeholder: "Brief description of the project"
@@ -145,6 +145,18 @@
   <%= component "input.html",
   form: f,
   atom: :operating_base_address_country,
+  placeholder: ""
+  %>
+
+  <%= component "input.html",
+  form: f,
+  atom: :operating_base_tel,
+  placeholder: ""
+  %>
+
+  <%= component "input.html",
+  form: f,
+  atom: :operating_base_email,
   placeholder: ""
   %>
 

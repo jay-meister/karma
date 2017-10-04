@@ -19,6 +19,7 @@
                           conn: @conn,
                           offer: %{job_title: ""},
                           job_title: @job_title,
-                          class: "mv4" %>
+                          class: "mv4",
+                          full_name: "" %>
 
 </div>

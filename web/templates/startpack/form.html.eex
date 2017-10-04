@@ -1,9 +1,4 @@
 <div class="pt4">
-  <%= if length(@changeset.errors) != 0 do %>
-      <div class="alert alert-danger">
-        <p>Fill out the error fields below to complete your startpack!</p>
-      </div>
-  <% end %>
   <%= if length(@uploaded_files) != 0 do %>
     <%= component "form_divider.html", title: "Uploaded files" %>
     <div class="tc">
@@ -49,7 +44,7 @@
     <%= component "dropdown.html",
     form: f,
     atom: :gender,
-    options: ["Male": "male", "Female": "female", "Other": "other", "Prefer not to say": "n/a"],
+    options: ["Male", "Female", "Other", "Prefer not to say"],
     prompt: "select..."
     %>
 
@@ -115,6 +110,11 @@
     atom: :country_of_permanent_residence
     %>
 
+    <%= component "input.html",
+    form: f,
+    atom: :passport_full_name,
+    placeholder: "Your full name as it appears on your passport (inc. middle name(s))"
+    %>
 
     <%= component "input.html",
     form: f,
@@ -144,11 +144,6 @@
     conn: @conn
     %>
 
-    <%= component "input.html",
-    form: f,
-    atom: :passport_full_name,
-    placeholder: "Your full name as it appears on your passport (inc. middle name(s))"
-    %>
 
     <%= component "form_divider.html", title: "Contact info" %>
 
@@ -443,7 +438,7 @@
         atom: :loan_out_company_registration_number
         %>
 
-        <%= component "input.html",
+        <%= component "textarea.html",
         form: f,
         atom: :loan_out_company_address
         %>

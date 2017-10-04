@@ -41,7 +41,7 @@ defmodule Engine.DocumentController do
     project = Repo.get_by(Project, id: project_id)
     if category == "" || (contract_name == "" && name == "") || !Map.has_key?(document_params, "file") do
       conn
-      |> put_flash(:error, "File upload fields can't be empty!")
+      |> put_flash(:error, "File upload fields can't be empty")
       |> redirect(to: project_path(conn, :show, project))
       |> halt()
     else
@@ -68,7 +68,7 @@ defmodule Engine.DocumentController do
                 |> Map.put_new("url", url)
               {:error, :url, _error} ->
                 conn
-                |> put_flash(:error, "Error uploading document!")
+                |> put_flash(:error, "Error uploading document")
                 |> redirect(to: project_path(conn, :show, project))
                 document_params
             end
@@ -79,7 +79,7 @@ defmodule Engine.DocumentController do
 
           Repo.insert(changeset)
           conn
-          |> put_flash(:info, "Document uploaded successfully.")
+          |> put_flash(:info, "Document uploaded successfully")
           |> redirect(to: project_path(conn, :show, project))
         end
     end
@@ -106,7 +106,7 @@ defmodule Engine.DocumentController do
     case Repo.update(changeset) do
       {:ok, document} ->
         conn
-        |> put_flash(:info, "Document updated successfully.")
+        |> put_flash(:info, "Document updated successfully")
         |> redirect(to: project_document_path(conn, :show, project, document))
       {:error, changeset} ->
         render(conn, "edit.html", document: document, changeset: changeset, project: project)
@@ -121,11 +121,11 @@ defmodule Engine.DocumentController do
       |> Ecto.Changeset.change
       |> Ecto.Changeset.no_assoc_constraint(:altered_documents)
       |> Repo.delete
-      
+
     case changeset do
       {:ok, _} ->
         conn
-        |> put_flash(:info, "Document deleted successfully.")
+        |> put_flash(:info, "Document deleted successfully")
         |> redirect(to: project_path(conn, :show, project))
       {:error, _} ->
         conn

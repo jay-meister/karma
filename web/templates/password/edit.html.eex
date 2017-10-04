@@ -2,11 +2,11 @@
   <div class="dtc v-mid">
       <div class="ba b--black-10 br4-ns pa4 bg-white h-auto-ns h-100">
         <div class="tc pt5">
-          <img src="/images/logo-blue.png" class="k-w4-5"/>
+          <img src="/images/engine-logo-front.jpg" class="k-w32"/>
         </div>
         <div class="">
           <%= form_for @changeset, password_path(@conn, :update, 1, hash: @hash), [method: "put"] , fn f -> %>
-          <h2 class="tc">Reset your password</h2>
+          <h2 class="tc">Reset password</h2>
             <%= if @changeset.action do %>
               <div class="alert alert-danger mt3">
                 <p>Oops, something went wrong! Please check the errors below.</p>
@@ -17,7 +17,7 @@
             form: f,
             atom: :password,
             type: "password",
-            placeholder: "Must contain at least 6 characters"
+            placeholder: "Minimum 6 characters, inc: 1 capital, 1 digit, 1 special"
             %>
             <%= component "input.html",
             form: f,
@@ -26,7 +26,7 @@
             placeholder: "Must match password"
             %>
 
-            <%= component "submit_button.html", title: "Reset password" %>
+            <%= component "submit_button.html", title: "Reset" %>
           <% end %>
 
           <%= link "Back to log in", to: session_path(@conn, :new) %>

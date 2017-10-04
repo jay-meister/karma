@@ -16,7 +16,7 @@ defmodule Engine.PasswordController do
       nil ->
         # if user not found, just let them know something not working
         conn
-        |> put_flash(:error, "Something went wrong, please try again later")
+        |> put_flash(:error, "No user found with that email, check you have entered the one you signed up with")
         |> redirect(to: password_path(conn, :new))
       %User{} ->
         # if email is found, send reset email

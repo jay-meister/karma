@@ -180,6 +180,13 @@ defmodule Engine.OfferControllerTest do
     assert html_response(conn, 200) =~ "Edit offer"
   end
 
+  test "replaces recipient_fullname with real name of contractor", %{conn: conn, project: project} do
+    insert_user(%{email: "contractor@email.com"})
+    offer = insert_offer(project, %{target_email: "contractor@email.com"})
+    conn = get conn, project_offer_path(conn, :edit, offer.project_id, offer)
+    assert html_response(conn, 200) =~ "Edit offer"
+  end
+
   test "does not update offer or send email when data is valid but unchanged", %{conn: conn, offer: offer} do
     unchanged = default_offer()
 
@@ -257,7 +264,7 @@ defmodule Engine.OfferControllerTest do
     with_mock Engine.Mailer, [deliver_later: fn(string) -> string end] do
       conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: false}
       assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
-      assert Phoenix.Controller.get_flash(conn, :info) == "Offer rejected!"
+      assert Phoenix.Controller.get_flash(conn, :info) == "Offer rejected"
       # ensure the offer is now rejected in DB
       assert Repo.get(Engine.Offer, offer.id).accepted == false
     end
@@ -275,7 +282,7 @@ defmodule Engine.OfferControllerTest do
       with_mock Engine.Merger, [merge_multiple: fn(_, _) -> {:ok, "Documents merged"} end] do
         conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: true}
         assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
-        assert Phoenix.Controller.get_flash(conn, :info) == "Congratulations, you have accepted this offer!"
+        assert Phoenix.Controller.get_flash(conn, :info) == "Congratulations, you have accepted this offer"
       end
     end
   end
@@ -291,7 +298,7 @@ defmodule Engine.OfferControllerTest do
       with_mock Engine.Merger, [merge_multiple: fn(_, _) -> {:ok, "Documents merged"} end] do
         conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: true}
         assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
-        assert Phoenix.Controller.get_flash(conn, :info) == "Congratulations, you have accepted this offer!"
+        assert Phoenix.Controller.get_flash(conn, :info) == "Congratulations, you have accepted this offer"
       end
     end
   end
@@ -307,7 +314,7 @@ defmodule Engine.OfferControllerTest do
       with_mock Engine.Merger, [merge_multiple: fn(_, _) -> {:ok, "Documents merged"} end] do
         conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: true}
         assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
-        assert Phoenix.Controller.get_flash(conn, :info) == "Congratulations, you have accepted this offer!"
+        assert Phoenix.Controller.get_flash(conn, :info) == "Congratulations, you have accepted this offer"
       end
     end
   end
@@ -347,7 +354,7 @@ defmodule Engine.OfferControllerTest do
     conn = login_user(build_conn(), contractor)
     conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: :invalid}
     assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
-    assert Phoenix.Controller.get_flash(conn, :error) == "Error making response!"
+    assert Phoenix.Controller.get_flash(conn, :error) == "Error making response"
   end
 
 
@@ -355,8 +362,8 @@ defmodule Engine.OfferControllerTest do
     offer = %{offer | vehicle_allowance_per_week: 0}
 
     _contract = insert_document(project, %{name: "PAYE"})
-    _box_rental_form = insert_document(project, %{name: "BOX RENTAL"})
-    _equipment_rental_form = insert_document(project, %{name: "EQUIPMENT RENTAL"})
+    _box_rental_form = insert_document(project, %{name: "BOX INVENTORY"})
+    _equipment_rental_form = insert_document(project, %{name: "EQUIPMENT INVENTORY"})
     _vehicle_allowance_form = insert_document(project, %{name: "VEHICLE ALLOWANCE"})
 
     query = Engine.Controllers.Helpers.get_forms_for_merging(offer)
@@ -365,6 +372,6 @@ defmodule Engine.OfferControllerTest do
     document_names = docs |> Enum.map(&Map.get(&1, :name)) |> Enum.sort()
 
     # assert the correct forms are retrieved
-    assert document_names == ["BOX RENTAL", "EQUIPMENT RENTAL", "PAYE"]
+    assert document_names == ["BOX INVENTORY", "EQUIPMENT INVENTORY", "PAYE"]
   end
 end

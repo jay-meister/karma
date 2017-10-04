@@ -280,6 +280,7 @@ defmodule Engine.Startpack do
         struct
         |> cast(startpack, [:box_rental_value, :box_rental_url])
         |> validate_required([:box_rental_url, :box_rental_value])
+        |> validate_number(:box_rental_value, greater_than: 0)
       false ->
         struct
     end
@@ -291,6 +292,7 @@ defmodule Engine.Startpack do
         struct
         |> cast(startpack, [:equipment_rental_value, :equipment_rental_url])
         |> validate_required([:equipment_rental_url, :equipment_rental_value])
+        |> validate_number(:equipment_rental_value, greater_than: 0)
       false ->
         struct
     end
@@ -340,7 +342,7 @@ defmodule Engine.Startpack do
           false ->
             changeset
             |> cast(startpack, paye_keys())
-            |> validate_required(paye_keys())
+            |> validate_required([:national_insurance_number, :for_paye_only])
             |> validate_inclusion(:for_paye_only, for_paye_only())
         end
       %Engine.Offer{contract_type: "CONSTRUCTION PAYE"} ->
@@ -351,7 +353,7 @@ defmodule Engine.Startpack do
           false ->
             changeset
             |> cast(startpack, paye_keys())
-            |> validate_required(paye_keys())
+            |> validate_required([:national_insurance_number, :for_paye_only])
             |> validate_inclusion(:for_paye_only, for_paye_only())
         end
       %Engine.Offer{contract_type: "TRANSPORT PAYE"} ->
@@ -362,7 +364,7 @@ defmodule Engine.Startpack do
           false ->
             changeset
             |> cast(startpack, paye_keys())
-            |> validate_required(paye_keys())
+            |> validate_required([:national_insurance_number, :for_paye_only])
             |> validate_inclusion(:for_paye_only, for_paye_only())
         end
       %Engine.Offer{contract_type: "SCHEDULE-D", daily_or_weekly: "daily"} ->
@@ -444,6 +446,7 @@ defmodule Engine.Startpack do
         |> cast(startpack, loan_out_company_keys())
         |> validate_required(loan_out_company_keys())
         |> validate_format(:loan_out_company_email, ~r/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/)
+        |> validate_length(:loan_out_company_address, max: 300)
       false ->
         struct
     end

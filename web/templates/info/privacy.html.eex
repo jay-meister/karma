@@ -77,7 +77,7 @@
       </tr>
       <tr>
         <td class="ba k-b--grey pl3 pr3 pb3 pr4 w-40 k-darker-grey">“<span class="fw6">Website</span>”</td>
-        <td class="ba k-b--grey pa3 fw3">Team Engine’s proprietary web portal that may be accessed at <a class="link k-light-indigo" href="www.teamengine.co.uk">www.teamengine.co.uk</a> </td>
+        <td class="ba k-b--grey pa3 fw3">Team Engine’s proprietary web portal that may be accessed at <a class="link k-light-indigo" href="http://www.teamengine.co.uk" target="_blank">www.teamengine.co.uk</a> </td>
       </tr>
     </table>
     <br />
@@ -95,7 +95,7 @@
       you close your browser.  A persistent cookie remains on the hard drive
       of your Device for an extended period of time. You can remove persistent
       cookies via your browser’s “clear cookies” function.  Please see
-      <a class="link k-light-indigo" href="www.allaboutcookies.org">www.allaboutcookies.org</a> for more information about blocking cookies on
+      <a class="link k-light-indigo" href="http://www.allaboutcookies.org" target="_blank">www.allaboutcookies.org</a> for more information about blocking cookies on
       your particular web browser.</div>
     <br />
     <div>Unless you have adjusted your browser setting so that it will refuse
@@ -127,7 +127,7 @@
     <div class="fw6">Data Protection Service</div>
     <div>You can obtain further information about data protection and
       privacy laws by visiting the Information Commissioner’s web site
-      at: https://ico.org.uk/for-the-public/.</div>
+      at: <a class="link k-light-indigo" href="https://ico.org.uk/for-the-public/" target="_blank">https://ico.org.uk/for-the-public/</a>.</div>
     <br />
     <br />
     <div class="k-darker-grey fw6">Section 2: Engine users</div>

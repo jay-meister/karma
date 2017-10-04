@@ -95,7 +95,7 @@ defmodule Engine.StartpackControllerTest do
   end
 
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn, user: user} do
-    conn = post conn, startpack_path(conn, :update, user.startpacks), startpack: %{"vehicle_bring_own?": false}
+    conn = post conn, startpack_path(conn, :update, user.startpacks), startpack: %{"vehicle_bring_own?": false, "loan_out_company_address": ""}
     assert html_response(conn, 302) =~ "/startpack"
   end
 
@@ -208,7 +208,7 @@ defmodule Engine.StartpackControllerTest do
     startpack = Repo.get_by(Startpack, user_id: user.id)
     conn = post conn, startpack_path(conn, :delete_uploaded_files, startpack), startpack: %{p45_url: nil}
     assert redirected_to(conn, 302) == "/startpack"
-    assert Phoenix.Controller.get_flash(conn, :info) == "File deleted successfully!"
+    assert Phoenix.Controller.get_flash(conn, :info) == "File deleted successfully"
     updated_startpack = Repo.get(Startpack, startpack.id)
     assert updated_startpack.p45_url == nil
   end
