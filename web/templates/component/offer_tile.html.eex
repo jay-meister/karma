@@ -32,6 +32,7 @@
 
 <a href="<%= assigns[:url] %>" class="no-underline" >
   <div class="bw1 k-b--grey bg-white k-indigo ba br3 k-indigo relative mb3">
+    <div class="absolute f5 k-top-0-5 k-right-0-5 k-light-indigo"><%= format_long_date(offer.inserted_at) %></div>
     <div class="dt w-100 k-minw-320">
       <div class="dtc pl2 pl4-l pv4">
         <div class="<%= status %> dib br-100 w3 h3 tc"><div class="f2 w3 h3 ph3 pv2 center white"><img src="/images/<%= symbol %>.svg" alt=""></div></div>
