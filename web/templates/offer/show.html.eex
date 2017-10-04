@@ -142,6 +142,12 @@
     label: label || format_label(atom)
     %>
   <% end %>
+  <%= for field <- @custom_project_fields do %>
+    <%= component "data.html",
+    data: String.capitalize(field.value),
+    label: field.name
+    %>
+  <% end %>
   <%= component "form_divider.html", title: "Offer status" %>
   <%= for {atom, label, formatted} <- [
     {:accepted, nil, nil},
@@ -213,6 +219,14 @@
       <%= component "data.html",
       data: formatted || Map.get(@formatted_offer, atom),
       label: label || format_label(atom)
+      %>
+    <% end %>
+  </div>
+  <div class="mt4">
+    <%= for field <- @custom_offer_fields do %>
+      <%= component "data.html",
+      data: String.capitalize(field.value),
+      label: field.name
       %>
     <% end %>
   </div>

@@ -219,7 +219,7 @@ defmodule Engine.OfferController do
           []
       end
     user = conn.assigns.current_user
-    project = Repo.get(Project, project_id) |> Repo.preload(:documents) |> Repo.preload(:user)
+    project = Repo.get(Project, project_id) |> Repo.preload(:documents) |> Repo.preload(:user) |> Repo.preload(:custom_fields)
     pm_email = project.user.email
     info_documents =
       Repo.all(project_documents(project))
@@ -229,6 +229,16 @@ defmodule Engine.OfferController do
     merged_documents = Repo.all(query) |> Repo.preload(:document)
     deal_documents = Enum.filter(merged_documents, fn altered_doc -> altered_doc.document.category == "Deal" end)
     form_documents = Enum.filter(merged_documents, fn altered_doc -> altered_doc.document.category == "Form" end)
+
+    custom_fields = Repo.all(project_custom_fields(project))
+    custom_project_fields = Enum.filter(custom_fields, fn field -> field.type == "Project" end)
+    custom_offer_fields =
+      custom_fields
+      |> Enum.filter(fn field -> field.type == "Offer" end)
+      |> Enum.filter(fn field -> field.offer_id == String.to_integer(id) end)
+
+    IO.inspect custom_offer_fields
+
     # todo fix this one
     case offer.user_id do
       nil ->
@@ -241,7 +251,9 @@ defmodule Engine.OfferController do
         contractor: contractor,
         formatted_offer: Formatter.format_offer_data(offer),
         supporting_documents: supporting_documents,
-        pm_email: pm_email)
+        pm_email: pm_email,
+        custom_offer_fields: custom_offer_fields,
+        custom_project_fields: custom_project_fields)
       _ ->
         edit_changeset = Offer.changeset(offer)
         startpack = Repo.get_by(Startpack, user_id: user.id)
@@ -258,7 +270,9 @@ defmodule Engine.OfferController do
         contractor: contractor,
         formatted_offer: Formatter.format_offer_data(offer),
         supporting_documents: supporting_documents,
-        pm_email: pm_email
+        pm_email: pm_email,
+        custom_offer_fields: custom_offer_fields,
+        custom_project_fields: custom_project_fields
         )
     end
   end

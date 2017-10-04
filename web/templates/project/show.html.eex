@@ -92,7 +92,7 @@
       <%
         value =
           case custom_field.value do
-            nil -> "(edit value in offer)"
+            nil -> "(edit value per offer)"
             value -> value
           end
       %>
