@@ -5,7 +5,8 @@
   end %>
 <% class = assigns[:class] || "" %>
 <% container_id = assigns[:container_id] || "" %>
-<div class="mb4 <%= class %>" id="<%= container_id %>">
+<% margin_bottom = assigns[:margin_bottom] || "mb4" %>
+<div class="<%= margin_bottom %> <%= class %>" id="<%= container_id %>">
   <%= case assigns[:label] do
    nil -> label assigns[:form], assigns[:atom], class: "dib mw-100 mb2 fw4"
    _ -> label assigns[:form], assigns[:atom], assigns[:label], class: "dib mw-100 mb2 fw4"

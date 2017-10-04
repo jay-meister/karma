@@ -142,20 +142,24 @@
     label: label || format_label(atom)
     %>
   <% end %>
-  <%= component "form_divider.html", title: "Offer status" %>
-  <%= for {atom, label, formatted} <- [
-    {:accepted, nil, nil},
-    {:updated_at, nil, format_date(@offer.updated_at)},
-    {:active, nil, nil},
-    {:contractor_details_accepted, nil, nil}
-  ] do %>
+  <%= for field <- @custom_project_fields do %>
     <%= component "data.html",
-    data: formatted || Map.get(@formatted_offer, atom),
-    label: label || format_label(atom)
+    data: String.capitalize(field.value),
+    label: field.name
     %>
   <% end %>
 
   <%= component "form_divider.html", title: "Offer details" %>
+  <div>
+    <%= for {atom, label, formatted} <- [
+      {:updated_at, nil, format_date(@offer.updated_at)}
+    ] do %>
+      <%= component "data.html",
+      data: formatted || Map.get(@formatted_offer, atom),
+      label: label || format_label(atom)
+      %>
+    <% end %>
+  </div>
   <div class="mt4">
     <%= if Map.has_key?(@contractor, :first_name) do %>
       <div>
@@ -213,6 +217,14 @@
       <%= component "data.html",
       data: formatted || Map.get(@formatted_offer, atom),
       label: label || format_label(atom)
+      %>
+    <% end %>
+  </div>
+  <div class="mt4">
+    <%= for field <- @custom_offer_fields do %>
+      <%= component "data.html",
+      data: String.capitalize(field.value),
+      label: field.name
       %>
     <% end %>
   </div>

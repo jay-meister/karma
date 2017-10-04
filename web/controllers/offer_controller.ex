@@ -102,6 +102,12 @@ defmodule Engine.OfferController do
     changeset = Offer.changeset(%Offer{})
     job_titles = Engine.Job.titles()
     job_departments = Engine.Job.departments()
+    project = Repo.get(Project, project_id) |> Repo.preload(:custom_fields)
+    num_custom_offer_fields =
+      project.custom_fields
+      |> Enum.filter(fn field -> field.type == "Offer" end)
+      |> Enum.count()
+
     render(conn,
     "new.html",
     changeset: changeset,
@@ -109,14 +115,19 @@ defmodule Engine.OfferController do
     job_titles: job_titles,
     job_departments: job_departments,
     job_title: "",
-    full_name: "")
+    full_name: "",
+    num_custom_offer_fields: num_custom_offer_fields)
   end
 
   def create(conn, %{"offer" => %{"target_email" => email} = offer_params, "project_id" => project_id}) do
     offer_params = Map.put(offer_params, "target_email", String.downcase(email))
     %{"recipient_fullname" => recipient_fullname} = offer_params
-    project = Repo.get(Project, project_id) |> Repo.preload(:user) |> Repo.preload(:documents)
+    project = Repo.get(Project, project_id) |> Repo.preload(:user) |> Repo.preload(:documents) |> Repo.preload(:custom_fields)
     project_documents = Enum.map(project.documents, fn document -> document.name end)
+    project_custom_fields = project.custom_fields
+    project_custom_offer_fields =
+      project_custom_fields
+      |> Enum.filter(fn field -> field.type == "Offer" end)
     %{"department" => department,
     "job_title" => job_title,
     "daily_or_weekly" => daily_or_weekly,
@@ -150,12 +161,19 @@ defmodule Engine.OfferController do
 
       case Repo.insert(changeset) do
         {:ok, offer} ->
-          # email function decides whether this is a registered user
-          Engine.Email.send_new_offer_email(conn, offer, project)
-          |> Engine.Mailer.deliver_later()
-          conn
-          |> put_flash(:info, "Offer sent to #{offer.target_email}")
-          |> redirect(to: project_offer_path(conn, :index, project_id))
+          case length(project_custom_offer_fields) == 0 do
+            false ->
+              conn
+              |> put_flash(:info, "Offer created, now complete your custom fields")
+              |> redirect(to: project_offer_custom_field_path(conn, :add, project_id, offer.id))
+            true ->
+              # email function decides whether this is a registered user
+              Engine.Email.send_new_offer_email(conn, offer, project)
+              |> Engine.Mailer.deliver_later()
+              conn
+              |> put_flash(:info, "Offer sent to #{offer.target_email}")
+              |> redirect(to: project_offer_path(conn, :index, project_id))
+          end
         {:error, changeset} ->
           job_titles = Engine.Job.titles()
           job_departments = Engine.Job.departments()
@@ -163,6 +181,19 @@ defmodule Engine.OfferController do
           render(conn, "new.html", changeset: changeset, project_id: project_id, job_titles: job_titles, job_departments: job_departments, job_title: job_title)
       end
     end
+  end
+
+  def send_offer(conn, %{"project_id" => project_id, "offer_id" => offer_id} = params) do
+    IO.inspect params
+    project = Repo.get!(Project, project_id)
+    offer = Repo.get!(Offer, offer_id)
+    # email function decides whether this is a registered user
+    Engine.Email.send_new_offer_email(conn, offer, project)
+    |> Engine.Mailer.deliver_later()
+    conn
+    |> put_flash(:info, "Offer sent to #{offer.target_email}")
+    |> redirect(to: project_offer_path(conn, :index, project_id))
+
   end
 
   def show(conn, %{"project_id" => project_id, "id" => id}) do
@@ -188,7 +219,7 @@ defmodule Engine.OfferController do
           []
       end
     user = conn.assigns.current_user
-    project = Repo.get(Project, project_id) |> Repo.preload(:documents) |> Repo.preload(:user)
+    project = Repo.get(Project, project_id) |> Repo.preload(:documents) |> Repo.preload(:user) |> Repo.preload(:custom_fields)
     pm_email = project.user.email
     info_documents =
       Repo.all(project_documents(project))
@@ -198,6 +229,16 @@ defmodule Engine.OfferController do
     merged_documents = Repo.all(query) |> Repo.preload(:document)
     deal_documents = Enum.filter(merged_documents, fn altered_doc -> altered_doc.document.category == "Deal" end)
     form_documents = Enum.filter(merged_documents, fn altered_doc -> altered_doc.document.category == "Form" end)
+
+    custom_fields = Repo.all(project_custom_fields(project))
+    custom_project_fields = Enum.filter(custom_fields, fn field -> field.type == "Project" end)
+    custom_offer_fields =
+      custom_fields
+      |> Enum.filter(fn field -> field.type == "Offer" end)
+      |> Enum.filter(fn field -> field.offer_id == String.to_integer(id) end)
+
+    IO.inspect custom_offer_fields
+
     # todo fix this one
     case offer.user_id do
       nil ->
@@ -210,7 +251,9 @@ defmodule Engine.OfferController do
         contractor: contractor,
         formatted_offer: Formatter.format_offer_data(offer),
         supporting_documents: supporting_documents,
-        pm_email: pm_email)
+        pm_email: pm_email,
+        custom_offer_fields: custom_offer_fields,
+        custom_project_fields: custom_project_fields)
       _ ->
         edit_changeset = Offer.changeset(offer)
         startpack = Repo.get_by(Startpack, user_id: user.id)
@@ -227,7 +270,9 @@ defmodule Engine.OfferController do
         contractor: contractor,
         formatted_offer: Formatter.format_offer_data(offer),
         supporting_documents: supporting_documents,
-        pm_email: pm_email
+        pm_email: pm_email,
+        custom_offer_fields: custom_offer_fields,
+        custom_project_fields: custom_project_fields
         )
     end
   end

@@ -508,6 +508,10 @@ select {
   outline: 0;
 }
 
+.pointer_not-allowed:hover {
+  cursor: not-allowed;
+}
+
 .radio {
   top: 50%;
   margin-top: -8px;
