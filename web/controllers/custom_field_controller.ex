@@ -43,39 +43,62 @@ defmodule Engine.CustomFieldController do
   def add(conn, %{"project_id" => project_id, "offer_id" => offer_id}, user) do
     project = Repo.get(user_projects(user), project_id) |> Repo.preload(:custom_fields)
     changeset = CustomField.value_changeset(%CustomField{})
-    custom_offer_fields = Enum.filter(project.custom_fields, fn field -> field.type == "Offer" end)
-    empty_fields =
-      custom_offer_fields
+    all_offer_fields =
+      project.custom_fields
+      |> Enum.filter(fn field -> field.type == "Offer" end)
+
+    custom_project_offer_fields =
+      all_offer_fields
       |> Enum.filter(fn field -> field.value == nil end)
+
+    custom_offer_specific_fields =
+      all_offer_fields
+      |> Enum.filter(fn field -> field.value != nil end)
+
+    custom_project_offer_count =
+      custom_project_offer_fields
       |> Enum.count()
-    IO.inspect empty_fields
+
+    custom_offer_field_count =
+      custom_offer_specific_fields
+      |> Enum.count()
+
+
+    empty_fields = custom_project_offer_count - custom_offer_field_count
+
+    custom_offer_field_names = Enum.map(custom_offer_specific_fields, fn field -> field.name end)
+    IO.inspect all_offer_fields
+
+    filtered_list = Enum.filter(custom_project_offer_fields, fn(e) -> !Enum.member?(custom_offer_field_names, e.name) end)
+    IO.inspect filtered_list
     offer_changeset = Offer.send_offer_changeset(%Offer{})
 
     render conn, "add.html",
     changeset: changeset,
-    custom_offer_fields: custom_offer_fields,
+    custom_project_offer_fields: custom_project_offer_fields,
     project_id: project_id,
     offer_id: offer_id,
     empty_fields: empty_fields,
-    offer_changeset: offer_changeset
+    offer_changeset: offer_changeset,
+    filtered_list: filtered_list,
+    custom_offer_specific_fields: custom_offer_specific_fields
   end
 
   def save(conn, %{"project_id" => project_id, "offer_id" => offer_id, "id" => id, "custom_field" => custom_field_params} = params, user) do
     custom_field = Repo.get!(CustomField, id)
-    IO.inspect custom_field_params
-    changeset = CustomField.value_changeset(custom_field, custom_field_params)
-
+    project = Repo.get(user_projects(user), project_id)
+    offer = Repo.get(user_offers(user), offer_id)
     new =
       custom_field_params
-      |> Map.put_new("project_id", project_id)
-      |> Map.put_new("offer_id", offer_id)
       |> Map.put_new("type", "Offer")
 
-    new_changeset = CustomField.value_changeset(%CustomField{}, new)
-    IO.inspect new
-    IO.inspect new_changeset
+    changeset =
+      project
+      |> build_assoc(:custom_fields)
+      |> CustomField.value_changeset(new)
+      |> Ecto.Changeset.put_assoc(:offer, offer)
 
-    case Repo.update(changeset) do
+    case Repo.insert(changeset) do
       {:ok, custom_field} ->
         conn
         |> put_flash(:info, "Custom field #{custom_field.name} saved")
@@ -92,4 +115,5 @@ defmodule Engine.CustomFieldController do
     apply(__MODULE__, action_name(conn),
           [conn, conn.params, conn.assigns.current_user])
   end
+
 end

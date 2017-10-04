@@ -83,6 +83,12 @@ defmodule Engine.ProjectController do
     signee_changeset = Signee.changeset(%Signee{})
     custom_field_changeset = CustomField.changeset(%CustomField{})
     custom_fields = Repo.all(project_custom_fields(project))
+    custom_project_fields = Enum.filter(custom_fields, fn field -> field.type == "Project" end)
+    custom_offer_fields =
+      custom_fields
+      |> Enum.filter(fn field -> field.type == "Offer" end)
+      |> Enum.filter(fn field -> field.value == nil end)
+
     render(conn,
     "show.html",
     project: conn.assigns.project,
@@ -90,6 +96,8 @@ defmodule Engine.ProjectController do
     signee_changeset: signee_changeset,
     custom_field_changeset: custom_field_changeset,
     custom_fields: custom_fields,
+    custom_project_fields: custom_project_fields,
+    custom_offer_fields: custom_offer_fields,
     forms: forms,
     deals: deals,
     signees: signees,

@@ -1,7 +1,17 @@
-<div class="relative pt4">
+<div class="relative pt2">
   <h1 class="k-indigo top--header absolute fw4 mb0">Custom offer fields</h1>
 
-  <%= for field <- @custom_offer_fields do %>
+  <%= if length(@custom_offer_specific_fields) > 0 do %>
+    <%= component "form_divider.html", title: "Added fields" %>
+    <div class="mb4">
+      <%= for field <- @custom_offer_specific_fields do %>
+      <div class="mb2">
+        <%= "#{field.name}: #{field.value}" %>
+      </div>
+      <% end %>
+    </div>
+  <% end %>
+  <%= for field <- @filtered_list do %>
     <%= form_for @changeset, project_offer_custom_field_path(@conn, :save, @project_id, @offer_id, field.id), fn f -> %>
       <%= component "input.html",
       form: f,
