@@ -182,7 +182,7 @@
     %>
   <% else %>
     <%= component "submit_button.html",
-    title: "Complete custom fields"
+    title: "Continue"
     %>
   <% end %>
 
