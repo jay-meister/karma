@@ -296,7 +296,7 @@ defmodule Engine.OfferController do
         nil -> offer.recipient_fullname
         user -> "#{user.first_name} #{user.last_name}"
       end
-    ops = [offer: offer, changeset: changeset, project_id: project_id, job_titles: job_titles, job_departments: job_departments, full_name: full_name, num_custom_offer_fields: num_custom_offer_fields]
+    ops = [offer: offer, changeset: changeset, project_id: project_id, job_titles: job_titles, job_departments: job_departments, full_name: full_name, num_custom_offer_fields: num_custom_offer_fields, project: project]
     render(conn, "edit.html", ops)
   end
 
@@ -308,8 +308,16 @@ defmodule Engine.OfferController do
       |> Repo.preload(:user)
       |> Repo.preload(:project)
 
-    project = Repo.get(Project, project_id) |> Repo.preload(:user) |> Repo.preload(:documents)
+    project = Repo.get(Project, project_id) |> Repo.preload(:user) |> Repo.preload(:documents) |> Repo.preload(:custom_fields)
     project_documents = Enum.map(project.documents, fn document -> document.name end)
+    project_custom_fields = project.custom_fields
+    project_custom_offer_fields =
+      project_custom_fields
+      |> Enum.filter(fn field -> field.type == "Offer" end)
+    num_custom_offer_fields =
+      project.custom_fields
+      |> Enum.filter(fn field -> field.type == "Offer" end)
+      |> Enum.count()
     daily = offer.daily_or_weekly == "daily"
     equipment = offer.equipment_rental_required?
     job_titles = Engine.Job.titles()
@@ -320,7 +328,8 @@ defmodule Engine.OfferController do
       job_titles: job_titles,
       job_departments: job_departments,
       job_title: offer.job_title,
-      full_name: offer.recipient_fullname
+      full_name: offer.recipient_fullname,
+      num_custom_offer_fields: num_custom_offer_fields
     ]
     # first check the values provided by the user are valid
     validation_changeset = Offer.form_validation(offer, offer_params)
@@ -349,13 +358,19 @@ defmodule Engine.OfferController do
           changeset = Offer.changeset(offer, offer_params)
 
           {:ok, offer} = Repo.update(changeset)
-          # email function decides whether this is a registered user
-          Engine.Email.send_updated_offer_email(conn, offer, project)
-          |> Engine.Mailer.deliver_later()
-
-          conn
-          |> put_flash(:info, "Offer updated successfully, and re-emailed to recipient")
-          |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
+          case length(project_custom_offer_fields) == 0 do
+            false ->
+              conn
+              |> put_flash(:info, "Offer created, now complete your custom fields")
+              |> redirect(to: project_offer_custom_field_path(conn, :add, project_id, offer.id))
+            true ->
+              # email function decides whether this is a registered user
+              Engine.Email.send_updated_offer_email(conn, offer, project)
+              |> Engine.Mailer.deliver_later()
+              conn
+              |> put_flash(:info, "Offer updated successfully, and re-emailed to recipient")
+              |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
+          end
       end
     end
   end

@@ -181,11 +181,23 @@
     title: "#{@button_text} Offer"
     %>
   <% else %>
+    <% title =
+        case @method == :put do
+          false -> "Continue"
+          true -> "Save"
+        end
+    %>
     <%= component "submit_button.html",
-    title: "Continue"
+    title: title
     %>
   <% end %>
-
+<% end %>
+<%= if @method == :put do %>
+    <%= link to: project_offer_custom_field_path(@conn, :add, @project, @offer) do %>
+      <div class="tc ttu k-bg-light-indigo ba k-b--light-indigo pa3 pl4 pr4 k-f2-5 br2 white w-100 lato mt3 no-outline-focus button-active no-underline dib">
+        Edit custom fields
+      </div>
+    <% end %>
 <% end %>
 
 

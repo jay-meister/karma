@@ -18,6 +18,8 @@
                           conn: @conn,
                           job_title: @offer.job_title,
                           full_name: @full_name,
-                          num_custom_offer_fields: @num_custom_offer_fields %>
+                          num_custom_offer_fields: @num_custom_offer_fields,
+                          offer: @offer,
+                          project: @project %>
 
 </div>
