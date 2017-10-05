@@ -279,6 +279,11 @@ defmodule Engine.OfferController do
 
   def edit(conn, %{"project_id" => project_id, "id" => id}) do
     offer = Repo.get!(Offer, id)
+    project = Repo.get(Project, project_id) |> Repo.preload(:custom_fields)
+    num_custom_offer_fields =
+      project.custom_fields
+      |> Enum.filter(fn field -> field.type == "Offer" end)
+      |> Enum.count()
     changeset = Offer.changeset(offer)
     job_titles = Engine.Job.titles()
     job_departments = Engine.Job.departments()
@@ -287,7 +292,7 @@ defmodule Engine.OfferController do
         nil -> offer.recipient_fullname
         user -> "#{user.first_name} #{user.last_name}"
       end
-    ops = [offer: offer, changeset: changeset, project_id: project_id, job_titles: job_titles, job_departments: job_departments, full_name: full_name]
+    ops = [offer: offer, changeset: changeset, project_id: project_id, job_titles: job_titles, job_departments: job_departments, full_name: full_name, num_custom_offer_fields: num_custom_offer_fields]
     render(conn, "edit.html", ops)
   end
 

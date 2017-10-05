@@ -53,7 +53,7 @@ defmodule Engine.CustomFieldController do
 
     custom_offer_specific_fields =
       all_offer_fields
-      |> Enum.filter(fn field -> field.value != nil end)
+      |> Enum.filter(fn field -> field.offer_id == String.to_integer(offer_id) end)
 
     custom_project_offer_count =
       custom_project_offer_fields
