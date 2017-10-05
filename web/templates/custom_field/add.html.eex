@@ -11,6 +11,25 @@
       <% end %>
     </div>
   <% end %>
+  <%= for field <- @custom_offer_specific_fields do %>
+    <%= form_for @changeset, project_offer_custom_field_path(@conn, :revise, @project_id, @offer_id, field.id), fn f -> %>
+      <%= component "input.html",
+      form: f,
+      atom: :value,
+      placeholder: "",
+      container_id: "custom_field_value_edit_container",
+      label: field.name,
+      value: field.value,
+      margin_bottom: "mb2"
+      %>
+      <%= hidden_input f, :name, value: field.name %>
+      <div class="tl">
+        <div class="mb2">
+          <%= submit "Update", class: "ttu bg-white ba k-b--light-indigo pa1 pl2 pr2 f3 br2 k-light-indigo w-100 w4-ns w4-m w4-l lato no-outline-focus" %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
   <%= for field <- @filtered_list do %>
     <%= form_for @changeset, project_offer_custom_field_path(@conn, :save, @project_id, @offer_id, field.id), fn f -> %>
       <%= component "input.html",
@@ -31,13 +50,9 @@
     <% end %>
   <% end %>
 
-  <%= if @empty_fields == 0 do %>
-    <%= form_for @offer_changeset, project_offer_path(@conn, :send_offer, @project_id, @offer_id), fn _f -> %>
-      <%= component "submit_button.html", title: "Send offer" %>
-    <% end %>
-  <% else %>
-  <%= component "disabled_button.html", title: "Send offer" %>
-  <div class="tc k-indigo pt1">Complete all fields to send the offer</div>
+  <%= form_for @offer_changeset, project_offer_path(@conn, :send_offer, @project_id, @offer_id), fn _f -> %>
+    <%= component "submit_button.html", title: "Send offer" %>
   <% end %>
+
 
 </div>

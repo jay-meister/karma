@@ -128,6 +128,10 @@ defmodule Engine.OfferController do
     project_custom_offer_fields =
       project_custom_fields
       |> Enum.filter(fn field -> field.type == "Offer" end)
+    num_custom_offer_fields =
+      project.custom_fields
+      |> Enum.filter(fn field -> field.type == "Offer" end)
+      |> Enum.count()
     %{"department" => department,
     "job_title" => job_title,
     "daily_or_weekly" => daily_or_weekly,
@@ -152,7 +156,7 @@ defmodule Engine.OfferController do
       job_titles: job_titles,
       job_departments: job_departments,
       job_title: job_title,
-      full_name: recipient_fullname)
+      full_name: recipient_fullname, num_custom_offer_fields: num_custom_offer_fields)
     else
       # run calculations and add them to the offer_params
       calculations = parse_offer_strings(offer_params) |> run_calculations(project, project_documents, daily, equipment)
@@ -178,7 +182,7 @@ defmodule Engine.OfferController do
           job_titles = Engine.Job.titles()
           job_departments = Engine.Job.departments()
           job_title = Map.get(changeset.changes, :job_title, "")
-          render(conn, "new.html", changeset: changeset, project_id: project_id, job_titles: job_titles, job_departments: job_departments, job_title: job_title)
+          render(conn, "new.html", changeset: changeset, project_id: project_id, job_titles: job_titles, job_departments: job_departments, job_title: job_title, num_custom_offer_fields: num_custom_offer_fields)
       end
     end
   end

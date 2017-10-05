@@ -67,10 +67,9 @@ defmodule Engine.CustomFieldController do
     empty_fields = custom_project_offer_count - custom_offer_field_count
 
     custom_offer_field_names = Enum.map(custom_offer_specific_fields, fn field -> field.name end)
-    IO.inspect all_offer_fields
 
     filtered_list = Enum.filter(custom_project_offer_fields, fn(e) -> !Enum.member?(custom_offer_field_names, e.name) end)
-    IO.inspect filtered_list
+
     offer_changeset = Offer.send_offer_changeset(%Offer{})
 
     render conn, "add.html",
@@ -85,7 +84,6 @@ defmodule Engine.CustomFieldController do
   end
 
   def save(conn, %{"project_id" => project_id, "offer_id" => offer_id, "id" => id, "custom_field" => custom_field_params} = params, user) do
-    custom_field = Repo.get!(CustomField, id)
     project = Repo.get(user_projects(user), project_id)
     offer = Repo.get(user_offers(user), offer_id)
     new =
@@ -108,6 +106,23 @@ defmodule Engine.CustomFieldController do
         |> put_flash(:error, "Oops! Make sure you entered a value")
         |> redirect(to: project_offer_custom_field_path(conn, :add, project_id, offer_id))
     end
+  end
+
+  def revise(conn, %{"project_id" => project_id, "offer_id" => offer_id, "id" => id, "custom_field" => custom_field_params} = params, user) do
+    custom_field = Repo.get!(CustomField, id)
+    changeset = CustomField.value_changeset(custom_field, custom_field_params)
+
+    case Repo.update(changeset) do
+      {:ok, custom_field} ->
+        conn
+        |> put_flash(:info, "Custom field #{custom_field.name} updated")
+        |> redirect(to: project_offer_custom_field_path(conn, :add, project_id, offer_id))
+      {:error, changeset} ->
+        conn
+        |> put_flash(:error, "Oops! Make sure you entered a value")
+        |> redirect(to: project_offer_custom_field_path(conn, :add, project_id, offer_id))
+    end
+
   end
 
 
