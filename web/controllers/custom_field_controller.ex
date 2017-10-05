@@ -83,7 +83,7 @@ defmodule Engine.CustomFieldController do
     custom_offer_specific_fields: custom_offer_specific_fields
   end
 
-  def save(conn, %{"project_id" => project_id, "offer_id" => offer_id, "id" => id, "custom_field" => custom_field_params} = params, user) do
+  def save(conn, %{"project_id" => project_id, "offer_id" => offer_id, "custom_field" => custom_field_params}, user) do
     project = Repo.get(user_projects(user), project_id)
     offer = Repo.get(user_offers(user), offer_id)
     new =
@@ -101,14 +101,14 @@ defmodule Engine.CustomFieldController do
         conn
         |> put_flash(:info, "Custom field #{custom_field.name} saved")
         |> redirect(to: project_offer_custom_field_path(conn, :add, project_id, offer_id))
-      {:error, changeset} ->
+      {:error, _changeset} ->
         conn
         |> put_flash(:error, "Oops! Make sure you entered a value")
         |> redirect(to: project_offer_custom_field_path(conn, :add, project_id, offer_id))
     end
   end
 
-  def revise(conn, %{"project_id" => project_id, "offer_id" => offer_id, "id" => id, "custom_field" => custom_field_params} = params, user) do
+  def revise(conn, %{"project_id" => project_id, "offer_id" => offer_id, "id" => id, "custom_field" => custom_field_params}, _user) do
     custom_field = Repo.get!(CustomField, id)
     changeset = CustomField.value_changeset(custom_field, custom_field_params)
 
@@ -117,7 +117,7 @@ defmodule Engine.CustomFieldController do
         conn
         |> put_flash(:info, "Custom field #{custom_field.name} updated")
         |> redirect(to: project_offer_custom_field_path(conn, :add, project_id, offer_id))
-      {:error, changeset} ->
+      {:error, _changeset} ->
         conn
         |> put_flash(:error, "Oops! Make sure you entered a value")
         |> redirect(to: project_offer_custom_field_path(conn, :add, project_id, offer_id))

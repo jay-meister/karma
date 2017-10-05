@@ -188,7 +188,6 @@ defmodule Engine.OfferController do
   end
 
   def send_offer(conn, %{"project_id" => project_id, "offer_id" => offer_id} = params) do
-    IO.inspect params
     project = Repo.get!(Project, project_id)
     offer = Repo.get!(Offer, offer_id)
     # email function decides whether this is a registered user
@@ -201,7 +200,8 @@ defmodule Engine.OfferController do
   end
 
   def show(conn, %{"project_id" => project_id, "id" => id}) do
-    offer = conn.assigns.offer
+    offer = conn.assigns.offer |> Repo.preload(:custom_fields)
+    offer_custom_fields = offer.custom_fields
     contractor =
       case Repo.get_by(User, email: offer.target_email) |> Repo.preload(:startpacks) do
         nil -> %{}
@@ -240,8 +240,6 @@ defmodule Engine.OfferController do
       custom_fields
       |> Enum.filter(fn field -> field.type == "Offer" end)
       |> Enum.filter(fn field -> field.offer_id == String.to_integer(id) end)
-
-    IO.inspect custom_offer_fields
 
     # todo fix this one
     case offer.user_id do

@@ -79,11 +79,33 @@ defmodule Engine.Merger do
     first_name = Map.take(Map.from_struct(Repo.get(Engine.User, offer.user_id)), [:first_name])
     last_name = Map.take(Map.from_struct(Repo.get(Engine.User, offer.user_id)), [:last_name])
     full_name = "#{first_name.first_name} #{last_name.last_name}"
+    offer = Repo.get(Engine.Offer, offer.id) |> Repo.preload(:custom_fields)
+    custom_fields = offer.custom_fields
+    offer_custom_fields = build_custom_field_map(%{}, custom_fields)
+    project = Repo.get(Engine.Project, offer.project_id) |> Repo.preload(:custom_fields)
+    project_custom_fields = project.custom_fields |> Enum.filter(fn field -> field.type == "Project" end)
+
     %{user: Map.merge(Map.take(Map.from_struct(Repo.get(Engine.User, offer.user_id)), user()), %{full_name: full_name}),
       project: Map.take(Map.from_struct(Repo.get(Engine.Project, offer.project_id)), project()),
       offer: Map.take(Map.from_struct(Repo.get(Engine.Offer, offer.id)), offer()),
-      startpack: Map.take(Map.from_struct(Repo.get_by(Engine.Startpack, user_id: offer.user_id)), startpack())
+      startpack: Map.take(Map.from_struct(Repo.get_by(Engine.Startpack, user_id: offer.user_id)), startpack()),
+      offer_custom_field: offer_custom_fields,
+      project_custom_field: project_custom_fields
     }
+  end
+
+  def build_custom_field_map(map, []), do: map
+
+  def build_custom_field_map(map, list) do
+    [head | tail] = list
+    name = String.to_atom(String.replace(String.downcase(head.name), " ", "_"))
+    name =
+      case String.last(name) == "_" do
+        true -> String.trim_trailing(name, "_")
+        false -> name
+      end
+    updated_map = Map.put_new(map, name, head.value)
+    build_custom_field_map(updated_map, tail)
   end
 
   # formats nested map of all data, prefixes and flattens
