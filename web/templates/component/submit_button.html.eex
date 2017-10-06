@@ -6,6 +6,6 @@
 %>
 <div class="tc">
   <div class="mb4">
-    <%= submit assigns[:title], class: "k-min-h-4-9 ttu ba pa3 pl4 pr4 k-f2-5 br2 w-100 lato mt3 no-outline-focus button-active #{colours}" %>
+    <%= submit assigns[:title], class: "k-min-h-4-7 ttu ba pa3 pl4 pr4 k-f2-5 br2 w-100 lato mt3 no-outline-focus button-active #{colours}" %>
   </div>
 </div>
