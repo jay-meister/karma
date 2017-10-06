@@ -80,10 +80,12 @@ defmodule Engine.Merger do
     last_name = Map.take(Map.from_struct(Repo.get(Engine.User, offer.user_id)), [:last_name])
     full_name = "#{first_name.first_name} #{last_name.last_name}"
     offer = Repo.get(Engine.Offer, offer.id) |> Repo.preload(:custom_fields)
-    custom_fields = offer.custom_fields
+    custom_fields = Enum.map(offer.custom_fields, fn custom_field -> Map.from_struct(custom_field) end)
+
     offer_custom_fields = build_custom_field_map(%{}, custom_fields)
-    project = Repo.get(Engine.Project, offer.project_id) |> Repo.preload(:custom_fields)
-    project_custom_fields = project.custom_fields |> Enum.filter(fn field -> field.type == "Project" end)
+    project = Map.from_struct(Repo.get(Engine.Project, offer.project_id) |> Repo.preload(:custom_fields))
+    project_custom_field_structs = project.custom_fields |> Enum.filter(fn field -> field.type == "Project" end)
+    project_custom_fields = build_custom_field_map(%{}, Enum.map(project_custom_field_structs, fn custom_field -> Map.from_struct(custom_field) end))
     %{user: Map.merge(Map.take(Map.from_struct(Repo.get(Engine.User, offer.user_id)), user()), %{full_name: full_name}),
       project: Map.take(Map.from_struct(Repo.get(Engine.Project, offer.project_id)), project()),
       offer: Map.take(Map.from_struct(Repo.get(Engine.Offer, offer.id)), offer()),
@@ -114,7 +116,6 @@ defmodule Engine.Merger do
     Enum.reduce(Map.keys(data), %{}, fn(key, acc) ->
       # prefix is "offer", or "startpack"
       prefix = Atom.to_string(key)
-      IO.inspect prefix
       Map.get(data, key) # offer, startpack, user or project
       |> prefix_keys(prefix) # user_first_name
       |> Map.merge(acc)
