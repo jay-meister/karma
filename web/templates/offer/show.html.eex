@@ -226,7 +226,7 @@
     <%= for field <- @custom_offer_fields do %>
       <%= component "data.html",
       data: String.capitalize(field.value),
-      label: field.name
+      label: String.capitalize(field.name)
       %>
     <% end %>
   </div>

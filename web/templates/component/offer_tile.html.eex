@@ -27,12 +27,26 @@
           user -> "#{user.first_name} #{user.last_name}"
         end
     end
-
+  text =
+    case offer.sent do
+      false -> "DRAFT"
+      _not_false -> "UPDATED"
+    end
+  background_colours =
+    case offer.sent do
+      false -> " k-bg-offer-grey grey "
+      _not_false -> " bg-white k-indigo "
+    end
+  text_colour =
+    case offer.sent do
+      false -> "k-grey"
+      _not_false -> "k-indigo"
+    end
 %>
 
-<a href="<%= assigns[:url] %>" class="no-underline" >
-  <div class="bw1 k-b--grey bg-white k-indigo ba br3 k-indigo relative mb3">
-    <div class="absolute f5 k-top-0-5 k-right-0-5 k-light-indigo"><%= format_long_date(offer.inserted_at) %></div>
+<a href="<%= assigns[:url] %>" class="no-underline link <%= text_colour %>" >
+  <div class="bw1 k-b--grey <%= background_colours %> ba br3 <%= text_colour %> relative mb3">
+    <div class="absolute f5 k-top-0-5 k-right-0-5 <%= text_colour %>"><%= "#{text} #{format_long_date(offer.updated_at)}" %></div>
     <div class="dt w-100 k-minw-320">
       <div class="dtc pl2 pl4-l pv4">
         <div class="<%= status %> dib br-100 w3 h3 tc"><div class="f2 w3 h3 ph3 pv2 center white"><img src="/images/<%= symbol %>.svg" alt=""></div></div>
@@ -41,8 +55,8 @@
           <div class="silver f3-ns f4"><%= offer.job_title %></div>
         </div>
       </div>
-      <div class="dtc tr pr4-ns pr3-ns k-pr4-5 pv4">
-        <div class="pa2-ns pa0 f2-ns f3"><%= "#{currency}#{Engine.Formatter.format_number(offer.fee_per_day_inc_holiday)}" %>/day</div>
+      <div class="dtc tr pr4-ns pr3-ns k-pr4-5 pv4 <%= text_colour %>">
+        <div class="pa2-ns pa0 f2-ns f3 <%= text_colour %>"><%= "#{currency}#{Engine.Formatter.format_number(offer.fee_per_day_inc_holiday)}" %>/day</div>
       </div>
     </div>
   </div>

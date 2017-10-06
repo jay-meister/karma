@@ -16,6 +16,8 @@ defmodule Engine.DashboardController do
         offers =
           Repo.all(Helpers.user_offers(user))
           |> Repo.preload(:project)
+          |> Enum.filter(fn offer -> offer.sent == true end)
+          |> Enum.sort(&(&1.updated_at >= &2.updated_at))
 
         render conn, "index.html", projects: projects, offers: offers
     end
