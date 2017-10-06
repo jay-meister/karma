@@ -27,12 +27,20 @@ body {
   border-radius: 3px;
 }
 
+.k-right-0-5 {
+  right: 0.5rem;
+}
+
 .top--header {
   top: -6rem;
 }
 
 .k-top--0-5 {
   top: -0.5rem;
+}
+
+.k-top-0-5 {
+  top: 0.5rem
 }
 
 
