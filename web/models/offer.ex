@@ -39,6 +39,7 @@ defmodule Engine.Offer do
     field :additional_notes, :string
     field :accepted, :boolean, default: nil
     field :active, :boolean, default: true
+    field :sent, :boolean, default: nil
     field :contractor_details_accepted, :boolean, default: nil
     belongs_to :user, Engine.User
     belongs_to :project, Engine.Project
@@ -87,7 +88,8 @@ defmodule Engine.Offer do
       :active,
       :contractor_details_accepted,
       :project_id,
-      :user_id])
+      :user_id,
+      :sent])
     |> validate_required([
       :recipient_fullname,
       :contract_type,
@@ -103,7 +105,7 @@ defmodule Engine.Offer do
 
   def send_offer_changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [])
+    |> cast(params, [:sent])
   end
 
   def form_validation(struct, params \\ %{}) do

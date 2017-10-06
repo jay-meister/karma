@@ -62,9 +62,7 @@
 
 <%= component "form_divider.html", title: "Custom fields" %>
 <%= if length(@custom_fields) == 0 do %>
-  <div class="tc k-bg-indigo white pa4 f2 br3 mb4">
-    Add custom fields to this project
-  </div>
+  <div class="tc k-bg-indigo white pa4 f2 br3">You have not created any custom fields yet</div>
 <% end %>
 <%= if length(@custom_fields) != 0 do %>
   <div class="mb4">

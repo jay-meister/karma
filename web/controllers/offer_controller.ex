@@ -187,21 +187,41 @@ defmodule Engine.OfferController do
     end
   end
 
-  def send_offer(conn, %{"project_id" => project_id, "offer_id" => offer_id} = params) do
+  def send_offer(conn, %{"project_id" => project_id, "offer_id" => offer_id, "offer" => offer_params}) do
     project = Repo.get!(Project, project_id)
-    offer = Repo.get!(Offer, offer_id)
-    # email function decides whether this is a registered user
-    Engine.Email.send_new_offer_email(conn, offer, project)
-    |> Engine.Mailer.deliver_later()
-    conn
-    |> put_flash(:info, "Offer sent to #{offer.target_email}")
-    |> redirect(to: project_offer_path(conn, :index, project_id))
+    original_offer = Repo.get!(Offer, offer_id)
+    changeset = Offer.send_offer_changeset(original_offer, offer_params)
+    {:ok, offer} = Repo.update(changeset)
+    case original_offer.sent do
+      true ->
+        # email function decides whether this is a registered user
+        Engine.Email.send_updated_offer_email(conn, offer, project)
+        |> Engine.Mailer.deliver_later()
+        conn
+        |> put_flash(:info, "Offer updated successfully, and re-emailed to recipient")
+        |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
+      _not_true ->
+        case offer.sent do
+          true ->
+            # email function decides whether this is a registered user
+            Engine.Email.send_new_offer_email(conn, offer, project)
+            |> Engine.Mailer.deliver_later()
+            conn
+            |> put_flash(:info, "Offer sent to #{offer.target_email}")
+            |> redirect(to: project_offer_path(conn, :index, project_id))
+            false ->
+              conn
+              |> put_flash(:info, "Offer saved")
+              |> redirect(to: project_offer_path(conn, :show, project_id, offer_id))
+            end
+    end
+
+
 
   end
 
   def show(conn, %{"project_id" => project_id, "id" => id}) do
     offer = conn.assigns.offer |> Repo.preload(:custom_fields)
-    offer_custom_fields = offer.custom_fields
     contractor =
       case Repo.get_by(User, email: offer.target_email) |> Repo.preload(:startpacks) do
         nil -> %{}
@@ -241,6 +261,7 @@ defmodule Engine.OfferController do
       |> Enum.filter(fn field -> field.type == "Offer" end)
       |> Enum.filter(fn field -> field.offer_id == String.to_integer(id) end)
 
+    send_offer_changeset = Offer.send_offer_changeset(%Offer{}, %{})
     # todo fix this one
     case offer.user_id do
       nil ->
@@ -255,7 +276,8 @@ defmodule Engine.OfferController do
         supporting_documents: supporting_documents,
         pm_email: pm_email,
         custom_offer_fields: custom_offer_fields,
-        custom_project_fields: custom_project_fields)
+        custom_project_fields: custom_project_fields,
+        send_offer_changeset: send_offer_changeset)
       _ ->
         edit_changeset = Offer.changeset(offer)
         startpack = Repo.get_by(Startpack, user_id: user.id)
@@ -274,7 +296,8 @@ defmodule Engine.OfferController do
         supporting_documents: supporting_documents,
         pm_email: pm_email,
         custom_offer_fields: custom_offer_fields,
-        custom_project_fields: custom_project_fields
+        custom_project_fields: custom_project_fields,
+        send_offer_changeset: send_offer_changeset
         )
     end
   end
