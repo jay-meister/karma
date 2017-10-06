@@ -188,15 +188,16 @@
         true -> "Save"
       end
       %>
-      <div class="dib">
+      <div class="dib mr1">
         <%= component "submit_button.html",
-        title: title
+        title: title,
+        invert: true
         %>
       </div>
       <% end %>
       <%= if @method == :put do %>
         <%= link to: project_offer_custom_field_path(@conn, :add, @project, @offer) do %>
-        <div style="padding:1.2rem;padding-right:1.9rem;padding-left:1.9rem;" class="dib tc ttu bg-white ba k-b--light-indigo pa3 pl4 pr4 k-f2-5 br2 k-light-indigo lato mt3 no-outline-focus no-underline dib">
+        <div style="padding:1.1rem;padding-right:1.9rem;padding-left:1.9rem;" class="dib ml1 tc ttu k-bg-light-indigo ba k-b--light-indigo pa3 pl4 pr4 k-f2-5 br2 white lato mt3 no-outline-focus no-underline dib">
           Next
         </div>
       <% end %>

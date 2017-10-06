@@ -76,7 +76,7 @@
       %>
       <div class="ba k-b--indigo br3 pa3 pr5 mb2 k-bg-input relative">
         <div class="dib ml3"><%= custom_field.type %> - </div>
-        <div class="dib ml3"><%= custom_field.name %>:</div>
+        <div class="dib ml3"><%= String.capitalize(custom_field.name) %>:</div>
         <div class="dib ml3"><%= value %></div>
 
         <%= link to: project_custom_field_path(@conn, :delete, @project, custom_field),

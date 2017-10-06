@@ -19,7 +19,7 @@
   <% end %>
   <%= component "form_divider.html", title: "Available fields" %>
   <%= for field <- @custom_offer_specific_fields do %>
-    <div class="mb3">
+    <div class="mb4">
       <%= form_for @changeset, project_offer_custom_field_path(@conn, :revise, @project_id, @offer_id, field.id), fn f -> %>
       <%= component "input.html",
       form: f,
@@ -74,7 +74,7 @@
     <div class="dib">
       <%= form_for @offer_changeset, project_offer_path(@conn, :send_offer, @project_id, @offer_id), fn f -> %>
       <%= hidden_input f, :sent, value: "true" %>
-      <div style="width:10rem;" class="dib">
+      <div style="width:10rem;" class="dib ml2">
         <%= component "submit_button.html", title: "Send" %>
       </div>
       <% end %>
