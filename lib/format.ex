@@ -6,6 +6,8 @@ defmodule Engine.Formatter do
     project_data = data.project
     startpack_data = data.startpack
     user_data = data.user
+    offer_custom_field_data = data.offer_custom_field
+    project_custom_field_data = data.project_custom_field
 
     currency_symbol =
       case offer_data.currency do
@@ -56,7 +58,9 @@ defmodule Engine.Formatter do
       offer: offer_data,
       project: project_data,
       startpack: startpack_data,
-      user: user_data
+      user: user_data,
+      offer_custom_field: offer_custom_field_data,
+      project_custom_field: project_custom_field_data
     }
   end
 
