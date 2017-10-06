@@ -85,15 +85,15 @@ opacity: 0;
 }
 
 .button-active {
-  border-width: 2px;
+  border-width: 1px;
 }
 
 .button-active:focus {
-  border: 2px solid #eeeeee;
+  border: 1px solid #eeeeee;
 }
 
 .button-active:active {
-  border: 2px solid #eeeeee;
+  border: 1px solid #eeeeee;
 }
 
 .button-active:hover {
@@ -119,6 +119,10 @@ opacity: 0;
 
 .k-min-h-10 {
   min-height: 10rem;
+}
+
+.k-min-h-4-9 {
+  min-height: 4.9rem;
 }
 
 .k-minw-320 {

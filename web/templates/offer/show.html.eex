@@ -142,12 +142,14 @@
     label: label || format_label(atom)
     %>
   <% end %>
-  <%= for field <- @custom_project_fields do %>
+  <div class="mt4">
+    <%= for field <- @custom_project_fields do %>
     <%= component "data.html",
     data: String.capitalize(field.value),
-    label: field.name
+    label: String.capitalize(field.name)
     %>
-  <% end %>
+    <% end %>
+  </div>
 
   <%= component "form_divider.html", title: "Offer details" %>
   <div>
@@ -381,3 +383,21 @@
   %>
 <% end %>
 </ul>
+
+<%= if @is_pm? do %>
+  <div class="tc mt2">
+    <%= if @offer.sent == false do %>
+      <div class="dib ma1">
+        <%= link "Edit", to: project_offer_path(@conn, :edit, @offer.project_id, @offer), class: "ttu k-bg-light-indigo ba k-b--light-indigo pa3 pl4 pr4 k-f2-5 br2 white w-100 lato mt3 no-outline-focus button-active no-underline" %>
+      </div>
+      <div class="dib ma1">
+        <%= form_for @send_offer_changeset, project_offer_path(@conn, :response, @offer.project_id, @offer), fn f -> %>
+          <%= hidden_input f, :sent, value: "true" %>
+          <%= component "submit_button.html",
+            title: "Send"
+          %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

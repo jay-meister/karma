@@ -49,6 +49,7 @@ defmodule Engine.Router do
 
         get "/custom_fields/add", CustomFieldController, :add
         post "/custom_fields/:id/save", CustomFieldController, :save
+        post "/custom_fields/:id/revise", CustomFieldController, :revise
         get "/altered_documents/sign", AlteredDocumentController, :sign
       end
       put "/offers/:id/response", OfferController, :response
