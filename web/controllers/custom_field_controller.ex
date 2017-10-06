@@ -54,6 +54,7 @@ defmodule Engine.CustomFieldController do
     custom_offer_specific_fields =
       all_offer_fields
       |> Enum.filter(fn field -> field.offer_id == String.to_integer(offer_id) end)
+      |> Enum.sort(&(&1.name <= &2.name))
 
     custom_project_offer_count =
       custom_project_offer_fields
@@ -68,7 +69,10 @@ defmodule Engine.CustomFieldController do
 
     custom_offer_field_names = Enum.map(custom_offer_specific_fields, fn field -> field.name end)
 
-    filtered_list = Enum.filter(custom_project_offer_fields, fn(e) -> !Enum.member?(custom_offer_field_names, e.name) end)
+    filtered_list =
+      custom_project_offer_fields
+      |> Enum.filter(fn(e) -> !Enum.member?(custom_offer_field_names, e.name) end)
+      |> Enum.sort(&(&1.name <= &2.name))
 
     offer_changeset = Offer.send_offer_changeset(%Offer{})
 

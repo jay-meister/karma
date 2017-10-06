@@ -84,7 +84,6 @@ defmodule Engine.Merger do
     offer_custom_fields = build_custom_field_map(%{}, custom_fields)
     project = Repo.get(Engine.Project, offer.project_id) |> Repo.preload(:custom_fields)
     project_custom_fields = project.custom_fields |> Enum.filter(fn field -> field.type == "Project" end)
-
     %{user: Map.merge(Map.take(Map.from_struct(Repo.get(Engine.User, offer.user_id)), user()), %{full_name: full_name}),
       project: Map.take(Map.from_struct(Repo.get(Engine.Project, offer.project_id)), project()),
       offer: Map.take(Map.from_struct(Repo.get(Engine.Offer, offer.id)), offer()),
@@ -98,12 +97,13 @@ defmodule Engine.Merger do
 
   def build_custom_field_map(map, list) do
     [head | tail] = list
-    name = String.to_atom(String.replace(String.downcase(head.name), " ", "_"))
+    name = String.replace(String.downcase(head.name), " ", "_")
     name =
       case String.last(name) == "_" do
         true -> String.trim_trailing(name, "_")
         false -> name
       end
+    name = String.to_atom(name)
     updated_map = Map.put_new(map, name, head.value)
     build_custom_field_map(updated_map, tail)
   end
