@@ -113,7 +113,7 @@
     <%= component "dropdown.html",
     form: f,
     atom: :type,
-    options: ["Project", "Offer"],
+    options: ["Offer", "Project"],
     id: "custom_field_dropdown",
     container_id: "custom_field_dropdown_container"
     %>
@@ -126,7 +126,8 @@
     form: f,
     atom: :value,
     placeholder: "10 hours",
-    container_id: "custom_field_value_container"
+    container_id: "custom_field_value_container",
+    class: "dn"
     %>
     <%= component "submit_button.html",
     form: f,
