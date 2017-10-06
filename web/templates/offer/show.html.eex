@@ -398,7 +398,7 @@
         <%= link "Edit", to: project_offer_path(@conn, :edit, @offer.project_id, @offer), class: "ttu bg-white ba k-b--light-indigo pa3 pl4 pr4 k-f2-5 br2 k-light-indigo w-100 lato mt3 no-outline-focus button-active no-underline" %>
       </div>
       <div class="dib ma1 ml1">
-        <%= form_for @send_offer_changeset, project_offer_path(@conn, :response, @offer.project_id, @offer), fn f -> %>
+        <%= form_for @send_offer_changeset, project_offer_path(@conn, :send_offer, @offer.project_id, @offer), fn f -> %>
           <%= hidden_input f, :sent, value: "true" %>
           <%= component "submit_button.html",
             title: "Send"
