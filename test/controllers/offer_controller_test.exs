@@ -39,15 +39,17 @@ defmodule Engine.OfferControllerTest do
   test "creates offer to an unregistered user and redirects them", %{conn: conn, project: project} do
     new_offer = default_offer(%{target_email: "different@test.com"})
 
-    with_mock Engine.Mailer, [deliver_later: fn(email) ->
-      assert email.html_body =~ "You've received an offer to work on the project"
-      assert email.html_body =~ "To review the offer"
-      assert email.to == new_offer.target_email
-     end] do
+    # with_mock Engine.Mailer, [deliver_later: fn(email) ->
+    #   assert email.html_body =~ "You've received an offer to work on the project"
+    #   assert email.html_body =~ "To review the offer"
+    #   assert email.to == new_offer.target_email
+    #  end] do
 
       post_conn = post conn, project_offer_path(conn, :create, project), offer: new_offer
-      assert redirected_to(post_conn) == project_offer_path(conn, :index, project)
-      assert Phoenix.Controller.get_flash(post_conn, :info) =~ "Offer sent"
+      [{_location, value}] = Enum.filter(post_conn.resp_headers, fn {name, _value} -> name == "location" end)
+      offer_id = String.to_integer(List.last(String.split(value, "/")))
+      assert redirected_to(post_conn) == project_offer_path(conn, :show, project, offer_id)
+      assert Phoenix.Controller.get_flash(post_conn, :info) =~ "Offer saved"
 
       # test the email is shown on the index view
       get_conn = get conn, project_offer_path(conn, :index, project)
@@ -55,8 +57,8 @@ defmodule Engine.OfferControllerTest do
       assert Repo.get_by(Offer, target_email: new_offer.target_email)
 
       # ensure email was sentt
-      assert called Engine.Mailer.deliver_later(:_)
-    end
+    #   assert called Engine.Mailer.deliver_later(:_)
+    # end
   end
 
 
@@ -78,14 +80,16 @@ defmodule Engine.OfferControllerTest do
     contractor = insert_user(%{first_name: "Dave", last_name: "Seaman", email: "contractor@gmail.com"})
     new_offer = default_offer(%{target_email: "contractor@gmail.com", fee_per_day_inc_holiday: "200", recipient_fullname: "David Seamon"})
 
-    with_mock Engine.Mailer, [deliver_later: fn(email) ->
-      assert email.html_body =~ "You've received an offer to work on the project"
-      assert email.to == new_offer.target_email
-     end] do
+    # with_mock Engine.Mailer, [deliver_later: fn(email) ->
+    #   assert email.html_body =~ "You've received an offer to work on the project"
+    #   assert email.to == new_offer.target_email
+    #  end] do
 
       post_conn = post conn, project_offer_path(conn, :create, project), offer: new_offer
-      assert redirected_to(post_conn) == project_offer_path(conn, :index, project)
-      assert Phoenix.Controller.get_flash(post_conn, :info) =~ "Offer sent"
+      [{_location, value}] = Enum.filter(post_conn.resp_headers, fn {name, _value} -> name == "location" end)
+      offer_id = String.to_integer(List.last(String.split(value, "/")))
+      assert redirected_to(post_conn) == project_offer_path(conn, :show, project, offer_id)
+      assert Phoenix.Controller.get_flash(post_conn, :info) =~ "Offer saved"
 
       # test the contractor's email is shown on the index view
       get_conn = get conn, project_offer_path(conn, :index, project)
@@ -96,8 +100,8 @@ defmodule Engine.OfferControllerTest do
       assert offer.user_id == contractor.id
 
       # ensure email was sent
-      assert called Engine.Mailer.deliver_later(:_)
-    end
+      # assert called Engine.Mailer.deliver_later(:_)
+    # end
   end
 
   test "does not create offer and renders error if target_email is not given", %{conn: conn, project: project} do
