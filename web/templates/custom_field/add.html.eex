@@ -8,8 +8,11 @@
   <%= if length(@custom_offer_specific_fields) > 0 do %>
     <div class="mb4">
       <%= for field <- @custom_offer_specific_fields do %>
-      <div class="mb2">
-        <%= "#{field.name}: #{field.value}" %>
+      <div class="mb2" style="list-style:none;">
+        <%= component "data.html",
+        data: field.value,
+        label: String.capitalize(field.name)
+        %>
       </div>
       <% end %>
     </div>
