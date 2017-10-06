@@ -114,7 +114,7 @@ defmodule Engine.Merger do
     Enum.reduce(Map.keys(data), %{}, fn(key, acc) ->
       # prefix is "offer", or "startpack"
       prefix = Atom.to_string(key)
-
+      IO.inspect prefix
       Map.get(data, key) # offer, startpack, user or project
       |> prefix_keys(prefix) # user_first_name
       |> Map.merge(acc)

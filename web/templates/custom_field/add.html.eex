@@ -26,8 +26,8 @@
       atom: :value,
       placeholder: "",
       container_id: "custom_field_value_edit_container",
-      label: field.name,
-      value: field.value,
+      label: String.capitalize(field.name),
+      value: String.capitalize(field.value),
       margin_bottom: "mb2"
       %>
       <%= hidden_input f, :name, value: field.name %>
@@ -40,14 +40,14 @@
     </div>
   <% end %>
   <%= for field <- @filtered_list do %>
-    <div class="mb3">
+    <div class="mb4">
       <%= form_for @changeset, project_offer_custom_field_path(@conn, :save, @project_id, @offer_id, field.id), fn f -> %>
       <%= component "input.html",
       form: f,
       atom: :value,
       placeholder: "",
       container_id: "custom_field_value_container",
-      label: field.name,
+      label: String.capitalize(field.name),
       value: field.value,
       margin_bottom: "mb2"
       %>

@@ -24,10 +24,12 @@ function custom_field_listeners() {
   var custom_field_dropdown = document.getElementById('custom_field_dropdown');
   var custom_field_dropdown_container = document.getElementById('custom_field_dropdown_container');
   var custom_field_value_container = document.getElementById('custom_field_value_container');
+  var custom_field_value_input = document.getElementById('custom_field_value_input');
   custom_field_dropdown.addEventListener("change", function(e) {
     var type = e.target.value;
     if (type === "Offer") {
-      custom_field_value_container.className += " dn"
+      custom_field_value_input.value = "";
+      custom_field_value_container.className += " dn";
     } else {
       custom_field_value_container.className = custom_field_value_container.className.replace(/dn/g, "");
     }

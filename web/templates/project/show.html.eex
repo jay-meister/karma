@@ -77,7 +77,7 @@
       <div class="ba k-b--indigo br3 pa3 pr5 mb2 k-bg-input relative">
         <div class="dib ml3"><%= custom_field.type %> - </div>
         <div class="dib ml3"><%= String.capitalize(custom_field.name) %>:</div>
-        <div class="dib ml3"><%= value %></div>
+        <div class="dib ml3"><%= String.capitalize(value) %></div>
 
         <%= link to: project_custom_field_path(@conn, :delete, @project, custom_field),
           method: :delete,
@@ -96,8 +96,8 @@
       %>
       <div class="ba k-b--indigo br3 pa3 pr5 mb2 k-bg-input relative">
         <div class="dib ml3"><%= custom_field.type %> - </div>
-        <div class="dib ml3"><%= custom_field.name %>:</div>
-        <div class="dib ml3"><%= value %></div>
+        <div class="dib ml3"><%= String.capitalize(custom_field.name) %>:</div>
+        <div class="dib ml3"><%= String.capitalize(value) %></div>
 
         <%= link to: project_custom_field_path(@conn, :delete, @project, custom_field),
           method: :delete,
@@ -127,6 +127,7 @@
     atom: :value,
     placeholder: "10 hours",
     container_id: "custom_field_value_container",
+    id: "custom_field_value_input",
     class: "dn"
     %>
     <%= component "submit_button.html",

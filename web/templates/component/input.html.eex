@@ -33,7 +33,8 @@
       value: assigns[:value],
       type: assigns[:type] || "",
       class: "border-box k-dark-grey pa3 br2 w-100 outline-0 lato ba #{border} #{padding} #{bg_color}",
-      autocomplete: assigns[:autocomplete] || "on"
+      autocomplete: assigns[:autocomplete] || "on",
+      id: assigns[:id]
       %>
     <% else %>
       <%= text_input assigns[:form],
@@ -43,7 +44,8 @@
       placeholder: assigns[:placeholder],
       type: assigns[:type] || "",
       class: "border-box k-dark-grey pa3 br2 w-100 outline-0 lato ba #{border} #{padding} #{bg_color}",
-      autocomplete: assigns[:autocomplete] || "on"
+      autocomplete: assigns[:autocomplete] || "on",
+      id: assigns[:id]
       %>
     <% end %>
     <%= if assigns[:image_name] do %>
