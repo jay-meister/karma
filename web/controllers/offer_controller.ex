@@ -171,12 +171,12 @@ defmodule Engine.OfferController do
               |> put_flash(:info, "Offer created, now complete your custom fields")
               |> redirect(to: project_offer_custom_field_path(conn, :add, project_id, offer.id))
             true ->
-              # email function decides whether this is a registered user
-              Engine.Email.send_new_offer_email(conn, offer, project)
-              |> Engine.Mailer.deliver_later()
+              # # email function decides whether this is a registered user
+              # Engine.Email.send_new_offer_email(conn, offer, project)
+              # |> Engine.Mailer.deliver_later()
               conn
-              |> put_flash(:info, "Offer sent to #{offer.target_email}")
-              |> redirect(to: project_offer_path(conn, :index, project_id))
+              |> put_flash(:info, "Offer saved")
+              |> redirect(to: project_offer_path(conn, :show, project_id, offer.id))
           end
         {:error, changeset} ->
           job_titles = Engine.Job.titles()
@@ -382,8 +382,8 @@ defmodule Engine.OfferController do
           case length(project_custom_offer_fields) == 0 do
             false ->
               conn
-              |> put_flash(:info, "Offer created, now complete your custom fields")
-              |> redirect(to: project_offer_custom_field_path(conn, :add, project_id, offer.id))
+              |> put_flash(:info, "Offer saved")
+              |> redirect(to: project_offer_path(conn, :show, project_id, offer.id))
             true ->
               # email function decides whether this is a registered user
               Engine.Email.send_updated_offer_email(conn, offer, project)

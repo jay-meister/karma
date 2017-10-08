@@ -1,8 +1,15 @@
 defmodule Engine.CustomFieldController do
   use Engine.Web, :controller
   alias Engine.{CustomField, Offer}
+  import Engine.ProjectController, only: [add_project_to_conn: 2, block_if_not_project_manager: 2]
 
-  plug :authenticate when action in [:create, :delete, :add]
+
+  plug :authenticate when action in [:create, :delete, :add, :save, :revise]
+
+  plug :add_project_to_conn when action in [:create, :delete, :add, :save, :revise]
+
+  plug :block_if_not_project_manager when action in [:add, :save, :create, :revise, :delete]
+
 
   def create(conn, %{"project_id" => project_id, "custom_field" => %{"type" => type} = custom_field_params}, user) do
     project = Repo.get(user_projects(user), project_id)
@@ -18,7 +25,6 @@ defmodule Engine.CustomFieldController do
           |> build_assoc(:custom_fields)
           |> CustomField.changeset(custom_field_params)
       end
-
     case Repo.insert(changeset) do
       {:ok, custom_field} ->
         conn
@@ -54,6 +60,7 @@ defmodule Engine.CustomFieldController do
     custom_offer_specific_fields =
       all_offer_fields
       |> Enum.filter(fn field -> field.offer_id == String.to_integer(offer_id) end)
+      |> Enum.sort(&(&1.name <= &2.name))
 
     custom_project_offer_count =
       custom_project_offer_fields
@@ -68,7 +75,10 @@ defmodule Engine.CustomFieldController do
 
     custom_offer_field_names = Enum.map(custom_offer_specific_fields, fn field -> field.name end)
 
-    filtered_list = Enum.filter(custom_project_offer_fields, fn(e) -> !Enum.member?(custom_offer_field_names, e.name) end)
+    filtered_list =
+      custom_project_offer_fields
+      |> Enum.filter(fn(e) -> !Enum.member?(custom_offer_field_names, e.name) end)
+      |> Enum.sort(&(&1.name <= &2.name))
 
     offer_changeset = Offer.send_offer_changeset(%Offer{})
 
@@ -80,7 +90,8 @@ defmodule Engine.CustomFieldController do
     empty_fields: empty_fields,
     offer_changeset: offer_changeset,
     filtered_list: filtered_list,
-    custom_offer_specific_fields: custom_offer_specific_fields
+    custom_offer_specific_fields: custom_offer_specific_fields,
+    offer_id: offer_id
   end
 
   def save(conn, %{"project_id" => project_id, "offer_id" => offer_id, "custom_field" => custom_field_params}, user) do

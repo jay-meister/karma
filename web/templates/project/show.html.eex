@@ -62,7 +62,7 @@
 
 <%= component "form_divider.html", title: "Custom fields" %>
 <%= if length(@custom_fields) == 0 do %>
-  <div class="tc k-bg-indigo white pa4 f2 br3">You have not created any custom fields yet</div>
+  <div class="tc k-bg-indigo white pa4 f2 br3 mb4">You have not created any custom fields yet</div>
 <% end %>
 <%= if length(@custom_fields) != 0 do %>
   <div class="mb4">
@@ -75,9 +75,9 @@
           end
       %>
       <div class="ba k-b--indigo br3 pa3 pr5 mb2 k-bg-input relative">
-        <div class="dib ml3"><%= custom_field.type %> - </div>
-        <div class="dib ml3"><%= custom_field.name %>:</div>
-        <div class="dib ml3"><%= value %></div>
+        <div class="dib ml3"><%= custom_field.type %></div>
+        <div class="dib ml3"><%= String.capitalize(custom_field.name) %>:</div>
+        <div class="dib ml3"><%= String.capitalize(value) %></div>
 
         <%= link to: project_custom_field_path(@conn, :delete, @project, custom_field),
           method: :delete,
@@ -95,9 +95,9 @@
           end
       %>
       <div class="ba k-b--indigo br3 pa3 pr5 mb2 k-bg-input relative">
-        <div class="dib ml3"><%= custom_field.type %> - </div>
-        <div class="dib ml3"><%= custom_field.name %>:</div>
-        <div class="dib ml3"><%= value %></div>
+        <div class="dib ml3" style="padding-right:1.1rem;"><%= custom_field.type %></div>
+        <div class="dib ml3"><%= String.capitalize(custom_field.name) %>:</div>
+        <div class="dib ml3"><%= String.capitalize(value) %></div>
 
         <%= link to: project_custom_field_path(@conn, :delete, @project, custom_field),
           method: :delete,
@@ -113,7 +113,7 @@
     <%= component "dropdown.html",
     form: f,
     atom: :type,
-    options: ["Project", "Offer"],
+    options: ["Offer", "Project"],
     id: "custom_field_dropdown",
     container_id: "custom_field_dropdown_container"
     %>
@@ -126,7 +126,9 @@
     form: f,
     atom: :value,
     placeholder: "10 hours",
-    container_id: "custom_field_value_container"
+    container_id: "custom_field_value_container",
+    id: "custom_field_value_input",
+    class: "dn"
     %>
     <%= component "submit_button.html",
     form: f,

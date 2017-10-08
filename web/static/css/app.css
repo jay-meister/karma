@@ -27,12 +27,20 @@ body {
   border-radius: 3px;
 }
 
+.k-right-0-5 {
+  right: 0.5rem;
+}
+
 .top--header {
   top: -6rem;
 }
 
 .k-top--0-5 {
   top: -0.5rem;
+}
+
+.k-top-0-5 {
+  top: 0.5rem
 }
 
 
@@ -121,8 +129,8 @@ opacity: 0;
   min-height: 10rem;
 }
 
-.k-min-h-4-9 {
-  min-height: 4.9rem;
+.k-min-h-4-7 {
+  min-height: 4.7rem;
 }
 
 .k-minw-320 {
@@ -209,6 +217,10 @@ nav {
 
 .k-bg-light-grey {
   background-color: #cfcfcf;
+}
+
+.k-bg-offer-grey {
+  background-color: #eeeeee;
 }
 
 .k-bg-black {

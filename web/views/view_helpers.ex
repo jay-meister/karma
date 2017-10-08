@@ -34,6 +34,37 @@ defmodule Engine.ViewHelpers do
     end
   end
 
+  def format_long_date(date) do
+    case date do
+      nil -> "n/a"
+      _ ->
+        day = Integer.to_string(date.day)
+        month = find_month(date.month)
+        year = Integer.to_string(date.year)
+        hour = Integer.to_string(date.hour + 1)
+        minutes = String.slice("0" <> Integer.to_string(date.minute), -2, 2)
+
+        "#{day} #{month} #{year}, #{hour}:#{minutes}"
+    end
+  end
+
+  def find_month(index) do
+    case index do
+      1 -> "Jan"
+      2 -> "Feb"
+      3 -> "Mar"
+      4 -> "Apr"
+      5 -> "May"
+      6 -> "Jun"
+      7 -> "Jul"
+      8 -> "Aug"
+      9 -> "Sep"
+      10 -> "Oct"
+      11 -> "Nov"
+      12 -> "Dec"
+    end
+  end
+
   def format_holiday_rate(float) do
     float_string =
       case float do
