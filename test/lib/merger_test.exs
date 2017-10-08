@@ -158,4 +158,9 @@ defmodule Engine.MergerTest do
       assert {:ok, "Documents merged"} = Merger.merge_multiple(offer, documents)
     end
   end
+
+  test "build custom field map" do
+    custom_field_map = Merger.build_custom_field_map(%{}, [%{name: "testing", value: "testing"},%{name: "test_", value: "test"}])
+    assert custom_field_map == %{test: "test", testing: "testing"}
+  end
 end

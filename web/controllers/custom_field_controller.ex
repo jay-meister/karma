@@ -5,7 +5,6 @@ defmodule Engine.CustomFieldController do
   plug :authenticate when action in [:create, :delete, :add]
 
   def create(conn, %{"project_id" => project_id, "custom_field" => %{"type" => type} = custom_field_params}, user) do
-    IO.inspect custom_field_params
     project = Repo.get(user_projects(user), project_id)
 
     changeset =
@@ -19,7 +18,6 @@ defmodule Engine.CustomFieldController do
           |> build_assoc(:custom_fields)
           |> CustomField.changeset(custom_field_params)
       end
-    IO.inspect changeset
     case Repo.insert(changeset) do
       {:ok, custom_field} ->
         conn
@@ -88,8 +86,7 @@ defmodule Engine.CustomFieldController do
     custom_offer_specific_fields: custom_offer_specific_fields
   end
 
-  def save(conn, %{"project_id" => project_id, "offer_id" => offer_id, "custom_field" => custom_field_params} = params, user) do
-    IO.inspect params
+  def save(conn, %{"project_id" => project_id, "offer_id" => offer_id, "custom_field" => custom_field_params}, user) do
     project = Repo.get(user_projects(user), project_id)
     offer = Repo.get(user_offers(user), offer_id)
     new =
@@ -101,10 +98,6 @@ defmodule Engine.CustomFieldController do
       |> build_assoc(:custom_fields)
       |> CustomField.value_changeset(new)
       |> Ecto.Changeset.put_assoc(:offer, offer)
-
-    IO.puts "+++++++++++"
-    IO.inspect changeset
-    IO.puts "+++++++++++"
 
     case Repo.insert(changeset) do
       {:ok, custom_field} ->

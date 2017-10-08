@@ -135,7 +135,8 @@ defmodule Engine.Offer do
       :equipment_rental_description,
       :equipment_rental_fee_per_week,
       :equipment_rental_cap,
-      :equipment_rental_period
+      :equipment_rental_period,
+      :sent
       ])
     |> validate_required([
       :recipient_fullname,
