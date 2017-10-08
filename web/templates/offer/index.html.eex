@@ -36,7 +36,11 @@
       <div class="k-bg-light-grey pa3 pa4-l br3 tc mt4 f2">You haven't made any offers yet for this project</div>
     <% end %>
     <%= if @offers != [] do %>
-      <%= for offer <- @offers do %>
+      <% offers =
+          @offers
+          |> Enum.sort(&(&1.updated_at >= &2.updated_at))
+      %>
+      <%= for offer <- offers do %>
         <%= component "offer_tile.html", offer: offer, url: project_offer_path(@conn, :show, @project, offer) %>
       <% end %>
     <% end %>
