@@ -75,7 +75,7 @@
           end
       %>
       <div class="ba k-b--indigo br3 pa3 pr5 mb2 k-bg-input relative">
-        <div class="dib ml3"><%= custom_field.type %> - </div>
+        <div class="dib ml3"><%= custom_field.type %></div>
         <div class="dib ml3"><%= String.capitalize(custom_field.name) %>:</div>
         <div class="dib ml3"><%= String.capitalize(value) %></div>
 
@@ -95,7 +95,7 @@
           end
       %>
       <div class="ba k-b--indigo br3 pa3 pr5 mb2 k-bg-input relative">
-        <div class="dib ml3"><%= custom_field.type %> - </div>
+        <div class="dib ml3" style="padding-right:1.1rem;"><%= custom_field.type %></div>
         <div class="dib ml3"><%= String.capitalize(custom_field.name) %>:</div>
         <div class="dib ml3"><%= String.capitalize(value) %></div>
 

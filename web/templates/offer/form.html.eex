@@ -195,7 +195,8 @@
       <div class="dib mr1">
         <%= component "submit_button.html",
         title: title,
-        invert: true
+        invert: true,
+        class: "button-active"
         %>
       </div>
       <% end %>

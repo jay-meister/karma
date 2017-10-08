@@ -1,4 +1,12 @@
 <div class="relative pt2">
+  <%= link "Dashboard", to: dashboard_path(@conn, :index), class: "no-underline k-indigo" %>
+  <img src="/images/breadcrumb-arrow.svg" class="w1 ml2" />
+  <%= link "Project", to: project_offer_path(@conn, :index, @project_id), class: "ma2 no-underline k-indigo" %>
+  <img src="/images/breadcrumb-arrow.svg" class="w1 ml2" />
+  <%= link "Offer details", to: project_offer_path(@conn, :show, @project_id, @offer_id), class: "ma2 no-underline k-indigo" %>
+  <img src="/images/breadcrumb-arrow.svg" class="w1 ml2" />
+  <div class="ma2 k-light-indigo dib">Custom fields</div>
+
   <h1 class="k-indigo top--header absolute fw4 mb0">Custom offer fields</h1>
 
   <%= component "form_divider.html", title: "Applied fields" %>
@@ -33,7 +41,7 @@
       <%= hidden_input f, :name, value: field.name %>
       <div class="tl">
         <div class="mb2">
-          <%= submit "Update", class: "ttu bg-white ba k-b--light-indigo pa1 pl2 pr2 f3 br2 k-light-indigo w-100 w4-ns w4-m w4-l lato no-outline-focus" %>
+          <%= submit "Update", class: "ttu bg-white ba k-b--light-indigo pa1 pl2 pr2 f3 br2 k-light-indigo w-100 w4-ns w4-m w4-l lato no-outline-focus button-active" %>
         </div>
       </div>
       <% end %>
@@ -54,7 +62,7 @@
       <%= hidden_input f, :name, value: field.name %>
       <div class="tl">
         <div class="mb2">
-          <%= submit "Save", class: "ttu k-bg-light-indigo ba k-b--light-indigo pa1 pl2 pr2 f3 br2 white w-100 w4-ns w4-m w4-l lato no-outline-focus button-active" %>
+          <%= submit "Apply", class: "ttu k-bg-light-indigo ba k-b--light-indigo pa1 pl2 pr2 f3 br2 white w-100 w4-ns w4-m w4-l lato no-outline-focus button-active" %>
         </div>
       </div>
       <% end %>

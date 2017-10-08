@@ -83,7 +83,8 @@ defmodule Engine.CustomFieldController do
     empty_fields: empty_fields,
     offer_changeset: offer_changeset,
     filtered_list: filtered_list,
-    custom_offer_specific_fields: custom_offer_specific_fields
+    custom_offer_specific_fields: custom_offer_specific_fields,
+    offer_id: offer_id
   end
 
   def save(conn, %{"project_id" => project_id, "offer_id" => offer_id, "custom_field" => custom_field_params}, user) do
