@@ -29,8 +29,17 @@
     end
   text =
     case offer.sent do
-      false -> "DRAFT"
-      _not_false -> "UPDATED"
+      false -> "draft"
+      _not_false ->
+        case offer.accepted do
+          true -> "accepted"
+          _not_true ->
+            case offer.accepted == false do
+              true -> "rejected"
+              _not_true -> "sent"
+            end
+        end
+
     end
   background_colours =
     case offer.sent do
@@ -46,7 +55,6 @@
 
 <a href="<%= assigns[:url] %>" class="no-underline link <%= text_colour %>" >
   <div class="bw1 k-b--grey <%= background_colours %> ba br3 <%= text_colour %> relative mb3">
-    <div class="absolute f5 k-top-0-5 k-right-0-5 <%= text_colour %>"><%= "#{text} #{format_long_date(offer.updated_at)}" %></div>
     <div class="dt w-100 k-minw-320">
       <div class="dtc pl2 pl4-l pv4">
         <div class="<%= status %> dib br-100 w3 h3 tc"><div class="f2 w3 h3 ph3 pv2 center white"><img src="/images/<%= symbol %>.svg" alt=""></div></div>
@@ -57,6 +65,7 @@
       </div>
       <div class="dtc tr pr4-ns pr3-ns k-pr4-5 pv4 <%= text_colour %>">
         <div class="pa2-ns pa0 f2-ns f3 <%= text_colour %>"><%= "#{currency}#{Engine.Formatter.format_number(offer.fee_per_day_inc_holiday)}" %>/day</div>
+        <div class="f5 k-top-0-5 k-right-0-5 pr2-ns <%= text_colour %>"><%= "#{text} #{format_long_date(offer.updated_at)}" %></div>
       </div>
     </div>
   </div>
