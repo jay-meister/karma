@@ -1,8 +1,15 @@
 defmodule Engine.CustomFieldController do
   use Engine.Web, :controller
   alias Engine.{CustomField, Offer}
+  import Engine.ProjectController, only: [add_project_to_conn: 2, block_if_not_project_manager: 2]
 
-  plug :authenticate when action in [:create, :delete, :add]
+
+  plug :authenticate when action in [:create, :delete, :add, :save, :revise]
+
+  plug :add_project_to_conn when action in [:create, :delete, :add, :save, :revise]
+
+  plug :block_if_not_project_manager when action in [:add, :save, :create, :revise, :delete]
+
 
   def create(conn, %{"project_id" => project_id, "custom_field" => %{"type" => type} = custom_field_params}, user) do
     project = Repo.get(user_projects(user), project_id)
