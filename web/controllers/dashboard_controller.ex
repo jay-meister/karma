@@ -17,7 +17,6 @@ defmodule Engine.DashboardController do
           Repo.all(Helpers.user_offers(user))
           |> Repo.preload(:project)
 
-          IO.inspect offers
         render conn, "index.html", projects: projects, offers: offers
     end
   end
