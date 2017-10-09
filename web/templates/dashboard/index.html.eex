@@ -36,8 +36,13 @@
   </div>
 <% end %>
 <%= if length(@offers) != 0 do %>
+  <% offers =
+      @offers
+      |> Enum.filter(fn offer -> offer.sent == true end)
+      |> Enum.sort(&(&1.updated_at >= &2.updated_at))
+  %>
   <div class="br3 pv3 mb3">
-    <%= for offer <- sort_offers(@offers) do %>
+    <%= for offer <- offers do %>
       <%= component "offer_tile.html",
       offer: offer,
       url: project_offer_path(@conn, :show, offer.project_id, offer.id),

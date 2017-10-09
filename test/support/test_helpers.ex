@@ -1,12 +1,12 @@
 defmodule Engine.TestHelpers do
   alias Engine.{Repo, User, Project, Offer, Startpack,
-    Document, Signee, DocumentSignee, AlteredDocument}
+    Document, Signee, DocumentSignee, AlteredDocument, CustomField}
 
   def mother_setup() do
     user = insert_user() # This represents the user that created the project (PM)
     contractor = insert_user(%{email: "cont@gmail.com"})
-    project = insert_project(user)
-    offer = insert_offer(project)
+    project = insert_project(user) |> Repo.preload(:custom_fields)
+    offer = insert_offer(project) |> Repo.preload(:custom_fields)
     document = insert_document(project)
     signee1 = insert_approver(project, %{email: "signee1@gmail.com"})
     signee2 = insert_approver(project, %{email: "signee2@gmail.com"})
@@ -45,6 +45,7 @@ defmodule Engine.TestHelpers do
   end
 
   def login_user(conn, user) do
+    user = user |> Repo.preload(:projects) |> Repo.preload(:offers)
     conn
     |> Plug.Conn.assign(:current_user, user)
   end
@@ -113,6 +114,51 @@ defmodule Engine.TestHelpers do
     # add link to original document and offer
     Ecto.build_assoc(offer, :altered_documents, document_id: document.id)
     |> AlteredDocument.merged_changeset(changes)
+    |> Repo.insert!()
+  end
+
+  def insert_project_custom_field(project, attrs \\ %{}) do
+    default = %{
+      name: "Shoot date duration",
+      value: "12 hours",
+      type: "Project"
+    }
+
+    changes = Map.merge(default, attrs)
+
+    project
+    |> Ecto.build_assoc(:custom_fields)
+    |> CustomField.value_changeset(changes)
+    |> Repo.insert!()
+  end
+
+  def insert_offer_custom_field(project, attrs \\ %{}) do
+    default = %{
+      name: "Shoot date duration",
+      type: "Offer"
+    }
+
+    changes = Map.merge(default, attrs)
+
+    project
+    |> Ecto.build_assoc(:custom_fields)
+    |> CustomField.changeset(changes)
+    |> Repo.insert!()
+  end
+
+  def insert_associated_offer_custom_field(project, offer, attrs \\ %{}) do
+    default = %{
+      name: "Shoot date duration",
+      type: "Offer",
+      value: "14 hours"
+    }
+
+    changes = Map.merge(default, attrs)
+
+    project
+    |> Ecto.build_assoc(:custom_fields)
+    |> CustomField.changeset(changes)
+    |> Ecto.Changeset.put_assoc(:offer, offer)
     |> Repo.insert!()
   end
 
@@ -197,7 +243,8 @@ defmodule Engine.TestHelpers do
       start_date: %{day: 17, month: 4, year: 2019},
       target_email: "a_new_email@gmail.com",
       vehicle_allowance_per_week: "10",
-      working_week: "5.5"
+      working_week: "5.5",
+      sent: true
     }
     Map.merge(default, attrs)
   end
@@ -265,6 +312,14 @@ defmodule Engine.TestHelpers do
     bank_sort_code: "some content",
     bank_iban: "some content",
     bank_swift_code: "some content"
+    }
+    Map.merge(default, attrs)
+  end
+
+  def default_custom_field(attrs \\ %{}) do
+    default = %{
+      type: "Offer",
+      name: "Account code"
     }
     Map.merge(default, attrs)
   end

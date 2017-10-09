@@ -41,7 +41,7 @@ defmodule Engine.ViewHelpers do
         day = Integer.to_string(date.day)
         month = find_month(date.month)
         year = Integer.to_string(date.year)
-        hour = Integer.to_string(date.hour)
+        hour = Integer.to_string(date.hour + 1)
         minutes = String.slice("0" <> Integer.to_string(date.minute), -2, 2)
 
         "#{day} #{month} #{year}, #{hour}:#{minutes}"

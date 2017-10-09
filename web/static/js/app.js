@@ -20,6 +20,22 @@ import "phoenix_html"
 
 // import socket from "./socket"
 
+function custom_field_listeners() {
+  var custom_field_dropdown = document.getElementById('custom_field_dropdown');
+  var custom_field_dropdown_container = document.getElementById('custom_field_dropdown_container');
+  var custom_field_value_container = document.getElementById('custom_field_value_container');
+  var custom_field_value_input = document.getElementById('custom_field_value_input');
+  custom_field_dropdown.addEventListener("change", function(e) {
+    var type = e.target.value;
+    if (type === "Offer") {
+      custom_field_value_input.value = "";
+      custom_field_value_container.className += " dn";
+    } else {
+      custom_field_value_container.className = custom_field_value_container.className.replace(/dn/g, "");
+    }
+  })
+}
+
 function document_upload_listeners() {
   var document_category = document.getElementById('category_dropdown');
   var contract_dropdown = document.getElementById('contract_dropdown');
@@ -137,5 +153,6 @@ export var App = {
   studentLoanRadios: studentLoanRadios,
   hamburgerAnimate: hamburgerAnimate,
   document_upload_listeners: document_upload_listeners,
-  reverseScientificNotation: reverseScientificNotation
+  reverseScientificNotation: reverseScientificNotation,
+  custom_field_listeners: custom_field_listeners
 }

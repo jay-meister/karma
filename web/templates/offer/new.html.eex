@@ -11,7 +11,7 @@
 
   <%= render "form.html", changeset: @changeset,
                           action: project_offer_path(@conn, :create, @project_id),
-                          button_text: "Make",
+                          button_text: "Save",
                           method: :post,
                           target_email_disabled: false,
                           job_titles: @job_titles,
@@ -20,6 +20,7 @@
                           offer: %{job_title: ""},
                           job_title: @job_title,
                           class: "mv4",
-                          full_name: "" %>
+                          full_name: "",
+                          num_custom_offer_fields: @num_custom_offer_fields || 0 %>
 
 </div>

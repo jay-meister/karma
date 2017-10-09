@@ -38,7 +38,7 @@
     <div class="k-bg-indigo white tc pa4 br3 ma2 f2 mt3">You have rejected this offer!</div>
   <% end %>
   <div class="tc mt2">
-    <%= if length(@changeset.errors) == 0 && @offer.accepted == nil do %>
+    <%= if length(@changeset.errors) == 0 && @offer.accepted == nil && @offer.sent == true do %>
       <div class="dib ma1">
         <%= form_for @edit_changeset, project_offer_path(@conn, :response, @offer.project_id, @offer), fn f -> %>
             <%= hidden_input f, :accepted, value: "true" %>
@@ -135,6 +135,21 @@
     {:studio_name, nil, @project.studio_name},
     {:holiday_rate, nil, format_holiday_rate(@project.holiday_rate)},
     {:locations, nil, @project.locations},
+  ] do %>
+    <%= component "data.html",
+    data: formatted || Map.get(@offer, atom),
+    label: label || format_label(atom)
+    %>
+  <% end %>
+  <div class="mt4 mb4">
+    <%= for field <- @custom_project_fields do %>
+    <%= component "data.html",
+    data: String.capitalize(field.value),
+    label: String.capitalize(field.name)
+    %>
+    <% end %>
+  </div>
+  <%= for {atom, label, formatted} <- [
     {:additional_notes, nil, @project.additional_notes}
   ] do %>
     <%= component "data.html",
@@ -142,20 +157,18 @@
     label: label || format_label(atom)
     %>
   <% end %>
-  <%= component "form_divider.html", title: "Offer status" %>
-  <%= for {atom, label, formatted} <- [
-    {:accepted, nil, nil},
-    {:updated_at, nil, format_date(@offer.updated_at)},
-    {:active, nil, nil},
-    {:contractor_details_accepted, nil, nil}
-  ] do %>
-    <%= component "data.html",
-    data: formatted || Map.get(@formatted_offer, atom),
-    label: label || format_label(atom)
-    %>
-  <% end %>
 
   <%= component "form_divider.html", title: "Offer details" %>
+  <div>
+    <%= for {atom, label, formatted} <- [
+      {:updated_at, nil, format_date(@offer.updated_at)}
+    ] do %>
+      <%= component "data.html",
+      data: formatted || Map.get(@formatted_offer, atom),
+      label: label || format_label(atom)
+      %>
+    <% end %>
+  </div>
   <div class="mt4">
     <%= if Map.has_key?(@contractor, :first_name) do %>
       <div>
@@ -213,6 +226,14 @@
       <%= component "data.html",
       data: formatted || Map.get(@formatted_offer, atom),
       label: label || format_label(atom)
+      %>
+    <% end %>
+  </div>
+  <div class="mt4">
+    <%= for field <- @custom_offer_fields do %>
+      <%= component "data.html",
+      data: String.capitalize(field.value),
+      label: String.capitalize(field.name)
       %>
     <% end %>
   </div>
@@ -369,3 +390,21 @@
   %>
 <% end %>
 </ul>
+
+<%= if @is_pm? do %>
+  <div class="tc mt2">
+    <%= if @offer.sent == false do %>
+      <div class="dib ma1">
+        <%= link "Edit", to: project_offer_path(@conn, :edit, @offer.project_id, @offer), class: "ttu bg-white ba k-b--light-indigo pa3 pl4 pr4 k-f2-5 br2 k-light-indigo w-100 lato mt3 no-outline-focus button-active no-underline" %>
+      </div>
+      <div class="dib ma1 ml1">
+        <%= form_for @send_offer_changeset, project_offer_path(@conn, :send_offer, @offer.project_id, @offer), fn f -> %>
+          <%= hidden_input f, :sent, value: "true" %>
+          <%= component "submit_button.html",
+            title: "Send"
+          %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

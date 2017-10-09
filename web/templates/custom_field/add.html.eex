@@ -1,0 +1,91 @@
+<div class="relative pt2">
+  <%= link "Dashboard", to: dashboard_path(@conn, :index), class: "no-underline k-indigo" %>
+  <img src="/images/breadcrumb-arrow.svg" class="w1 ml2" />
+  <%= link "Project", to: project_offer_path(@conn, :index, @project_id), class: "ma2 no-underline k-indigo" %>
+  <img src="/images/breadcrumb-arrow.svg" class="w1 ml2" />
+  <%= link "Offer details", to: project_offer_path(@conn, :show, @project_id, @offer_id), class: "ma2 no-underline k-indigo" %>
+  <img src="/images/breadcrumb-arrow.svg" class="w1 ml2" />
+  <div class="ma2 k-light-indigo dib">Custom fields</div>
+
+  <h1 class="k-indigo top--header absolute fw4 mb0">Custom offer fields</h1>
+
+  <%= component "form_divider.html", title: "Applied fields" %>
+  <%= if length(@custom_offer_specific_fields) == 0 do %>
+    <div class="tc k-bg-indigo white pa4 f2 br3 mt2">You have not yet applied any custom fields to this offer</div>
+  <% end %>
+  <%= if length(@custom_offer_specific_fields) > 0 do %>
+    <div class="mb4">
+      <%= for field <- @custom_offer_specific_fields do %>
+      <div class="mb2" style="list-style:none;">
+        <%= component "data.html",
+        data: field.value,
+        label: String.capitalize(field.name)
+        %>
+      </div>
+      <% end %>
+    </div>
+  <% end %>
+  <%= component "form_divider.html", title: "Available fields" %>
+  <%= for field <- @custom_offer_specific_fields do %>
+    <div class="mb4">
+      <%= form_for @changeset, project_offer_custom_field_path(@conn, :revise, @project_id, @offer_id, field.id), fn f -> %>
+      <%= component "input.html",
+      form: f,
+      atom: :value,
+      placeholder: "",
+      container_id: "custom_field_value_edit_container",
+      label: String.capitalize(field.name),
+      value: String.capitalize(field.value),
+      margin_bottom: "mb2"
+      %>
+      <%= hidden_input f, :name, value: field.name %>
+      <div class="tl">
+        <div class="mb2">
+          <%= submit "Update", class: "ttu bg-white ba k-b--light-indigo pa1 pl2 pr2 f3 br2 k-light-indigo w-100 w4-ns w4-m w4-l lato no-outline-focus button-active" %>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  <% end %>
+  <%= for field <- @filtered_list do %>
+    <div class="mb4">
+      <%= form_for @changeset, project_offer_custom_field_path(@conn, :save, @project_id, @offer_id, field.id), fn f -> %>
+      <%= component "input.html",
+      form: f,
+      atom: :value,
+      placeholder: "",
+      container_id: "custom_field_value_container",
+      label: String.capitalize(field.name),
+      value: field.value,
+      margin_bottom: "mb2"
+      %>
+      <%= hidden_input f, :name, value: field.name %>
+      <div class="tl">
+        <div class="mb2">
+          <%= submit "Apply", class: "ttu k-bg-light-indigo ba k-b--light-indigo pa1 pl2 pr2 f3 br2 white w-100 w4-ns w4-m w4-l lato no-outline-focus button-active" %>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="tc">
+    <div class="dib">
+      <%= form_for @offer_changeset, project_offer_path(@conn, :send_offer, @project_id, @offer_id), fn f -> %>
+      <%= hidden_input f, :sent, value: "false" %>
+      <div style="width:10rem;" class="dib">
+        <%= component "submit_button.html", title: "Save", invert: true %>
+      </div>
+      <% end %>
+    </div>
+
+    <div class="dib">
+      <%= form_for @offer_changeset, project_offer_path(@conn, :send_offer, @project_id, @offer_id), fn f -> %>
+      <%= hidden_input f, :sent, value: "true" %>
+      <div style="width:10rem;" class="dib ml2">
+        <%= component "submit_button.html", title: "Send" %>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>

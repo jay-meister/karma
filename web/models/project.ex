@@ -31,6 +31,7 @@ defmodule Engine.Project do
     has_many :offers, Engine.Offer
     has_many :documents, Engine.Document
     has_many :signees, Engine.Signee
+    has_many :custom_fields, Engine.CustomField
 
     timestamps()
   end

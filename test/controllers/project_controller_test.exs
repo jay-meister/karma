@@ -63,6 +63,7 @@ defmodule Engine.ProjectControllerTest do
   end
 
   test "/project/:id shows specific project", %{conn: conn, project: project} do
+    insert_offer_custom_field(project)
     conn = get conn, project_path(conn, :show, project)
     assert html_response(conn, 200) =~ project.codename
   end

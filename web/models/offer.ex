@@ -39,10 +39,12 @@ defmodule Engine.Offer do
     field :additional_notes, :string
     field :accepted, :boolean, default: nil
     field :active, :boolean, default: true
+    field :sent, :boolean, default: nil
     field :contractor_details_accepted, :boolean, default: nil
     belongs_to :user, Engine.User
     belongs_to :project, Engine.Project
     has_many :altered_documents, Engine.AlteredDocument
+    has_many :custom_fields, Engine.CustomField
 
     timestamps()
   end
@@ -86,7 +88,8 @@ defmodule Engine.Offer do
       :active,
       :contractor_details_accepted,
       :project_id,
-      :user_id])
+      :user_id,
+      :sent])
     |> validate_required([
       :recipient_fullname,
       :contract_type,
@@ -100,6 +103,10 @@ defmodule Engine.Offer do
     |> validate_required_dropdowns()
   end
 
+  def send_offer_changeset(struct, params \\ %{}) do
+    struct
+    |> cast(params, [:sent])
+  end
 
   def form_validation(struct, params \\ %{}) do
     struct
@@ -128,7 +135,8 @@ defmodule Engine.Offer do
       :equipment_rental_description,
       :equipment_rental_fee_per_week,
       :equipment_rental_cap,
-      :equipment_rental_period
+      :equipment_rental_period,
+      :sent
       ])
     |> validate_required([
       :recipient_fullname,
@@ -207,12 +215,5 @@ defmodule Engine.Offer do
     |> validate_required([:accepted])
   end
 
-
-  # queries
-  # get projects created by specified user
-  def projects_offers(query, project) do
-    from p in query,
-    where: p.project_id == ^project.id
-  end
 
 end
