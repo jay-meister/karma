@@ -1,7 +1,7 @@
 defmodule Engine.DashboardController do
   use Engine.Web, :controller
 
-  alias Engine.Controllers.Helpers
+  alias Engine.{Controllers.Helpers, Offer}
 
   def index(conn, _params, user) do
     case user == nil do
@@ -13,9 +13,13 @@ defmodule Engine.DashboardController do
         projects =
           Repo.all(Helpers.user_projects(user))
           |> Repo.preload(:offers)
-        offers =
-          Repo.all(Helpers.user_offers(user))
-          |> Repo.preload(:project)
+        query = from o in Offer,
+          where: o.user_id == ^user.id,
+          order_by: [desc: o.updated_at]
+        offers = Repo.all(query) |> Repo.preload(:project)
+
+
+
 
         render conn, "index.html", projects: projects, offers: offers
     end
