@@ -65,7 +65,7 @@
       </div>
       <div class="dib tr pr4-ns pr3-ns k-pr4-5 fr pt4 <%= text_colour %> k-pt2-8">
         <div class=" f2-ns f3 <%= text_colour %>"><%= "#{currency}#{Engine.Formatter.format_number(offer.fee_per_day_inc_holiday)}" %>/day</div>
-        <div class="f5 k-top-0-5 k-right-0-5 pr2-ns <%= text_colour %>"><%= "#{text} #{format_long_date(offer.updated_at)}" %></div>
+        <div class="f5 k-top-0-5 k-right-0-5 pr1-ns k-grey"><%= "#{text} #{format_long_date(offer.updated_at)}" %></div>
       </div>
     </div>
   </div>
