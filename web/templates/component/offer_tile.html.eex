@@ -56,15 +56,15 @@
 <a href="<%= assigns[:url] %>" class="no-underline link <%= text_colour %>" >
   <div class="bw1 k-b--grey <%= background_colours %> ba br3 <%= text_colour %> relative mb3">
     <div class="dt w-100 k-minw-320">
-      <div class="dtc pl2 pl4-l pv4">
+      <div class="dib pl2 pl4-l pv4">
         <div class="<%= status %> dib br-100 w3 h3 tc"><div class="f2 w3 h3 ph3 pv2 center white"><img src="/images/<%= symbol %>.svg" alt=""></div></div>
         <div class="dib pl2 v-mid">
           <div class="dib dark-gray fw6 f3-ns f4"><%= title %></div>
-          <div class="silver f3-ns f4"><%= offer.job_title %></div>
+          <div class="silver f3-ns f5"><%= offer.job_title %></div>
         </div>
       </div>
-      <div class="dtc tr pr4-ns pr3-ns k-pr4-5 pv4 <%= text_colour %>">
-        <div class="pa2-ns pa0 f2-ns f3 <%= text_colour %>"><%= "#{currency}#{Engine.Formatter.format_number(offer.fee_per_day_inc_holiday)}" %>/day</div>
+      <div class="dib tr pr4-ns pr3-ns k-pr4-5 fr pt4 <%= text_colour %> k-pt2-8">
+        <div class=" f2-ns f3 <%= text_colour %>"><%= "#{currency}#{Engine.Formatter.format_number(offer.fee_per_day_inc_holiday)}" %>/day</div>
         <div class="f5 k-top-0-5 k-right-0-5 pr2-ns <%= text_colour %>"><%= "#{text} #{format_long_date(offer.updated_at)}" %></div>
       </div>
     </div>
