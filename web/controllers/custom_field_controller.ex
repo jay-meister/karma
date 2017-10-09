@@ -96,7 +96,7 @@ defmodule Engine.CustomFieldController do
 
   def save(conn, %{"project_id" => project_id, "offer_id" => offer_id, "custom_field" => custom_field_params}, user) do
     project = Repo.get(user_projects(user), project_id)
-    offer = Repo.get(user_offers(user), offer_id)
+    offer = Repo.get(Offer, offer_id)
     new =
       custom_field_params
       |> Map.put_new("type", "Offer")

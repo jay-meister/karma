@@ -7,9 +7,9 @@ defmodule Engine.Controllers.Helpers do
     Ecto.assoc(user, :startpacks)
   end
 
-  def user_offers(user) do
-    Ecto.assoc(user, :offers)
-  end
+  # def user_offers(user) do
+  #   Ecto.assoc(user, :offers)
+  # end
 
   def user_projects(user) do
     Ecto.assoc(user, :projects)
