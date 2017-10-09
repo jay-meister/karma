@@ -419,12 +419,12 @@ defmodule Engine.Controllers.Helpers do
       "Hair And Makeup" ->
           case Enum.member?(["Crowd Hair/Makeup Supervisor",
           "Crowd Makeup Artist",
-          "Hair & Makeup Artist",
+          "Hair and Makeup Artist",
           "Makeup Artist",
           "Makeup Designer",
           "Key Hair And Make Up Artist",
-          "Hair & Makeup Designer",
-          "Hair & Makeup Supervisor",
+          "Hair and Makeup Designer",
+          "Hair and Makeup Supervisor",
           "Hair Designer"], job_title) do
             true -> sch_d(direct_hire, daily_direct_hire, daily_sch_d)
             false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
