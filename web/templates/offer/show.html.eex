@@ -289,7 +289,8 @@
     <%= for {atom, label, formatted} <- [
       {:sixth_day_fee_multiplier, nil, nil},
       {:sixth_day_fee_inc_holiday, nil, nil},
-      {:sixth_day_fee_exc_holiday, nil, nil}
+      {:sixth_day_fee_exc_holiday, nil, nil},
+      {:sixth_day_holiday_pay, nil, nil}
     ] do %>
       <%= component "data.html",
       data: formatted || Map.get(@formatted_offer, atom),
@@ -302,7 +303,8 @@
     <%= for {atom, label, formatted} <- [
       {:seventh_day_fee_multiplier, nil, nil},
       {:seventh_day_fee_inc_holiday, nil, nil},
-      {:seventh_day_fee_exc_holiday, nil, nil}
+      {:seventh_day_fee_exc_holiday, nil, nil},
+      {:seventh_day_holiday_pay, nil, nil}
     ] do %>
       <%= component "data.html",
       data: formatted || Map.get(@formatted_offer, atom),
