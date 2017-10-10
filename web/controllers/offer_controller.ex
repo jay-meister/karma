@@ -566,8 +566,6 @@ defmodule Engine.OfferController do
     sixth_day_holiday_pay = calc_holiday_pay_difference(sixth_day_fee_inc_holiday, sixth_day_fee_exc_holiday)
     seventh_day_fee_inc_holiday = calc_day_fee_inc_holidays(fee_per_day_inc_holiday, seventh_day_fee_multiplier)
     seventh_day_fee_exc_holiday = calc_day_fee_exc_holidays(fee_per_day_exc_holiday, seventh_day_fee_multiplier)
-    IO.inspect seventh_day_fee_inc_holiday
-    IO.inspect seventh_day_fee_exc_holiday
     seventh_day_holiday_pay = calc_holiday_pay_difference(seventh_day_fee_inc_holiday, seventh_day_fee_exc_holiday)
 
     %{
