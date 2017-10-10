@@ -19,9 +19,9 @@ defmodule Engine.ViewHelpersTest do
   end
 
   test "format_duration" do
-    formatted_duration = ViewHelpers.format_duration(12)
+    formatted_duration = ViewHelpers.format_duration(12.0)
 
-    assert formatted_duration == "12 weeks"
+    assert formatted_duration == "12.0 weeks"
   end
 
   test "format_budget" do

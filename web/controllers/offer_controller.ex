@@ -563,8 +563,10 @@ defmodule Engine.OfferController do
     contract_type = determine_contract_type(department, job_title, project_documents, daily, equipment)
     sixth_day_fee_inc_holiday = calc_day_fee_inc_holidays(fee_per_day_inc_holiday, sixth_day_fee_multiplier)
     sixth_day_fee_exc_holiday = calc_day_fee_exc_holidays(fee_per_day_exc_holiday, sixth_day_fee_multiplier)
+    sixth_day_holiday_pay = calc_holiday_pay_difference(sixth_day_fee_inc_holiday, sixth_day_fee_exc_holiday)
     seventh_day_fee_inc_holiday = calc_day_fee_inc_holidays(fee_per_day_inc_holiday, seventh_day_fee_multiplier)
     seventh_day_fee_exc_holiday = calc_day_fee_exc_holidays(fee_per_day_exc_holiday, seventh_day_fee_multiplier)
+    seventh_day_holiday_pay = calc_holiday_pay_difference(seventh_day_fee_inc_holiday, seventh_day_fee_exc_holiday)
 
     %{
     "fee_per_day_exc_holiday" => fee_per_day_exc_holiday,
@@ -575,8 +577,10 @@ defmodule Engine.OfferController do
     "contract_type" => contract_type,
     "sixth_day_fee_inc_holiday" => sixth_day_fee_inc_holiday,
     "sixth_day_fee_exc_holiday" => sixth_day_fee_exc_holiday,
+    "sixth_day_holiday_pay" => sixth_day_holiday_pay,
     "seventh_day_fee_inc_holiday" => seventh_day_fee_inc_holiday,
-    "seventh_day_fee_exc_holiday" => seventh_day_fee_exc_holiday
+    "seventh_day_fee_exc_holiday" => seventh_day_fee_exc_holiday,
+    "seventh_day_holiday_pay" => seventh_day_holiday_pay
     }
   end
 end

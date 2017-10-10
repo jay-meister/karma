@@ -65,11 +65,11 @@ defmodule Engine.Controllers.Helpers do
   end
 
   def calc_day_fee_inc_holidays(fee_per_day_inc_holiday, day_fee_multiplier) do
-    (fee_per_day_inc_holiday * day_fee_multiplier) / 1
+    Float.round(((fee_per_day_inc_holiday * day_fee_multiplier) / 1), 2)
   end
 
   def calc_day_fee_exc_holidays(fee_per_day_exc_holiday, day_fee_multiplier) do
-    (fee_per_day_exc_holiday * day_fee_multiplier) / 1
+    Float.round(((fee_per_day_exc_holiday * day_fee_multiplier) / 1), 2)
   end
 
   def calc_fee_per_day_exc_holiday(fee_per_day_inc_holiday, project_holiday_rate) do
@@ -92,6 +92,10 @@ defmodule Engine.Controllers.Helpers do
 
   def calc_holiday_pay_per_week(fee_per_week_inc_holiday, fee_per_week_exc_holiday) do
     Float.round((fee_per_week_inc_holiday - fee_per_week_exc_holiday), 2)
+  end
+
+  def calc_holiday_pay_difference(fee_inc_holiday, fee_exc_holiday) do
+    Float.round(fee_inc_holiday - fee_exc_holiday, 2)
   end
 
   defp construction_sch_d(construction_direct_hire, daily_construction_direct_hire, daily_construction_sch_d) do

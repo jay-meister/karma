@@ -10,7 +10,7 @@
   <h1 class="k-indigo top--header absolute fw4 mb0">Edit offer</h1>
   <%= render "form.html", changeset: @changeset,
                           action: project_offer_path(@conn, :update, @offer.project_id, @offer),
-                          button_text: "Update",
+                          button_text: "Send",
                           method: :put,
                           target_email_disabled: true,
                           job_titles: @job_titles,
