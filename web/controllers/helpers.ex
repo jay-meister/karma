@@ -94,6 +94,10 @@ defmodule Engine.Controllers.Helpers do
     Float.round((fee_per_week_inc_holiday - fee_per_week_exc_holiday), 2)
   end
 
+  def calc_holiday_pay_difference(fee_inc_holiday, fee_exc_holiday) do
+    fee_inc_holiday - fee_exc_holiday
+  end
+
   defp construction_sch_d(construction_direct_hire, daily_construction_direct_hire, daily_construction_sch_d) do
     case construction_direct_hire do
       true ->

@@ -32,9 +32,11 @@ defmodule Engine.Offer do
     field :holiday_pay_per_week, :float
     field :sixth_day_fee_inc_holiday, :float
     field :sixth_day_fee_exc_holiday, :float
+    field :sixth_day_holiday_pay, :float
     field :sixth_day_fee_multiplier, :float
     field :seventh_day_fee_inc_holiday, :float
     field :seventh_day_fee_exc_holiday, :float
+    field :seventh_day_holiday_pay, :float
     field :seventh_day_fee_multiplier, :float
     field :additional_notes, :string
     field :accepted, :boolean, default: nil
@@ -80,9 +82,11 @@ defmodule Engine.Offer do
       :sixth_day_fee_inc_holiday,
       :sixth_day_fee_exc_holiday,
       :sixth_day_fee_multiplier,
+      :sixth_day_holiday_pay,
       :seventh_day_fee_inc_holiday,
       :seventh_day_fee_exc_holiday,
       :seventh_day_fee_multiplier,
+      :seventh_day_holiday_pay,
       :additional_notes,
       :accepted,
       :active,
