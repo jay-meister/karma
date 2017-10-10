@@ -76,7 +76,7 @@ defmodule Engine.ViewHelpers do
   end
 
   def format_duration(integer) do
-    int_string = Integer.to_string(integer)
+    int_string = Float.to_string(integer)
 
     "#{int_string} weeks"
   end
