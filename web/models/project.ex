@@ -8,7 +8,7 @@ defmodule Engine.Project do
     field :codename, :string
     field :description, :string
     field :start_date, Ecto.Date
-    field :duration, :integer
+    field :duration, :float
     field :studio_name, :string
     field :company_name, :string
     field :company_address_1, :string
