@@ -125,7 +125,7 @@ defmodule Engine.MergerTest do
     project = insert_project(pm)
     contractor = insert_user(%{email: "contractor@gmail.com"})
     _startpack = update_startpack(contractor)
-    offer = insert_offer(project, %{user_id: contractor.id, box_rental_required?: false, equipment_rental_required?: false})
+    offer = insert_offer(project, %{sixth_day_holiday_pay: 10.0, seventh_day_holiday_pay: 10.0, user_id: contractor.id, box_rental_required?: false, equipment_rental_required?: false})
     document = insert_document(project, %{name: offer.contract_type, url: "www.image_url.pdf"})
 
     with_mocks([
