@@ -38,7 +38,7 @@
 <%= if length(@offers) != 0 do %>
   <% offers =
       @offers
-      |> Enum.filter(fn offer -> offer.sent == true end)
+      |> Enum.filter(fn offer -> offer.sent != false end)
       |> Enum.sort(&(&1.updated_at >= &2.updated_at))
   %>
   <div class="br3 pv3 mb3">
