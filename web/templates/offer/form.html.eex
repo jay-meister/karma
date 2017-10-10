@@ -180,36 +180,40 @@
     <%= hidden_input f, :sent, value: "false" %>
   <% end %>
 
-  <%= if @num_custom_offer_fields == 0 do %>
-    <%= component "submit_button.html",
-    title: "#{@button_text}"
-    %>
-  <% else %>
   <div class="tc">
-    <% title =
-      case @method == :put do
-        false -> "Next"
-        true -> "Save"
-      end
+    <%= if @num_custom_offer_fields == 0 do %>
+    <div class="dib">
+      <%= component "submit_button.html",
+      title: "#{@button_text}"
       %>
-      <div class="dib mr1">
-        <%= component "submit_button.html",
-        title: title,
-        invert: true,
-        class: "button-active"
+    </div>
+    <% else %>
+    <div class="tc">
+      <% title =
+        case @method == :put do
+          false -> "Next"
+          true -> "Save"
+        end
         %>
-      </div>
-      <% end %>
+        <div class="dib mr1">
+          <%= component "submit_button.html",
+          title: title,
+          invert: true,
+          class: "button-active"
+          %>
+        </div>
+        <% end %>
 
-      <%= if @method == :put do %>
+        <%= if @method == :put do %>
         <%= link to: project_offer_custom_field_path(@conn, :add, @project, @offer) do %>
-        <div style="padding:1.1rem;padding-right:1.9rem;padding-left:1.9rem;" class="dib ml1 tc ttu k-bg-light-indigo ba k-b--light-indigo pa3 pl4 pr4 k-f2-5 br2 white lato mt3 no-outline-focus no-underline dib button-active">
+        <div style="padding:1.1rem;padding-right:1.9rem;padding-left:1.9rem;" class="dib ml1 tc ttu bg-white ba k-b--light-indigo pa3 pl4 pr4 k-f2-5 br2 k-light-indigo lato mt3 no-outline-focus no-underline dib button-active">
           Next
         </div>
+        <% end %>
+        <% end %>
+      </div>
       <% end %>
-    <% end %>
   </div>
-<% end %>
 
 
 <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
