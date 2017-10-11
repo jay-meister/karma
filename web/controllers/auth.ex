@@ -61,8 +61,8 @@ defmodule Engine.Auth do
     end
   end
 
-  def authenticate_admin(conn, _opts) do
-    authenticate(conn, _opts)
+  def authenticate_admin(conn, opts) do
+    authenticate(conn, opts)
     case conn.assigns.current_user.admin do
       true -> conn
       false ->
