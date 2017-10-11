@@ -210,15 +210,32 @@ defmodule Engine.OfferControllerTest do
   end
 
 
-  test "updates offer and redirects when data is valid", %{conn: conn, offer: offer, project: project, user: user} do
+  test "updates offer and redirects to custom field when they exist", %{conn: conn, offer: offer, project: project, user: user} do
     updated = default_offer(%{additional_notes: "Sneaky peaky", user_id: user.id})
     insert_project_custom_field(project)
     insert_offer_custom_field(project)
 
     conn = put conn, project_offer_path(conn, :update, offer.project_id, offer), offer: updated
+    assert redirected_to(conn) == project_offer_custom_field_path(conn, :add, offer.project_id, offer)
+    assert Repo.get_by(Offer, additional_notes: "Sneaky peaky")
+
+  end
+
+  test "updates offer and redirects when data is valid", %{conn: conn, offer: offer, user: user} do
+    updated = default_offer(%{additional_notes: "Sneaky peaky", user_id: user.id})
+
+    conn = put conn, project_offer_path(conn, :update, offer.project_id, offer), offer: updated
     assert redirected_to(conn) == project_offer_path(conn, :show, offer.project_id, offer)
     assert Repo.get_by(Offer, additional_notes: "Sneaky peaky")
 
+  end
+
+  test "navigates to custom field page when no changes made", %{conn: conn, offer: offer, project: project} do
+    insert_project_custom_field(project)
+    insert_offer_custom_field(project)
+
+    conn = put conn, project_offer_path(conn, :update, offer.project_id, offer), offer: %{}
+    assert redirected_to(conn) == project_offer_custom_field_path(conn, :add, offer.project_id, offer)
   end
 
   test "updates offer and redirects when data is valid - nonexistent user", %{conn: conn, offer: offer} do
