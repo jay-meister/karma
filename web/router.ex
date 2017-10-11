@@ -30,6 +30,7 @@ defmodule Engine.Router do
   # authed routes
   scope "/", Engine do
     pipe_through [:browser, :authenticate]
+    get "/admin-dashboard", AdminDashboardController, :index
     post "/startpack/:id", StartpackController, :update
     post "/startpack/:id/delete-file", StartpackController, :delete_uploaded_files
     resources "/startpack", StartpackController, except: [:new, :create, :delete]

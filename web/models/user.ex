@@ -10,6 +10,7 @@ defmodule Engine.User do
     field :password, :string, virtual: true
     field :verified, :boolean
     field :terms_accepted, :boolean
+    field :admin, :boolean, default: false
     has_many :projects, Engine.Project
     has_many :offers, Engine.Offer
     has_one :startpacks, Engine.Startpack
@@ -22,7 +23,7 @@ defmodule Engine.User do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:email, :first_name, :last_name, :password, :verified])
+    |> cast(params, [:email, :first_name, :last_name, :password, :verified, :admin])
     |> validate_required([:email, :first_name, :last_name])
     |> email_changeset(params)
     |> unique_constraint(:email)
