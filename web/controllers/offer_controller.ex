@@ -360,9 +360,16 @@ defmodule Engine.OfferController do
     else
       case validation_changeset.changes == %{} do
         true ->
-          conn
-          |> put_flash(:error, "Nothing to update")
-          |> render("edit.html", ops ++ [changeset: validation_changeset])
+          case length(project_custom_offer_fields) == 0 do
+            true ->
+              conn
+              |> put_flash(:error, "Nothing to update")
+              |> render("edit.html", ops ++ [changeset: validation_changeset])
+            false ->
+              conn
+              |> put_flash(:info, "No changes made")
+              |> redirect(to: project_offer_custom_field_path(conn, :add, project_id, offer.id))
+          end
         false ->
           # run calculations and add them to the offer_params
           calculations = parse_offer_strings(offer_params) |> run_calculations(project, project_documents, daily, equipment)
@@ -382,7 +389,7 @@ defmodule Engine.OfferController do
             false ->
               conn
               |> put_flash(:info, "Offer saved")
-              |> redirect(to: project_offer_path(conn, :show, project_id, offer.id))
+              |> redirect(to: project_offer_custom_field_path(conn, :add, project_id, offer.id))
             true ->
               # email function decides whether this is a registered user
               Engine.Email.send_updated_offer_email(conn, offer, project)

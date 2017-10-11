@@ -30,9 +30,17 @@ defmodule Engine.CustomFieldControllerTest do
 
   test "delete a custom field", %{conn: conn, project: project} do
     custom_field = insert_offer_custom_field(project)
-    conn = delete conn, project_custom_field_path(conn, :delete, project, custom_field)
+    conn = delete conn, project_custom_field_path(conn, :delete, project, custom_field, add: false)
     assert Phoenix.Controller.get_flash(conn, :info) == "Custom field deleted successfully"
     assert redirected_to(conn, 302) == "/projects/#{project.id}"
+    assert Repo.get_by(CustomField, project_id: project.id) == nil
+  end
+
+  test "delete a custom offer specific field", %{conn: conn, project: project, offer: offer} do
+    custom_field = insert_associated_offer_custom_field(project, offer)
+    conn = delete conn, project_custom_field_path(conn, :delete, project, custom_field, add: true)
+    assert Phoenix.Controller.get_flash(conn, :info) == "Custom field deleted successfully"
+    assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{custom_field.offer_id}/custom_fields/add"
     assert Repo.get_by(CustomField, project_id: project.id) == nil
   end
 

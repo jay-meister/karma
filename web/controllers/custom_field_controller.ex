@@ -38,12 +38,19 @@ defmodule Engine.CustomFieldController do
   end
 
   def delete(conn, %{"id" => id, "project_id" => project_id}, user) do
+    %{"add" => add} = conn.query_params
     project = Repo.get(user_projects(user), project_id)
     custom_field = Repo.get!(CustomField, id)
+    offer_id = custom_field.offer_id
     Repo.delete!(custom_field)
+    path =
+      case add == "true" do
+        true -> project_offer_custom_field_path(conn, :add, project, offer_id)
+        false -> project_path(conn, :show, project)
+      end
     conn
     |> put_flash(:info, "Custom field deleted successfully")
-    |> redirect(to: project_path(conn, :show, project))
+    |> redirect(to: path)
   end
 
   def add(conn, %{"project_id" => project_id, "offer_id" => offer_id}, user) do

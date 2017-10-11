@@ -15,17 +15,24 @@
   <% end %>
   <%= if length(@custom_offer_specific_fields) > 0 do %>
     <div class="mb4">
-      <%= for field <- @custom_offer_specific_fields do %>
-      <div class="mb2" style="list-style:none;">
-        <%= component "data.html",
-        data: field.value,
-        label: String.capitalize(field.name)
-        %>
+      <%= for custom_field <- @custom_offer_specific_fields do %>
+      <div class="ba k-b--indigo br3 pa3 pr5 mb2 k-bg-input relative">
+        <div class="dib ml3"><%= String.capitalize(custom_field.name) %>:</div>
+        <div class="dib ml3"><%= String.capitalize(custom_field.value) %></div>
+
+        <%= link to: project_custom_field_path(@conn, :delete, @project, custom_field, add: true),
+          method: :delete,
+          data: [confirm: "Are you sure?"] do %>
+          <img class="absolute k-w2-5 k-top-center right-1" src="/images/delete.svg" />
+        <% end %>
       </div>
       <% end %>
     </div>
   <% end %>
   <%= component "form_divider.html", title: "Available fields" %>
+  <%= if length(@custom_project_offer_fields) == 0 do %>
+    <div class="tc k-bg-indigo white pa4 f2 br3 mt2">You have not yet added any custom fields to this <a href="/projects/<%= @project.id %>" class="link k-light-indigo">project</a></div>
+  <% end %>
   <%= for field <- @custom_offer_specific_fields do %>
     <div class="mb4">
       <%= form_for @changeset, project_offer_custom_field_path(@conn, :revise, @project_id, @offer_id, field.id), fn f -> %>
@@ -69,7 +76,7 @@
     </div>
   <% end %>
 
-  <div class="tc">
+  <div class="tc mt5">
     <div class="dib">
       <%= form_for @offer_changeset, project_offer_path(@conn, :send_offer, @project_id, @offer_id), fn f -> %>
       <%= hidden_input f, :sent, value: "false" %>

@@ -37,7 +37,7 @@ defmodule Engine.Web do
       import Engine.Router.Helpers
       import Engine.Gettext
       import Engine.Controllers.Helpers
-      import Engine.Auth, only: [authenticate: 2]
+      import Engine.Auth, only: [authenticate: 2, authenticate_admin: 2]
     end
   end
 

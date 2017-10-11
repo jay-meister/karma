@@ -31,6 +31,9 @@
               </a>
               <%= if @current_user do %>
             <div class="white fr k-mt3-5 fw4">
+              <%= if @current_user.admin do %>
+              <%= link "Admin", to: admin_dashboard_path(@conn, :index), class: "back-button link hover-purple white ml3 mv4 mb0-ns outline-0" %>
+              <% end %>
               <%= link "Startpack", to: startpack_path(@conn, :index), class: "back-button link hover-purple white ml3 mv4 mb0-ns outline-0" %>
               <%= link "Log out", to: session_path(@conn, :delete, @current_user), method: "delete", class: "back-button hover-purple link white ml4-ns ml3 mv4 mb0-ns outline-0" %>
             </div>
