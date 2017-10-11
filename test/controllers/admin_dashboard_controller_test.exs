@@ -11,7 +11,7 @@ defmodule Engine.AdminDashboardControllerTest do
     assert redirected_to(conn, 302) == "/"
   end
 
-  test "view admin dashboard", %{conn: conn} do
+  test "view admin dashboard" do
     user = insert_user(%{admin: true, email: "admin@email.com"})
     conn = login_user(build_conn(), user)
     conn = get conn, admin_dashboard_path(conn, :index)
