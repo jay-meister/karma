@@ -149,6 +149,18 @@
     %>
     <% end %>
   </div>
+  <%= if @offer.other_deal_provisions != nil do %>
+    <div class="mt4">
+      <%= for {atom, label, formatted} <- [
+        {:other_deal_provisions, nil, nil}
+      ] do %>
+        <%= component "data.html",
+        data: formatted || Map.get(@formatted_offer, atom),
+        label: label || format_label(atom)
+        %>
+      <% end %>
+    </div>
+  <% end %>
   <%= for {atom, label, formatted} <- [
     {:additional_notes, nil, @project.additional_notes}
   ] do %>
@@ -319,25 +331,13 @@
   || @offer.equipment_rental_required?
   || @offer.vehicle_allowance_per_week > 0 do %>
   <%= component "form_divider.html", title: "Allowances" %>
-  <%= if @offer.other_deal_provisions != nil do %>
-    <div class="mt4">
-      <%= for {atom, label, formatted} <- [
-        {:other_deal_provisions, nil, nil}
-      ] do %>
-        <%= component "data.html",
-        data: formatted || Map.get(@formatted_offer, atom),
-        label: label || format_label(atom)
-        %>
-      <% end %>
-    </div>
-  <% end %>
   <%= if @offer.box_rental_required? do %>
     <div class="mt4">
       <%= for {atom, label, formatted} <- [
         {:box_rental_description, nil, nil},
         {:box_rental_fee_per_week, nil, nil},
         {:box_rental_cap, nil, nil},
-        {:box_rental_period, nil, nil}
+        {:box_rental_period, "Box rental terms", nil}
       ] do %>
         <%= component "data.html",
         data: formatted || Map.get(@formatted_offer, atom),
@@ -352,7 +352,7 @@
         {:equipment_rental_description, nil, nil},
         {:equipment_rental_fee_per_week, nil, nil},
         {:equipment_rental_cap, nil, nil},
-        {:equipment_rental_period, nil, nil}
+        {:equipment_rental_period, "Equipment rental terms", nil}
       ] do %>
         <%= component "data.html",
         data: formatted || Map.get(@formatted_offer, atom),
