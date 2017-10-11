@@ -224,9 +224,17 @@ defmodule Engine.OfferControllerTest do
   test "updates offer and redirects when data is valid", %{conn: conn, offer: offer, user: user} do
     updated = default_offer(%{additional_notes: "Sneaky peaky", user_id: user.id})
 
-    conn = put conn, project_offer_path(conn, :update, offer.project_id, offer), offer: updated
-    assert redirected_to(conn) == project_offer_path(conn, :show, offer.project_id, offer)
-    assert Repo.get_by(Offer, additional_notes: "Sneaky peaky")
+    with_mock Engine.Mailer, [deliver_later: fn(_) -> nil end] do
+
+
+      conn = put conn, project_offer_path(conn, :update, offer.project_id, offer), offer: updated
+      assert redirected_to(conn) == project_offer_path(conn, :show, offer.project_id, offer)
+      assert Repo.get_by(Offer, additional_notes: "Sneaky peaky")
+
+      # ensure email was sent
+      assert called Engine.Mailer.deliver_later(:_)
+    end
+
 
   end
 
