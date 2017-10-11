@@ -61,4 +61,16 @@ defmodule Engine.Auth do
     end
   end
 
+  def authenticate_admin(conn, _opts) do
+    authenticate(conn, _opts)
+    case conn.assigns.current_user.admin do
+      true -> conn
+      false ->
+        conn
+        |> put_flash(:error, "You do not have permission to view that page")
+        |> redirect(to: Helpers.dashboard_path(conn, :index))
+        |> halt()
+    end
+  end
+
 end

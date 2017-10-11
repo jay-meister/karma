@@ -149,18 +149,6 @@
     %>
     <% end %>
   </div>
-  <%= if @offer.other_deal_provisions != nil do %>
-    <div class="mt4">
-      <%= for {atom, label, formatted} <- [
-        {:other_deal_provisions, nil, nil}
-      ] do %>
-        <%= component "data.html",
-        data: formatted || Map.get(@formatted_offer, atom),
-        label: label || format_label(atom)
-        %>
-      <% end %>
-    </div>
-  <% end %>
   <%= for {atom, label, formatted} <- [
     {:additional_notes, nil, @project.additional_notes}
   ] do %>
@@ -249,6 +237,18 @@
       %>
     <% end %>
   </div>
+  <%= if @offer.other_deal_provisions != nil do %>
+    <div class="mt4">
+      <%= for {atom, label, formatted} <- [
+        {:other_deal_provisions, nil, nil}
+      ] do %>
+        <%= component "data.html",
+        data: formatted || Map.get(@formatted_offer, atom),
+        label: label || format_label(atom)
+        %>
+      <% end %>
+    </div>
+  <% end %>
   <div class="mt4">
     <%= for {atom, label, formatted} <- [
       {:additional_notes, nil, nil}

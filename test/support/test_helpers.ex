@@ -38,7 +38,6 @@ defmodule Engine.TestHelpers do
 
   def insert_user(attrs \\ %{}) do
     changes = Map.merge(default_user(), attrs)
-
     %User{}
     |> User.registration_changeset(changes)
     |> Repo.insert!
@@ -169,7 +168,8 @@ defmodule Engine.TestHelpers do
       password: "Password123!",
       terms_accepted: true,
       verified: true,
-      startpacks: %{}
+      startpacks: %{},
+      admin: false
     }
 
     Map.merge(default, attrs)
