@@ -45,7 +45,7 @@ defmodule Engine.S3 do
     seconds = String.slice("0" <> Integer.to_string(date.second), -2, 2)
     timestamp = "#{day}_#{month}_#{year}_#{hour}:#{minutes}:#{seconds}"
     image_filename = String.replace(filename, " ", "_")
-    "#{identifier}-#{image_filename}-#{timestamp}"
+    "#{identifier}-#{timestamp}-#{image_filename}"
   end
 
 
