@@ -419,6 +419,7 @@ var departments_with_jobs = {
     "Location Manager",
     "Location Manager (PAYE)",
     "Location Marshall",
+    "Location Scout",
     "Locations Assistant",
     "PA",
     "Studio Unit Manager",

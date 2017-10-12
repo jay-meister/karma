@@ -436,7 +436,8 @@ defmodule Engine.Controllers.Helpers do
       "IT" -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
       "Locations" ->
           case Enum.member?(["Location Manager",
-          "Supervising Location Manager"], job_title) do
+          "Supervising Location Manager",
+          "Location Scout"], job_title) do
             true -> sch_d(direct_hire, daily_direct_hire, daily_sch_d)
             false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
           end
