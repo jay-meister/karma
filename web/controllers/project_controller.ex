@@ -75,6 +75,7 @@ defmodule Engine.ProjectController do
   def show(conn, %{"id" => id}) do
     project = Repo.get(Project, id) |> Repo.preload(:documents)
     documents = project.documents
+
     forms = Enum.filter(documents, fn document -> document.category == "Form" end)
     deals = Enum.filter(documents, fn document -> document.category == "Deal" end)
     info = Enum.filter(documents, fn document -> document.category == "Info" end)
