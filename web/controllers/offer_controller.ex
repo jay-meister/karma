@@ -282,6 +282,7 @@ defmodule Engine.OfferController do
         startpack = Repo.get_by(Startpack, user_id: user.id)
         startpack =  Map.from_struct(startpack)
         changeset = Startpack.mother_changeset(%Startpack{}, startpack, offer)
+
         render(conn,
         "show.html",
         project_id: project_id,
@@ -363,8 +364,8 @@ defmodule Engine.OfferController do
           case length(project_custom_offer_fields) == 0 do
             true ->
               conn
-              |> put_flash(:error, "Nothing to update")
-              |> render("edit.html", ops ++ [changeset: validation_changeset])
+              |> put_flash(:info, "No changes made")
+              |> redirect(to: project_offer_path(conn, :show, project_id, offer.id))
             false ->
               conn
               |> put_flash(:info, "No changes made")
@@ -391,11 +392,8 @@ defmodule Engine.OfferController do
               |> put_flash(:info, "Offer saved")
               |> redirect(to: project_offer_custom_field_path(conn, :add, project_id, offer.id))
             true ->
-              # email function decides whether this is a registered user
-              Engine.Email.send_updated_offer_email(conn, offer, project)
-              |> Engine.Mailer.deliver_later()
               conn
-              |> put_flash(:info, "Offer updated successfully, and re-emailed to recipient")
+              |> put_flash(:info, "Offer updated successfully")
               |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
           end
       end
@@ -450,6 +448,7 @@ defmodule Engine.OfferController do
       |> Enum.filter(fn document -> document.category == "Form" end)
 
     documents = contract_documents ++ form_documents
+    documents = sort_documents(documents)
 
     # check if there is a document to be merged
     case length(documents) > 0 do
@@ -497,6 +496,18 @@ defmodule Engine.OfferController do
             end
         end
     end
+  end
+
+  defp sort_documents(documents) do
+    documents
+    |> Enum.sort_by(&!String.contains?(&1.name, "VEHICLE"))
+    |> Enum.sort_by(&!String.contains?(&1.name, "EQUIPMENT"))
+    |> Enum.sort_by(&!String.contains?(&1.name, "BOX"))
+    |> Enum.sort_by(&!String.contains?(&1.name, "LOAN"))
+    |> Enum.sort_by(&!String.contains?(&1.name, "PAYE"))
+    |> Enum.sort_by(&!String.contains?(&1.name, "SCHEDULE"))
+    |> Enum.sort_by(&!String.contains?(&1.name, "DIRECT"))
+    |> Enum.sort_by(&!String.contains?(&1.name, "START"))
   end
 
   def delete(conn, %{"id" => id}) do

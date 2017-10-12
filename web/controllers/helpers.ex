@@ -38,8 +38,8 @@ defmodule Engine.Controllers.Helpers do
     Document
     |> Document.get_contract(offer)
     |> Document.get_conditional_form(offer, true, "START FORM")
-    |> Document.get_conditional_form(offer, offer.box_rental_required?, "BOX INVENTORY")
-    |> Document.get_conditional_form(offer, offer.equipment_rental_required?, "EQUIPMENT INVENTORY")
+    |> Document.get_conditional_form(offer, offer.box_rental_required?, "BOX RENTAL FORM")
+    |> Document.get_conditional_form(offer, offer.equipment_rental_required?, "EQUIPMENT RENTAL FORM")
     |> Document.get_conditional_form(offer, offer.vehicle_allowance_per_week != 0, "VEHICLE ALLOWANCE")
   end
 
@@ -426,7 +426,7 @@ defmodule Engine.Controllers.Helpers do
           "Hair and Makeup Artist",
           "Makeup Artist",
           "Makeup Designer",
-          "Key Hair And Make Up Artist",
+          "Key Hair and Make Up Artist",
           "Hair and Makeup Designer",
           "Hair and Makeup Supervisor",
           "Hair Designer"], job_title) do
@@ -436,7 +436,8 @@ defmodule Engine.Controllers.Helpers do
       "IT" -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
       "Locations" ->
           case Enum.member?(["Location Manager",
-          "Supervising Location Manager"], job_title) do
+          "Supervising Location Manager",
+          "Location Scout"], job_title) do
             true -> sch_d(direct_hire, daily_direct_hire, daily_sch_d)
             false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
           end
@@ -456,7 +457,8 @@ defmodule Engine.Controllers.Helpers do
           "Production Manager",
           "Production Supervisor",
           "Script Supervisor",
-          "Unit Production Manager"], job_title) do
+          "Unit Production Manager",
+          "Associate Producer (Sch D)"], job_title) do
             true -> sch_d(direct_hire, daily_direct_hire, daily_sch_d)
             false -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
           end

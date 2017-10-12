@@ -7,6 +7,27 @@
 <img src="/images/breadcrumb-arrow.svg" class="w1 ml2" />
 <div class="ma2 k-light-indigo dib mb4">Offer details</div>
 <%= if @is_pm? do %>
+  <div class="tc mt2">
+    <% title =
+        case @offer.sent do
+          true -> "RE-SEND"
+          false -> "SEND"
+        end
+    %>
+    <div class="dib ma1">
+      <%= link "Edit", to: project_offer_path(@conn, :edit, @offer.project_id, @offer), class: "ttu bg-white ba k-b--light-indigo pa3 pl4 pr4 k-f2-5 br2 k-light-indigo w-100 lato mt3 no-outline-focus button-active no-underline" %>
+    </div>
+    <div class="dib ma1 ml1">
+      <%= form_for @send_offer_changeset, project_offer_path(@conn, :send_offer, @offer.project_id, @offer), fn f -> %>
+        <%= hidden_input f, :sent, value: "true" %>
+        <%= component "submit_button.html",
+          title: title
+        %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+<%= if @is_pm? do %>
   <%= if Map.has_key?(@contractor, :first_name) do %>
     <h1 class="top--header absolute fw4 mb0">Offer for <%= "#{@contractor.first_name} #{@contractor.last_name} " %></h1>
   <% else %>
@@ -38,7 +59,7 @@
     <div class="k-bg-indigo white tc pa4 br3 ma2 f2 mt3">You have rejected this offer!</div>
   <% end %>
   <div class="tc mt2">
-    <%= if length(@changeset.errors) == 0 && @offer.accepted == nil && @offer.sent != false do %>
+    <%= if length(@changeset.errors) == 0 && @offer.accepted == nil && @is_contractor? && @offer.sent != false do %>
       <div class="dib ma1">
         <%= form_for @edit_changeset, project_offer_path(@conn, :response, @offer.project_id, @offer), fn f -> %>
             <%= hidden_input f, :accepted, value: "true" %>
@@ -395,18 +416,16 @@
 
 <%= if @is_pm? do %>
   <div class="tc mt2">
-    <%= if @offer.sent == false do %>
-      <div class="dib ma1">
-        <%= link "Edit", to: project_offer_path(@conn, :edit, @offer.project_id, @offer), class: "ttu bg-white ba k-b--light-indigo pa3 pl4 pr4 k-f2-5 br2 k-light-indigo w-100 lato mt3 no-outline-focus button-active no-underline" %>
-      </div>
-      <div class="dib ma1 ml1">
-        <%= form_for @send_offer_changeset, project_offer_path(@conn, :send_offer, @offer.project_id, @offer), fn f -> %>
-          <%= hidden_input f, :sent, value: "true" %>
-          <%= component "submit_button.html",
-            title: "Send"
-          %>
-        <% end %>
-      </div>
-    <% end %>
+    <div class="dib ma1">
+      <%= link "Edit", to: project_offer_path(@conn, :edit, @offer.project_id, @offer), class: "ttu bg-white ba k-b--light-indigo pa3 pl4 pr4 k-f2-5 br2 k-light-indigo w-100 lato mt3 no-outline-focus button-active no-underline" %>
+    </div>
+    <div class="dib ma1 ml1">
+      <%= form_for @send_offer_changeset, project_offer_path(@conn, :send_offer, @offer.project_id, @offer), fn f -> %>
+        <%= hidden_input f, :sent, value: "true" %>
+        <%= component "submit_button.html",
+          title: title
+        %>
+      <% end %>
+    </div>
   </div>
 <% end %>

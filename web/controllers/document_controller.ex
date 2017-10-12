@@ -62,7 +62,7 @@ defmodule Engine.DocumentController do
           |> redirect(to: project_path(conn, :show, project))
         true ->
           updated_params =
-            case S3.upload({:url, file_params}) do
+            case S3.upload({:url, file_params, String.replace(String.upcase(project.codename), " ", "-")}) do
               {:ok, :url, url} ->
                 Map.delete(document_params, "file")
                 |> Map.put_new("url", url)
