@@ -55,7 +55,7 @@
         <div class="mt0 mb4 b--black-20 bt">
           <article class="cf mt0">
             <div class="fl w-100 tl pt4-ns pt2 mb3 mb0-ns">
-              <a href="http://www.teamengine.co.uk">
+              <a href="http://www.teamengine.co.uk" target="_blank">
                 <div class="h3 dt pb3 dib fl mr4">
                   <img src="/images/footer-logo.svg" class="k-w2-5 pv2 dib dtc" />
                   <p class="dib f4 pl2 fw5 white ma0 dtc v-mid"><span class="k-light-grey fw3">team</span> engine</p>
