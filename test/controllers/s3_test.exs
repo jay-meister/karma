@@ -12,7 +12,7 @@ defmodule Engine.S3Test do
     identifier = "JOHN-SMITH"
     unique = S3.get_unique_filename(filename, identifier)
 
-    assert [first_name, last_name, file, _timestamp] = String.split(unique, "-")
+    assert [first_name, last_name, _timestamp, file] = String.split(unique, "-")
     assert file == filename
     assert first_name == "JOHN"
     assert last_name == "SMITH"
@@ -23,7 +23,7 @@ defmodule Engine.S3Test do
     identifier = "SECRET-PROJECT"
     unique = S3.get_unique_filename(filename, identifier)
 
-    assert [first_word, second_word, file, _timestamp] = String.split(unique, "-")
+    assert [first_word, second_word, _timestamp, file] = String.split(unique, "-")
     assert file == filename
     assert first_word == "SECRET"
     assert second_word == "PROJECT"
