@@ -202,7 +202,7 @@ defmodule Engine.OfferControllerTest do
     with_mock Engine.Mailer, [deliver_later: fn(_) -> nil end] do
 
       conn = put conn, project_offer_path(conn, :update, offer.project_id, offer), offer: unchanged
-      assert Phoenix.Controller.get_flash(conn, :error) == "Nothing to update"
+      assert Phoenix.Controller.get_flash(conn, :info) == "No changes made"
 
       # ensure email wasnt sent
       refute called Engine.Mailer.deliver_later(:_)
@@ -224,17 +224,9 @@ defmodule Engine.OfferControllerTest do
   test "updates offer and redirects when data is valid", %{conn: conn, offer: offer, user: user} do
     updated = default_offer(%{additional_notes: "Sneaky peaky", user_id: user.id})
 
-    with_mock Engine.Mailer, [deliver_later: fn(_) -> nil end] do
-
-
-      conn = put conn, project_offer_path(conn, :update, offer.project_id, offer), offer: updated
-      assert redirected_to(conn) == project_offer_path(conn, :show, offer.project_id, offer)
-      assert Repo.get_by(Offer, additional_notes: "Sneaky peaky")
-
-      # ensure email was sent
-      assert called Engine.Mailer.deliver_later(:_)
-    end
-
+    conn = put conn, project_offer_path(conn, :update, offer.project_id, offer), offer: updated
+    assert redirected_to(conn) == project_offer_path(conn, :show, offer.project_id, offer)
+    assert Repo.get_by(Offer, additional_notes: "Sneaky peaky")
 
   end
 
@@ -249,19 +241,9 @@ defmodule Engine.OfferControllerTest do
   test "updates offer and redirects when data is valid - nonexistent user", %{conn: conn, offer: offer} do
     updated = default_offer(%{additional_notes: "Sneaky peaky"})
 
-    with_mock Engine.Mailer, [deliver_later: fn(email) ->
-      assert email.html_body =~ "Your offer to join"
-      assert email.html_body =~ "The more you add to Engine, the easier"
-      assert email.to == updated.target_email
-     end] do
-
-      conn = put conn, project_offer_path(conn, :update, offer.project_id, offer), offer: updated
-      assert redirected_to(conn) == project_offer_path(conn, :show, offer.project_id, offer)
-      assert Repo.get_by(Offer, additional_notes: "Sneaky peaky")
-
-      # ensure email was sent
-      assert called Engine.Mailer.deliver_later(:_)
-    end
+    conn = put conn, project_offer_path(conn, :update, offer.project_id, offer), offer: updated
+    assert redirected_to(conn) == project_offer_path(conn, :show, offer.project_id, offer)
+    assert Repo.get_by(Offer, additional_notes: "Sneaky peaky")
   end
 
 
