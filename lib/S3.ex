@@ -1,10 +1,12 @@
 defmodule Engine.S3 do
-  def upload_many(params, keys) do
+
+  alias Engine.{ViewHelpers}
+  def upload_many(params, keys, identifier) do
     ops = [max_concurrency: System.schedulers_online() * 3, timeout: 20000]
     keys
     # remove keys that haven't been uploaded
     |> Enum.filter(fn({file_key, _url_key}) -> Map.has_key?(params, file_key) end)
-    |> Enum.map(fn({file_key, url_key}) -> {url_key, Map.get(params, file_key)} end)
+    |> Enum.map(fn({file_key, url_key}) -> {url_key, Map.get(params, file_key), identifier} end)
     |> Task.async_stream(&upload/1, ops)
     |> Enum.to_list()
     |> Enum.filter(fn {_async_res, {res, _url_key, _url}} -> res != :error end)
@@ -18,9 +20,9 @@ defmodule Engine.S3 do
   #  filename: "Screen Shot 2017-06-05 at 16.36.15.png",
   #  path: "/var/folders/_p/46vn16c94z7cqz18w_3qxjb00000gn/T//plug-1496/multipart-909146-647759-1"
   # }
-  def upload({url_key, image_params}) do
+  def upload({url_key, image_params, identifier}) do
     # first check if user has uploaded an image
-    unique_filename = get_unique_filename(image_params.filename)
+    unique_filename = get_unique_filename(image_params.filename, identifier)
 
     case File.read(image_params.path) do
       {:error, _} ->
@@ -33,11 +35,17 @@ defmodule Engine.S3 do
     end
   end
 
-
-  def get_unique_filename(filename) do
-    file_uuid = UUID.uuid4(:hex)
+  def get_unique_filename(filename, identifier) do
+    date = DateTime.utc_now()
+    day = Integer.to_string(date.day)
+    month = ViewHelpers.find_month(date.month)
+    year = Integer.to_string(date.year)
+    hour = Integer.to_string(date.hour + 1)
+    minutes = String.slice("0" <> Integer.to_string(date.minute), -2, 2)
+    seconds = String.slice("0" <> Integer.to_string(date.second), -2, 2)
+    timestamp = "#{day}_#{month}_#{year}_#{hour}:#{minutes}:#{seconds}"
     image_filename = String.replace(filename, " ", "_")
-    "#{file_uuid}-#{image_filename}"
+    "#{identifier}-#{image_filename}-#{timestamp}"
   end
 
 
