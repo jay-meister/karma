@@ -1,3 +1,10 @@
+<%
+  title =
+    case @offer.sent do
+      false -> "SEND"
+      _not_false -> "RE-SEND"
+    end
+%>
 <%= link "Dashboard", to: dashboard_path(@conn, :index), class: "mr2 no-underline k-indigo" %>
 <%= if @is_pm? do %>
 <img src="/images/breadcrumb-arrow.svg" class="w1 ml1" />
@@ -8,12 +15,6 @@
 <div class="ma2 k-light-indigo dib mb4">Offer details</div>
 <%= if @is_pm? do %>
   <div class="tc mt2">
-    <% title =
-        case @offer.sent do
-          true -> "RE-SEND"
-          false -> "SEND"
-        end
-    %>
     <div class="dib ma1">
       <%= link "Edit", to: project_offer_path(@conn, :edit, @offer.project_id, @offer), class: "ttu bg-white ba k-b--light-indigo pa3 pl4 pr4 k-f2-5 br2 k-light-indigo w-100 lato mt3 no-outline-focus button-active no-underline" %>
     </div>
