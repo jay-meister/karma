@@ -7,13 +7,26 @@ defmodule Engine.S3Test do
   @bucket System.get_env("BUCKET_NAME")
   @image_params %{filename: "unique.png", path: "./maybe/mocked"}
 
-  test "unique filename" do
+  test "unique filename - contractor" do
     filename = "foxy.png"
-    unique = S3.get_unique_filename(filename)
+    identifier = "JOHN-SMITH"
+    unique = S3.get_unique_filename(filename, identifier)
 
-    assert [uuid, file] = String.split(unique, "-")
+    assert [first_name, last_name, file, _timestamp] = String.split(unique, "-")
     assert file == filename
-    assert String.length(uuid) > 8
+    assert first_name == "JOHN"
+    assert last_name == "SMITH"
+  end
+
+  test "unique filename - project" do
+    filename = "foxy.png"
+    identifier = "SECRET-PROJECT"
+    unique = S3.get_unique_filename(filename, identifier)
+
+    assert [first_word, second_word, file, _timestamp] = String.split(unique, "-")
+    assert file == filename
+    assert first_word == "SECRET"
+    assert second_word == "PROJECT"
   end
 
   test "put_object failure function" do
@@ -33,13 +46,13 @@ defmodule Engine.S3Test do
 
   test "S3.upload_many with no file uploaded" do
     keys = [{"passport_image", "passport_url"}]
-    res = S3.upload_many(%{}, keys)
+    res = S3.upload_many(%{}, keys, "PROJECT-NAME")
     assert res == %{}
   end
 
   test "S3.upload failure" do
     with_mock ExAws, [request!: fn(_) -> %{status_code: 200} end] do
-      res = S3.upload({"passport_url", @image_params})
+      res = S3.upload({"passport_url", @image_params, "PROJECT-NAME"})
       assert {:error, "passport_url", "file could not be read"} == res
     end
   end
@@ -48,12 +61,11 @@ defmodule Engine.S3Test do
     url_key = "passport_url"
     with_mock ExAws, [request!: fn(_) -> %{status_code: 200} end] do
       with_mock File, [read: fn(_) -> {:ok, "image_binary"} end] do
-        res = S3.upload({url_key, @image_params})
+        res = S3.upload({url_key, @image_params, "PROJECT-NAME"})
         assert {:ok, ^url_key, url} = res
         beginning = "https://#{@bucket}.s3.amazonaws.com/#{@bucket}/"
 
         assert String.starts_with?(url, beginning)
-        assert String.ends_with?(url, @image_params.filename)
       end
     end
   end
