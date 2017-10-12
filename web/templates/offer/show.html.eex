@@ -8,10 +8,11 @@
 <div class="ma2 k-light-indigo dib mb4">Offer details</div>
 <%= if @is_pm? do %>
   <div class="tc mt2">
-    <% title =
+    <%
+      title =
         case @offer.sent do
-          true -> "RE-SEND"
           false -> "SEND"
+          _not_false -> "RE-SEND"
         end
     %>
     <div class="dib ma1">
