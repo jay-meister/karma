@@ -73,7 +73,6 @@ defmodule Engine.Project do
       :budget,
       :name,
       :codename,
-      :description,
       :start_date,
       :duration,
       :studio_name,

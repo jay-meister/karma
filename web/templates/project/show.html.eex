@@ -145,6 +145,12 @@
   <% end %>
   <div class="tc">
     <%= for deal <- @deals do %>
+      <% title =
+          case length(deal.signees) == 0 do
+            true -> "Add"
+            false -> "Edit"
+          end
+      %>
       <div class="dib tc">
         <div class="relative dib">
           <img class="w5 dib ma1" src="/images/file.png" />
@@ -156,7 +162,7 @@
         </div>
         <div class="tc f5"><%= deal.name %></div>
         <div class="w-50">
-          <%= component "button.html", title: "Approval chain", link: project_document_signee_path(@conn, :add, @project, deal)%>
+          <%= component "button.html", title: "#{title} Approvers", link: project_document_signee_path(@conn, :add, @project, deal)%>
         </div>
       </div>
     <% end %>
@@ -167,6 +173,12 @@
   <% end %>
   <div class="tc">
     <%= for form <- @forms do %>
+    <% title =
+        case length(form.signees) == 0 do
+          true -> "Add"
+          false -> "Edit"
+        end
+    %>
       <div class="dib tc">
         <div class="relative dib">
           <img class="w5 dib ma1" src="/images/file.png" />
@@ -177,7 +189,7 @@
           <% end %>
         </div>
         <div class="tc f5"><%= form.name %></div>
-        <%= component "button.html", title: "Approval chain", link: project_document_signee_path(@conn, :add, @project, form), class: "w-50" %>
+        <%= component "button.html", title: "#{title} Approvers", link: project_document_signee_path(@conn, :add, @project, form), class: "w-50" %>
       </div>
     <% end %>
   </div>

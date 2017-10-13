@@ -387,7 +387,7 @@ var departments_with_jobs = {
     "Stabileye Tech",
     "Techno Dolly Operator",
     ],
-  "Hair And Makeup": [
+  "Hair and Makeup": [
     "Crowd Hair and Makeup Junior",
     "Crowd Hair/Makeup Supervisor",
     "Crowd Makeup Artist",
