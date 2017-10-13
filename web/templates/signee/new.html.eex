@@ -3,8 +3,8 @@
 <img src="/images/breadcrumb-arrow.svg" class="w1 ml3" />
 <%= link "Project", to: project_offer_path(@conn, :index, @project), class: "ma2 k-indigo no-underline" %>
 <img src="/images/breadcrumb-arrow.svg" class="w1 ml2" />
-<%= link "Project details", to: project_path(@conn, :show, @project), class: "no-underline k-indigo" %>
-<img src="/images/breadcrumb-arrow.svg" class="w1 ml2" />
+<%= link "Project details", to: project_path(@conn, :show, @project), class: "no-underline k-indigo ml2" %>
+<img src="/images/breadcrumb-arrow.svg" class="w1 ml3" />
 <div class="ma2 k-light-indigo dib"><%= @project.codename %></div>
 <div class="pt3">
   <%= component "form_divider.html", title: "#{@document.name} Approvers" %>
