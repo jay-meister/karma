@@ -230,13 +230,13 @@ defmodule Engine.OfferController do
       case offer.accepted do
         true ->
           [
-            {"Passport image", contractor.startpacks.passport_url, true},
-            {"Equipment rental list", contractor.startpacks.equipment_rental_url, offer.equipment_rental_required?},
-            {"Box rental list", contractor.startpacks.box_rental_url, offer.box_rental_required?},
-            {"Vehicle insurance image", contractor.startpacks.vehicle_insurance_url, offer.vehicle_allowance_per_week > 0},
-            {"Schedule D letter", contractor.startpacks.schedule_d_letter_url, offer.contract_type == "SCHEDULE D"},
-            {"Loan out company certificate", contractor.startpacks.loan_out_company_cert_url, contractor.startpacks.use_loan_out_company?},
-            {"P45 image", contractor.startpacks.p45_url, offer.contract_type == "PAYE"},
+            {"PASSPORT", contractor.startpacks.passport_url, true},
+            {"EQUIPMENT RENTAL LIST", contractor.startpacks.equipment_rental_url, offer.equipment_rental_required?},
+            {"BOX RENTAL LIST", contractor.startpacks.box_rental_url, offer.box_rental_required?},
+            {"VEHICLE INSURANCE", contractor.startpacks.vehicle_insurance_url, offer.vehicle_allowance_per_week > 0},
+            {"SCHEDULE D LETTER", contractor.startpacks.schedule_d_letter_url, offer.contract_type == "SCHEDULE D"},
+            {"LOAN OUT COMPANY CERTIFICATE", contractor.startpacks.loan_out_company_cert_url, contractor.startpacks.use_loan_out_company?},
+            {"P45", contractor.startpacks.p45_url, offer.contract_type == "PAYE"},
           ]
         _not_true ->
           []
