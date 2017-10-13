@@ -79,7 +79,7 @@
         <div class="dib ml3"><%= String.capitalize(custom_field.name) %>:</div>
         <div class="dib ml3"><%= String.capitalize(value) %></div>
 
-        <%= link to: project_custom_field_path(@conn, :delete, @project, custom_field),
+        <%= link to: project_custom_field_path(@conn, :delete, @project, custom_field, add: false),
           method: :delete,
           data: [confirm: "Are you sure?"] do %>
           <img class="absolute k-w2-5 k-top-center right-1" src="/images/delete.svg" />
