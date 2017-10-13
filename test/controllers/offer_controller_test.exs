@@ -312,12 +312,44 @@ defmodule Engine.OfferControllerTest do
     end
   end
 
+  test "offer accepted, merged documents success - construction loan out", %{project: project} do
+    contractor = insert_user(%{email: "contractor@gmail.com"})
+    offer = insert_offer(project, %{user_id: contractor.id, target_email: "contractor@gmail.com", daily_or_weekly: "daily", department: "Construction"})
+    update_startpack(contractor, %{use_loan_out_company?: true})
+    insert_document(project, %{name: offer.contract_type, url: "www.image_url"})
+    insert_document(project, %{name: "CONSTRUCTION LOAN OUT", url: "www.image_url"})
+    conn = login_user(build_conn(), contractor)
+    with_mock Engine.Mailer, [deliver_later: fn(string) -> string end] do
+      with_mock Engine.Merger, [merge_multiple: fn(_, _) -> {:ok, "Documents merged"} end] do
+        conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: true}
+        assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
+        assert Phoenix.Controller.get_flash(conn, :info) == "Congratulations, you have accepted this offer"
+      end
+    end
+  end
+
   test "offer accepted, merged documents success - daily transport loan out", %{project: project} do
     contractor = insert_user(%{email: "contractor@gmail.com"})
     offer = insert_offer(project, %{user_id: contractor.id, target_email: "contractor@gmail.com", daily_or_weekly: "daily", department: "Transport"})
     update_startpack(contractor, %{use_loan_out_company?: true})
     insert_document(project, %{name: offer.contract_type, url: "www.image_url"})
     insert_document(project, %{name: "DAILY TRANSPORT LOAN OUT", url: "www.image_url"})
+    conn = login_user(build_conn(), contractor)
+    with_mock Engine.Mailer, [deliver_later: fn(string) -> string end] do
+      with_mock Engine.Merger, [merge_multiple: fn(_, _) -> {:ok, "Documents merged"} end] do
+        conn = put conn, project_offer_path(conn, :response, project, offer), offer: %{accepted: true}
+        assert redirected_to(conn, 302) == "/projects/#{project.id}/offers/#{offer.id}"
+        assert Phoenix.Controller.get_flash(conn, :info) == "Congratulations, you have accepted this offer"
+      end
+    end
+  end
+
+  test "offer accepted, merged documents success - transport loan out", %{project: project} do
+    contractor = insert_user(%{email: "contractor@gmail.com"})
+    offer = insert_offer(project, %{user_id: contractor.id, target_email: "contractor@gmail.com", daily_or_weekly: "daily", department: "Transport"})
+    update_startpack(contractor, %{use_loan_out_company?: true})
+    insert_document(project, %{name: offer.contract_type, url: "www.image_url"})
+    insert_document(project, %{name: "TRANSPORT LOAN OUT", url: "www.image_url"})
     conn = login_user(build_conn(), contractor)
     with_mock Engine.Mailer, [deliver_later: fn(string) -> string end] do
       with_mock Engine.Merger, [merge_multiple: fn(_, _) -> {:ok, "Documents merged"} end] do

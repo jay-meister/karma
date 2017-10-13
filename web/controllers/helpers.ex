@@ -161,9 +161,12 @@ defmodule Engine.Controllers.Helpers do
     end
   end
 
-  defp transport_conditional() do
+  defp transport_conditional(vehicle_allowance) do
     # "CONDITIONAL"
-    "TRANSPORT PAYE"
+    case vehicle_allowance do
+      true -> "TRANSPORT SCHEDULE-D"
+      false -> "TRANSPORT PAYE"
+    end
   end
 
   defp sch_d(direct_hire, daily_direct_hire, daily_sch_d) do
@@ -241,7 +244,7 @@ defmodule Engine.Controllers.Helpers do
     end
   end
 
-  def determine_contract_type(department, job_title, project_documents, daily, equipment) do
+  def determine_contract_type(department, job_title, project_documents, daily, equipment, vehicle_allowance) do
     direct_hire = Enum.member?(project_documents, "DIRECT HIRE")
     daily_direct_hire = daily && Enum.member?(project_documents, "DAILY DIRECT HIRE")
     construction_direct_hire = Enum.member?(project_documents, "CONSTRUCTION DIRECT HIRE")
@@ -547,7 +550,7 @@ defmodule Engine.Controllers.Helpers do
             true -> sch_d(direct_hire, daily_direct_hire, daily_transport_sch_d)
             false ->
                 case job_title == "Unit Driver" do
-                  true -> transport_conditional()
+                  true -> transport_conditional(vehicle_allowance)
                   false ->
                     case job_title == "Transport Coordinator" do
                       true -> paye(direct_hire, daily_direct_hire, daily_paye, equipment, department, job_title)
