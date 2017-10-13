@@ -37,7 +37,12 @@ defmodule Engine.S3 do
 
   def get_unique_filename(filename, identifier, file_key) do
     [extension | _list] = Enum.reverse(String.split(filename, "."))
-    filename = String.upcase(String.replace(file_key, "_image", ""))
+    filename =
+      file_key
+      |> String.replace("_image", "")
+      |> String.downcase()
+      |> String.capitalize()
+      
     date = DateTime.utc_now()
     day = Integer.to_string(date.day)
     month = ViewHelpers.find_month(date.month)
@@ -47,7 +52,7 @@ defmodule Engine.S3 do
     seconds = String.slice("0" <> Integer.to_string(date.second), -2, 2)
     timestamp = "#{day}_#{month}_#{year}_#{hour}:#{minutes}:#{seconds}"
     # image_filename = String.replace(filename, " ", "_")
-    "#{identifier}-#{filename}-#{timestamp}.#{extension}"
+    "#{identifier}_#{filename}_#{timestamp}.#{extension}"
   end
 
 

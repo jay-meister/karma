@@ -10,11 +10,11 @@ defmodule Engine.S3Test do
   test "unique filename - contractor" do
     filename = "foxy.png"
     file = "passport"
-    identifier = "JOHN-SMITH"
+    identifier = "JOHN_SMITH"
     unique = S3.get_unique_filename(filename, identifier, file)
 
-    assert [first_name, last_name, file, _timestamp] = String.split(unique, "-")
-    assert file == "PASSPORT"
+    assert [first_name, last_name, file, _day, _month, _year, _time] = String.split(unique, "_")
+    assert file == "Passport"
     assert first_name == "JOHN"
     assert last_name == "SMITH"
   end
@@ -22,11 +22,11 @@ defmodule Engine.S3Test do
   test "unique filename - project" do
     filename = "foxy.png"
     file = "paye"
-    identifier = "SECRET-PROJECT"
+    identifier = "SECRET_PROJECT"
     unique = S3.get_unique_filename(filename, identifier, file)
 
-    assert [first_word, second_word, file, _timestamp] = String.split(unique, "-")
-    assert file == "PAYE"
+    assert [first_word, second_word, file, _day, _month, _year, _time] = String.split(unique, "_")
+    assert file == "Paye"
     assert first_word == "SECRET"
     assert second_word == "PROJECT"
   end
