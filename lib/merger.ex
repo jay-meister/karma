@@ -43,7 +43,7 @@ defmodule Engine.Merger do
             # save to S3
             # get file name from merged path
             image_params = %{path: merged_path, filename: get_file_name(merged_path)}
-            case Engine.S3.upload({:url, image_params, offer.project.codename}) do
+            case Engine.S3.upload({:url, image_params, offer.project.codename, String.replace(document.name, " ", "_")}) do
               {:error, _url, _error} ->
                 {:error, "There was an error saving the document"}
               {:ok, :url, url} ->
