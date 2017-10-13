@@ -393,6 +393,7 @@ var departments_with_jobs = {
     "Crowd Makeup Artist",
     "Crowd Makeup Trainee",
     "Hair and Makeup Artist",
+    "Hair and Makeup Assistant",
     "Hair and Makeup Co-Ordinator",
     "Hair and Makeup Designer",
     "Hair and Makeup Junior",
