@@ -7,7 +7,7 @@
           <%= form_for @delete_changeset, startpack_path(@conn, :delete_uploaded_files, @startpack), fn f -> %>
             <div class="dib relative">
               <img class="w5" src="/images/file.png"  />
-              <div class="f5 tc"><%= file.name %></div>
+              <div class="f5 tc"><%= String.replace(file.name, "RENTAL", "INVENTORY") %></div>
               <%= hidden_input f, file.atom, value: nil %>
               <%= submit "x", class: "k-bg-error k-light-indigo br-100 bn absolute k-top--0-5 left-0 pl3 pr3 f2 nunito tc outline-0 pointer" %>
             </div>
