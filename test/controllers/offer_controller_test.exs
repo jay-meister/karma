@@ -434,6 +434,16 @@ defmodule Engine.OfferControllerTest do
     end
   end
 
+  test "saves offer and returns to offer view from custom fields", %{conn: conn, offer: offer, project: project} do
+    insert_offer_custom_field(project)
+    insert_user(%{first_name: "Dave", last_name: "Seaman", email: "contractor@gmail.com"})
+
+    conn = post conn, project_offer_path(conn, :send_offer, project, offer), offer: %{sent: false}
+    assert Phoenix.Controller.get_flash(conn, :info) == "Offer saved"
+    assert redirected_to(conn, 302) == project_offer_path(conn, :show, project, offer)
+
+  end
+
   test "updates an offer email once send is clicked - registered user", %{conn: conn, project: project} do
     insert_offer_custom_field(project)
     contractor = insert_user(%{first_name: "Dave", last_name: "Seaman", email: "contractor@gmail.com"})
