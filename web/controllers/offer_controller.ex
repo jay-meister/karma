@@ -134,10 +134,12 @@ defmodule Engine.OfferController do
     %{"department" => department,
     "job_title" => job_title,
     "daily_or_weekly" => daily_or_weekly,
-    "equipment_rental_required?" => equipment_rental_required?} = offer_params
+    "equipment_rental_required?" => equipment_rental_required?,
+    "vehicle_allowance_per_week" => vehicle_allowance_per_week} = offer_params
     equipment = equipment_rental_required? == "true"
     daily = daily_or_weekly == "daily"
-    contract_type = determine_contract_type(department, job_title, project_documents, daily, equipment)
+    vehicle_allowance = vehicle_allowance_per_week > 0
+    contract_type = determine_contract_type(department, job_title, project_documents, daily, equipment, vehicle_allowance)
     offer_params = Map.put(offer_params, "contract_type", contract_type)
     # first check the values provided by the user are valid
     validation_changeset = Offer.form_validation(%Offer{}, offer_params)
@@ -158,7 +160,7 @@ defmodule Engine.OfferController do
       full_name: recipient_fullname, num_custom_offer_fields: num_custom_offer_fields)
     else
       # run calculations and add them to the offer_params
-      calculations = parse_offer_strings(offer_params) |> run_calculations(project, project_documents, daily, equipment)
+      calculations = parse_offer_strings(offer_params) |> run_calculations(project, project_documents, daily, equipment, vehicle_allowance)
       offer_params = Map.merge(offer_params, calculations)
       changeset = changeset_maybe_with_user(offer_params, project)
 
@@ -230,13 +232,13 @@ defmodule Engine.OfferController do
       case offer.accepted do
         true ->
           [
-            {"Passport image", contractor.startpacks.passport_url, true},
-            {"Equipment rental list", contractor.startpacks.equipment_rental_url, offer.equipment_rental_required?},
-            {"Box rental list", contractor.startpacks.box_rental_url, offer.box_rental_required?},
-            {"Vehicle insurance image", contractor.startpacks.vehicle_insurance_url, offer.vehicle_allowance_per_week > 0},
-            {"Schedule D letter", contractor.startpacks.schedule_d_letter_url, offer.contract_type == "SCHEDULE D"},
-            {"Loan out company certificate", contractor.startpacks.loan_out_company_cert_url, contractor.startpacks.use_loan_out_company?},
-            {"P45 image", contractor.startpacks.p45_url, offer.contract_type == "PAYE"},
+            {"PASSPORT", contractor.startpacks.passport_url, true},
+            {"EQUIPMENT RENTAL LIST", contractor.startpacks.equipment_rental_url, offer.equipment_rental_required?},
+            {"BOX RENTAL LIST", contractor.startpacks.box_rental_url, offer.box_rental_required?},
+            {"VEHICLE INSURANCE", contractor.startpacks.vehicle_insurance_url, offer.vehicle_allowance_per_week > 0},
+            {"SCHEDULE D LETTER", contractor.startpacks.schedule_d_letter_url, offer.contract_type == "SCHEDULE D"},
+            {"LOAN OUT COMPANY CERTIFICATE", contractor.startpacks.loan_out_company_cert_url, contractor.startpacks.use_loan_out_company?},
+            {"P45", contractor.startpacks.p45_url, offer.contract_type == "PAYE"},
           ]
         _not_true ->
           []
@@ -373,15 +375,17 @@ defmodule Engine.OfferController do
           end
         false ->
           # run calculations and add them to the offer_params
-          calculations = parse_offer_strings(offer_params) |> run_calculations(project, project_documents, daily, equipment)
-          offer_params = Map.merge(offer_params, calculations)
           %{"department" => department,
           "job_title" => job_title,
           "daily_or_weekly" => daily_or_weekly,
-          "equipment_rental_required?" => equipment_rental_required?} = offer_params
+          "equipment_rental_required?" => equipment_rental_required?,
+          "vehicle_allowance_per_week" => vehicle_allowance_per_week} = offer_params
           daily = daily_or_weekly == "daily"
           equipment = equipment_rental_required? == "true"
-          contract_type = determine_contract_type(department, job_title, project_documents, daily, equipment)
+          vehicle_allowance = vehicle_allowance_per_week > 0
+          calculations = parse_offer_strings(offer_params) |> run_calculations(project, project_documents, daily, equipment, vehicle_allowance)
+          offer_params = Map.merge(offer_params, calculations)
+          contract_type = determine_contract_type(department, job_title, project_documents, daily, equipment, vehicle_allowance)
           offer_params = Map.put(offer_params, "contract_type", contract_type)
           changeset = Offer.changeset(offer, offer_params)
 
@@ -414,6 +418,8 @@ defmodule Engine.OfferController do
     loan_out = contractor.startpacks.use_loan_out_company?
     daily_construction_loan_out = offer.daily_or_weekly == "daily" && Enum.member?(project_documents, "DAILY CONSTRUCTION LOAN OUT")
     daily_transport_loan_out = offer.daily_or_weekly == "daily" && Enum.member?(project_documents, "DAILY TRANSPORT LOAN OUT")
+    transport_loan_out = Enum.member?(project_documents, "TRANSPORT LOAN OUT")
+    construction_loan_out = Enum.member?(project_documents, "CONSTRUCTION LOAN OUT")
     daily = offer.daily_or_weekly == "daily"
     contract_type =
       case loan_out do
@@ -422,12 +428,20 @@ defmodule Engine.OfferController do
             %{department: "Construction"} ->
               case daily_construction_loan_out do
                 true -> "DAILY CONSTRUCTION LOAN OUT"
-                false -> "CONSTRUCTION LOAN OUT"
+                false ->
+                  case construction_loan_out do
+                    true -> "CONSTRUCTION LOAN OUT"
+                    false -> "LOAN OUT"
+                  end
               end
             %{department: "Transport"} ->
               case daily_transport_loan_out do
                 true -> "DAILY TRANSPORT LOAN OUT"
                 false -> "TRANSPORT LOAN OUT"
+                  case transport_loan_out do
+                    true -> "TRANSPORT LOAN OUT"
+                    false -> "LOAN OUT"
+                  end
               end
             _else ->
               case daily do
@@ -438,6 +452,7 @@ defmodule Engine.OfferController do
           false ->
             offer.contract_type
           end
+
     updated_offer = Repo.update!(Ecto.Changeset.change(offer, %{contract_type: contract_type}))
 
     # get the relevant original forms for merging
@@ -564,7 +579,7 @@ defmodule Engine.OfferController do
     Enum.reduce(keys, params, fn(i, acc) -> Map.update!(acc, i, f) end)
   end
 
-  def run_calculations(params, project, project_documents, daily, equipment) do
+  def run_calculations(params, project, project_documents, daily, equipment, vehicle_allowance) do
     %{"fee_per_day_inc_holiday" => fee_per_day_inc_holiday,
     "working_week" => working_week,
     "job_title" => job_title,
@@ -578,7 +593,7 @@ defmodule Engine.OfferController do
     fee_per_week_inc_holiday = calc_fee_per_week_inc_holiday(fee_per_day_inc_holiday, working_week)
     fee_per_week_exc_holiday = calc_fee_per_week_exc_holiday(fee_per_week_inc_holiday, project.holiday_rate)
     holiday_pay_per_week = calc_holiday_pay_per_week(fee_per_week_inc_holiday, fee_per_week_exc_holiday)
-    contract_type = determine_contract_type(department, job_title, project_documents, daily, equipment)
+    contract_type = determine_contract_type(department, job_title, project_documents, daily, equipment, vehicle_allowance)
     sixth_day_fee_inc_holiday = calc_day_fee_inc_holidays(fee_per_day_inc_holiday, sixth_day_fee_multiplier)
     sixth_day_fee_exc_holiday = calc_day_fee_exc_holidays(fee_per_day_exc_holiday, sixth_day_fee_multiplier)
     sixth_day_holiday_pay = calc_holiday_pay_difference(sixth_day_fee_inc_holiday, sixth_day_fee_exc_holiday)

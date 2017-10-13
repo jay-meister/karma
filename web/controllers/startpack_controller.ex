@@ -56,7 +56,7 @@ defmodule Engine.StartpackController do
         |> put_flash(:error, "Error updating startpack")
         |> render("index.html", changeset: image_changeset, startpack: startpack, offer: %{}, user: user, delete_changeset: delete_changeset, uploaded_files: uploaded_files)
       true ->
-        urls = Engine.S3.upload_many(startpack_params, @file_upload_keys, "#{String.upcase(user.first_name)}-#{String.upcase(user.last_name)}")
+        urls = Engine.S3.upload_many(startpack_params, @file_upload_keys, "#{String.upcase(user.first_name)}_#{String.upcase(user.last_name)}")
 
         params = Map.merge(startpack_params, urls)
 

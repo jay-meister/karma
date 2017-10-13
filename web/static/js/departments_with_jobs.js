@@ -387,12 +387,13 @@ var departments_with_jobs = {
     "Stabileye Tech",
     "Techno Dolly Operator",
     ],
-  "Hair And Makeup": [
+  "Hair and Makeup": [
     "Crowd Hair and Makeup Junior",
     "Crowd Hair/Makeup Supervisor",
     "Crowd Makeup Artist",
     "Crowd Makeup Trainee",
     "Hair and Makeup Artist",
+    "Hair and Makeup Assistant",
     "Hair and Makeup Co-Ordinator",
     "Hair and Makeup Designer",
     "Hair and Makeup Junior",

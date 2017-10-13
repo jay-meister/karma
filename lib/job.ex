@@ -20,7 +20,7 @@ defmodule Engine.Job do
       "Electrical",
       "Greens",
       "Grip",
-      "Hair And Makeup",
+      "Hair and Makeup",
       "IT",
       "Locations",
       "Medical",

@@ -6,7 +6,7 @@ defmodule Engine.S3 do
     keys
     # remove keys that haven't been uploaded
     |> Enum.filter(fn({file_key, _url_key}) -> Map.has_key?(params, file_key) end)
-    |> Enum.map(fn({file_key, url_key}) -> {url_key, Map.get(params, file_key), identifier} end)
+    |> Enum.map(fn({file_key, url_key}) -> {url_key, Map.get(params, file_key), identifier, file_key} end)
     |> Task.async_stream(&upload/1, ops)
     |> Enum.to_list()
     |> Enum.filter(fn {_async_res, {res, _url_key, _url}} -> res != :error end)
@@ -20,9 +20,9 @@ defmodule Engine.S3 do
   #  filename: "Screen Shot 2017-06-05 at 16.36.15.png",
   #  path: "/var/folders/_p/46vn16c94z7cqz18w_3qxjb00000gn/T//plug-1496/multipart-909146-647759-1"
   # }
-  def upload({url_key, image_params, identifier}) do
+  def upload({url_key, image_params, identifier, file_key}) do
     # first check if user has uploaded an image
-    unique_filename = get_unique_filename(image_params.filename, identifier)
+    unique_filename = get_unique_filename(image_params.filename, identifier, file_key)
 
     case File.read(image_params.path) do
       {:error, _} ->
@@ -35,7 +35,14 @@ defmodule Engine.S3 do
     end
   end
 
-  def get_unique_filename(filename, identifier) do
+  def get_unique_filename(filename, identifier, file_key) do
+    [extension | _list] = Enum.reverse(String.split(filename, "."))
+    filename =
+      file_key
+      |> String.replace("_image", "")
+      |> String.downcase()
+      |> String.capitalize()
+      
     date = DateTime.utc_now()
     day = Integer.to_string(date.day)
     month = ViewHelpers.find_month(date.month)
@@ -44,8 +51,8 @@ defmodule Engine.S3 do
     minutes = String.slice("0" <> Integer.to_string(date.minute), -2, 2)
     seconds = String.slice("0" <> Integer.to_string(date.second), -2, 2)
     timestamp = "#{day}_#{month}_#{year}_#{hour}:#{minutes}:#{seconds}"
-    image_filename = String.replace(filename, " ", "_")
-    "#{identifier}-#{timestamp}-#{image_filename}"
+    # image_filename = String.replace(filename, " ", "_")
+    "#{identifier}_#{filename}_#{timestamp}.#{extension}"
   end
 
 
