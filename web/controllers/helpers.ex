@@ -420,7 +420,7 @@ defmodule Engine.Controllers.Helpers do
                 false -> sch_d(direct_hire, daily_direct_hire, daily_sch_d)
               end
           end
-      "Hair And Makeup" ->
+      "Hair and Makeup" ->
           case Enum.member?(["Crowd Hair/Makeup Supervisor",
           "Crowd Makeup Artist",
           "Hair and Makeup Artist",

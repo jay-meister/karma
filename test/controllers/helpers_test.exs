@@ -207,9 +207,9 @@ defmodule Engine.Controllers.HelpersTest do
     assert conditional_contract == "PAYE"
   end
 
-  test "determine_contract_type(department, job_title) Hair And Makeup" do
-    sch_d_contract = Helpers.determine_contract_type("Hair And Makeup", "Hair Designer", [], false, false)
-    paye_contract = Helpers.determine_contract_type("Hair And Makeup", "Hairdresser", [], false, false)
+  test "determine_contract_type(department, job_title) Hair and Makeup" do
+    sch_d_contract = Helpers.determine_contract_type("Hair and Makeup", "Hair Designer", [], false, false)
+    paye_contract = Helpers.determine_contract_type("Hair and Makeup", "Hairdresser", [], false, false)
 
 
     assert sch_d_contract == "SCHEDULE-D"
