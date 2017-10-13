@@ -39,7 +39,7 @@ defmodule Engine.SigneeControllerTest do
 
   test "get add signees", %{conn: conn, project: project, document: document} do
     conn = get conn, project_document_signee_path(conn, :add, project, document)
-    assert html_response(conn, 200) =~ "Add approvers"
+    assert html_response(conn, 200) =~ project.codename
   end
 
   test "get add signees project does not exist", %{conn: conn, document: document} do
