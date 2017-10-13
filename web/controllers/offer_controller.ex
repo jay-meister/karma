@@ -195,12 +195,19 @@ defmodule Engine.OfferController do
     {:ok, offer} = Repo.update(changeset)
     case original_offer.sent do
       true ->
-        # email function decides whether this is a registered user
-        Engine.Email.send_updated_offer_email(conn, offer, project)
-        |> Engine.Mailer.deliver_later()
-        conn
-        |> put_flash(:info, "Offer updated successfully, and re-emailed to recipient")
-        |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
+        case offer.sent do
+          true ->
+            # email function decides whether this is a registered user
+            Engine.Email.send_updated_offer_email(conn, offer, project)
+            |> Engine.Mailer.deliver_later()
+            conn
+            |> put_flash(:info, "Offer updated successfully, and re-emailed to recipient")
+            |> redirect(to: project_offer_path(conn, :show, offer.project_id, offer))
+          false ->
+            conn
+            |> put_flash(:info, "Offer saved")
+            |> redirect(to: project_offer_path(conn, :show, project_id, offer_id))
+        end
       _not_true ->
         case offer.sent do
           true ->
@@ -210,11 +217,11 @@ defmodule Engine.OfferController do
             conn
             |> put_flash(:info, "Offer sent to #{offer.target_email}")
             |> redirect(to: project_offer_path(conn, :index, project_id))
-            false ->
-              conn
-              |> put_flash(:info, "Offer saved")
-              |> redirect(to: project_offer_path(conn, :show, project_id, offer_id))
-            end
+          false ->
+            conn
+            |> put_flash(:info, "Offer saved")
+            |> redirect(to: project_offer_path(conn, :show, project_id, offer_id))
+          end
     end
 
 
