@@ -421,8 +421,11 @@
     label: "VAT number"
     %>
 
+    <%= component "form_divider.html", title: "", colour: "k-b--grey" %>
+
+
     <div conditional class="mb5">
-      <%= label f, :use_loan_out_company?, "Check the box if you deal through a loan out company", class: "dib mw-100 mb2 fw4 k-inline-checkbox-label k-inline-checkbox-label" %>
+      <div class="dib mw-100 mb2 fw4 k-inline-checkbox-label k-inline-checkbox-label">Check this box to provide your <strong>loan out company</strong> details</div>
       <%= checkbox f, :use_loan_out_company?, class: "db mr2 k-w1-5 h2" %>
       <%= error_tag f, :use_loan_out_company? %>
 
