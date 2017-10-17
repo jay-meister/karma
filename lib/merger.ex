@@ -28,7 +28,6 @@ defmodule Engine.Merger do
         {:error, "There was an error retrieving the document"}
       {:ok, doc_path} ->
         # get formatted data
-         IO.inspect get_data_for_merge(offer).startpack.primary_address_block
         json =
           get_data_for_merge(offer)
           |> Formatter.format_data()
