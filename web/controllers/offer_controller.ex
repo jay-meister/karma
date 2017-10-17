@@ -91,7 +91,7 @@ defmodule Engine.OfferController do
     query = from o in Offer,
       where: o.project_id == ^project_id,
       order_by: o.updated_at
-    offers = Repo.all(query) |> Repo.preload(:user)
+    offers = Repo.all(query) |> Repo.preload(:user) |> Repo.preload(:altered_documents)
 
     ops = [offers: offers, project: project]
     render conn, "index.html", ops

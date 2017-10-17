@@ -27,19 +27,25 @@
           user -> "#{user.first_name} #{user.last_name}"
         end
     end
+  altered_docs = offer.altered_documents |> Engine.Repo.preload(:document)
+  deal_documents = Enum.filter(altered_docs, fn altered_doc -> altered_doc.document.category == "Deal" end)
+  form_documents = Enum.filter(altered_docs, fn altered_doc -> altered_doc.document.category == "Form" end)
   text =
-    case offer.sent do
-      false -> "draft"
-      _not_false ->
-        case offer.accepted do
-          true -> "accepted"
-          _not_true ->
-            case offer.accepted == false do
-              true -> "rejected"
-              _not_true -> "sent"
+    case length(deal_documents) > 0 && hd(deal_documents).status == "signing" || length(form_documents) > 0 && hd(form_documents).status == "signing" do
+      true -> "docusign"
+      false ->
+        case offer.sent do
+          false -> "draft"
+          _not_false ->
+            case offer.accepted do
+              true -> "accepted"
+              _not_true ->
+                case offer.accepted == false do
+                  true -> "rejected"
+                  _not_true -> "sent"
+                end
             end
         end
-
     end
   background_colours =
     case offer.sent do
