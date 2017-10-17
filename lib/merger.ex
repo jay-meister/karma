@@ -79,6 +79,7 @@ defmodule Engine.Merger do
     first_name = Map.take(Map.from_struct(Repo.get(Engine.User, offer.user_id)), [:first_name])
     last_name = Map.take(Map.from_struct(Repo.get(Engine.User, offer.user_id)), [:last_name])
     full_name = "#{first_name.first_name} #{last_name.last_name}"
+
     offer = Repo.get(Engine.Offer, offer.id) |> Repo.preload(:custom_fields)
     custom_fields = Enum.map(offer.custom_fields, fn custom_field -> Map.from_struct(custom_field) end)
 
@@ -86,10 +87,24 @@ defmodule Engine.Merger do
     project = Map.from_struct(Repo.get(Engine.Project, offer.project_id) |> Repo.preload(:custom_fields))
     project_custom_field_structs = project.custom_fields |> Enum.filter(fn field -> field.type == "Project" end)
     project_custom_fields = build_custom_field_map(%{}, Enum.map(project_custom_field_structs, fn custom_field -> Map.from_struct(custom_field) end))
-    %{user: Map.merge(Map.take(Map.from_struct(Repo.get(Engine.User, offer.user_id)), user()), %{full_name: full_name}),
+
+    startpack_address_line_1 = Map.take(Map.from_struct(Repo.get_by(Engine.Startpack, user_id: offer.user_id)), [:primary_address_1])
+    startpack_address_line_2 = Map.take(Map.from_struct(Repo.get_by(Engine.Startpack, user_id: offer.user_id)), [:primary_address_2])
+    startpack_address_line_2 =
+      case startpack_address_line_2.primary_address_2 == nil do
+        true -> ""
+        false -> "#{startpack_address_line_2.primary_address_2}, "
+      end
+    startpack_address_city = Map.take(Map.from_struct(Repo.get_by(Engine.Startpack, user_id: offer.user_id)), [:primary_address_city])
+    startpack_address_country = Map.take(Map.from_struct(Repo.get_by(Engine.Startpack, user_id: offer.user_id)), [:primary_address_country])
+    startpack_address_postcode = Map.take(Map.from_struct(Repo.get_by(Engine.Startpack, user_id: offer.user_id)), [:primary_address_postcode])
+    startpack_address_block = "#{startpack_address_line_1.primary_address_1}, #{startpack_address_line_2}#{startpack_address_city.primary_address_city}, #{startpack_address_country.primary_address_country}, #{startpack_address_postcode.primary_address_postcode}"
+
+    %{
+      user: Map.merge(Map.take(Map.from_struct(Repo.get(Engine.User, offer.user_id)), user()), %{full_name: full_name}),
       project: Map.take(Map.from_struct(Repo.get(Engine.Project, offer.project_id)), project()),
       offer: Map.take(Map.from_struct(Repo.get(Engine.Offer, offer.id)), offer()),
-      startpack: Map.take(Map.from_struct(Repo.get_by(Engine.Startpack, user_id: offer.user_id)), startpack()),
+      startpack: Map.merge(Map.take(Map.from_struct(Repo.get_by(Engine.Startpack, user_id: offer.user_id)), startpack()), %{primary_address_block: startpack_address_block}),
       offer_custom_field: offer_custom_fields,
       project_custom_field: project_custom_fields
     }
