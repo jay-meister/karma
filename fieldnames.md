@@ -90,6 +90,7 @@ startpack_primary_address_2
 startpack_primary_address_city
 startpack_primary_address_postcode
 startpack_primary_address_country
+startpack_primary_address_block
 startpack_primary_address_tel
 startpack_agent_deal?
 startpack_agent_name
