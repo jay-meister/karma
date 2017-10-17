@@ -66,6 +66,7 @@ offer_contractor_details_accepted
 user_email
 user_first_name
 user_last_name
+user_full_name
 
 # startpack
 startpack_gender
@@ -133,3 +134,8 @@ startpack_bank_account_number
 startpack_bank_sort_code
 startpack_bank_iban
 startpack_bank_swift_code
+
+# Custom fields
+
+offer_custom_field_[field_name]
+project_custom_field_[field_name]
