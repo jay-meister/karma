@@ -141,6 +141,48 @@ defmodule Engine.MergerTest do
     end
   end
 
+  test "merge funciton: use loan out company" do
+    pm = insert_user()
+    project = insert_project(pm)
+    contractor = insert_user(%{email: "contractor@gmail.com"})
+    _startpack = update_startpack(contractor, %{use_loan_out_company?: true})
+    offer =
+      insert_offer(project, %{sixth_day_holiday_pay: 10.0, seventh_day_holiday_pay: 10.0, user_id: contractor.id, box_rental_required?: false, equipment_rental_required?: false})
+      |> Repo.preload(:project)
+    document = insert_document(project, %{name: offer.contract_type, url: "www.image_url.pdf"})
+
+    with_mocks([
+      {Engine.S3, [],
+       [download: fn(_, _) -> {:ok, "www.aws.someurl.pdf"} end,
+        upload: fn(_) -> {:ok, :url, "www.aws.another.pdf"} end]},
+      {Engine.ScriptRunner, [],
+       [run_merge_script: fn(_) -> {"destination.pdf", 0} end]}
+    ]) do
+      assert {:ok, "www.aws.another.pdf"} = Merger.merge(offer, document)
+    end
+  end
+
+  test "merge funciton: don't use agent" do
+    pm = insert_user()
+    project = insert_project(pm)
+    contractor = insert_user(%{email: "contractor@gmail.com"})
+    _startpack = update_startpack(contractor, %{agent_deal?: false})
+    offer =
+      insert_offer(project, %{sixth_day_holiday_pay: 10.0, seventh_day_holiday_pay: 10.0, user_id: contractor.id, box_rental_required?: false, equipment_rental_required?: false})
+      |> Repo.preload(:project)
+    document = insert_document(project, %{name: offer.contract_type, url: "www.image_url.pdf"})
+
+    with_mocks([
+      {Engine.S3, [],
+       [download: fn(_, _) -> {:ok, "www.aws.someurl.pdf"} end,
+        upload: fn(_) -> {:ok, :url, "www.aws.another.pdf"} end]},
+      {Engine.ScriptRunner, [],
+       [run_merge_script: fn(_) -> {"destination.pdf", 0} end]}
+    ]) do
+      assert {:ok, "www.aws.another.pdf"} = Merger.merge(offer, document)
+    end
+  end
+
   test "merge_multiple function: success" do
     pm = insert_user()
     project = insert_project(pm)
