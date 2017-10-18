@@ -280,6 +280,7 @@ defmodule Engine.Merger do
     :student_loan_plan_1?,
     :student_loan_finished_before_6_april?,
     :schedule_d_letter_url,
+    :use_loan_out_company?,
     :loan_out_company_name,
     :loan_out_company_registration_number,
     :loan_out_company_address,
