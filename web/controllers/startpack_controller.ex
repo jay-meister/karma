@@ -37,7 +37,13 @@ defmodule Engine.StartpackController do
   end
 
   def update(conn, %{"id" => id, "startpack" => startpack_params}, user) do
-    %{"loan_out_company_address" => loca} = startpack_params
+    %{
+      "loan_out_company_address" => loca,
+      "student_loan_not_repayed?" => student_loan_not_repayed?
+    } = startpack_params
+
+    startpack_params = remove_student_loan_values_if_repaid(startpack_params, student_loan_not_repayed?)
+
     single_line_address = Regex.replace(~r/\r\n/, loca, " ")
     startpack_params =
       startpack_params
@@ -73,6 +79,21 @@ defmodule Engine.StartpackController do
             |> put_flash(:info, "Startpack updated successfully")
             |> redirect(to: startpack_path(conn, :index, offer_id: offer_id))
       end
+    end
+  end
+
+  defp remove_student_loan_values_if_repaid(startpack_params, not_repaid?) do
+    case not_repaid? == true || not_repaid? == "true" do
+      true ->
+        startpack_params
+        |> Map.delete("student_loan_repay_direct?")
+        |> Map.put_new("student_loan_repay_direct?", nil)
+        |> Map.delete("student_loan_plan_1?")
+        |> Map.put_new("student_loan_plan_1?", nil)
+        |> Map.delete("student_loan_finished_before_6_april?")
+        |> Map.put_new("student_loan_finished_before_6_april?", nil)
+      false ->
+        startpack_params
     end
   end
 
