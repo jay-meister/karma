@@ -145,11 +145,13 @@
   <% end %>
   <div class="tc">
     <%= for deal <- @deals do %>
-      <% title =
+      <%
+        title =
           case length(deal.signees) == 0 do
             true -> "Add"
             false -> "Edit"
           end
+        invert = !(length(deal.signees) == 0)
       %>
       <div class="dib tc">
         <div class="relative dib">
@@ -162,7 +164,7 @@
         </div>
         <div class="tc f5"><%= deal.name %></div>
         <div class="w-50">
-          <%= component "button.html", title: "#{title} Approvers", link: project_document_signee_path(@conn, :add, @project, deal)%>
+          <%= component "button.html", title: "#{title} Approvers", link: project_document_signee_path(@conn, :add, @project, deal), invert: invert %>
         </div>
       </div>
     <% end %>
