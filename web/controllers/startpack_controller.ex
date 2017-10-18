@@ -84,7 +84,7 @@ defmodule Engine.StartpackController do
 
   defp remove_student_loan_values_if_repaid(startpack_params, not_repaid?) do
     case not_repaid? == true || not_repaid? == "true" do
-      true ->
+      false ->
         startpack_params
         |> Map.delete("student_loan_repay_direct?")
         |> Map.put_new("student_loan_repay_direct?", nil)
@@ -92,7 +92,7 @@ defmodule Engine.StartpackController do
         |> Map.put_new("student_loan_plan_1?", nil)
         |> Map.delete("student_loan_finished_before_6_april?")
         |> Map.put_new("student_loan_finished_before_6_april?", nil)
-      false ->
+      true ->
         startpack_params
     end
   end
