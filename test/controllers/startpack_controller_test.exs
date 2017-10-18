@@ -95,7 +95,7 @@ defmodule Engine.StartpackControllerTest do
   end
 
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn, user: user} do
-    conn = post conn, startpack_path(conn, :update, user.startpacks), startpack: %{"vehicle_bring_own?": false, "loan_out_company_address": ""}
+    conn = post conn, startpack_path(conn, :update, user.startpacks), startpack: %{"vehicle_bring_own?": false, "loan_out_company_address": "", "student_loan_not_repayed?": false}
     assert html_response(conn, 302) =~ "/startpack"
   end
 
