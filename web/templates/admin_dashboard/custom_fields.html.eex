@@ -6,27 +6,31 @@
   <%= for project <- @all_projects do %>
     <div class="mb3 pa2">
       <%= component "form_divider.html", title: "#{project.name}/#{project.codename}" %>
-      <div class="pl2">
-        <div class="f3 mb4">Custom Fields</div>
-        <div class="mb3">
-          <div class="dib mr5 f3" style="min-width:4.25rem;">Type</div>
-          <div class="dib f3">Fieldname</div>
-        </div>
-        <div>
-          <%= for field <- Enum.filter(project.custom_fields, fn field -> field.type == "Project" end) do %>
-          <div class="mb2">
-            <div class="dib mr5" style="min-width:4.25rem;"><%= field.type %></div>
-            <div class="dib"><%= field.name %></div>
+      <%= if length(project.custom_fields) == 0 do %>
+        <div class="tc k-bg-indigo white pa4 f2 br3 mb4">This project has no custom fields</div>
+      <% else %>
+        <div class="pl2">
+          <div class="f3 mb4">Custom Fields</div>
+          <div class="mb3">
+            <div class="dib mr5 f3" style="min-width:4.25rem;">Type</div>
+            <div class="dib f3">Fieldname</div>
           </div>
-          <% end %>
-          <%= for field <- Enum.filter(project.custom_fields, fn field -> field.value == nil end) do %>
+          <div>
+            <%= for field <- Enum.filter(project.custom_fields, fn field -> field.type == "Project" end) do %>
             <div class="mb2">
               <div class="dib mr5" style="min-width:4.25rem;"><%= field.type %></div>
               <div class="dib"><%= field.name %></div>
             </div>
-          <% end %>
+            <% end %>
+            <%= for field <- Enum.filter(project.custom_fields, fn field -> field.value == nil end) do %>
+            <div class="mb2">
+              <div class="dib mr5" style="min-width:4.25rem;"><%= field.type %></div>
+              <div class="dib"><%= field.name %></div>
+            </div>
+            <% end %>
+          </div>
         </div>
-      </div>
+      <% end %>
     </div>
   <% end %>
 </div>
