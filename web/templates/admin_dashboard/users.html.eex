@@ -1,0 +1,35 @@
+<h1 class="k-indigo top--header absolute fw4 mb0">Users</h1>
+<%= link "Admin dashboard", to: admin_dashboard_path(@conn, :index), class: "mr2 no-underline k-indigo" %>
+<img src="/images/breadcrumb-arrow.svg" class="w1 ml2" />
+<div class="ma2 k-light-indigo dib">Users</div>
+<div>
+  <%= for user <- @all_users do %>
+    <div class="mb3 pa2">
+      <%= component "form_divider.html", title: "#{user.first_name} #{user.last_name}" %>
+      <div class="pl2">
+        <div>
+          <%= component "data.html",
+          data: user.email,
+          label: "Email"
+          %>
+          <%= component "data.html",
+          data: user.terms_accepted,
+          label: "Terms accepted"
+          %>
+          <%= component "data.html",
+          data: user.verified,
+          label: "Verified"
+          %>
+          <%= component "data.html",
+          data: format_long_date(user.inserted_at),
+          label: "Registered"
+          %>
+          <%= component "data.html",
+          data: user.id,
+          label: "User ID"
+          %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

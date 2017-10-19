@@ -1,0 +1,6 @@
+<%= link to: assigns[:link], class: "link" do %>
+  <div class="tc w-40 pa4 br2 k-indigo k-bg-input ma2 dib">
+    <div class="f2"><%= assigns[:title] %></div>
+    <div class="pt3"><%= assigns[:subtitle] %></div>
+  </div>
+<% end %>

@@ -18,4 +18,20 @@ defmodule Engine.AdminDashboardControllerTest do
 
     assert html_response(conn, 200) =~ "Admin dashboard"
   end
+
+  test "view custom fields" do
+    user = insert_user(%{admin: true, email: "admin@email.com"})
+    conn = login_user(build_conn(), user)
+    conn = get conn, admin_dashboard_path(conn, :custom_fields)
+
+    assert html_response(conn, 200) =~ "Custom fields"
+  end
+
+  test "view users" do
+    user = insert_user(%{admin: true, email: "admin@email.com"})
+    conn = login_user(build_conn(), user)
+    conn = get conn, admin_dashboard_path(conn, :users)
+
+    assert html_response(conn, 200) =~ "Users"
+  end
 end

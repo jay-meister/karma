@@ -5,7 +5,7 @@
     end
 %>
 <%= if assigns[:email] != true do %>
-  <li class="pt2 f4">
+  <li class="pt2 f4 list">
     <table>
       <td class="k-minw-20">
         <strong><%= assigns[:label] %><%= divider %></strong>
@@ -16,7 +16,7 @@
     </table>
   </li>
 <% else %>
-  <li class="pt2 f4">
+  <li class="pt2 f4 list">
     <table>
       <td class="k-minw-20">
         <strong><%= assigns[:label] %><%= divider %></strong>

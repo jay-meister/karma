@@ -30,7 +30,7 @@ defmodule Engine.Router do
   # authed routes
   scope "/", Engine do
     pipe_through [:browser, :authenticate]
-    get "/admin-dashboard", AdminDashboardController, :index
+    # get "/admin-dashboard", AdminDashboardController, :index
     post "/startpack/:id", StartpackController, :update
     post "/startpack/:id/delete-file", StartpackController, :delete_uploaded_files
     resources "/startpack", StartpackController, except: [:new, :create, :delete]
@@ -55,6 +55,14 @@ defmodule Engine.Router do
       end
       put "/offers/:id/response", OfferController, :response
     end
+  end
+
+  # admin authed routes
+  scope "/admin", Engine do
+    pipe_through [:browser, :authenticate_admin]
+    get "/dashboard", AdminDashboardController, :index
+    get "/custom-fields", AdminDashboardController, :custom_fields
+    get "/users", AdminDashboardController, :users
   end
 
   # Other scopes may use custom stacks.
