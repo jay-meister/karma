@@ -21,7 +21,7 @@
           label: "Verified"
           %>
           <%= component "data.html",
-          data: user.inserted_at,
+          data: format_long_date(user.inserted_at),
           label: "Registered"
           %>
           <%= component "data.html",
