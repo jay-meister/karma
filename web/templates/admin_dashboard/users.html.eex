@@ -3,7 +3,7 @@
 <img src="/images/breadcrumb-arrow.svg" class="w1 ml2" />
 <div class="ma2 k-light-indigo dib">Users</div>
 <div>
-  <%= for user <- @all_users do %>
+  <%= for user <- Enum.sort(@all_users, &(&1.id < &2.id)) do %>
     <div class="mb3 pa2">
       <%= component "form_divider.html", title: "#{user.first_name} #{user.last_name}" %>
       <div class="pl2">
