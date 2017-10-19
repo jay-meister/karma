@@ -1,0 +1,32 @@
+<h1 class="k-indigo top--header absolute fw4 mb0">Custom fields</h1>
+<%= link "Admin dashboard", to: admin_dashboard_path(@conn, :index), class: "mr2 no-underline k-indigo" %>
+<img src="/images/breadcrumb-arrow.svg" class="w1 ml2" />
+<div class="ma2 k-light-indigo dib">Custom fields</div>
+<div>
+  <%= for project <- @all_projects do %>
+    <div class="mb3 pa2">
+      <%= component "form_divider.html", title: "#{project.name}/#{project.codename}" %>
+      <div class="pl2">
+        <div class="f3 mb4">Custom Fields</div>
+        <div class="mb3">
+          <div class="dib mr5 f3" style="min-width:4.25rem;">Type</div>
+          <div class="dib f3">Fieldname</div>
+        </div>
+        <div>
+          <%= for field <- Enum.filter(project.custom_fields, fn field -> field.type == "Project" end) do %>
+          <div class="mb2">
+            <div class="dib mr5" style="min-width:4.25rem;"><%= field.type %></div>
+            <div class="dib"><%= field.name %></div>
+          </div>
+          <% end %>
+          <%= for field <- Enum.filter(project.custom_fields, fn field -> field.value == nil end) do %>
+            <div class="mb2">
+              <div class="dib mr5" style="min-width:4.25rem;"><%= field.type %></div>
+              <div class="dib"><%= field.name %></div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -63,7 +63,7 @@ defmodule Engine.Web do
     quote do
       use Phoenix.Router
       # Authenticate entire controllers from the router
-      import Engine.Auth, only: [authenticate: 2]
+      import Engine.Auth, only: [authenticate: 2, authenticate_admin: 2]
     end
   end
 
