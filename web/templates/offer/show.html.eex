@@ -398,6 +398,7 @@
 <% end %>
 <%= component "form_divider.html", title: "Project contacts" %>
 <%= for {atom, label, formatted, group, email} <- [
+  {:company_name, nil, @project.company_name, false, false},
   {:operating_base_address, nil, @project.operating_base_address_1, false, false},
   {:operating_base_address_2, "", @project.operating_base_address_2, true, false},
   {:operating_base_address_city, "", @project.operating_base_address_city, true, false},
