@@ -52,7 +52,35 @@ defmodule Engine.Formatter do
         _not_true ->
           startpack_data
       end
-
+    startpack_data =
+      case startpack_data.agent_deal? do
+        true -> startpack_data
+        false ->
+          startpack_data
+          |> Map.delete(:agent_name)
+          |> Map.delete(:agent_company)
+          |> Map.delete(:agent_address)
+          |> Map.delete(:agent_tel)
+          |> Map.delete(:agent_email_address)
+          |> Map.delete(:agent_bank_name)
+          |> Map.delete(:agent_bank_address)
+          |> Map.delete(:agent_bank_sort_code)
+          |> Map.delete(:agent_bank_account_number)
+          |> Map.delete(:agent_bank_account_name)
+          |> Map.delete(:agent_bank_account_swift_code)
+          |> Map.delete(:agent_bank_account_iban)
+      end
+    startpack_data =
+      case startpack_data.use_loan_out_company? do
+        true -> startpack_data
+        false ->
+          startpack_data
+          |> Map.delete(:loan_out_company_name)
+          |> Map.delete(:loan_out_company_registration_number)
+          |> Map.delete(:loan_out_company_address)
+          |> Map.delete(:loan_out_company_email)
+          |> Map.delete(:loan_out_company_cert_url)
+      end
 
     %{
       offer: offer_data,

@@ -100,6 +100,7 @@ defmodule Engine.Merger do
     startpack_address_postcode = Map.take(Map.from_struct(Repo.get_by(Engine.Startpack, user_id: offer.user_id)), [:primary_address_postcode])
     startpack_address_block = "#{startpack_address_line_1.primary_address_1}, #{startpack_address_line_2}#{startpack_address_city.primary_address_city}, #{startpack_address_country.primary_address_country}, #{startpack_address_postcode.primary_address_postcode}"
 
+    IO.inspect Map.take(Map.from_struct(Repo.get_by(Engine.Startpack, user_id: offer.user_id)), startpack())
     %{
       user: Map.merge(Map.take(Map.from_struct(Repo.get(Engine.User, offer.user_id)), user()), %{full_name: full_name}),
       project: Map.take(Map.from_struct(Repo.get(Engine.Project, offer.project_id)), project()),
@@ -280,6 +281,7 @@ defmodule Engine.Merger do
     :student_loan_plan_1?,
     :student_loan_finished_before_6_april?,
     :schedule_d_letter_url,
+    :use_loan_out_company?,
     :loan_out_company_name,
     :loan_out_company_registration_number,
     :loan_out_company_address,

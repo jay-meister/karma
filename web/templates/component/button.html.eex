@@ -1,7 +1,13 @@
+<% colours =
+  case assigns[:invert] do
+    true -> "bg-white k-b--light-indigo k-light-indigo"
+    _not_true -> "k-bg-light-indigo k-b--light-indigo white"
+  end
+%>
 <a href="<%= assigns[:link] %>" class="outline-0 no-underline k-button-no-underline no-outline-focus">
   <div class="tc">
     <div class="mb4">
-      <div class="ttu k-bg-light-indigo ba k-b--light-indigo pa3 pl4 pr4 k-f2-5 br2 white k-w6 mt3 outline-0 k-m-auto lato button-active"><%= assigns[:title] %></div>
+      <div class="ttu ba pa3 pl4 pr4 k-f2-5 br2 k-w6 mt3 outline-0 k-m-auto lato button-active <%= colours %>"><%= assigns[:title] %></div>
     </div>
   </div>
 </a>
