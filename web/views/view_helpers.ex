@@ -1,8 +1,18 @@
 defmodule Engine.ViewHelpers do
 
-  alias Engine.{User, Repo}
+  alias Engine.{User, Repo, Project}
 
-  def check_loan_out(contract, user_id) do
+  def check_loan_out(contract, user_id, offer) do
+    project_id = offer.project_id
+    project = Repo.get(Project, project_id) |> Repo.preload(:user) |> Repo.preload(:documents)
+    project_documents = Enum.map(project.documents, fn document -> document.name end)
+
+    construction_loan_out = Enum.member?(project_documents, "CONSTRUCTION LOAN OUT")
+    daily_construction_loan_out = offer.daily_or_weekly == "daily" && Enum.member?(project_documents, "DAILY CONSTRUCTION LOAN OUT")
+    daily_transport_loan_out = offer.daily_or_weekly == "daily" && Enum.member?(project_documents, "DAILY TRANSPORT LOAN OUT")
+    transport_loan_out = Enum.member?(project_documents, "TRANSPORT LOAN OUT")
+    daily = offer.daily_or_weekly == "daily"
+
     case user_id == nil do
       true ->
         contract
@@ -11,7 +21,31 @@ defmodule Engine.ViewHelpers do
         loaded_user = user |> Repo.preload(:startpacks)
         case loaded_user.startpacks.use_loan_out_company? do
           true ->
-            "LOAN OUT"
+            case offer do
+              %{department: "Construction"} ->
+                case daily_construction_loan_out do
+                  true -> "DAILY CONSTRUCTION LOAN OUT"
+                  false ->
+                    case construction_loan_out do
+                      true -> "CONSTRUCTION LOAN OUT"
+                      false -> "LOAN OUT"
+                    end
+                end
+              %{department: "Transport"} ->
+                case daily_transport_loan_out do
+                  true -> "DAILY TRANSPORT LOAN OUT"
+                  false ->
+                    case transport_loan_out do
+                      true -> "TRANSPORT LOAN OUT"
+                      false -> "LOAN OUT"
+                    end
+                end
+              _else ->
+                case daily do
+                  true -> "DAILY LOAN OUT"
+                  false -> "LOAN OUT"
+                end
+            end
           false ->
             contract
         end
