@@ -75,7 +75,7 @@
   <%= component "textarea.html",
   form: f,
   atom: :additional_notes,
-  placeholder: "Add any other notes"
+  placeholder: "(max 300 characters)"
   %>
 
   <%= component "form_divider.html", title: "Company details" %>
