@@ -89,6 +89,7 @@
   </div>
   <%= if length(@deal_documents) > 0 && @is_contractor? do %>
   <%= component "form_divider.html", title: "Contracts" %>
+    <div class="tc">You can read the documents by downloading below</div>
     <div class="tc">
       <%= for document <- @deal_documents do %>
         <div class="tc mt3 dib ma2">
