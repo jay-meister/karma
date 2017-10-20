@@ -226,10 +226,16 @@
       <% end %>
     </div>
   </div>
+  <% job_title =
+    case @offer.job_title_suffix == nil do
+      true -> Map.get(@formatted_offer, :job_title)
+      false -> "#{@offer.job_title} #{@offer.job_title_suffix}"
+    end
+  %>
   <div class="mt4">
     <%= for {atom, label, formatted} <- [
       {:department, nil, nil},
-      {:job_title, nil, nil}
+      {:job_title, nil, job_title}
     ] do %>
       <%= component "data.html",
       data: formatted || Map.get(@formatted_offer, atom),

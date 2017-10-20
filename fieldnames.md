@@ -28,6 +28,8 @@ project_active
 offer_target_email  
 offer_department  
 offer_job_title  
+offer_job_title_suffix  
+offer_job_title_with_suffix  
 offer_contract_type  
 offer_start_date  
 offer_daily_or_weekly  

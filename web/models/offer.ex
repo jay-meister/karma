@@ -6,6 +6,7 @@ defmodule Engine.Offer do
     field :target_email, :string
     field :department, :string
     field :job_title, :string
+    field :job_title_suffix, :string
     field :contract_type, :string
     field :start_date, Ecto.Date
     field :end_date, Ecto.Date
@@ -119,6 +120,7 @@ defmodule Engine.Offer do
       :target_email,
       :department,
       :job_title,
+      :job_title_suffix,
       :start_date,
       :end_date,
       :daily_or_weekly,
