@@ -87,7 +87,7 @@ defmodule Engine.Sign do
     |> format_approval_chain()
     |> add_contractor_to_chain(contractor)
     |> add_index_to_chain(merged)
-    |> add_loan_out_if_needed(contractor)
+    |> add_loan_out_if_needed(merged, contractor)
     |> add_agent_to_chain_if_needed(merged, contractor.startpacks)
   end
 
@@ -109,10 +109,21 @@ defmodule Engine.Sign do
     |> Enum.map(&Map.take(&1, [:email, :name, :id]))
   end
 
-  def add_loan_out_if_needed(chain, user) do
+  def add_loan_out_if_needed(chain, merged, user) do
     case user.startpacks.use_loan_out_company? do
       true ->
-        loan_out = %{email: user.startpacks.loan_out_company_email, name: user.startpacks.loan_out_company_name, recipientId: 2, routingOrder: 2}
+        tabs = %{
+            "signHereTabs": [
+              %{documentId: merged.id, "tabLabel": "signature_2\\*"}
+            ]
+          }
+        loan_out = %{
+          tabs: tabs,
+          email: user.startpacks.loan_out_company_email,
+          name: user.startpacks.loan_out_company_name,
+          recipientId: 2,
+          routingOrder: 2
+        }
         [loan_out] ++ chain
       false -> chain
     end
