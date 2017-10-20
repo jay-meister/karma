@@ -3,8 +3,9 @@ defmodule Engine.Sign do
 
   alias Engine.{AlteredDocument, Repo, S3}
 
-  @default_increment 2
+  @default_increment 3
   # when creating an approval chain, we 'inject' the agent if necessary
+  # as well as the loan out company
   # and the contractor to the beginning of the signee list
   # which means we need to increment all signee ids by 2
 
@@ -86,6 +87,7 @@ defmodule Engine.Sign do
     |> format_approval_chain()
     |> add_contractor_to_chain(contractor)
     |> add_index_to_chain(merged)
+    |> add_loan_out_if_needed(contractor)
     |> add_agent_to_chain_if_needed(merged, contractor.startpacks)
   end
 
@@ -107,10 +109,20 @@ defmodule Engine.Sign do
     |> Enum.map(&Map.take(&1, [:email, :name, :id]))
   end
 
+  def add_loan_out_if_needed(chain, user) do
+    case user.startpacks.use_loan_out_company? do
+      true ->
+        loan_out = %{email: user.startpacks.loan_out_company_email, name: user.startpacks.loan_out_company_name, recipientId: 2, routingOrder: 2}
+        [loan_out] ++ chain
+      false -> chain
+    end
+  end
+
   def add_contractor_to_chain(chain, user) do
-    user = %{email: user.email, name: "#{user.first_name} #{user.last_name}", id: 0}
+    user = %{email: user.email, name: "#{user.first_name} #{user.last_name}", id: 1}
     [user] ++ chain
   end
+
 
   def add_index_to_chain(chain, merged, increment \\ @default_increment) do
     # contractor has id set to 0, signees have id set to their signee id on our table

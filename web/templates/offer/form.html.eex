@@ -43,7 +43,7 @@
   <%= component "input.html",
   form: f,
   atom: :job_title_suffix,
-  placeholder: "e.g. if Job title = Driver, add the suffix: \'to Cast # 1\' or \'to Producer\'s name"
+  placeholder: "e.g. if Job title = Driver, add the suffix: \'to Cast # 1\' or \'to Producer\'s name\'"
   %>
 
   <%= component "date.html",

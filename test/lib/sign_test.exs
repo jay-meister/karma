@@ -47,7 +47,7 @@ defmodule Engine.SignTest do
     merged = %{id: 333}
     chain = [%{name: "jack", id: 0}, %{name: "brad", id: 2}]
     indexed = Sign.add_index_to_chain(chain, merged)
-    assert hd(indexed) == %{name: "jack", recipientId: 2, routingOrder: 2, tabs: %{signHereTabs: [%{documentId: 333, tabLabel: "signature_1\\*"}], dateSignedTabs: [%{documentId: 333, tabLabel: "date_signed_1DocuSignDateSigned\\*"}]}}
+    assert hd(indexed) == %{name: "jack", recipientId: 3, routingOrder: 3, tabs: %{signHereTabs: [%{documentId: 333, tabLabel: "signature_1\\*"}], dateSignedTabs: [%{documentId: 333, tabLabel: "date_signed_1DocuSignDateSigned\\*"}]}}
   end
 
   test "add agent to chain when not an agent deal" do
@@ -68,10 +68,30 @@ defmodule Engine.SignTest do
 
       assert fully_formatted_chain ==
         [%{email: "agent@gmail.com", name: "Secret Agent", recipientId: 1, routingOrder: 1},
-         %{email: "cont@gmail.com", name: "Joe Blogs", recipientId: 2, routingOrder: 2},
-         %{email: "signee3@gmail.com", name: "John Smith", recipientId: signee3.id + 2, routingOrder: 3},
-         %{email: "signee1@gmail.com", name: "John Smith", recipientId: signee1.id + 2, routingOrder: 4},
-         %{email: "signee2@gmail.com", name: "John Smith", recipientId: signee2.id + 2, routingOrder: 5}]
+         %{email: "cont@gmail.com", name: "Joe Blogs", recipientId: 4, routingOrder: 3},
+         %{email: "signee3@gmail.com", name: "John Smith", recipientId: signee3.id + 3, routingOrder: 4},
+         %{email: "signee1@gmail.com", name: "John Smith", recipientId: signee1.id + 3, routingOrder: 5},
+         %{email: "signee2@gmail.com", name: "John Smith", recipientId: signee2.id + 3, routingOrder: 6}]
+  end
+
+  test "get and prepare approval chain function - loan out", %{document: document, offer: offer,
+    contractor: contractor, signee1: signee1, signee2: signee2, signee3: signee3} do
+      loan_out_details = %{agent_deal?: true, agent_email_address: "agent@gmail.com", agent_name: "Secret Agent", use_loan_out_company?: true, loan_out_company_email: "loanout@gmail.com", loan_out_company_name: "Loan Out LTD"}
+      alt_doc = insert_merged_document(document, offer)
+      _startpack = update_startpack(contractor, loan_out_details)
+      contractor = Repo.preload(contractor, :startpacks, force: true)
+
+      fully_formatted_chain =
+        Sign.get_and_prepare_approval_chain(alt_doc, contractor)
+        |> Enum.map(&Map.delete(&1, :tabs))
+
+      assert fully_formatted_chain ==
+        [%{email: "agent@gmail.com", name: "Secret Agent", recipientId: 1, routingOrder: 1},
+        %{email: "loanout@gmail.com", name: "Loan Out LTD", recipientId: 2, routingOrder: 2},
+         %{email: "cont@gmail.com", name: "Joe Blogs", recipientId: 4, routingOrder: 3},
+         %{email: "signee3@gmail.com", name: "John Smith", recipientId: signee3.id + 3, routingOrder: 4},
+         %{email: "signee1@gmail.com", name: "John Smith", recipientId: signee1.id + 3, routingOrder: 5},
+         %{email: "signee2@gmail.com", name: "John Smith", recipientId: signee2.id + 3, routingOrder: 6}]
   end
 
   test "get_carbon_copies function", %{document: document, offer: offer,
@@ -87,8 +107,8 @@ defmodule Engine.SignTest do
       assert carbon_copies ==
         [%{email: recipient_1.email,
           name: recipient_1.name,
-          recipientId: recipient_1.id + 2,
-          routingOrder: Kernel.length(chain) + 2
+          recipientId: recipient_1.id + 3,
+          routingOrder: Kernel.length(chain) + 3
         }]
   end
 
