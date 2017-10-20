@@ -70,8 +70,30 @@ defmodule Engine.ViewHelpersTest do
     project = insert_project(pm)
     offer = insert_offer(project, %{user_id: contractor.id})
     update_startpack(contractor, %{use_loan_out_company?: true})
-    contract = ViewHelpers.check_loan_out("PAYE", offer.user_id)
+    contract = ViewHelpers.check_loan_out("PAYE", offer.user_id, offer)
     assert contract == "LOAN OUT"
+  end
+
+  test "check_loan_out with user - construction" do
+    contractor = insert_user(%{email: "test@email.co.uk"})
+    pm = insert_user(%{email: "pm@test.co.uk"})
+    project = insert_project(pm)
+    insert_document(project, %{name: "CONSTRUCTION LOAN OUT"})
+    offer = insert_offer(project, %{user_id: contractor.id, department: "Construction", job_title: "Construction Manager"})
+    update_startpack(contractor, %{use_loan_out_company?: true})
+    contract = ViewHelpers.check_loan_out("PAYE", offer.user_id, offer)
+    assert contract == "CONSTRUCTION LOAN OUT"
+  end
+
+  test "check_loan_out with user - transport" do
+    contractor = insert_user(%{email: "test@email.co.uk"})
+    pm = insert_user(%{email: "pm@test.co.uk"})
+    project = insert_project(pm)
+    insert_document(project, %{name: "TRANSPORT LOAN OUT"})
+    offer = insert_offer(project, %{user_id: contractor.id, department: "Transport", job_title: "Transport Captain"})
+    update_startpack(contractor, %{use_loan_out_company?: true})
+    contract = ViewHelpers.check_loan_out("PAYE", offer.user_id, offer)
+    assert contract == "TRANSPORT LOAN OUT"
   end
 
   test "sort_offers" do

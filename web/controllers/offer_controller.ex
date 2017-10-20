@@ -348,7 +348,7 @@ defmodule Engine.OfferController do
       project.custom_fields
       |> Enum.filter(fn field -> field.type == "Offer" end)
       |> Enum.count()
-    daily = offer.daily_or_weekly == "daily"
+    daily = (offer.daily_or_weekly == "daily")
     equipment = offer.equipment_rental_required?
     job_titles = Engine.Job.titles()
     job_departments = Engine.Job.departments()
@@ -444,7 +444,7 @@ defmodule Engine.OfferController do
             %{department: "Transport"} ->
               case daily_transport_loan_out do
                 true -> "DAILY TRANSPORT LOAN OUT"
-                false -> "TRANSPORT LOAN OUT"
+                false ->
                   case transport_loan_out do
                     true -> "TRANSPORT LOAN OUT"
                     false -> "LOAN OUT"

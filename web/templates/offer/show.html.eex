@@ -241,7 +241,7 @@
     <%= for {atom, label, formatted} <- [
       {:start_date, "Start date", @formatted_offer.start_date},
       {:end_date, nil, format_date(@offer.end_date)},
-      {:contract_type, nil, check_loan_out(@formatted_offer.contract_type, @offer.user_id)},
+      {:contract_type, nil, check_loan_out(@formatted_offer.contract_type, @offer.user_id, @offer)},
       {:daily_or_weekly, nil, nil},
       {:working_week, nil, format_working_days(@formatted_offer.working_week)}
     ] do %>
