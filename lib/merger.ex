@@ -83,6 +83,14 @@ defmodule Engine.Merger do
     offer = Repo.get(Engine.Offer, offer.id) |> Repo.preload(:custom_fields)
     custom_fields = Enum.map(offer.custom_fields, fn custom_field -> Map.from_struct(custom_field) end)
 
+    job_title = Map.take(Map.from_struct(Repo.get(Engine.Offer, offer.id)), [:job_title])
+    job_title_suffix = Map.take(Map.from_struct(Repo.get(Engine.Offer, offer.id)), [:job_title_suffix])
+      case job_title_suffix == nil do
+        true -> ""
+        false -> job_title_suffix
+      end
+    job_title_with_suffix = "#{job_title.job_title} #{job_title_suffix.job_title_suffix}"
+
     offer_custom_fields = build_custom_field_map(%{}, custom_fields)
     project = Map.from_struct(Repo.get(Engine.Project, offer.project_id) |> Repo.preload(:custom_fields))
     project_custom_field_structs = project.custom_fields |> Enum.filter(fn field -> field.type == "Project" end)
@@ -103,7 +111,7 @@ defmodule Engine.Merger do
     %{
       user: Map.merge(Map.take(Map.from_struct(Repo.get(Engine.User, offer.user_id)), user()), %{full_name: full_name}),
       project: Map.take(Map.from_struct(Repo.get(Engine.Project, offer.project_id)), project()),
-      offer: Map.take(Map.from_struct(Repo.get(Engine.Offer, offer.id)), offer()),
+      offer: Map.merge(Map.take(Map.from_struct(Repo.get(Engine.Offer, offer.id)), offer()), %{job_title_with_suffix: job_title_with_suffix}),
       startpack: Map.merge(Map.take(Map.from_struct(Repo.get_by(Engine.Startpack, user_id: offer.user_id)), startpack()), %{primary_address_block: startpack_address_block}),
       offer_custom_field: offer_custom_fields,
       project_custom_field: project_custom_fields
@@ -179,6 +187,7 @@ defmodule Engine.Merger do
       :target_email,
       :department,
       :job_title,
+      :job_title_suffix,
       :contract_type,
       :start_date,
       :end_date,
