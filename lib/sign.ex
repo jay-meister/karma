@@ -2,8 +2,10 @@ defmodule Engine.Sign do
   import Ecto.Query
 
   alias Engine.{AlteredDocument, Repo, S3}
-
+  @agent_index 1
+  @loan_out_index 2
   @default_increment 3
+
   # when creating an approval chain, we 'inject' the agent if necessary
   # as well as the loan out company
   # and the contractor to the beginning of the signee list
@@ -114,17 +116,17 @@ defmodule Engine.Sign do
       true ->
         tabs = %{
             "signHereTabs": [
-              %{documentId: merged.id, "tabLabel": "signature_2\\*"}
+              %{documentId: merged.id, "tabLabel": "signature_#{@loan_out_index}\\*"}
             ]
           }
         loan_out = %{
           tabs: tabs,
           email: user.startpacks.loan_out_company_email,
           name: user.startpacks.loan_out_company_name,
-          recipientId: 2,
-          routingOrder: 2
+          recipientId: @loan_out_index,
+          routingOrder: @loan_out_index
         }
-        [loan_out] ++ chain
+        List.insert_at(chain, 0, loan_out)
       false -> chain
     end
   end
@@ -137,8 +139,9 @@ defmodule Engine.Sign do
 
   def add_index_to_chain(chain, merged, increment \\ @default_increment) do
     # contractor has id set to 0, signees have id set to their signee id on our table
-    # add 2 to this id, so contractors id will become 2, required to be positive by docusign
+    # add 3 to this id, so contractors id will become 3, required to be positive by docusign
     # if an agent is to be added, they will be added at index 1
+    # loan out company added at 2
     chain
     |> Enum.with_index()
     |> Enum.map(fn({signee, index}) ->
@@ -180,8 +183,8 @@ defmodule Engine.Sign do
           %{tabs: tabs,
             name: startpack.agent_name,
             email: startpack.agent_email_address,
-            recipientId: 1,
-            routingOrder: 1
+            recipientId: @agent_index,
+            routingOrder: @agent_index
         }
         List.insert_at(chain, 0, agent)
     end

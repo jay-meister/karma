@@ -87,7 +87,7 @@ defmodule Engine.SignTest do
 
       assert fully_formatted_chain ==
         [%{email: "agent@gmail.com", name: "Secret Agent", recipientId: 1, routingOrder: 1},
-        %{email: "loanout@gmail.com", name: "Loan Out LTD", recipientId: 2, routingOrder: 2},
+         %{email: "loanout@gmail.com", name: "Loan Out LTD", recipientId: 2, routingOrder: 2},
          %{email: "cont@gmail.com", name: "Joe Blogs", recipientId: 4, routingOrder: 3},
          %{email: "signee3@gmail.com", name: "John Smith", recipientId: signee3.id + 3, routingOrder: 4},
          %{email: "signee1@gmail.com", name: "John Smith", recipientId: signee1.id + 3, routingOrder: 5},
